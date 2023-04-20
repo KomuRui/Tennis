@@ -17,6 +17,6 @@ void Water::ChildInitialize()
 void Water::ChildUpdate()
 {
 	//UVÉXÉNÉçÅ[Éã
-	scroll += 0.002f;
+	scroll += 0.008f;
 	Model::SetUvScroll(hModel_, scroll);
 }
