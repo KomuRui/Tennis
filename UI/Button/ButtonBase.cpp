@@ -20,9 +20,6 @@ void ButtonBase::ChildUpdate()
 	//もし選択されているかつプッシュOkになっているかつAボタンを押したのなら
 	if (isSelect_ && isPushOk_ && Input::IsPadButtonDown(XINPUT_GAMEPAD_A))
 	{
-		//クリック音
-		OtherAudioManager::ClickAudio();
-
 		//一回でも押したに設定
 		ARGUMENT_INITIALIZE(isPush_, true);
 

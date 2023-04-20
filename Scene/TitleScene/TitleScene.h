@@ -6,7 +6,6 @@
 /// </summary>
 class TitleScene : public GameObject
 {
-	int hModel_; 	       //ƒ‚ƒfƒ‹”Ô†Ši”[—p
 
 public:
 

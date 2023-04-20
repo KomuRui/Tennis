@@ -23,9 +23,6 @@ namespace GameManager
 	//現在の使用されているステージのポインタ格納用
 	Stage* pNowStage_;
 
-	//現在の使用されているワープのポインタ格納用
-	Warp* pNowWarp_;
-
 	//シーンマネージャーのポインタ格納用
 	SceneManager* pSceneManager_;
 
@@ -97,12 +94,6 @@ namespace GameManager
 
 	//ステージのポインタゲット
 	Stage* GameManager::GetpStage() { return pNowStage_; }
-
-	//ワープのポインタセット
-	void GameManager::SetpWarp(Warp* warp) { pNowWarp_ = warp; }
-
-	//ワープのポインタゲット
-	Warp* GameManager::GetpWarp() { return pNowWarp_; }
 
 	//シーンマネージャーのポインタセット
 	void GameManager::SetpSceneManager(SceneManager* scene) { pSceneManager_ = scene; }

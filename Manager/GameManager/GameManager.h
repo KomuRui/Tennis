@@ -3,8 +3,6 @@
 #include "../../Player/PlayerBase.h"
 #include "../../Manager/SceneManager/SceneManager.h"
 
-class Warp;
-
 //ゲームのいろいろな管理をする
 namespace GameManager
 {
@@ -35,11 +33,6 @@ namespace GameManager
 	/// </summary>
 	void Draw();
 
-	/// <summary>
-	/// ポーズ画面を削除
-	/// </summary>
-	void PauseDelete();
-
 	///////////////////////////////セットゲット関数//////////////////////////////////
 
 	//プレイヤーのポインタセット
@@ -53,12 +46,6 @@ namespace GameManager
 
 	//ステージのポインタゲット
 	Stage* GetpStage();
-
-	//ワープのポインタセット
-	void SetpWarp(Warp* warp);
-
-	//ワープのポインタゲット
-	Warp* GetpWarp();
 
 	//シーンマネージャーのポインタセット
 	void SetpSceneManager(SceneManager* scene);

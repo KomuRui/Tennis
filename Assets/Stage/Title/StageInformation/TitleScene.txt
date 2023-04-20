@@ -1,0 +1,2 @@
+Stage/TennisCourt.fbx,TennisCourt,0,0,0,0,0,0,1,1,1
+Stage/Net.fbx,Net,0,0,0,0,0,0,1,1,1

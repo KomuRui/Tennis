@@ -1,5 +1,5 @@
 #pragma once
-#include "../Mob/Mob.h"
+#include "../Base/Mob.h"
 #include "../Engine/GameObject/GameObject.h"
 #include "../State/PlayerState/PlayerStateManager.h"
 #include "../Engine/ResourceManager/Model.h"

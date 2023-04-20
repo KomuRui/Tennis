@@ -15,15 +15,15 @@
 //定数
 namespace
 {
-	static const float RATATION_SPEED = 0.5f;    //回転速度
-	static const XMFLOAT3 CAM_POS = { 0, 0, 5 }; //カメラの位置
-	static const XMFLOAT3 CAM_TAR = { 0, 0, 0 }; //カメラのターゲット
-	static const int FIELD_ANGLE = 45;           //カメラの画角
+	static const float RATATION_SPEED = 0.5f;     //回転速度
+	static const XMFLOAT3 CAM_POS = { 0, 7, 15 }; //カメラの位置
+	static const XMFLOAT3 CAM_TAR = { 0, 0, 0 };  //カメラのターゲット
+	static const int FIELD_ANGLE = 45;            //カメラの画角
 }
 
 //コンストラクタ
 TitleScene::TitleScene(GameObject* parent)
-	: GameObject(parent, "TitleScene"), hModel_(-1)
+	: GameObject(parent, "TitleScene")
 {
 }
 
@@ -35,15 +35,11 @@ TitleScene::~TitleScene()
 //初期化
 void TitleScene::Initialize()
 {
-	//////////////モデルデータのロード///////////////////
-
-	hModel_ = Model::Load("Stage/Title/Model/BackGroundModel.fbx");
-	assert(hModel_ >= ZERO);
 
 	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
 
 	CreateStage* pCreateStage = new CreateStage;
-	pCreateStage->LoadFileCreateStage(GetParent(), "Stage/Title/StageInformation/TitleScene1.txt");
+	pCreateStage->LoadFileCreateStage(GetParent(), "Stage/Title/StageInformation/TitleScene.txt");
 
 	///////////////カメラ///////////////////
 
@@ -65,8 +61,6 @@ void TitleScene::Update()
 //描画
 void TitleScene::Draw()
 {
-	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
 }
 
 //開放

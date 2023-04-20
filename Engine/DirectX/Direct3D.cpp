@@ -52,7 +52,7 @@ namespace Direct3D
 	SHADER_TYPE shaderType;
 
 	//”wŒiF
-	XMFLOAT4 backScreenColor = {0,0,0,0};
+	XMFLOAT4 backScreenColor = {0.3,0.3,0.3,0};
 
 	//externéŒ¾‚µ‚½•Ï”‚Ì‰Šú‰»
 	ID3D11Device*           pDevice_ = nullptr;

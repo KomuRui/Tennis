@@ -24,12 +24,6 @@ public:
 	virtual void Update3D(PlayerBase* player) {};
 
 	/// <summary>
-	/// ミニゲーム用更新
-	/// </summary>
-	/// <param name="player">Playerのポインタ</param>
-	virtual void UpdateMiniGame(PlayerBase* player) {};
-
-	/// <summary>
 	/// 入力によって状態を変化する
 	/// </summary>
 	/// <param name="player">Playerのポインタ</param>

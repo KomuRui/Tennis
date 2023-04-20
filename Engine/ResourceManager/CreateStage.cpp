@@ -6,7 +6,10 @@
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
-#include "../../Mob/Mob.h"
+#include "../../Base/Mob.h"
+#include "../../Base/NormalObject.h"
+#include "../../OtherObject/TitleScene/TennisCourt.h"
+#include "../../OtherObject/TitleScene/Net.h"
 #include <fstream>
 
 
@@ -23,11 +26,15 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	/////////////////////Player///////////////////////
 
 
-	/////////////////////Mob///////////////////////
+	/////////////////////Base///////////////////////
 
 	if (inName == "Mob")
 	{
 		InstantiateMob3D<Mob>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "NormalObject")
+	{
+		InstantiateNormal<NormalObject>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////UI///////////////////////
@@ -43,6 +50,14 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 
 	/////////////////////OtherObject///////////////////////
 
+	if (inName == "TennisCourt")
+	{
+		InstantiateNormal<TennisCourt>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "Net")
+	{
+		InstantiateNormal<Net>(parent, ModelPathName, inName, t);
+	}
 
 	/////////////////////Camera////////////////////////
 

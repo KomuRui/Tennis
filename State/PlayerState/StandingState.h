@@ -16,9 +16,6 @@ public:
 	//3D用更新
 	void Update3D(PlayerBase* player) override;
 
-	//ミニゲーム用更新
-	void UpdateMiniGame(PlayerBase* player) override {};
-
 	//入力によって状態変化する
 	void HandleInput(PlayerBase* player) override;
 

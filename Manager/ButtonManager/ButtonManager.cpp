@@ -98,8 +98,6 @@ namespace ButtonManager
 		//もし空じゃなければ
 		if (!date.empty())
 		{
-			//音
-			OtherAudioManager::ClickAudio();
 
 			//選択されているボタンも追加
 			date.push_back({ x,button });
@@ -135,8 +133,6 @@ namespace ButtonManager
 		//もし空じゃなければ
 		if (!date.empty())
 		{
-			//音
-			OtherAudioManager::ClickAudio();
 
 			//選択されているボタンも追加
 			date.push_back({ x,button });
@@ -172,8 +168,6 @@ namespace ButtonManager
 		//もし空じゃなければ
 		if (!date.empty())
 		{
-			//音
-			OtherAudioManager::ClickAudio();
 
 			//選択されているボタンも追加
 			date.push_back({ y,button });
@@ -209,8 +203,6 @@ namespace ButtonManager
 		//もし空じゃなければ
 		if (!date.empty())
 		{
-			//音
-			OtherAudioManager::ClickAudio();
 
 			//選択されているボタンも追加
 			date.push_back({ y,button });

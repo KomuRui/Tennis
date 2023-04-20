@@ -89,51 +89,11 @@ float4 PS(VS_OUT inData) : SV_Target
 	inData.normal.w = 0;
 	inData.normal = normalize(inData.normal);
 
-	float3 dir = float3(0,0,0);
-	float3 sumDir = float3(0, 0, 0); //すべての光源の方向を考慮した方向
-	float  len = 0;
-	float  colD = 0;
-	float  colA = 0;
-	float  col = 0;
-	float4 shade = float4(0,0,0,0);
+	float4 shade = saturate(dot(-lightDir, inData.normal));
+	shade.a = 1;
 
-	for (int i = 0; i < 8; i++)
-	{
-		if (g_LightPosition[i].x != 99999 && g_LightPosition[i].y != 99999 && g_LightPosition[i].z != 99999)
-		{
-			//点光源の方向
-			dir = g_LightPosition[i].xyz - inData.posw.xyz;
-
-			//点光源の距離
-			len = length(dir) / g_LightIntensity[i];
-
-			//点光源の方向をnormalize
-			dir = normalize(dir);
-
-			//方向を足す
-			sumDir += dir;
-			sumDir = normalize(sumDir);
-
-			//拡散
-			colD = saturate(dot(normalize(inData.normal), dir)) * g_LightIntensity[i];
-
-			//減衰
-			colA = saturate(1.0f / (1.0 + 0 * len + 0.2 * len * len));
-
-			col += colD * colA;
-		}
-	}
-
-	if (col > 1)
-		col = 1;
-
-	if (g_isBrightness == 0)
-		shade = float4(col, col, col, 1.0f);
-	else
+	if (g_isBrightness != 0)
 		shade = float4(g_isBrightness, g_isBrightness, g_isBrightness, 1.0f);
-
-
-	float4 d = float4(sumDir.x, sumDir.y, sumDir.z, 0);
 
 	float4 diffuse;
 	//テクスチャ有無
@@ -159,7 +119,7 @@ float4 PS(VS_OUT inData) : SV_Target
 	{
 		if (g_vecSpeculer.a != 0)	//スペキュラーの情報があれば
 		{
-			float4 R = reflect(d, inData.normal);			//正反射ベクトル
+			float4 R = reflect(lightDir, inData.normal);		//正反射ベクトル
 			speculer = pow(saturate(dot(R, inData.eye)), g_shuniness) * g_vecSpeculer;	//ハイライトを求める
 		}
 	}
@@ -167,7 +127,12 @@ float4 PS(VS_OUT inData) : SV_Target
 	//最終的な色
 	float4 color = diffuse * shade + diffuse * ambient + speculer;
 	color += g_isAmbient;
-	color.a = g_isDiffuse;
+
+	//もしアルファ値がすこしでも透明でなければ
+	if(diffuse.a == 1)
+		color.a = g_isDiffuse;
+	else
+		color.a = diffuse.a;
 
 	return color;
 }

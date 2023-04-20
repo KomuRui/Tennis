@@ -345,6 +345,8 @@ namespace Model
 
 		do
 		{
+			if (_datas.empty()) return;
+
 			XMFLOAT3 target = Float3Add(start, dir);
 			XMMATRIX matInv = XMMatrixInverse(nullptr, (*ehandle)->transform.GetWorldMatrix());
 			XMVECTOR vecStart = XMVector3TransformCoord(XMLoadFloat3(&start), matInv);
@@ -384,13 +386,14 @@ namespace Model
 		data->normal = normal;
 
 		//アウトライン更新
-		if (hModelNum->isOutLineDraw && hModelNum != nullptr)
+		if (hModelNum != nullptr && hModelNum->isOutLineDraw)
 			hModelNum->isOutLineDraw = false;
 		else if(hModelNum != nullptr)
 			hModelNum->isOutLineDraw = true;
 
 		//アウトラインの色
-		hModelNum->outLineColor = outLineColor;
+		if (hModelNum != nullptr)
+			hModelNum->outLineColor = outLineColor;
 	}
 
 	//一番近いポリゴンの法線とポジションをRayCastDataに格納

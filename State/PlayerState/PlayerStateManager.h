@@ -22,7 +22,7 @@ public:
 	static PlayerState* playerState_;
 
 	//各状態変数
-	static StandingState*		  playerStanding_;			  //立ってる
+	static StandingState* playerStanding_; //立ってる
 
     //コンストラクタ
 	PlayerStateManager();
@@ -32,9 +32,6 @@ public:
 
 	//3D用更新
 	virtual void Update3D(PlayerBase* player)override;
-
-	//ミニゲーム用更新
-	virtual void UpdateMiniGame(PlayerBase* player)override;
 
 	//入力によって状態変化する
 	virtual void HandleInput(PlayerBase* player)override;

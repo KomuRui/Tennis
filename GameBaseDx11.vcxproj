@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include;C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\include</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\lib\vs2017\x64\debug;$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\lib\vs2017\x64\debug</LibraryPath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include;C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\include;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\lib\vs2017\x64\debug;$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\lib\vs2017\x64\debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\debug</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include;C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\include</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\lib\vs2017\x64\release;$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\lib\vs2017\x64\release</LibraryPath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\include;C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\include;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2019.5\lib\vs2017\x64\release;$(WindowsSDK_LibraryPath_x64);$(VC_LibraryPath_x64);C:\Program Files\Autodesk\FBX\FBX SDK\2020.0.1\lib\vs2017\x64\release;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\release</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -126,6 +126,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base\Mob.cpp" />
+    <ClCompile Include="Base\NormalObject.cpp" />
     <ClCompile Include="Engine\Collider\BoxCollider.cpp" />
     <ClCompile Include="Engine\Collider\Collider.cpp" />
     <ClCompile Include="Engine\Collider\SphereCollider.cpp" />
@@ -173,7 +175,8 @@
     <ClCompile Include="Manager\GameManager\GameManager.cpp" />
     <ClCompile Include="Manager\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Manager\TextManager\TextManager.cpp" />
-    <ClCompile Include="Mob\Mob.cpp" />
+    <ClCompile Include="OtherObject\TitleScene\Net.cpp" />
+    <ClCompile Include="OtherObject\TitleScene\TennisCourt.cpp" />
     <ClCompile Include="Player\PlayerBase.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -185,6 +188,8 @@
     <ClCompile Include="UI\ScalingImage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base\Mob.h" />
+    <ClInclude Include="Base\NormalObject.h" />
     <ClInclude Include="Engine\Collider\BoxCollider.h" />
     <ClInclude Include="Engine\Collider\Collider.h" />
     <ClInclude Include="Engine\Collider\SphereCollider.h" />
@@ -234,7 +239,8 @@
     <ClInclude Include="Manager\GameManager\GameManager.h" />
     <ClInclude Include="Manager\SceneManager\SceneManager.h" />
     <ClInclude Include="Manager\TextManager\TextManager.h" />
-    <ClInclude Include="Mob\Mob.h" />
+    <ClInclude Include="OtherObject\TitleScene\Net.h" />
+    <ClInclude Include="OtherObject\TitleScene\TennisCourt.h" />
     <ClInclude Include="Player\PlayerBase.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Stage.h" />

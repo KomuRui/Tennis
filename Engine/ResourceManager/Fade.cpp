@@ -145,14 +145,6 @@ namespace Fade
 			ARGUMENT_INITIALIZE(normalAlpha_, 1.0f);
 			break;
 
-			//ゲームオーバー
-		case FADE_GAME_OVER:
-
-			OtherAudioManager::GameOverAudio(); //ゲームオーバー音
-			pEasingScale_->Reset(&gameOver_.scale_, XMFLOAT3(5, 5, 5), XMFLOAT3(1, 1, 1), 4.0f, Easing::OutQuart);
-			pEasingRotate_->Reset(&gameOver_.rotate_, XMFLOAT3(0, 0, 720), XMFLOAT3(0, 0, 0), 4.0f, Easing::OutQuart);
-			break;
-
 			//それ以外
 		default:
 
@@ -202,12 +194,6 @@ namespace Fade
 		case FADE_NORMAL_OUT:
 
 			FadeOutNormalDraw();
-			break;
-
-			//ゲームオーバー
-		case FADE_GAME_OVER:
-
-			GameOverDraw();
 			break;
 
 			//それ以外
@@ -329,29 +315,5 @@ namespace Fade
 
 		//描画
 		pNormal_->Draw(t,rect, normalAlpha_);
-	}
-
-	//ゲームオーバー描画
-	void Fade::GameOverDraw()
-	{
-		//テクスチャのサイズ取得
-		XMFLOAT3 size = pGameOver_->GetTextureSize();
-
-		//動かす
-		pEasingScale_->Move();
-		bool f = pEasingRotate_->Move();
-
-		//切り抜き範囲をリセット（画像全体を表示する）
-		RECT rect;
-		rect.left = (LONG)ZERO;
-		rect.top = (LONG)ZERO;
-		rect.right = (long)size.x;
-		rect.bottom = (long)size.y;
-
-		//描画
-		pGameOver_->ReversalColorDraw(gameOver_, rect, XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
-
-		//もしイージングの動きが終わっているのなら死んだ関数を呼ぶ
-		if (f) GameManager::PlayerDie();
 	}
 }

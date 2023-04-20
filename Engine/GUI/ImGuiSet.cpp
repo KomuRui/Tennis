@@ -8,7 +8,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_win32.h"
 #include "imgui/imgui_impl_dx11.h"
-#include "../../Mob/Mob.h"
+#include "../../Base/Mob.h"
 #include "../../UI/ImageBase.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../../Manager/SceneManager/SceneManager.h"
@@ -167,7 +167,7 @@ namespace ImGuiSet
         pStickFbx->Load("EffectEditModel/StickModel.fbx");
 
         //各シーンのステージ情報が入ってるファイルのパス設定
-        stageInfoFilePath_[SCENE_ID_TITLE] = "Stage/Title/StageInformation/TitleScene1.txt";
+        stageInfoFilePath_[SCENE_ID_TITLE] = "Stage/Title/StageInformation/TitleScene.txt";
     }
 
     //ゲーム画面がフルサイズではない時の描画
@@ -347,7 +347,7 @@ namespace ImGuiSet
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
                         std::pair<int, Transform> a(Model::Load(text1[i]), t);
-                        assert(a.first > 0);
+                        assert(a.first > -1);
 
                         //vectorに格納する
                         obj_.push_back(a);
@@ -1328,7 +1328,7 @@ namespace ImGuiSet
             ARGUMENT_INITIALIZE(gameMode_, static_cast<int>(Mode::START));
             Direct3D::SetTimeScale(false);
             Direct3D::SetScreenGameStatus(true);
-            Direct3D::SetBackScreenColor(XMFLOAT4(0, 0, 0, 1));
+            Direct3D::SetBackScreenColor(XMFLOAT4(0.3f, 0.3f, 0.3f, 1));
 
             //もし前回のモードがエフェクトエディタなら
             if(beforeMode == static_cast<int>(Mode::EFFECT_EDIT))Camera::UndoFiledAngle();
@@ -1340,7 +1340,7 @@ namespace ImGuiSet
             Direct3D::SetTimeScale(true);
             Direct3D::SetScreenGameStatus(false);
             Camera::FrameCameraInitialize();
-            Direct3D::SetBackScreenColor(XMFLOAT4(0, 0, 0, 1));
+            Direct3D::SetBackScreenColor(XMFLOAT4(0.3f, 0.3f, 0.3f, 1));
 
             //もし前回のモードがエフェクトエディタなら
             if (beforeMode == static_cast<int>(Mode::EFFECT_EDIT))Camera::UndoFiledAngle();

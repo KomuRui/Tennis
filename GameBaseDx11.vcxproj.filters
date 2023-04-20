@@ -24,9 +24,6 @@
       <UniqueIdentifier>{47a6a3f5-8cfd-436b-8d58-beccd108f3f3}</UniqueIdentifier>
       <Extensions>hlsl</Extensions>
     </Filter>
-    <Filter Include="Mob">
-      <UniqueIdentifier>{ee4dea8f-7656-44cf-89ff-40befbc9e769}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{e80c0e4a-fc29-4d0c-9d94-60778d53ed8b}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,15 @@
     <Filter Include="Manager\AudioManager\OtherAudioManager">
       <UniqueIdentifier>{1ecb8ccf-2e8b-4d52-a19d-838cf5a73d41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{ee4dea8f-7656-44cf-89ff-40befbc9e769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OtherObject">
+      <UniqueIdentifier>{0d243d09-38eb-456d-9efa-9db5261e5e90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OtherObject\TitleScene">
+      <UniqueIdentifier>{871c65ea-67a9-4bf6-8f9f-480fc396bc28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Main.cpp">
@@ -140,9 +146,6 @@
     </ClCompile>
     <ClCompile Include="Manager\SceneManager\SceneManager.cpp">
       <Filter>Manager\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Mob\Mob.cpp">
-      <Filter>Mob</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Collider\BoxCollider.cpp">
       <Filter>01Engine\Collider</Filter>
@@ -261,6 +264,18 @@
     <ClCompile Include="Manager\AudioManager\OtherAudioManager\OtherAudioManager.cpp">
       <Filter>Manager\AudioManager\OtherAudioManager</Filter>
     </ClCompile>
+    <ClCompile Include="Base\NormalObject.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\Mob.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\Net.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\TennisCourt.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -308,9 +323,6 @@
     </ClInclude>
     <ClInclude Include="Manager\SceneManager\SceneManager.h">
       <Filter>Manager\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Mob\Mob.h">
-      <Filter>Mob</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Collider\BoxCollider.h">
       <Filter>01Engine\Collider</Filter>
@@ -437,6 +449,18 @@
     </ClInclude>
     <ClInclude Include="Manager\AudioManager\OtherAudioManager\OtherAudioManager.h">
       <Filter>Manager\AudioManager\OtherAudioManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\NormalObject.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Mob.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\Net.h">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\TennisCourt.h">
+      <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
