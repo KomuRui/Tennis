@@ -8,6 +8,9 @@
 
 //各static変数の初期化
 StandingState* PlayerStateManager::playerStanding_ = new StandingState;
+ForehandingState* PlayerStateManager::playerForehanding_ = new ForehandingState;
+BackhandingState* PlayerStateManager::playerBackhanding_ = new BackhandingState;
+ServingState* PlayerStateManager::playerServing_ = new ServingState;
 PlayerState* PlayerStateManager::playerState_ = playerStanding_;
 
 ////定数
@@ -26,7 +29,6 @@ PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR)
 //更新
 void PlayerStateManager::Update2D(PlayerBase* player)
 {
-   
 	//現在の状態の更新を呼ぶ
 	playerState_->Update2D(player);
 }
@@ -34,6 +36,18 @@ void PlayerStateManager::Update2D(PlayerBase* player)
 //3D用更新
 void PlayerStateManager::Update3D(PlayerBase* player)
 {
+
+    //立っている状態じゃないのなら
+    if (playerState_ != PlayerStateManager::playerStanding_)
+    {
+        //動いたのでアニメーション
+        Model::SetAnimFlag(player->GetModelNum(), true);
+
+        //現在の状態の更新を呼ぶ
+        playerState_->Update3D(player);
+        return;
+    }
+
     //Lスティックの傾きを取得
     float PadLx = Input::GetPadStickL().x;
     float PadLy = Input::GetPadStickL().y;

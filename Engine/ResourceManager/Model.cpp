@@ -83,7 +83,10 @@ namespace Model
 		}
 		else
 		{
-			_datas[handle]->nowFrame = 0;
+			_datas[handle]->nowFrame = (float)_datas[handle]->startFrame;
+
+			if ((float)_datas[handle]->startFrame == 1)
+				_datas[handle]->nowFrame = 0;
 		}
 
 		//最後までアニメーションしたら戻す

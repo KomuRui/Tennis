@@ -5,6 +5,7 @@
 #include "StandingState.h"
 #include "ForehandingState.h"
 #include "BackhandingState.h"
+#include "ServingState.h"
 
 //定義
 class PlayerBase;
@@ -28,6 +29,7 @@ public:
 	static StandingState* playerStanding_;		 //立ってる
 	static ForehandingState* playerForehanding_; //フォアハンド
 	static BackhandingState* playerBackhanding_; //バックハンド
+	static ServingState* playerServing_;         //サーブ
 
     //コンストラクタ
 	PlayerStateManager();
