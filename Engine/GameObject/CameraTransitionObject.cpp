@@ -72,6 +72,4 @@ void CameraTransitionObject::OutCollision()
 //指定した時間で呼ばれるメソッド
 void CameraTransitionObject::TimeMethod()
 {
-	//カメラ動作を変更
-	GameManager::GetpPlayer()->SetCamFlag(!(GameManager::GetpPlayer()->IsCamBehavior()));
 }

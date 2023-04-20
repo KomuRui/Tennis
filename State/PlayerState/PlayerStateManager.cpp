@@ -4,6 +4,7 @@
 #include "../../Engine/ResourceManager/Model.h"
 #include "../../Player/PlayerBase.h"
 #include "../../Engine/GUI/ImGuiSet.h"
+#include <math.h>
 
 //各static変数の初期化
 StandingState* PlayerStateManager::playerStanding_ = new StandingState;
@@ -12,13 +13,13 @@ PlayerState* PlayerStateManager::playerState_ = playerStanding_;
 ////定数
 namespace
 {
-    const float RUN_SPEED = 1.5f;                 // GetPrivateProfilefloat("PLAYER", "RunSpeed", "0.02", ".\\/Parameter/Player/PlayerParameter.ini");//走っているときのキャラのスピード
+    const float RUN_SPEED = 1.5f;                 //走っているときのキャラのスピード
     const float PLAYER_WALK_ANIM_SPEED = 1.0f;    //アニメーションの再生速度
     const float ANIM_RUN_SPEED = 2.0f;            //アニメーションの再生速度(走ってるとき)
 }
 
 //コンストラクタ
-PlayerStateManager::PlayerStateManager():front_(XMVectorSet(0, 0, 1.0f, 0))
+PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR)
 {
 }
 
@@ -33,6 +34,29 @@ void PlayerStateManager::Update2D(PlayerBase* player)
 //3D用更新
 void PlayerStateManager::Update3D(PlayerBase* player)
 {
+    //Lスティックの傾きを取得
+    float PadLx = Input::GetPadStickL().x;
+    float PadLy = Input::GetPadStickL().y;
+
+    //少しでも動いたのなら
+    if (PadLx != ZERO || PadLy != ZERO)
+    {
+        //動いたのでアニメーション
+        Model::SetAnimFlag(player->GetModelNum(), true);
+
+        //回転行列
+        XMMATRIX rotateX, rotateY, rotateZ;
+        rotateX = XMMatrixRotationX(XMConvertToRadians(ZERO));
+        rotateY = XMMatrixRotationY(XMConvertToRadians(XMConvertToDegrees(atan2(-PadLx, -PadLy))));
+        rotateZ = XMMatrixRotationZ(XMConvertToRadians(ZERO));
+        XMMATRIX matRotate = rotateZ * rotateX * rotateY;
+
+        //Playerの移動
+        player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord(front_ / 10.0f, matRotate))));
+    }
+    //動いていないのならアニメーションを止める
+    else
+        Model::SetAnimFlag(player->GetModelNum(), false);
 
     //現在の状態の更新を呼ぶ
     playerState_->Update3D(player);

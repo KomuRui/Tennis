@@ -81,7 +81,7 @@ VS_OUT VS(float4 pos : POSITION, float4 normal : NORMAL, float2 uv : TEXCOORD, f
 	outData.V.w = 0;
 
 	////ƒ‰ƒCƒg‚Ì•ûŒü
-	float4 light = g_vecLightPosition - pos;
+	float4 light = float4(0.0f,10.0f,0.0f,0.0f) - pos;
 	light = normalize(light);
 	outData.light.x = dot(light, tangent);
 	outData.light.y = dot(light, binormal);

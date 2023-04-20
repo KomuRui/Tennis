@@ -18,6 +18,9 @@ using namespace std;
 //360“x
 #define TWOPI_DEGREES  360
 
+//‰~ü—¦
+#define PI 3.14159265
+
 //////‰Šú‰»
 
 //0‚É‰Šú‰»

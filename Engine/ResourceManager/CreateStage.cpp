@@ -10,6 +10,8 @@
 #include "../../Base/NormalObject.h"
 #include "../../OtherObject/TitleScene/TennisCourt.h"
 #include "../../OtherObject/TitleScene/Net.h"
+#include "../../OtherObject/TitleScene/Water.h"
+#include "../../Player/PlayerBase.h"
 #include <fstream>
 
 
@@ -25,6 +27,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	
 	/////////////////////Player///////////////////////
 
+	if (inName == "Player")
+	{
+		GameManager::SetpPlayer(InstantiateNormal<PlayerBase>(parent, ModelPathName, inName, t));
+	}
 
 	/////////////////////Base///////////////////////
 
@@ -57,6 +63,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "Net")
 	{
 		InstantiateNormal<Net>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "Water")
+	{
+		InstantiateNormal<Water>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////Camera////////////////////////

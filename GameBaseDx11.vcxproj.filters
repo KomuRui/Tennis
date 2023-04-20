@@ -276,6 +276,18 @@
     <ClCompile Include="OtherObject\TitleScene\TennisCourt.cpp">
       <Filter>OtherObject\TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\Water.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="State\PlayerState\ForehandingState.cpp">
+      <Filter>State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="State\PlayerState\BackhandingState.cpp">
+      <Filter>State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="State\PlayerState\ServingState.cpp">
+      <Filter>State\PlayerState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -461,6 +473,18 @@
     </ClInclude>
     <ClInclude Include="OtherObject\TitleScene\TennisCourt.h">
       <Filter>OtherObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\Water.h">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="State\PlayerState\ForehandingState.h">
+      <Filter>State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="State\PlayerState\BackhandingState.h">
+      <Filter>State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="State\PlayerState\ServingState.h">
+      <Filter>State\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

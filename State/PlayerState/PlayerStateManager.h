@@ -3,6 +3,9 @@
 #include "PlayerState.h"
 #include "../../Engine/ResourceManager/Global.h"
 #include "StandingState.h"
+#include "ForehandingState.h"
+#include "BackhandingState.h"
+
 //定義
 class PlayerBase;
 
@@ -22,7 +25,9 @@ public:
 	static PlayerState* playerState_;
 
 	//各状態変数
-	static StandingState* playerStanding_; //立ってる
+	static StandingState* playerStanding_;		 //立ってる
+	static ForehandingState* playerForehanding_; //フォアハンド
+	static BackhandingState* playerBackhanding_; //バックハンド
 
     //コンストラクタ
 	PlayerStateManager();

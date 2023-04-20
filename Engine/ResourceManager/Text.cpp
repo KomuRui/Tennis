@@ -138,9 +138,6 @@ bool Text::SlowlyDraw(int x, int y, const wchar_t* str, float ratio, float textI
 				//カメラ移動
 				case '{':
 				{
-					//Playerのカメラ動作させないように
-					GameManager::GetpPlayer()->SetCamFlag(true);
-
 					//カメラ設定
 					Camera::SetUpDirection(UP_VECTOR);
 					Camera::InterpolationMove({15,35,0}, { 0,25,0 }, 0.03f);
@@ -150,8 +147,6 @@ bool Text::SlowlyDraw(int x, int y, const wchar_t* str, float ratio, float textI
 				//カメラ元に戻す
 				case '}':
 				{
-					//Playerのカメラ動作させるように
-					GameManager::GetpPlayer()->SetCamFlag(false);
 					break;
 				}
 
