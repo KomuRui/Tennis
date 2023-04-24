@@ -288,6 +288,9 @@
     <ClCompile Include="State\PlayerState\ServingState.cpp">
       <Filter>State\PlayerState</Filter>
     </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\Racket.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -485,6 +488,9 @@
     </ClInclude>
     <ClInclude Include="State\PlayerState\ServingState.h">
       <Filter>State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\Racket.h">
+      <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

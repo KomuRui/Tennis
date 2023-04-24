@@ -4,6 +4,7 @@
 #include "../../Engine/ResourceManager/Model.h"
 #include "../../Player/PlayerBase.h"
 #include "../../Engine/GUI/ImGuiSet.h"
+#include "../../OtherObject/TitleScene/Racket.h"
 #include <math.h>
 
 //各static変数の初期化
@@ -42,6 +43,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     {
         //動いたのでアニメーション
         Model::SetAnimFlag(player->GetModelNum(), true);
+        Model::SetAnimFlag(player->GetRacket()->GetModelNum(), true);
 
         //現在の状態の更新を呼ぶ
         playerState_->Update3D(player);
@@ -57,6 +59,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     {
         //動いたのでアニメーション
         Model::SetAnimFlag(player->GetModelNum(), true);
+        Model::SetAnimFlag(player->GetRacket()->GetModelNum(), true);
 
         //回転行列
         XMMATRIX rotateX, rotateY, rotateZ;
@@ -70,7 +73,10 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     }
     //動いていないのならアニメーションを止める
     else
+    {
         Model::SetAnimFlag(player->GetModelNum(), false);
+        Model::SetAnimFlag(player->GetRacket()->GetModelNum(), false);
+    }
 
     //現在の状態の更新を呼ぶ
     playerState_->Update3D(player);

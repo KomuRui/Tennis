@@ -5,6 +5,7 @@
 #include "../../Engine/GUI/ImGuiSet.h"
 #include "PlayerStateManager.h"
 #include "../../Player/PlayerBase.h"
+#include "../../OtherObject/TitleScene/Racket.h"
 
 //更新
 void BackhandingState::Update2D(PlayerBase* player)
@@ -25,6 +26,7 @@ void BackhandingState::Update3D(PlayerBase* player)
 
 		//アニメーション
 		Model::SetAnimFrame(player->GetModelNum(), 1, 60, 2.0f);
+		Model::SetAnimFrame(player->GetRacket()->GetModelNum(), 1, 60, 2.0f);
 	}
 
 	//入力処理関数を呼ぶ
@@ -41,4 +43,5 @@ void BackhandingState::Enter(PlayerBase* player)
 {
 	//アニメーション
 	Model::SetAnimFrame(player->GetModelNum(), 70, 130, 2.0f);
+	Model::SetAnimFrame(player->GetRacket()->GetModelNum(), 70, 130, 2.0f);
 }

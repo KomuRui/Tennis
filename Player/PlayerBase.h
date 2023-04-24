@@ -4,6 +4,8 @@
 #include "../State/PlayerState/PlayerStateManager.h"
 #include "../Engine/ResourceManager/Model.h"
 
+class Racket;
+
 /// <summary>
 /// Playerの基底クラス
 /// </summary>
@@ -13,7 +15,7 @@ protected:
 
 	///////////////キャラの必要な情報///////////////////
 
-
+	Racket* pRacket_;                   //ラケット
 
 	/////////////////////カメラ//////////////////////
 
@@ -59,6 +61,12 @@ public:
 	/// モデル番号取得
 	/// </summary>
 	/// <returns>モデル番号</returns>
-	int GetModelNum() { return hModel_; }
+	int GetModelNum() { return hModel_; } 
+
+	/// <summary>
+	/// ラケット取得
+	/// </summary>
+	/// <returns>ラケット</returns>
+	Racket* GetRacket() { return pRacket_; }
 };
 

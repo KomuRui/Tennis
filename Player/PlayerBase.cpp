@@ -5,6 +5,7 @@
 #include "../Manager/GameManager/GameManager.h"
 #include "../Manager/AudioManager/PlayerAudioManager/PlayerAudioManager.h"
 #include "../Engine/ResourceManager/Audio.h"
+#include "../OtherObject/TitleScene/Racket.h"
 
 ////定数
 namespace
@@ -49,6 +50,9 @@ void PlayerBase::ChildInitialize()
     //アニメーション
     Model::SetAnimFrame(hModel_, ANIM_START_FRAME, ANIM_END_FRAME, PLAYER_ANIM_SPEED);
 
+    ///////////////ラケット生成///////////////////
+
+    ARGUMENT_INITIALIZE(pRacket_,Instantiate<Racket>(this));
 }
 
 

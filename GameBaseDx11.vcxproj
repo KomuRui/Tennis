@@ -176,6 +176,7 @@
     <ClCompile Include="Manager\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Manager\TextManager\TextManager.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Net.cpp" />
+    <ClCompile Include="OtherObject\TitleScene\Racket.cpp" />
     <ClCompile Include="OtherObject\TitleScene\TennisCourt.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Water.cpp" />
     <ClCompile Include="Player\PlayerBase.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="Manager\SceneManager\SceneManager.h" />
     <ClInclude Include="Manager\TextManager\TextManager.h" />
     <ClInclude Include="OtherObject\TitleScene\Net.h" />
+    <ClInclude Include="OtherObject\TitleScene\Racket.h" />
     <ClInclude Include="OtherObject\TitleScene\TennisCourt.h" />
     <ClInclude Include="OtherObject\TitleScene\Water.h" />
     <ClInclude Include="Player\PlayerBase.h" />

@@ -71,5 +71,10 @@ public:
 	/// 継承先用の指定した時間で呼ばれるメソッド
 	/// </summary>
 	virtual void TimeMethod() override {};
+
+
+	////////////////////////////ゲッター・セッター////////////////////////////////
+
+	int GetModelNum() { return hModel_; }
 };
 
