@@ -1049,6 +1049,9 @@ namespace ImGuiSet
     //ステージオブジェのトランスフォームすべて表示するImGuiを表示
     void ImGuiSet::StageObjImGuiDisplay()
     {
+        //nullならこの先処理しない
+        if (GameManager::GetpSceneManager() == nullptr) return;
+
         //window作る
         ImGui::Begin("StageObjTransformDisplay", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
 

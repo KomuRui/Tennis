@@ -39,7 +39,7 @@ void TitleScene::Initialize()
 	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
 
 	CreateStage* pCreateStage = new CreateStage;
-	pCreateStage->LoadFileCreateStage(GetParent(), "Stage/Title/StageInformation/TitleScene.txt");
+	pCreateStage->LoadFileCreateStage(this, "Stage/Title/StageInformation/TitleScene.txt");
 
 	///////////////カメラ///////////////////
 
