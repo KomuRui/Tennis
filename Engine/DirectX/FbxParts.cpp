@@ -600,23 +600,46 @@ void FbxParts::DrawSkinAnime(Transform& transform, FbxTime time)
 	// ボーンごとの現在の行列を取得する
 	for (int i = 0; i < numBone_; i++)
 	{
-		FbxAnimEvaluator * evaluator = ppCluster_[i]->GetLink()->GetScene()->GetAnimationEvaluator();
-		FbxMatrix mCurrentOrentation = evaluator->GetNodeGlobalTransform(ppCluster_[i]->GetLink(), time);
+		FbxCluster* cluster = ppCluster_[i];
+		FbxNode* linkNode = cluster->GetLink();
+		FbxNode* parentNode = linkNode->GetParent();
+
+		FbxAMatrix linkMatrix, globalBindposeInverseMatrix, parentGlobalTransform;
+
+		// linkNodeの変形行列を取得する
+		FbxAMatrix transformMatrix = linkNode->EvaluateGlobalTransform(time);
+		linkMatrix = cluster->GetTransformLinkMatrix(transformMatrix);
+
+		// リンクノードがスケルタルノードでなければ、グローバルトランスフォームを計算する
+		if (!linkNode->GetSkeleton())
+		{
+			FbxAMatrix globalTransform = linkNode->GetScene()->GetAnimationEvaluator()->GetNodeGlobalTransform(linkNode, time);
+			FbxAMatrix globalParentTransform = parentNode->GetScene()->GetAnimationEvaluator()->GetNodeGlobalTransform(parentNode, time);
+
+			parentGlobalTransform = globalParentTransform;
+			linkMatrix = globalParentTransform.Inverse() * globalTransform * linkMatrix;
+		}
+
+		// グローバルバインドポーズの逆行列を取得する
+		FbxAMatrix bindposeMatrix = cluster->GetLink()->GetScene()->GetPose(0)->GetMatrix(cluster->GetLink()->GetScene()->GetNodeCount());
+		globalBindposeInverseMatrix = bindposeMatrix.Inverse();
 
 		// 行列コピー（Fbx形式からDirectXへの変換）
-		XMFLOAT4X4 pose;
+		XMFLOAT4X4 link, inverseBindpose;
 		for (DWORD x = 0; x < 4; x++)
 		{
 			for (DWORD y = 0; y < 4; y++)
 			{
-				pose(x, y) = (float)mCurrentOrentation.Get(x, y);
+				link(x, y) = (float)linkMatrix.Get(x, y);
+				inverseBindpose(x, y) = (float)globalBindposeInverseMatrix.Get(x, y);
 			}
 		}
 
+		// ボーン行列を計算する
+		XMMATRIX boneMatrix = XMLoadFloat4x4(&link) * XMLoadFloat4x4(&inverseBindpose);
+
 		// オフセット時のポーズの差分を計算する
-		pBoneArray_[i].newPose = XMLoadFloat4x4(&pose);
-		pBoneArray_[i].diffPose = XMMatrixInverse(nullptr, pBoneArray_[i].bindPose);
-		pBoneArray_[i].diffPose *= pBoneArray_[i].newPose;
+		pBoneArray_[i].diffPose = XMMatrixInverse(nullptr, pBoneArray_[i].bindPose) * boneMatrix;
 	}
 
 	// 各ボーンに対応した頂点の変形制御
@@ -631,7 +654,8 @@ void FbxParts::DrawSkinAnime(Transform& transform, FbxTime time)
 			{
 				break;
 			}
-			matrix += pBoneArray_[pWeightArray_[i].pBoneIndex[m]].diffPose * pWeightArray_[i].pBoneWeight[m];
+			float boneWeight = pWeightArray_[i].pBoneWeight[m];
+			matrix += boneWeight * pBoneArray_[pWeightArray_[i].pBoneIndex[m]].diffPose;
 
 		}
 
