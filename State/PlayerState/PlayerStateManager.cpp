@@ -59,7 +59,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     {
         //動いたのでアニメーション
         Model::SetAnimFlag(player->GetModelNum(), true);
-        Model::SetAnimFlag(player->GetRacket()->GetModelNum(), true);
+        //Model::SetAnimFlag(player->GetRacket()->GetModelNum(), true);
 
         //回転行列
         XMMATRIX rotateX, rotateY, rotateZ;
@@ -75,7 +75,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     else
     {
         Model::SetAnimFlag(player->GetModelNum(), false);
-        Model::SetAnimFlag(player->GetRacket()->GetModelNum(), false);
+        //Model::SetAnimFlag(player->GetRacket()->GetModelNum(), false);
     }
 
     //現在の状態の更新を呼ぶ
