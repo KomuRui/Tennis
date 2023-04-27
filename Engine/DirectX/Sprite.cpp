@@ -141,7 +141,6 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb;
 
-
 	//表示するサイズに合わせる
 	XMMATRIX cut = XMMatrixScaling((float)rect.right, (float)rect.bottom ,1);
 

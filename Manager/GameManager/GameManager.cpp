@@ -8,6 +8,7 @@
 #include "../../Engine/ResourceManager/Image.h"
 #include "../TextManager/TextManager.h"
 #include "../ButtonManager/ButtonManager.h"
+#include "../ScoreManager/ScoreManager.h"
 #include "../AudioManager/PlayerAudioManager/PlayerAudioManager.h"
 #include "../AudioManager/OtherAudioManager/OtherAudioManager.h"
 #include <cmath>
@@ -38,6 +39,9 @@ namespace GameManager
 		//テキストマネージャの初期化
 		TextManager::Initialize();
 
+		//スコアマネージャーの初期化
+		ScoreManager::Initialize();
+
 		//フェイドの初期化
 		Fade::Initialize();
 
@@ -55,6 +59,7 @@ namespace GameManager
 		Fade::SceneTransitionInitialize();
 		OtherAudioManager::SceneTransitionInitialize();
 		PlayerAudioManager::SceneTransitionInitialize();
+		ScoreManager::SceneTransitionInitialize();
 	}
 
 	//Playerが死亡した時にLifeManagerから呼ばれる
@@ -75,6 +80,9 @@ namespace GameManager
 	{
 		//Uiなどを表示
 		Image::UiDraw();
+
+		//スコアマネージャーの描画
+		ScoreManager::Draw();
 
 		//フェード用の描画
 		Fade::Draw();

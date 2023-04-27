@@ -96,6 +96,9 @@
     <Filter Include="OtherObject\TitleScene">
       <UniqueIdentifier>{871c65ea-67a9-4bf6-8f9f-480fc396bc28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\ScoreManager">
+      <UniqueIdentifier>{94699723-f653-4626-a1cf-030afd0165b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Main.cpp">
@@ -290,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="OtherObject\TitleScene\Racket.cpp">
       <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\ScoreManager\ScoreManager.cpp">
+      <Filter>Manager\ScoreManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -491,6 +497,9 @@
     </ClInclude>
     <ClInclude Include="OtherObject\TitleScene\Racket.h">
       <Filter>OtherObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\ScoreManager\ScoreManager.h">
+      <Filter>Manager\ScoreManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
