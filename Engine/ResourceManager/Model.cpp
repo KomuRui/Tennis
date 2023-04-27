@@ -80,6 +80,7 @@ namespace Model
 			//時間が止まっていなかったらアニメーションを進める
 			if(!Direct3D::GetTimeScale())
 			_datas[handle]->nowFrame += _datas[handle]->animSpeed;
+
 		}
 		else
 		{
@@ -90,8 +91,10 @@ namespace Model
 		}
 
 		//最後までアニメーションしたら戻す
-		if (_datas[handle]->nowFrame > (float)_datas[handle]->endFrame)
+		if (_datas[handle]->nowFrame > (float)_datas[handle]->endFrame && _datas[handle]->isAnimLoop)
 			_datas[handle]->nowFrame = (float)_datas[handle]->startFrame;
+		else if(_datas[handle]->nowFrame > (float)_datas[handle]->endFrame)
+			_datas[handle]->nowFrame = (float)_datas[handle]->endFrame;
 
 
 
@@ -265,9 +268,16 @@ namespace Model
 		_datas[handle]->SetAnimFrame(startFrame, endFrame, animSpeed);
 	}
 
+	//アニメーションを再生するかどうかセット
 	void SetAnimFlag(int handle,bool flag)
 	{
 		_datas[handle]->isAnim = flag;
+	}
+
+	//アニメーションをループ再生するかどうか
+	void SetAnimLoop(int handle, bool flag)
+	{
+		_datas[handle]->isAnimLoop = flag;
 	}
 
 	void SetAnimSpeed(int handle, float speed)

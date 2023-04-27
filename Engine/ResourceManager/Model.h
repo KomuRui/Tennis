@@ -64,6 +64,9 @@ namespace Model
 		//アニメーション再生するか
 		bool isAnim;
 
+		//アニメーションをループ再生するか
+		bool isAnimLoop;
+
 		//アニメーションのフレーム
 		float nowFrame, animSpeed;
 		int startFrame, endFrame;
@@ -71,7 +74,7 @@ namespace Model
 
 		//初期化
 		ModelData() : pFbx(nullptr), isRay(false), nowFrame(ZERO), startFrame((int)ZERO), endFrame((int)ZERO), animSpeed(ZERO), shaderType(Direct3D::SHADER_3D), outLineColor(ZERO, ZERO, ZERO, 1.0f),
-			alpha(1), ambient(ZERO, ZERO, ZERO, ZERO), isAnim(false), speculer(ZERO, ZERO, ZERO, ZERO), brightness(ZERO), pBlock(nullptr), pObstacle(nullptr), uvScroll(ZERO), isOutLineDraw(false)
+			alpha(1), ambient(ZERO, ZERO, ZERO, ZERO), isAnim(false), speculer(ZERO, ZERO, ZERO, ZERO), brightness(ZERO), pBlock(nullptr), pObstacle(nullptr), uvScroll(ZERO), isOutLineDraw(false), isAnimLoop(true)
 		{
 		}
 
@@ -185,6 +188,9 @@ namespace Model
 
 	//アニメーションするかしないか
 	void SetAnimFlag(int handle, bool flag);
+
+	//アニメーションをループ再生するかどうか
+	void SetAnimLoop(int handle, bool flag);
 
 	//アニメーションのスピードをセットする関数
 	void SetAnimSpeed(int handle, float speed);

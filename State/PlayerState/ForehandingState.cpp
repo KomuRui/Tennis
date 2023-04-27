@@ -18,7 +18,7 @@ void ForehandingState::Update2D(PlayerBase* player)
 void ForehandingState::Update3D(PlayerBase* player)
 {
 	//もしアニメーションが最後まで終わったのなら
-	if (Model::GetAnimFrame(player->GetModelNum()) == 200)
+	if (Model::GetAnimFrame(player->GetModelNum()) >= 200)
 	{
 		//状態変更
 		PlayerStateManager::playerState_ = PlayerStateManager::playerStanding_;
@@ -42,6 +42,7 @@ void ForehandingState::HandleInput(PlayerBase* player)
 void ForehandingState::Enter(PlayerBase* player)
 {
 	//アニメーション
-	Model::SetAnimFrame(player->GetModelNum(), 140, 200, 2.0f);
-	Model::SetAnimFrame(player->GetRacket()->GetModelNum(), 140, 200, 2.0f);
+	Model::SetAnimFrame(player->GetModelNum(), 140, 200, 4.0f);
+	Model::SetAnimFrame(player->GetRacket()->GetModelNum(), 140, 200, 4.0f);
+	Model::SetAnimLoop(player->GetRacket()->GetModelNum(), false);
 }

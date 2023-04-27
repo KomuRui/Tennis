@@ -15,6 +15,9 @@ Racket::Racket(GameObject* parent)
 //‰Šú‰»
 void Racket::ChildInitialize()
 {
-	transform_.position_.x += 0.8f;
-	transform_.position_.y -= 0.8f;
+	Model::SetBrightness(hModel_, 1.0f);
+
+	//ƒ|ƒWƒVƒ‡ƒ“’²®
+	transform_.position_.x += 0.85f;
+	transform_.position_.y -= 0.80f;
 }
