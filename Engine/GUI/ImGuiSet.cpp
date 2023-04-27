@@ -907,7 +907,7 @@ namespace ImGuiSet
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
                         std::pair<int, Transform> a(Image::Load(text1[i]), t);
-                        assert(a.first > 0);
+                        assert(a.first >= 0);
 
                         //vectorに格納する
                         obj_.push_back(a);
