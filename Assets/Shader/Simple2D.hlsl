@@ -41,7 +41,5 @@ VS_OUTPUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 float4 PS(VS_OUTPUT input) : SV_Target
 {
 	float4 diffuse = g_texture.Sample(g_sampler, input.uv);
-	float Alpha = diffuse.a;
-
-  return g_vecColor * diffuse;
+	return g_vecColor * diffuse;
 }
