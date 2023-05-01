@@ -4,3 +4,4 @@ Stage/Net.fbx,Net,0,0,0,0,0,0,1,1,1
 MainCharacter/Player.fbx,Player,0,0,11.579,0,180,0,1,1,1
 Image/PlayerUI.png,ImageBase,-0.654,0.88,0,0,0,0,1,1,1
 Image/EnemyUI.png,ImageBase,0.649,0.88,0,0,0,0,1,1,1
+Stage/RefereeStand.fbx,NormalObject,-8,0,0,0,0,0,1,1,1

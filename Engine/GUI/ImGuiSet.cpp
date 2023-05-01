@@ -1331,7 +1331,7 @@ namespace ImGuiSet
             ARGUMENT_INITIALIZE(gameMode_, static_cast<int>(Mode::START));
             Direct3D::SetTimeScale(false);
             Direct3D::SetScreenGameStatus(true);
-            Direct3D::SetBackScreenColor(XMFLOAT4(0.3f, 0.3f, 0.3f, 1));
+            Direct3D::SetBackScreenColor(XMFLOAT4(0.0f, 0.0f, 0.0f, 1));
 
             //もし前回のモードがエフェクトエディタなら
             if(beforeMode == static_cast<int>(Mode::EFFECT_EDIT))Camera::UndoFiledAngle();
@@ -1343,7 +1343,7 @@ namespace ImGuiSet
             Direct3D::SetTimeScale(true);
             Direct3D::SetScreenGameStatus(false);
             Camera::FrameCameraInitialize();
-            Direct3D::SetBackScreenColor(XMFLOAT4(0.3f, 0.3f, 0.3f, 1));
+            Direct3D::SetBackScreenColor(XMFLOAT4(0.0f, 0.0f, 0.0f, 1));
 
             //もし前回のモードがエフェクトエディタなら
             if (beforeMode == static_cast<int>(Mode::EFFECT_EDIT))Camera::UndoFiledAngle();

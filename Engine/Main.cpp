@@ -157,9 +157,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				{
 					//用意しておいたテクスチャに描画する
 					{
-						Direct3D::BeginDrawToTexture();
+						//Direct3D::BeginDrawToTexture();
 
-						pRootObject->EmissionDraw();   //ここでは光らせたいやつだけ描画する
+						//pRootObject->EmissionDraw();   //ここでは光らせたいやつだけ描画する
 					}
 
 					//本来のゲーム画面を描画する
