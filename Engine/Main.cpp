@@ -155,21 +155,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//エフェクトエディタモードじゃないのなら
 				if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
 				{
-					//用意しておいたテクスチャに描画する
-					{
-						//Direct3D::BeginDrawToTexture();
-
-						//pRootObject->EmissionDraw();   //ここでは光らせたいやつだけ描画する
-					}
-
-					//本来のゲーム画面を描画する
-					{
-						Direct3D::BeginDraw();
-
-						pRootObject->DrawSub();    //ここで普通に描画して
-
-						Direct3D::ScreenDraw();	   //先ほど描画したテクスチャをスプライトとして描画
-					}
+					Direct3D::BeginDraw();
+					pRootObject->DrawSub();    //ここで普通に描画して
+					Direct3D::ScreenDraw();	   //先ほど描画したテクスチャをスプライトとして描画
 				}
 				else
 				{
