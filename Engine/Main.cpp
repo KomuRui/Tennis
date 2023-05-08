@@ -21,10 +21,10 @@
 #pragma comment(lib,"Winmm.lib")
 
 //定数宣言
-const char* WIN_CLASS_NAME = "SampleGame";	//ウィンドウクラス名
+const char* WIN_CLASS_NAME = "テニスゲーム";	//ウィンドウクラス名
 
 //プロトタイプ宣言
-HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
+HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow,const char* winName);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
@@ -45,7 +45,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int isDrawFps = GetPrivateProfileInt("DEBUG", "ViewFps", 0, ".\\setup.ini");		//キャプションに現在のFPSを表示するかどうか
 
 	//ウィンドウを作成
-	HWND hWnd = InitApp(hInstance, screenWidth, screenHeight, nCmdShow);
+	HWND hWnd = InitApp(hInstance, screenWidth, screenHeight, nCmdShow, WIN_CLASS_NAME);
+	HWND hWndTool = InitApp(hInstance, 400,300, nCmdShow, WIN_CLASS_NAME);
 
 	//Direct3D準備
 	Direct3D::Initialize(hWnd, screenWidth, screenHeight);
@@ -209,13 +210,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 }
 
 //ウィンドウの作成
-HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow)
+HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow, const char* winName)
 {
 	//ウィンドウクラス（設計図）を作成
 	WNDCLASSEX wc;
 	wc.cbSize = sizeof(WNDCLASSEX);					//この構造体のサイズ
 	wc.hInstance = hInstance;						//インスタンスハンドル
-	wc.lpszClassName = WIN_CLASS_NAME;				//ウィンドウクラス名
+	wc.lpszClassName = winName;						//ウィンドウクラス名
 	wc.lpfnWndProc = WndProc;						//ウィンドウプロシージャ
 	wc.style = CS_VREDRAW | CS_HREDRAW;				//スタイル（デフォルト）
 	wc.hIcon = LoadIcon(nullptr, IDI_APPLICATION);	//アイコン
@@ -237,7 +238,7 @@ HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdSho
 
 	//ウィンドウを作成
 	HWND hWnd = CreateWindow(
-		WIN_CLASS_NAME,					//ウィンドウクラス名
+		winName,						//ウィンドウクラス名
 		caption,						//タイトルバーに表示する内容
 		WS_OVERLAPPEDWINDOW,			//スタイル（普通のウィンドウ）
 		CW_USEDEFAULT,					//表示位置左（おまかせ）
