@@ -99,6 +99,12 @@
     <Filter Include="Manager\ScoreManager">
       <UniqueIdentifier>{94699723-f653-4626-a1cf-030afd0165b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OtherObject\ToolObj">
+      <UniqueIdentifier>{4ce2d9a2-3dbe-4ac7-a615-4ce660cc34ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\BasePointManager">
+      <UniqueIdentifier>{8919ce3d-42c8-4958-98f4-b3ae244e35f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Main.cpp">
@@ -296,6 +302,12 @@
     </ClCompile>
     <ClCompile Include="Manager\ScoreManager\ScoreManager.cpp">
       <Filter>Manager\ScoreManager</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\ToolObj\BasePointModel.cpp">
+      <Filter>OtherObject\ToolObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\BasePointManager\BasePointManager.cpp">
+      <Filter>Manager\BasePointManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -500,6 +512,12 @@
     </ClInclude>
     <ClInclude Include="Manager\ScoreManager\ScoreManager.h">
       <Filter>Manager\ScoreManager</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\ToolObj\BasePointModel.h">
+      <Filter>OtherObject\ToolObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\BasePointManager\BasePointManager.h">
+      <Filter>Manager\BasePointManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
