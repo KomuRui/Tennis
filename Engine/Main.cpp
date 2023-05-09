@@ -46,11 +46,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//ウィンドウを作成
 	HWND hWnd = InitApp(hInstance, screenWidth, screenHeight, nCmdShow, WIN_CLASS_NAME);
-	HWND hWndTool = InitApp(hInstance, screenWidth, screenHeight, nCmdShow, WIN_CLASS_NAME);
+	HWND hWndTool = InitApp(hInstance, 960, 540, nCmdShow, WIN_CLASS_NAME);
 
 	//Direct3D準備
 	Direct3D::Initialize(hWnd, screenWidth, screenHeight);
-	Direct3D::InitializeTwo(hWndTool, screenWidth, screenHeight);
+	Direct3D::InitializeTwo(hWndTool, 960, 540);
 
 	//カメラを準備
 	Camera::Initialize();
@@ -154,6 +154,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//マネージャの更新処理を呼ぶ
 				GameManager::Update();
 
+				//カメラの更新
+				Camera::Update();
+
 				//エフェクトエディタモードじゃないのなら
 				if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
 				{
@@ -164,9 +167,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				{
 					Direct3D::BeginDraw();
 				}  
-
-				//カメラの更新
-				Camera::Update();
 
 				//時間止めていないかエフェクトエディタモードなら
 				if (!Direct3D::GetTimeScale() || ImGuiSet::GetScreenMode() == static_cast<int>(Mode::EFFECT_EDIT))
@@ -190,8 +190,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 										: ImGuiSet::GameScreenNotFullDraw();
 
 				//二つ目のウィンドウ描画
+				Camera::Update2();
 				Direct3D::BeginDrawTwo();
-				pRootObject->DrawSub();
+				pRootObject->TwoWindowDrawSub();
 
 				Direct3D::EndDraw();
 

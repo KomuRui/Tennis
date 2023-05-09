@@ -13,5 +13,8 @@ public:
 
 	//デストラクタ
 	~TennisCourt() {};
+
+	//二つ目のウィンドウの描画
+	void TwoWindowDraw() override;
 };
 

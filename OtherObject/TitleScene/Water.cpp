@@ -20,3 +20,11 @@ void Water::ChildUpdate()
 	scroll += 0.008f;
 	Model::SetUvScroll(hModel_, scroll);
 }
+
+//二つ目のウィンドウの描画
+void Water::TwoWindowDraw()
+{
+	//描画
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
+}

@@ -45,17 +45,21 @@ public:
 	virtual ~GameObject();
 
 	//各オブジェクトで必ず作る関数
-	virtual void Initialize(void) = 0;
-	virtual void Update(void) = 0;
-	virtual void StartUpdate(void) = 0;
-	virtual void Draw() = 0;
-	virtual void Release(void) = 0;
+	virtual void Initialize(void) {};
+	virtual void Update(void) {};
+	virtual void StartUpdate(void) {};
+	virtual void Draw() {};
+	virtual void Release(void){};
 
 	//自分の該当関数を読んだ後、子供の関数も呼ぶ
 	void UpdateSub();
 	void StartUpdateSub();
 	void DrawSub();
 	void ReleaseSub();
+
+	//二つ目のウィンドウ用
+	virtual void TwoWindowDraw() {};
+	void TwoWindowDrawSub();
 
 	//Emissionを適用させたいオブジェクトの描画
 	void EmissionDraw();

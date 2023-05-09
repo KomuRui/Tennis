@@ -15,10 +15,13 @@
 //定数
 namespace
 {
-	static const float RATATION_SPEED = 0.5f;     //回転速度
-	static const XMFLOAT3 CAM_POS = { 0, 7, 15 }; //カメラの位置
-	static const XMFLOAT3 CAM_TAR = { 0, 0, 0 };  //カメラのターゲット
-	static const int FIELD_ANGLE = 45;            //カメラの画角
+	static const float RATATION_SPEED = 0.5f;        //回転速度
+	static const XMFLOAT3 CAM_POS = { 0, 7, 15 };    //カメラの位置
+	static const XMFLOAT3 CAM_POS2 = { 0, 20, 0 };   //カメラの位置2
+	static const XMFLOAT3 CAM_TAR = { 0, 0, 0 };     //カメラのターゲット
+	static const XMFLOAT3 CAM_TAR2 = { 0, 0, 0 };    //カメラのターゲット2
+	static const XMVECTOR CAM_UP2 = { -1, 0, 0, 0 }; //カメラの上方向
+	static const int FIELD_ANGLE = 45;               //カメラの画角
 }
 
 //コンストラクタ
@@ -44,8 +47,11 @@ void TitleScene::Initialize()
 	///////////////カメラ///////////////////
 
 	Camera::SetPosition(CAM_POS);
+	Camera::SetPosition2(CAM_POS2);
 	Camera::SetTarget(CAM_TAR);
+	Camera::SetTarget2(CAM_TAR2);
 	Camera::SetFieldAngle(FIELD_ANGLE);
+	Camera::SetUpDirection2(CAM_UP2);
 }
 
 //更新の前に一度だけ呼ばれる更新

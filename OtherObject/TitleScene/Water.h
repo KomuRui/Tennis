@@ -24,5 +24,8 @@ public:
 
 	//更新
 	void ChildUpdate() override;
+
+	//二つ目のウィンドウの描画
+	void TwoWindowDraw() override;
 };
 
