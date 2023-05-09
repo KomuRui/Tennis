@@ -46,10 +46,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//ウィンドウを作成
 	HWND hWnd = InitApp(hInstance, screenWidth, screenHeight, nCmdShow, WIN_CLASS_NAME);
-	HWND hWndTool = InitApp(hInstance, 400,300, nCmdShow, WIN_CLASS_NAME);
+	HWND hWndTool = InitApp(hInstance, screenWidth, screenHeight, nCmdShow, WIN_CLASS_NAME);
 
 	//Direct3D準備
 	Direct3D::Initialize(hWnd, screenWidth, screenHeight);
+	Direct3D::InitializeTwo(hWndTool, screenWidth, screenHeight);
 
 	//カメラを準備
 	Camera::Initialize();
@@ -158,12 +159,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				{
 					Direct3D::BeginDraw();
 					pRootObject->DrawSub();    //ここで普通に描画して
-					Direct3D::ScreenDraw();	   //先ほど描画したテクスチャをスプライトとして描画
 				}
 				else
 				{
 					Direct3D::BeginDraw();
-				}
+				}  
 
 				//カメラの更新
 				Camera::Update();
@@ -188,6 +188,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//ゲーム画面のサイズごとの各GUI描画
 				Direct3D::GetGameFull() ? ImGuiSet::GameScreenFullDraw()
 										: ImGuiSet::GameScreenNotFullDraw();
+
+				//二つ目のウィンドウ描画
+				Direct3D::BeginDrawTwo();
+				pRootObject->DrawSub();
 
 				Direct3D::EndDraw();
 

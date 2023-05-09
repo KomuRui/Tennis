@@ -21,20 +21,26 @@ namespace Direct3D
 	//【レンダーターゲットビュー】
 	//描画したいものと、描画先（上でいう画用紙）の橋渡しをするもの
 	ID3D11RenderTargetView* pRenderTargetView_ = nullptr;
-	ID3D11RenderTargetView* pRenderTargetView2 = nullptr;
+	ID3D11RenderTargetView* pRenderTargetView_2 = nullptr;
 
 	//【デプスステンシル】
 	//Zバッファ法を用いて、3D物体の前後関係を正しく表示するためのもの
 	ID3D11Texture2D* pDepthStencil;
+	ID3D11Texture2D* pDepthStencil2;
 
 	//【デプスステンシルビュー】
 	//デプスステンシルの情報をシェーダーに渡すためのもの
 	ID3D11DepthStencilView* pDepthStencilView;
+	ID3D11DepthStencilView* pDepthStencilView2;
 	ID3D11DepthStencilState* pDepthStencilState[BLEND_MAX];
 
 	//【ブレンドステート】
 	//半透明のものをどのように表現するか
 	ID3D11BlendState* pBlendState[BLEND_MAX];
+
+	IDXGIDevice1* pDXGI = NULL;
+	IDXGIAdapter* pAdapter = NULL;
+	IDXGIFactory* pFactory = NULL;
 
 	bool		isDrawCollision_ = true;	//コリジョンを表示するか
 	bool		_isLighting = false;		//ライティングするか
@@ -60,16 +66,11 @@ namespace Direct3D
 	SHADER_BUNDLE			shaderBundle[SHADER_MAX] = { 0 };
 	int						screenWidth_ = 0;
 	int						screenHeight_ = 0;
+	int						screenWidth_2 = 0;
+	int						screenHeight_2 = 0;
 
-	D3D11_VIEWPORT vp, vpEmission, vpFull,vpMini;
+	D3D11_VIEWPORT vp, vpFull2, vpEmission, vpFull,vpMini;
 
-	Sprite* pScreen;
-
-	ID3D11Texture2D* pRenderTexture;
-
-	int screenWidth;
-	int screenHeight;
-	Texture* pToonTexture;
 
 	//時間と待っているのかゲット
 	bool GetTimeScale()
@@ -163,7 +164,6 @@ namespace Direct3D
 		//失敗したら終了
 		if (FAILED(hr))	return hr;
 
-
 		///////////////////////////描画のための準備///////////////////////////////
 		//スワップチェーンからバックバッファを取得（バックバッファ ＝ 裏画面 ＝ 描画先）
 		ID3D11Texture2D* pBackBuffer;
@@ -173,7 +173,6 @@ namespace Direct3D
 
 		//レンダーターゲットビューを作成
 		hr = pDevice_->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView_);
-		
 
 		//失敗したら終了
 		if (FAILED(hr))	return hr;
@@ -292,35 +291,84 @@ namespace Direct3D
 		screenWidth_ = screenWidth;
 		screenHeight_ = screenHeight;
 
-		D3D11_TEXTURE2D_DESC texdec;
-		texdec.Width = screenWidth / TEX_DIV;
-		texdec.Height = screenHeight / TEX_DIV;
-		texdec.MipLevels = 1;
-		texdec.ArraySize = 1;
-		texdec.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		texdec.SampleDesc.Count = 1;
-		texdec.SampleDesc.Quality = 0;
-		texdec.Usage = D3D11_USAGE_DEFAULT;
-		texdec.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-		texdec.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		texdec.MiscFlags = 0;
-		pDevice_->CreateTexture2D(&texdec, nullptr, &pRenderTexture);
-
-		D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
-		ZeroMemory(&renderTargetViewDesc, sizeof(D3D11_RENDER_TARGET_VIEW_DESC));
-		renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-		renderTargetViewDesc.Texture2D.MipSlice = 0;
-		pDevice_->CreateRenderTargetView(pRenderTexture,
-			&renderTargetViewDesc, &pRenderTargetView2);
-
-
-		pScreen = new Sprite;
-		pScreen->Initialize(pRenderTexture);
-
 		return S_OK;
 	}
 
+	HRESULT Direct3D::InitializeTwo(HWND hWnd, int screenWidth, int screenHeight)
+	{
+		///////////////////////////いろいろ準備するための設定///////////////////////////////
+		//いろいろな設定項目をまとめた構造体
+		DXGI_SWAP_CHAIN_DESC scDesc;
+
+		//とりあえず全部0
+		ZeroMemory(&scDesc, sizeof(scDesc));
+
+		//描画先のフォーマット
+		scDesc.BufferDesc.Width = screenWidth;		//画面幅
+		scDesc.BufferDesc.Height = screenHeight;		//画面高さ
+		scDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	// 何色使えるか
+
+		//FPS（1/60秒に1回）
+		scDesc.BufferDesc.RefreshRate.Numerator = 60;
+		scDesc.BufferDesc.RefreshRate.Denominator = 1;
+
+		//その他
+		scDesc.Windowed = TRUE;				//ウィンドウモードかフルスクリーンか
+		scDesc.OutputWindow = hWnd;			//ウィンドウハンドル
+		scDesc.BufferCount = 1;				//裏画面の枚数
+		scDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//画面に描画するために使う
+		scDesc.SampleDesc.Count = 1;		//MSAA（アンチエイリアス）の設定
+		scDesc.SampleDesc.Quality = 0;		//　〃
+
+		pDevice_->QueryInterface(__uuidof(IDXGIDevice1), (void**)&pDXGI);
+		pDXGI->GetAdapter(&pAdapter);
+		pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&pFactory);
+		pFactory->CreateSwapChain(pDevice_, &scDesc, &pSwapChain_2);
+		
+		///////////////////////////描画のための準備///////////////////////////////
+		//スワップチェーンからバックバッファを取得（バックバッファ ＝ 裏画面 ＝ 描画先）
+		ID3D11Texture2D* pBackBuffer;
+	    pSwapChain_2->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+
+		//レンダーターゲットビューを作成
+		pDevice_->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView_2);
+
+		//一時的にバックバッファを取得しただけなので、解放
+		pBackBuffer->Release();
+
+		/////////////////一人プレイ/////////////////
+
+		//画面Full
+		vpFull2.Width = (float)screenWidth;	 //幅
+		vpFull2.Height = (float)screenHeight;//高さ
+		vpFull2.MinDepth = 0.0f;			 //手前
+		vpFull2.MaxDepth = 1.0f;			 //奥
+		vpFull2.TopLeftX = 0;				 //左
+		vpFull2.TopLeftY = 0;				 //上
+
+
+		//深度ステンシルビューの作成
+		D3D11_TEXTURE2D_DESC descDepth;
+		descDepth.Width = screenWidth;
+		descDepth.Height = screenHeight;
+		descDepth.MipLevels = 1;
+		descDepth.ArraySize = 1;
+		descDepth.Format = DXGI_FORMAT_D32_FLOAT;
+		descDepth.SampleDesc.Count = 1;
+		descDepth.SampleDesc.Quality = 0;
+		descDepth.Usage = D3D11_USAGE_DEFAULT;
+		descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+		descDepth.CPUAccessFlags = 0;
+		descDepth.MiscFlags = 0;
+		pDevice_->CreateTexture2D(&descDepth, NULL, &pDepthStencil2);
+		pDevice_->CreateDepthStencilView(pDepthStencil2, NULL, &pDepthStencilView2);
+
+
+		screenWidth_2 = screenWidth;
+		screenHeight_2 = screenHeight;
+
+		return S_OK;
+	}
 
 	//シェーダー関連で必要なセット準備
 	void InitShaderBundle()
@@ -728,43 +776,34 @@ namespace Direct3D
 
 	}
 
-	void BeginDrawToTexture()
+	void BeginDrawTwo()
 	{
-		pContext_->RSSetViewports(1, &vpEmission);                                      // ビューポートのセット
-		pContext_->OMSetRenderTargets(1, &pRenderTargetView2, pDepthStencilView);
+		//何か準備できてないものがあったら諦める
+		if (NULL == pDevice_) return;
+		if (NULL == pContext_) return;
+		if (NULL == pRenderTargetView_2) return;
+		if (NULL == pSwapChain_2) return;
+
+		pContext_->OMSetRenderTargets(1, &pRenderTargetView_2, pDepthStencilView2);            // 描画先を設定
+		pContext_->RSSetViewports(1, &vpFull2);
 
 		//背景の色
 		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 1 };//R,G,B,A
 
-		//画面をクリア
-		pContext_->ClearRenderTargetView(pRenderTargetView2, clearColor);
-
 		//深度バッファクリア
-		pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+		pContext_->ClearDepthStencilView(pDepthStencilView2, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
-		//デフォルトにセット
-		Direct3D::SetBlendMode(Direct3D::BLEND_DEFAULT);
+		//画面をクリア
+		pContext_->ClearRenderTargetView(pRenderTargetView_2, clearColor);
 	}
 
-	void ScreenDraw()
-	{
-		//加算合成にセット
-		Direct3D::SetBlendMode(Direct3D::BLEND_ADD);
-
-		Transform transform;
-		transform.scale_.x = TEX_DIV;
-		transform.scale_.y = TEX_DIV;
-
-		transform.Calclation();
-		pScreen->Draw(transform);
-		
-	}
 
 	//描画終了
 	void EndDraw()
 	{
 		//スワップ（バックバッファを表に表示する）
 		pSwapChain_->Present(0, 0);
+		pSwapChain_2->Present(0, 0);
 	}
 
 
