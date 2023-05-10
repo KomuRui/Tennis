@@ -59,7 +59,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Light::Initialize();
 
 	//入力処理（キーボード、マウス、コントローラー）の準備
-	Input::Initialize(hWnd);
+	Input::Initialize(hWnd, hWndTool);
 
 	//オーディオ（効果音）の準備
 	Audio::Initialize(hWnd);

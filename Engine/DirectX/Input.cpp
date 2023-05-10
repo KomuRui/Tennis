@@ -26,9 +26,10 @@ namespace Input
 
 	//マウス
 	LPDIRECTINPUTDEVICE8	pMouseDevice_;	//デバイスオブジェクト
+	LPDIRECTINPUTDEVICE8	pMouseDevice2_;	//デバイスオブジェクト2
 	DIMOUSESTATE mouseState_;				//マウスの状態
 	DIMOUSESTATE prevMouseState_;			//前フレームのマウスの状態
-	POINT mousePos_;							//マウスカーソルの位置
+	POINT mousePos_;						//マウスカーソルの位置
 
 	//コントローラー
 	const int MAX_PAD_NUM = 4;
@@ -45,10 +46,11 @@ namespace Input
 
 
 	//初期化
-	void Initialize(HWND hWnd)
+	void Initialize(HWND hWnd, HWND hWnd2)
 	{
 		//ウィンドウハンドル
 		hWnd_ = hWnd;
+		hWnd2_ = hWnd2;
 
 		//DirectInput本体
 		DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION,
@@ -63,6 +65,10 @@ namespace Input
 		pDInput_->CreateDevice(GUID_SysMouse, &pMouseDevice_, nullptr);
 		pMouseDevice_->SetDataFormat(&c_dfDIMouse);
 		pMouseDevice_->SetCooperativeLevel(hWnd_, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+
+		pDInput_->CreateDevice(GUID_SysMouse, &pMouseDevice2_, nullptr);
+		pMouseDevice2_->SetDataFormat(&c_dfDIMouse);
+		pMouseDevice2_->SetCooperativeLevel(hWnd2_, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 	}
 
 
@@ -76,8 +82,10 @@ namespace Input
 
 		//マウス
 		pMouseDevice_->Acquire();
+		pMouseDevice2_->Acquire();
 		memcpy(&prevMouseState_, &mouseState_, sizeof(mouseState_));
 		pMouseDevice_->GetDeviceState(sizeof(mouseState_), &mouseState_);
+		pMouseDevice2_->GetDeviceState(sizeof(mouseState_), &mouseState_);
 
 		//コントローラー
 		for (int i = 0; i < MAX_PAD_NUM; i++)

@@ -18,7 +18,7 @@ namespace Input
 {
 	//初期化
 	//引数：hWnd	ウィンドウハンドル
-	void Initialize(HWND hWnd);
+	void Initialize(HWND hWnd, HWND hWnd2);
 
 	//更新
 	void Update();
