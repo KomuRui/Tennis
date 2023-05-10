@@ -4,6 +4,7 @@
 #include <fstream>
 #include "../../Engine/nlohmann/json.hpp"
 #include "../../OtherObject/ToolObj/BasePointModel.h"
+#include "../../Engine/ResourceManager/Model.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -34,6 +35,10 @@ namespace
 	//各jsonファイルのパス
 	static const string PLAYER_JSON_PATH = "Tool/BasePoint/BasePointPlayerCourt.json";
 	static const string ENEMY_JSON_PATH = "Tool/BasePoint/BasePointEnemyCourt.json";
+
+	//各アンビエント
+	static const XMFLOAT4 AMBIENT_COLOR_PLAYER = XMFLOAT4(1.0f, ZERO, ZERO, 1.0f);
+	static const XMFLOAT4 AMBIENT_COLOR_ENEMY = XMFLOAT4(1.0f, 1.0f, ZERO, 1.0f);
 }
 
 //テニスボールが飛んでいく基準点を管理している名前空間
@@ -70,8 +75,14 @@ namespace BasePointManager
 	{
 		for (string name : BASE_POINT)
 		{
-			Instantiate<BasePointModel>(GameManager::GetpSceneManager())->SetPosition(basePointPlayerCourt[name]);
-			Instantiate<BasePointModel>(GameManager::GetpSceneManager())->SetPosition(basePointEnemyCourt[name]);
+			BasePointModel*p = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
+			BasePointModel*e = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
+
+			p->SetPosition(basePointPlayerCourt[name]);
+			e->SetPosition(basePointEnemyCourt[name]);
+
+			Model::SetAmbient(p->GetModelNum(), AMBIENT_COLOR_PLAYER);
+			Model::SetAmbient(p->GetModelNum(), AMBIENT_COLOR_ENEMY);
 		}
 	}
 }

@@ -14,6 +14,7 @@ namespace Input
 {
 	//ウィンドウハンドル
 	HWND	hWnd_;
+	HWND	hWnd2_;
 
 	//DirectInputオブジェクト
 	LPDIRECTINPUT8			pDInput_;
