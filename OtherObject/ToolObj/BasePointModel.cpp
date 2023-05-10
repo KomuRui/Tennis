@@ -8,8 +8,14 @@ BasePointModel::BasePointModel(GameObject* parent, std::string modelPath, std::s
 {}
 
 BasePointModel::BasePointModel(GameObject* parent)
-	:NormalObject(parent, "ToolModel/BasePosModel.fbx", "BasePointModel")
+	:NormalObject(parent, "Tool/ToolModel/BasePosModel.fbx", "BasePointModel")
 {}
+
+//初期化
+void BasePointModel::ChildInitialize()
+{
+	Model::SetAmbient(hModel_, XMFLOAT4(1.0f, ZERO, ZERO, 1.0f));
+}
 
 //二つ目のウィンドウの描画
 void BasePointModel::TwoWindowDraw()

@@ -11,6 +11,7 @@
 #include "../../Engine/ResourceManager/Audio.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../../Manager/AudioManager/OtherAudioManager/OtherAudioManager.h"
+#include "../../Manager/BasePointManager/BasePointManager.h"
 
 //定数
 namespace
@@ -43,6 +44,10 @@ void TitleScene::Initialize()
 
 	CreateStage* pCreateStage = new CreateStage;
 	pCreateStage->LoadFileCreateStage(this, "Stage/Title/StageInformation/TitleScene.txt");
+
+	////////////////////////ツールの基準点モデルを生成/////////////////////////////////
+
+	BasePointManager::InstantiateBasePointModel();
 
 	///////////////カメラ///////////////////
 

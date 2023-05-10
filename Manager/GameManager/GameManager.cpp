@@ -11,6 +11,7 @@
 #include "../ScoreManager/ScoreManager.h"
 #include "../AudioManager/PlayerAudioManager/PlayerAudioManager.h"
 #include "../AudioManager/OtherAudioManager/OtherAudioManager.h"
+#include "../BasePointManager/BasePointManager.h"
 #include <cmath>
 
 //ゲームのいろいろな管理をする
@@ -41,6 +42,9 @@ namespace GameManager
 
 		//スコアマネージャーの初期化
 		ScoreManager::Initialize();
+
+		//基準点のマネージャーを初期化
+		BasePointManager::Initialize();
 
 		//フェイドの初期化
 		Fade::Initialize();

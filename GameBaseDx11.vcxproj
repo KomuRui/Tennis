@@ -227,6 +227,7 @@
     <ClInclude Include="Engine\GUI\imgui\imstb_rectpack.h" />
     <ClInclude Include="Engine\GUI\imgui\imstb_textedit.h" />
     <ClInclude Include="Engine\GUI\imgui\imstb_truetype.h" />
+    <ClInclude Include="Engine\nlohmann\json.hpp" />
     <ClInclude Include="Engine\ResourceManager\Audio.h" />
     <ClInclude Include="Engine\ResourceManager\CreateStage.h" />
     <ClInclude Include="Engine\ResourceManager\CsvReader.h" />

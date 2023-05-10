@@ -15,6 +15,12 @@ public:
 	//デストラクタ
 	~BasePointModel() {};
 
+	//初期化
+	void ChildInitialize() override;
+
+	//描画
+	void Draw() override {};
+
 	//二つ目のウィンドウの描画
 	void TwoWindowDraw() override;
 };
