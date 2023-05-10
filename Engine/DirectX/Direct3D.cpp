@@ -71,6 +71,7 @@ namespace Direct3D
 
 	D3D11_VIEWPORT vp, vpFull2, vpEmission, vpFull,vpMini;
 
+	HWND hWnd_;
 
 	//ŠÔ‚Æ‘Ò‚Á‚Ä‚¢‚é‚Ì‚©ƒQƒbƒg
 	bool GetTimeScale()
@@ -115,9 +116,16 @@ namespace Direct3D
 		isScreenGameStatus = a;
 	}
 
+	HWND GetWindowHandle()
+	{
+		return hWnd_;
+	}
+
 	//‰Šú‰»ˆ—
 	HRESULT Direct3D::Initialize(HWND hWnd, int screenWidth, int screenHeight)
 	{
+		hWnd_ = hWnd;
+
 		///////////////////////////‚¢‚ë‚¢‚ë€”õ‚·‚é‚½‚ß‚Ìİ’è///////////////////////////////
 		//‚¢‚ë‚¢‚ë‚Èİ’è€–Ú‚ğ‚Ü‚Æ‚ß‚½\‘¢‘Ì
 		DXGI_SWAP_CHAIN_DESC scDesc;

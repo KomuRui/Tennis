@@ -241,7 +241,10 @@ namespace ImGuiSet
     void ImGuiSet::StageCreater()
     {
         //window作る
-        ImGui::Begin("StageCreater", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        if (Direct3D::GetWindowHandle() == GetForegroundWindow())
+            ImGui::Begin("StageCreater", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        else
+            ImGui::Begin("StageCreater", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //3Dを作るボタン
         if (ImGui::Button("Create3D", ImVec2(300, 50)))
@@ -1053,7 +1056,10 @@ namespace ImGuiSet
         if (GameManager::GetpSceneManager() == nullptr) return;
 
         //window作る
-        ImGui::Begin("StageObjTransformDisplay", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        if (Direct3D::GetWindowHandle() == GetForegroundWindow())
+            ImGui::Begin("StageObjTransformDisplay", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        else
+            ImGui::Begin("StageObjTransformDisplay", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //ステージオブジェのトランスフォームすべて表示
         StageObjTransformDisplay(GameManager::GetpSceneManager());
@@ -1113,7 +1119,10 @@ namespace ImGuiSet
     void ImGuiSet::DebugLogManager()
     {
         //window作る
-        ImGui::Begin("DebugLog", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        if (Direct3D::GetWindowHandle() == GetForegroundWindow())
+            ImGui::Begin("DebugLog", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        else
+            ImGui::Begin("DebugLog", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //ログ表示
         for (auto i = variable_.rbegin(); i != variable_.rend(); i++)
@@ -1194,7 +1203,10 @@ namespace ImGuiSet
     void ImGuiSet::SceneChangeButton()
     {
         //window作る
-        ImGui::Begin("SceneChangeButton", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        if (Direct3D::GetWindowHandle() == GetForegroundWindow())
+            ImGui::Begin("SceneChangeButton", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        else
+            ImGui::Begin("SceneChangeButton", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //ボタン作成
         if (ImGui::Button("TITLE", ImVec2(300, 50)))                 { GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_TITLE); }
@@ -1211,7 +1223,10 @@ namespace ImGuiSet
     void ImGuiSet::GameScreenNotFullPreference()
     {
         //window作る
-        ImGui::Begin("GameScreenNotFullPreference", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        if (Direct3D::GetWindowHandle() == GetForegroundWindow())
+             ImGui::Begin("GameScreenNotFullPreference", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        else
+            ImGui::Begin("GameScreenNotFullPreference", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //ラジオボタンのサイズを2倍に変更
         ImGuiStyle& style = ImGui::GetStyle();
@@ -1260,7 +1275,10 @@ namespace ImGuiSet
     void ImGuiSet::GameScreenFullPreference()
     {
         //window作る
-        ImGui::Begin("GameScreenFullPreference", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        if (Direct3D::GetWindowHandle() == GetForegroundWindow())
+            ImGui::Begin("GameScreenFullPreference", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        else
+            ImGui::Begin("GameScreenFullPreference", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //ラジオボタンのサイズを2倍に変更
         ImGuiStyle& style = ImGui::GetStyle();
@@ -1309,7 +1327,10 @@ namespace ImGuiSet
     void ImGuiSet::ScreenStatusPreference()
     {
         //window作る
-        ImGui::Begin("ScreenStatus", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        if(Direct3D::GetWindowHandle() == GetForegroundWindow())
+            ImGui::Begin("ScreenStatus", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        else
+            ImGui::Begin("ScreenStatus", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //ラジオボタンのサイズを2倍に変更
         ImGuiStyle& style = ImGui::GetStyle();
@@ -1853,7 +1874,10 @@ namespace ImGuiSet
     void ImGuiSet::ProcessMemory()
     {
         //window作る
-        ImGui::Begin("ProcessMemory", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        if (Direct3D::GetWindowHandle() == GetForegroundWindow())
+            ImGui::Begin("ProcessMemory", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        else
+            ImGui::Begin("ProcessMemory", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //プロセスメモリ取得
         HANDLE processHandle = GetCurrentProcess();
@@ -1880,7 +1904,10 @@ namespace ImGuiSet
     void ImGuiSet::File()
     {
         //window作る
-        ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        if (Direct3D::GetWindowHandle() == GetForegroundWindow())
+            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+        else
+            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //ボタン作成
         if (ImGui::Button("Import", ImVec2(240, 55)))

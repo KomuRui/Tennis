@@ -160,6 +160,7 @@ void Camera::CamMouseMove()
 
 	//カメラの回転・移動
 	{
+
 		//タブとマウスの左ボタンが同時押しされているのなら
 		if (Input::IsKey(DIK_LALT) && Input::IsMouseButton(0))
 		{
@@ -200,7 +201,7 @@ void Camera::CamMouseMove()
 
 	//アウトライン
 	{
-		if (Input::IsMouseButtonDown(0) && !Input::IsKey(DIK_LALT))
+		if (Input::IsMouseButtonDown(0) && !Input::IsKey(DIK_LALT) && Direct3D::GetWindowHandle() == GetForegroundWindow())
 		{
 
 			//ビューポート行列
