@@ -105,6 +105,9 @@
     <Filter Include="Manager\BasePointManager">
       <UniqueIdentifier>{8919ce3d-42c8-4958-98f4-b3ae244e35f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01Engine\nlohmann">
+      <UniqueIdentifier>{e8088838-5a30-4639-9a49-641fa42e2fc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Main.cpp">
@@ -518,6 +521,9 @@
     </ClInclude>
     <ClInclude Include="Manager\BasePointManager\BasePointManager.h">
       <Filter>Manager\BasePointManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\nlohmann\json.hpp">
+      <Filter>01Engine\nlohmann</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

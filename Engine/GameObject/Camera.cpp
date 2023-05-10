@@ -263,18 +263,8 @@ RayCastData Camera::GetTwoWindowRayCastData()
 	float w = 0;
 	float h = 0;
 
-	//スクリーンの横と縦の長さ入れる
-	if (Direct3D::GetGameFull())
-	{
-		w = Direct3D::screenWidth_ / 2.0f;
-		h = Direct3D::screenHeight_ / 2.0f;
-	}
-	//マップエディタ状態なら
-	else
-	{
-		w = (Direct3D::screenWidth_ / 1.5f) / 2.0f;
-		h = (Direct3D::screenHeight_ / 1.5f) / 2.0f + 100;
-	}
+	w = Direct3D::screenWidth_2 / 2.0f;
+	h = Direct3D::screenHeight_2 / 2.0f;
 
 	XMMATRIX vp = {
 		w, 0, 0, 0,
@@ -286,7 +276,7 @@ RayCastData Camera::GetTwoWindowRayCastData()
 	//ビューポート行列の逆行列
 	XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
 	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
-	XMMATRIX invView = XMMatrixInverse(nullptr, XMMatrixLookAtLH(XMVectorSet(_fPosition.x, _fPosition.y, _fPosition.z, ZERO), XMVectorSet(_fTarget.x, _fTarget.y, _fTarget.z, ZERO), _fUpDirection));
+	XMMATRIX invView = XMMatrixInverse(nullptr, XMMatrixLookAtLH(XMVectorSet(_position2.x, _position2.y, _position2.z, ZERO), XMVectorSet(_target2.x, _target2.y, _target2.z, ZERO), _UpDirection2));
 
 	//マウス位置(手前)
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();

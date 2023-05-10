@@ -5,6 +5,7 @@
 #include "../../Engine/nlohmann/json.hpp"
 #include "../../OtherObject/ToolObj/BasePointModel.h"
 #include "../../Engine/ResourceManager/Model.h"
+#include "../../Engine/GameObject/Camera.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -89,6 +90,7 @@ namespace BasePointManager
 	//çXêV
 	void BasePointManager::Update()
 	{
+		RayCastData data = Camera::GetTwoWindowRayCastData();
 
 	}
 }
