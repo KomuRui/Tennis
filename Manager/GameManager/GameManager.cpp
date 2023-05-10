@@ -77,6 +77,9 @@ namespace GameManager
 	{
 		//ボタンマネージャの更新を呼ぶ
 		ButtonManager::Update();
+
+		//基準点のマネージャーを更新
+		BasePointManager::Update();
 	}
 
 	//描画(コインの取得数やPlayerライフの表示)

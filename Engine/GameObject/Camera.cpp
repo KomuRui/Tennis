@@ -257,7 +257,7 @@ void Camera::CamMouseMove()
 }
 
 //二つ目のウィンドウでレイキャストした時のデータを取得
-RayCastData Camera::GetTwoWindowRayCastData()
+RayCastData Camera::GetTwoWindowClickRayCastData()
 {
 	//ビューポート行列
 	float w = 0;

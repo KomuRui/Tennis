@@ -72,6 +72,7 @@ namespace Direct3D
 	D3D11_VIEWPORT vp, vpFull2, vpEmission, vpFull,vpMini;
 
 	HWND hWnd_;
+	HWND hWnd2_;
 
 	//ŠÔ‚Æ‘Ò‚Á‚Ä‚¢‚é‚Ì‚©ƒQƒbƒg
 	bool GetTimeScale()
@@ -119,6 +120,11 @@ namespace Direct3D
 	HWND GetWindowHandle()
 	{
 		return hWnd_;
+	}
+
+	HWND GetTwoWindowHandle()
+	{
+		return hWnd2_;
 	}
 
 	//‰Šú‰»ˆ—
@@ -304,6 +310,9 @@ namespace Direct3D
 
 	HRESULT Direct3D::InitializeTwo(HWND hWnd, int screenWidth, int screenHeight)
 	{
+
+		hWnd2_ = hWnd;
+
 		///////////////////////////‚¢‚ë‚¢‚ë€”õ‚·‚é‚½‚ß‚Ìİ’è///////////////////////////////
 		//‚¢‚ë‚¢‚ë‚Èİ’è€–Ú‚ğ‚Ü‚Æ‚ß‚½\‘¢‘Ì
 		DXGI_SWAP_CHAIN_DESC scDesc;

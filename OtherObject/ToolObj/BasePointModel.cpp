@@ -14,7 +14,11 @@ BasePointModel::BasePointModel(GameObject* parent)
 //初期化
 void BasePointModel::ChildInitialize()
 {
-	Model::SetAmbient(hModel_, XMFLOAT4(1.0f, ZERO, ZERO, 1.0f));
+	//基準点として追加
+	Model::SetBasePointObj(hModel_,this);
+
+	//レイの判定に含まれるように設定
+	Model::SetRayFlag(hModel_, true);
 }
 
 //二つ目のウィンドウの描画

@@ -7,22 +7,22 @@
 #include "Direct3D.h"
 
 class FbxParts;
-class Block;
+class BasePointModel;
 class GameObject;
 
 //レイキャスト用構造体
 struct RayCastData
 {
-	XMFLOAT3	start;	   //レイ発射位置
-	XMFLOAT3	dir;	   //レイの向きベクトル
-	float       dist;	   //衝突点までの距離
-	BOOL        hit;	   //レイが当たったか
-	XMFLOAT3 normal;	   //法線
-	XMFLOAT3 pos;          //ポジション
-	Block* block;          //ブロックオブジェのポインタ
-	GameObject* obstacle;  //障害物のポインタ
+	XMFLOAT3	start;	       //レイ発射位置
+	XMFLOAT3	dir;	       //レイの向きベクトル
+	float       dist;	       //衝突点までの距離
+	BOOL        hit;	       //レイが当たったか
+	XMFLOAT3 normal;	       //法線
+	XMFLOAT3 pos;              //ポジション
+	BasePointModel* basePoint; //基準点オブジェのポインタ
+	GameObject* obstacle;      //障害物のポインタ
 
-	RayCastData() { dist = 5000.0f; block = nullptr; obstacle = nullptr; hit = false; }
+	RayCastData() { dist = 5000.0f; basePoint = nullptr; obstacle = nullptr; hit = false; }
 };
 
 //一番近いポリゴンを保存するデータ

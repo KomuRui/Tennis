@@ -40,6 +40,9 @@ namespace
 	//各アンビエント
 	static const XMFLOAT4 AMBIENT_COLOR_PLAYER = XMFLOAT4(1.0f, ZERO, ZERO, 1.0f);
 	static const XMFLOAT4 AMBIENT_COLOR_ENEMY = XMFLOAT4(1.0f, 1.0f, ZERO, 1.0f);
+
+	//基準点を動かすときの倍率
+	static const float MOVE_RATIO = 0.020f;
 }
 
 //テニスボールが飛んでいく基準点を管理している名前空間
@@ -47,13 +50,23 @@ namespace BasePointManager
 {
 	///////////////////////////////変数//////////////////////////////////
 
+	//各基準点の位置
 	map<string, XMFLOAT3> basePointPlayerCourt;
     map<string, XMFLOAT3> basePointEnemyCourt;
+
+	//選択されている基準点のオブジェクト
+	BasePointModel* isSelectBasePointModel;
+
+	//動く状態かどうか
+	bool isMove;
 
 	//初期化
 	void BasePointManager::Initialize()
 	{
-		
+		//初期化
+		ARGUMENT_INITIALIZE(isSelectBasePointModel, nullptr);
+		ARGUMENT_INITIALIZE(isMove, false);
+
 		// JSONファイルの読み込み
 		ifstream ifs_p(PLAYER_JSON_PATH);
 		ifstream ifs_e(ENEMY_JSON_PATH);
@@ -83,14 +96,44 @@ namespace BasePointManager
 			e->SetPosition(basePointEnemyCourt[name]);
 
 			Model::SetAmbient(p->GetModelNum(), AMBIENT_COLOR_PLAYER);
-			Model::SetAmbient(p->GetModelNum(), AMBIENT_COLOR_ENEMY);
+			Model::SetAmbient(e->GetModelNum(), AMBIENT_COLOR_ENEMY);
 		}
 	}
 
 	//更新
 	void BasePointManager::Update()
 	{
-		RayCastData data = Camera::GetTwoWindowRayCastData();
+		//マウスをクリックしたのなら
+		if (Input::IsMouseButtonDown(0) && Direct3D::GetTwoWindowHandle() == GetForegroundWindow() && !isMove)
+		{
+			//2つ目のウィンドウでクリックした位置にレイを飛ばしたデータをとってくる
+			RayCastData data = Camera::GetTwoWindowClickRayCastData();
+			Model::AllRayCast(-1, &data);
 
+			//当たった基準点のオブジェクトがnullならこの先処理しない
+			if (data.basePoint == nullptr) return;
+
+			//違う基準点なら選択オブジェを更新
+			if (data.basePoint != isSelectBasePointModel) ARGUMENT_INITIALIZE(isSelectBasePointModel, data.basePoint);
+
+			//動く状態に設定
+			ARGUMENT_INITIALIZE(isMove, true);
+		}
+		
+		//クリックが離れたら動く状態解除
+		if (Input::IsMouseButtonUp(0)) ARGUMENT_INITIALIZE(isMove, false);
+
+		//動く状態なら
+		if (isMove)
+		{
+			//マウスの動きを取得
+			XMFLOAT3 mouseMove = Input::GetMouseMove();
+
+			//現在の位置を取得
+			XMFLOAT3 nowPos = isSelectBasePointModel->GetPosition();
+
+			//マウスの移動量分動かす
+			isSelectBasePointModel->SetPosition(XMFLOAT3(nowPos.x + mouseMove.y * MOVE_RATIO, nowPos.y, nowPos.z + mouseMove.x * MOVE_RATIO));
+		}
 	}
 }

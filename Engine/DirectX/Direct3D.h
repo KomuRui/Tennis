@@ -133,7 +133,9 @@ namespace Direct3D
 	//背景色を設定
 	void SetBackScreenColor(XMFLOAT4 color);
 
+	//ウィンドウハンドル取得
 	HWND GetWindowHandle();
+	HWND GetTwoWindowHandle();
 
 	//三角形と線分（レイ）の衝突判定（衝突判定に使用）
 	//引数：start　		レイのスタート位置

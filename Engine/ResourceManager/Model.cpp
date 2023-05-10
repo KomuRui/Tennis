@@ -1,5 +1,6 @@
 #include "Global.h"
 #include "Model.h"
+#include "../../OtherObject/ToolObj/BasePointModel.h"
 
 //3Dモデル（FBXファイル）を管理する
 namespace Model
@@ -175,14 +176,14 @@ namespace Model
 		_datas[handle]->isOutLineDraw = flag;
 	}
 
-	void SetBlockObj(int handle, Block* block)
+	void SetBasePointObj(int handle, BasePointModel* basePoint)
 	{
 		if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
 		{
 			return;
 		}
 
-		_datas[handle]->pBlock = block;
+		_datas[handle]->pBasePoint = basePoint;
 	}
 
 	void SetObstacleObj(int handle, GameObject* Obstacle)
@@ -386,7 +387,7 @@ namespace Model
 					XMStoreFloat3(&data->pos, XMVector3TransformCoord(XMLoadFloat3(&data->pos), matInv));
 					XMStoreFloat3(&normal, XMVector3TransformCoord(XMLoadFloat3(&data->normal), (*ehandle)->transform.mmRotate_));
 
-					data->block = (*ehandle)->pBlock;
+					data->basePoint = (*ehandle)->pBasePoint;
 					data->obstacle = (*ehandle)->pObstacle;
 				}
 			}
@@ -473,7 +474,7 @@ namespace Model
 							XMStoreFloat3(&data->pos, XMVector3TransformCoord(XMLoadFloat3(&data->pos), matInv));
 							XMStoreFloat3(&normal, XMVector3TransformCoord(XMLoadFloat3(&data->normal), (*ehandle)->transform.mmRotate_));
 
-							data->block = (*ehandle)->pBlock;
+							data->basePoint = (*ehandle)->pBasePoint;
 							data->obstacle = (*ehandle)->pObstacle;
 						}
 					}

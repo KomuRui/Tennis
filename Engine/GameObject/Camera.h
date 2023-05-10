@@ -55,7 +55,7 @@ namespace Camera
 	void FrameCameraInitialize();
 
 	//二つ目のウィンドウでレイキャストした時のデータを取得
-	RayCastData GetTwoWindowRayCastData();
+	RayCastData GetTwoWindowClickRayCastData();
 
 	//位置を取得
 	XMFLOAT3 GetPosition();

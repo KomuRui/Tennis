@@ -9,7 +9,7 @@
 #include "../GameObject/GameObject.h"
 
 //前定義
-class Block;
+class BasePointModel;
 
 //-----------------------------------------------------------
 //3Dモデル（FBXファイル）を管理する
@@ -25,8 +25,8 @@ namespace Model
 		//レイで障害物と当たった時を知りたいので用意しておく
 		GameObject* pObstacle;
 
-		//レイでブロックに当たった時動かしたいので用意しておく
-		Block* pBlock;
+		//レイで基準点に当たった時動かしたいので用意しておく
+		BasePointModel* pBasePoint;
 
 		//ロードしたモデルデータのアドレス
 		Fbx* pFbx;
@@ -74,7 +74,7 @@ namespace Model
 
 		//初期化
 		ModelData() : pFbx(nullptr), isRay(false), nowFrame(ZERO), startFrame((int)ZERO), endFrame((int)ZERO), animSpeed(ZERO), shaderType(Direct3D::SHADER_3D), outLineColor(ZERO, ZERO, ZERO, 1.0f),
-			alpha(1), ambient(ZERO, ZERO, ZERO, ZERO), isAnim(false), speculer(ZERO, ZERO, ZERO, ZERO), brightness(ZERO), pBlock(nullptr), pObstacle(nullptr), uvScroll(ZERO), isOutLineDraw(false), isAnimLoop(true)
+			alpha(1), ambient(ZERO, ZERO, ZERO, ZERO), isAnim(false), speculer(ZERO, ZERO, ZERO, ZERO), brightness(ZERO), pBasePoint(nullptr), pObstacle(nullptr), uvScroll(ZERO), isOutLineDraw(false), isAnimLoop(true)
 		{
 		}
 
@@ -155,9 +155,7 @@ namespace Model
 	/// <summary>
 	/// ブロックオブジェのポインタをセット
 	/// </summary>
-	/// <param name="handle">モデル番号</param>
-	/// <param name="block">ブロックオブジェのポインタ</param>
-	void SetBlockObj(int handle, Block* block);
+	void SetBasePointObj(int handle, BasePointModel* basePoint);
 
 	/// <summary>
 	/// 障害物のポインタをセット
