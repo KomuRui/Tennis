@@ -85,4 +85,10 @@ namespace BasePointManager
 			Model::SetAmbient(p->GetModelNum(), AMBIENT_COLOR_ENEMY);
 		}
 	}
+
+	//XV
+	void BasePointManager::Update()
+	{
+
+	}
 }

@@ -1,6 +1,5 @@
 #include "camera.h"
 #include "../DirectX/Direct3D.h"
-#include "../ResourceManager/Model.h"
 #include "../../Manager/AudioManager/OtherAudioManager/OtherAudioManager.h"
 #include "../GUI/ImGuiSet.h"
 
@@ -255,6 +254,61 @@ void Camera::CamMouseMove()
 			Model::RayCastOutLineSet(&data,XMFLOAT4(0,1,1,1));
 		}
 	}
+}
+
+//二つ目のウィンドウでレイキャストした時のデータを取得
+RayCastData Camera::GetTwoWindowRayCastData()
+{
+	//ビューポート行列
+	float w = 0;
+	float h = 0;
+
+	//スクリーンの横と縦の長さ入れる
+	if (Direct3D::GetGameFull())
+	{
+		w = Direct3D::screenWidth_ / 2.0f;
+		h = Direct3D::screenHeight_ / 2.0f;
+	}
+	//マップエディタ状態なら
+	else
+	{
+		w = (Direct3D::screenWidth_ / 1.5f) / 2.0f;
+		h = (Direct3D::screenHeight_ / 1.5f) / 2.0f + 100;
+	}
+
+	XMMATRIX vp = {
+		w, 0, 0, 0,
+		0,-h, 0, 0,
+		0, 0, 1, 0,
+		w, h, 0, 1
+	};
+
+	//ビューポート行列の逆行列
+	XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
+	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
+	XMMATRIX invView = XMMatrixInverse(nullptr, XMMatrixLookAtLH(XMVectorSet(_fPosition.x, _fPosition.y, _fPosition.z, ZERO), XMVectorSet(_fTarget.x, _fTarget.y, _fTarget.z, ZERO), _fUpDirection));
+
+	//マウス位置(手前)
+	XMFLOAT3 mousePosFront = Input::GetMousePosition();
+
+
+	//マウス位置(奥)
+	XMFLOAT3 mousePosBack = Input::GetMousePosition();
+	mousePosBack.z = 1.0f;
+
+	//手前
+	XMVECTOR vFront = XMLoadFloat3(&mousePosFront);
+	vFront = XMVector3TransformCoord(vFront, invVP * invPrj * invView);
+
+	//奥
+	XMVECTOR vBack = XMLoadFloat3(&mousePosBack);
+	vBack = XMVector3TransformCoord(vBack, invVP * invPrj * invView);
+
+	RayCastData data;
+	XMStoreFloat3(&data.start, vFront);
+	XMStoreFloat3(&data.dir, vBack - vFront);
+
+	return data;
 }
 
 //焦点を設定

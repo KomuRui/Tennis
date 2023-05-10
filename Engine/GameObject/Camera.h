@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "../ResourceManager/Model.h"
 
 //-----------------------------------------------------------
 //カメラ
@@ -52,6 +53,9 @@ namespace Camera
 
 	//フレームワーク上のカメラを初期化
 	void FrameCameraInitialize();
+
+	//二つ目のウィンドウでレイキャストした時のデータを取得
+	RayCastData GetTwoWindowRayCastData();
 
 	//位置を取得
 	XMFLOAT3 GetPosition();

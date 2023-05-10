@@ -13,5 +13,10 @@ namespace BasePointManager
 	/// 基準点モデルを生成
 	/// </summary>
 	void InstantiateBasePointModel();
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update();
 };
 
