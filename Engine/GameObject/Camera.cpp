@@ -47,7 +47,7 @@ void Camera::Initialize()
 	ARGUMENT_INITIALIZE(_fUpDirection, _UpDirection);					//フレームワーク上でカメラを操作する時のカメラの上方向のベクトル
 	ARGUMENT_INITIALIZE(_fFront, STRAIGHT_VECTOR);					    //フレームワーク上でカメラを操作する時のカメラの前方向のベクトル
 	ARGUMENT_INITIALIZE(_field_angle,45);                               //カメラの画角
-	ARGUMENT_INITIALIZE(_keep_field_angle,45);                               //カメラの画角
+	ARGUMENT_INITIALIZE(_keep_field_angle,45);                          //カメラの画角
 	ARGUMENT_INITIALIZE(_vibrationFlag,false);                          //カメラの振動Off
 	ARGUMENT_INITIALIZE(_vibrationQuantity, ZERO);                      //振動量
 	ARGUMENT_INITIALIZE(_vibrationAttenuation,0.01f);                   //振動の減衰
@@ -63,6 +63,16 @@ void Camera::Update()
 	//カメラの振動 
 	_target = Float3Add(_target,Vibration());
 
+	//ゲーム画面がフルなら
+	if (Direct3D::GetGameFull())
+	{
+		_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), (FLOAT)Direct3D::screenWidth_ / (FLOAT)Direct3D::screenHeight_, 0.1f, 1000.0f);
+	}
+	else
+	{
+		_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), ((FLOAT)Direct3D::screenWidth_ / 1.5f) / ((FLOAT)Direct3D::screenHeight_ /1.5f + 100), 0.1f, 1000.0f);
+	}
+
 	//画面がゲーム状態なら
 	if (Direct3D::GetScreenGameStatus())
 	{
@@ -74,6 +84,10 @@ void Camera::Update()
 		//（常にカメラの方を向くように回転させる行列。パーティクルでしか使わない）
 		_billBoard = XMMatrixLookAtLH(XMVectorSet(ZERO, ZERO, ZERO, ZERO), XMLoadFloat3(&_target) - XMLoadFloat3(&_position), _UpDirection);
 		_billBoard = XMMatrixInverse(nullptr, _billBoard);
+
+		ARGUMENT_INITIALIZE(_fPosition, _position);
+		ARGUMENT_INITIALIZE(_fTarget, _target);
+		ARGUMENT_INITIALIZE(_fUpDirection, _UpDirection);
 	}
 	else
 	{
@@ -83,6 +97,7 @@ void Camera::Update()
 		//ビュー行列
 		_view = XMMatrixLookAtLH(XMVectorSet(_fPosition.x, _fPosition.y, _fPosition.z, ZERO),
 			XMVectorSet(_fTarget.x, _fTarget.y, _fTarget.z, ZERO), _fUpDirection);
+
 
 		//ビルボード行列
 		//（常にカメラの方を向くように回転させる行列。パーティクルでしか使わない）
@@ -109,7 +124,7 @@ void Camera::Update2()
 XMFLOAT3 Camera::Vibration()
 {
 	//振動量どんどん減らしておく
-	if (abs(_vibrationQuantity) < 0.01)
+	if (abs(_vibrationQuantity) < 0.01f)
 		_vibrationQuantity = ZERO;
 	else
 		_vibrationQuantity = _sign * (abs(_vibrationQuantity) - _vibrationAttenuation);
@@ -215,7 +230,7 @@ void Camera::CamMouseMove()
 			//ビューポート行列の逆行列
 			XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
 			XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
-			XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
+			XMMATRIX invView = XMMatrixInverse(nullptr, XMMatrixLookAtLH(XMVectorSet(_fPosition.x, _fPosition.y, _fPosition.z, ZERO),XMVectorSet(_fTarget.x, _fTarget.y, _fTarget.z, ZERO), _fUpDirection));
 
 			//マウス位置(手前)
 			XMFLOAT3 mousePosFront = Input::GetMousePosition();
