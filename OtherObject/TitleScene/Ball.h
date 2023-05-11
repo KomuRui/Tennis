@@ -10,6 +10,7 @@ class Ball : public NormalObject
 	float ratio;			     //割合(始点から終点のどこの割合にいるか)
 	float upStrength_;			 //上方向の強さ
 	float moveTime_;			 //始点から終点まで動く時間
+	float v0_;					 //初速度
 	XMVECTOR endPointDirection_; //終点までのベクトル
 
 	XMFLOAT3 startPoint_; //ボールの始点
