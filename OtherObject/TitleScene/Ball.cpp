@@ -48,7 +48,7 @@ void Ball::ChildUpdate()
 
 	//åªç›ÇÃà íu
 	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * ratio));
-	nowPos.y = (v0_ *  sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5 * 9.8f * ratio * ratio);
+	nowPos.y = ((v0_ *  sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5 * 9.8f * ratio * ratio)) * 4;
 
 
 	ARGUMENT_INITIALIZE(transform_.position_, nowPos);

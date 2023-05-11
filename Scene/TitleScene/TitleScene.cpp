@@ -43,10 +43,10 @@ void TitleScene::Initialize()
 
 	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
 
+	Ball* p = Instantiate<Ball>(this);
+
 	CreateStage* pCreateStage = new CreateStage;
 	pCreateStage->LoadFileCreateStage(this, "Stage/Title/StageInformation/TitleScene.txt");
-
-	Ball *p = Instantiate<Ball>(this);
 
 	////////////////////////ツールの基準点モデルを生成/////////////////////////////////
 
