@@ -15153,7 +15153,7 @@ namespace detail
 
             case value_t::number_float:
             {
-                if (std::isnan(j.m_data.m_value.number_float))
+                if (isnan(j.m_data.m_value.number_float))
                 {
                     // NaN is 0xf97e00 in CBOR
                     oa->write_character(to_char_type(0xF9));
@@ -22877,8 +22877,8 @@ JSON_PRIVATE_UNLESS_TESTED:
     // an operation is computed as an odd number of inverses of others
     static bool compares_unordered(const_reference lhs, const_reference rhs, bool inverse = false) noexcept
     {
-        if ((lhs.is_number_float() && std::isnan(lhs.m_data.m_value.number_float) && rhs.is_number())
-            || (rhs.is_number_float() && std::isnan(rhs.m_data.m_value.number_float) && lhs.is_number()))
+        if ((lhs.is_number_float() && isnan(lhs.m_data.m_value.number_float) && rhs.is_number())
+            || (rhs.is_number_float() && isnan(rhs.m_data.m_value.number_float) && lhs.is_number()))
         {
             return true;
         }
