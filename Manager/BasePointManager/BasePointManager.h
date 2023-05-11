@@ -18,5 +18,18 @@ namespace BasePointManager
 	/// 更新
 	/// </summary>
 	void Update();
+
+	/// <summary>
+	/// 基準点エクスポート
+	/// </summary>
+	void BasePointExport();
+
+	/// <summary>
+	/// 基準点を取得
+	/// </summary>
+	/// <param name="name">基準点の名前</param>
+	/// <param name="isPlayer">Playerの基準点かどうか</param>
+	/// <returns>基準点</returns>
+	XMFLOAT3 GetBasePoint(string name,bool isPlayer);
 };
 

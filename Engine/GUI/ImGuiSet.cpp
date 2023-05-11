@@ -21,6 +21,8 @@
 #include <windows.h>
 #include <psapi.h>
 
+
+
 //定数
 namespace
 {
@@ -143,6 +145,11 @@ namespace ImGuiSet
     
     std::string info_;
 
+    ////////////////ツールの基準点モデルをゲームシーンに描画するか設定//////////////////////////
+
+    //0->Off 1->On
+    int toolStatus_;
+
     //初期化
     void ImGuiSet::Initialize()
     {
@@ -158,7 +165,8 @@ namespace ImGuiSet
         ARGUMENT_INITIALIZE(createImage_.second, (int)ZERO);
         ARGUMENT_INITIALIZE(objectCount_, (int)ZERO);
         ARGUMENT_INITIALIZE(screenMode_, static_cast<int>(Mode::GAME));
-        ARGUMENT_INITIALIZE(gameMode_, static_cast<int>(Mode::STOP));
+        ARGUMENT_INITIALIZE(gameMode_, static_cast<int>(Mode::START));
+        ARGUMENT_INITIALIZE(toolStatus_,ZERO);
         ARGUMENT_INITIALIZE(isGameScreenFull_, false);
         ARGUMENT_INITIALIZE(info_,"");
 
@@ -213,6 +221,7 @@ namespace ImGuiSet
             //描画
             ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
         }
+
     }
 
     //ゲーム画面がフルサイズの時の描画
@@ -233,6 +242,27 @@ namespace ImGuiSet
             //描画
             ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
         }
+
+    }
+
+    //二つ目のウィンドウ描画
+    void TwoWindowDraw()
+    {
+        //{
+        //    //Imguiスタート
+        //    ImGui_ImplDX11_NewFrame();
+        //    ImGui_ImplWin32_NewFrame();
+        //    ImGui::NewFrame();
+        //}
+
+        ////二つ目のウィンドウ用のGUI描画
+        //BasePointModelPreference();
+
+        //{
+        //    ImGui::Render();
+        //    //描画
+        //    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+        //}
     }
 
     ////////////////////////////////////ステージ作成用ImGui///////////////////////////////////////
@@ -2045,5 +2075,29 @@ namespace ImGuiSet
     //開放
     void ImGuiSet::Release()
     {
+    }
+
+    ////////////////ツールの基準点モデルをゲームシーンに描画するか設定//////////////////////////
+
+    //ツールの基準点モデルの設定
+    void ImGuiSet::BasePointModelPreference()
+    {
+        //window作る
+        if (Direct3D::GetTwoWindowHandle() == GetForegroundWindow())
+            ImGui::Begin("BasePointModelPreference");
+        else
+            ImGui::Begin("BasePointModelPreference");
+
+        //状態を記録しておく
+        int beforeStatus = toolStatus_;
+
+        //ラジオボタン作成
+        ImGui::RadioButton("On", &toolStatus_, 1);
+        ImGui::SameLine();
+        ImGui::RadioButton("Off", &toolStatus_, 0);
+        ImGui::SameLine();
+
+        //終わり
+        ImGui::End();
     }
 }

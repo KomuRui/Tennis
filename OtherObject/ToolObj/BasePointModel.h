@@ -6,6 +6,12 @@
 /// </summary>
 class BasePointModel : public NormalObject
 {
+	//基準点の名前
+	string basePointName_;
+
+	//プレイヤータイプかどうか
+	bool isPlayerType_;
+
 public:
 
 	//コンストラクタ
@@ -19,9 +25,30 @@ public:
 	void ChildInitialize() override;
 
 	//描画
-	void Draw() override {};
+	void Draw() override;
 
 	//二つ目のウィンドウの描画
 	void TwoWindowDraw() override;
+
+	//基準点の名前セット
+	void SetBasePointName(string name) { basePointName_ = name; }
+
+	/// <summary>
+	/// プレイヤータイプかどうかセット
+	/// </summary>
+	/// <param name="flag">trueならプレイヤータイプにセット</param>
+	void SetPlayerType(bool flag) { isPlayerType_ = flag; }
+
+	/// <summary>
+	/// プレイヤータイプかどうか取得
+	/// </summary>
+	/// <returns>trueならプレイヤータイプ</returns>
+	bool isPlayerType() { return isPlayerType_; }
+
+	/// <summary>
+	/// 基準点の名前を取得
+	/// </summary>
+	/// <returns>基準点の名前</returns>
+	string GetBasePointName() { return basePointName_; }
 };
 

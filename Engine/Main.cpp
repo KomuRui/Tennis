@@ -16,6 +16,7 @@
 #include "ResourceManager/Time.h"
 #include "ResourceManager/VFX.h"
 #include "../Manager/GameManager/GameManager.h"
+#include "../Manager/BasePointManager/BasePointManager.h"
 #include "GUI/ImGuiSet.h"
 
 #pragma comment(lib,"Winmm.lib")
@@ -184,7 +185,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					//様々な描画処理をする
 					GameManager::Draw();
 				}
-				
+
+
 				//ゲーム画面のサイズごとの各GUI描画
 				Direct3D::GetGameFull() ? ImGuiSet::GameScreenFullDraw()
 										: ImGuiSet::GameScreenNotFullDraw();
@@ -194,6 +196,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				Direct3D::BeginDrawTwo();
 				pRootObject->TwoWindowDrawSub();
 
+				//GUI表示
+				ImGuiSet::TwoWindowDraw();
+
 				Direct3D::EndDraw();
 
 				//ちょっと休ませる
@@ -202,6 +207,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			timeEndPeriod(1);	//時間計測の制度を戻す
 		}
 	}
+
+	//書き込み
+	BasePointManager::BasePointExport();
 
 	//いろいろ解放
 	Audio::AllRelease();

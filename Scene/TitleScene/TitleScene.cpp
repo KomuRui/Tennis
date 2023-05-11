@@ -12,6 +12,7 @@
 #include "../../Manager/GameManager/GameManager.h"
 #include "../../Manager/AudioManager/OtherAudioManager/OtherAudioManager.h"
 #include "../../Manager/BasePointManager/BasePointManager.h"
+#include "../../OtherObject/TitleScene/Ball.h"
 
 //定数
 namespace
@@ -44,6 +45,8 @@ void TitleScene::Initialize()
 
 	CreateStage* pCreateStage = new CreateStage;
 	pCreateStage->LoadFileCreateStage(this, "Stage/Title/StageInformation/TitleScene.txt");
+
+	Ball *p = Instantiate<Ball>(this);
 
 	////////////////////////ツールの基準点モデルを生成/////////////////////////////////
 

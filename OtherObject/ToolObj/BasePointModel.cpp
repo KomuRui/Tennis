@@ -4,11 +4,11 @@
 
 //コンストラクタ
 BasePointModel::BasePointModel(GameObject* parent, std::string modelPath, std::string name)
-	:NormalObject(parent, modelPath, name)
+	:NormalObject(parent, modelPath, name), basePointName_(""), isPlayerType_(false)
 {}
 
 BasePointModel::BasePointModel(GameObject* parent)
-	:NormalObject(parent, "Tool/ToolModel/BasePosModel.fbx", "BasePointModel")
+	:NormalObject(parent, "Tool/ToolModel/BasePosModel.fbx", "BasePointModel"), basePointName_(""), isPlayerType_(false)
 {}
 
 //初期化
@@ -23,6 +23,14 @@ void BasePointModel::ChildInitialize()
 
 //二つ目のウィンドウの描画
 void BasePointModel::TwoWindowDraw()
+{
+	//描画
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
+}
+
+//描画
+void BasePointModel::Draw()
 {
 	//描画
 	Model::SetTransform(hModel_, transform_);

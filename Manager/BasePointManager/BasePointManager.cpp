@@ -95,8 +95,15 @@ namespace BasePointManager
 			p->SetPosition(basePointPlayerCourt[name]);
 			e->SetPosition(basePointEnemyCourt[name]);
 
+			p->SetBasePointName(name);
+			e->SetBasePointName(name);
+
+			p->SetPlayerType(true);
+			e->SetPlayerType(false);
+
 			Model::SetAmbient(p->GetModelNum(), AMBIENT_COLOR_PLAYER);
 			Model::SetAmbient(e->GetModelNum(), AMBIENT_COLOR_ENEMY);
+
 		}
 	}
 
@@ -120,8 +127,22 @@ namespace BasePointManager
 			ARGUMENT_INITIALIZE(isMove, true);
 		}
 		
-		//クリックが離れたら動く状態解除
-		if (Input::IsMouseButtonUp(0)) ARGUMENT_INITIALIZE(isMove, false);
+		//クリックが離れたら動く状態解除してポジション更新
+		if (Input::IsMouseButtonUp(0))
+		{
+			//解除
+			ARGUMENT_INITIALIZE(isMove, false);
+
+			//nullptrならこの先処理しない
+			if (isSelectBasePointModel == nullptr) return;
+
+			//プレイヤータイプかどうか
+			if (isSelectBasePointModel->isPlayerType())
+				basePointPlayerCourt[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetPosition();
+			else								       
+				basePointEnemyCourt[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetPosition();
+
+		}
 
 		//動く状態なら
 		if (isMove)
@@ -135,5 +156,42 @@ namespace BasePointManager
 			//マウスの移動量分動かす
 			isSelectBasePointModel->SetPosition(XMFLOAT3(nowPos.x + mouseMove.y * MOVE_RATIO, nowPos.y, nowPos.z + mouseMove.x * MOVE_RATIO));
 		}
+	}
+
+	//基準点エクスポート
+	void BasePointManager::BasePointExport()
+	{
+		//JSONファイル
+		json j_p;
+		json j_e;
+		
+		//基準点分回す
+		for (string name : BASE_POINT)
+		{
+			j_p[name]["X"] = basePointPlayerCourt[name].x;
+			j_p[name]["Y"] = basePointPlayerCourt[name].y;
+			j_p[name]["Z"] = basePointPlayerCourt[name].z;
+
+			j_e[name]["X"] = basePointEnemyCourt[name].x;
+			j_e[name]["Y"] = basePointEnemyCourt[name].y;
+			j_e[name]["Z"] = basePointEnemyCourt[name].z;
+		}
+		
+		//JSONファイルの書き込み
+		ofstream ofs_p(PLAYER_JSON_PATH);
+		ofs_p << j_p;
+
+		ofstream ofs_e(ENEMY_JSON_PATH);
+		ofs_e << j_e;
+	}
+
+	//基準点を取得
+	XMFLOAT3 BasePointManager::GetBasePoint(string name, bool isPlayer)
+	{
+		//プレイヤーの基準点取得なら
+		if (isPlayer)
+			return basePointPlayerCourt[name];
+		else
+			return basePointEnemyCourt[name];
 	}
 }

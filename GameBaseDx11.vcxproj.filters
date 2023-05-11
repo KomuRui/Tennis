@@ -312,6 +312,9 @@
     <ClCompile Include="Manager\BasePointManager\BasePointManager.cpp">
       <Filter>Manager\BasePointManager</Filter>
     </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\Ball.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -524,6 +527,9 @@
     </ClInclude>
     <ClInclude Include="Engine\nlohmann\json.hpp">
       <Filter>01Engine\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\Ball.h">
+      <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

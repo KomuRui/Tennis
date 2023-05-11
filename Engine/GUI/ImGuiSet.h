@@ -30,6 +30,9 @@ namespace ImGuiSet
 	//ゲーム画面がフルサイズの時の描画
 	void GameScreenFullDraw();
 
+	//二つ目のウィンドウ描画
+	void TwoWindowDraw();
+
 	//開放
 	void Release();
 
@@ -171,4 +174,11 @@ namespace ImGuiSet
 	/// ステージエクスポート
 	/// </summary>
 	void Export();
+
+	////////////////ツールの基準点モデルをゲームシーンに描画するか設定//////////////////////////
+
+	/// </summary>
+	/// ツールの基準点モデルの設定
+	/// </summary>
+	void BasePointModelPreference();
 };

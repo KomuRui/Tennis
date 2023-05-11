@@ -46,7 +46,7 @@ namespace Direct3D
 	bool		_isLighting = false;		//ライティングするか
 	
 	//実行とめるか再開するか
-	bool time_Scale = true;
+	bool time_Scale = false;
 
 	//ゲーム画面がフルかどうか
 	bool isGameFull = false;
