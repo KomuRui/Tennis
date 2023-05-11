@@ -251,7 +251,7 @@ void Camera::CamMouseMove()
 			RayCastData data;
 			XMStoreFloat3(&data.start, vFront);
 			XMStoreFloat3(&data.dir, vBack - vFront);
-			Model::RayCastOutLineSet(&data,XMFLOAT4(0,1,1,1));
+			//Model::RayCastOutLineSet(&data,XMFLOAT4(0,1,1,1));
 		}
 	}
 }
