@@ -8,7 +8,8 @@
 
 namespace
 {
-	static const int ANGLE = 150.0f; //角度
+	static const int ANGLE = 45.0f;		//角度
+	static const float GRAVITY = 9.8f;	//重力
 }
 
 //コンストラクタ
@@ -34,7 +35,7 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(upStrength_, Random(1, 5));
 	ARGUMENT_INITIALIZE(moveTime_, Random(1, 2));
 	ARGUMENT_INITIALIZE(hTime_, Time::Add());
-	ARGUMENT_INITIALIZE(v0_, (0.5f * 9.8f * 1.0f * 1.0f) / sin(XMConvertToRadians(ANGLE)) * 1.0f);
+	ARGUMENT_INITIALIZE(v0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	Time::UnLock(hTime_);
 }
 
@@ -49,7 +50,7 @@ void Ball::ChildUpdate()
 
 	//現在の位置
 	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * ratio));
-	nowPos.y = ((v0_ *  sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5 * 9.8f * ratio * ratio)) * upStrength_;
+	nowPos.y = ((v0_ *  sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5 * GRAVITY * ratio * ratio)) * upStrength_;
 
 
 	ARGUMENT_INITIALIZE(transform_.position_, nowPos);
@@ -69,7 +70,7 @@ void Ball::Reset()
 		ARGUMENT_INITIALIZE(startPoint_, BasePointManager::GetBasePoint("Back_R", true));
 		ARGUMENT_INITIALIZE(endPoint_, BasePointManager::GetBasePoint("Back_R", false));
 		ARGUMENT_INITIALIZE(endPointDirection_, endPoint_ - startPoint_);
-		ARGUMENT_INITIALIZE(v0_, (0.5f * 9.8f) / sin(XMConvertToRadians(ANGLE)));
+		ARGUMENT_INITIALIZE(v0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 		ARGUMENT_INITIALIZE(moveTime_, Random(1, 2))
 		ARGUMENT_INITIALIZE(upStrength_, Random(1, 5));
 		Time::Reset(hTime_);
@@ -82,7 +83,7 @@ void Ball::Reset()
 		ARGUMENT_INITIALIZE(startPoint_, BasePointManager::GetBasePoint("Back_R", false));
 		ARGUMENT_INITIALIZE(endPoint_, BasePointManager::GetBasePoint("Back_R", true));
 		ARGUMENT_INITIALIZE(endPointDirection_, endPoint_ - startPoint_);
-		ARGUMENT_INITIALIZE(v0_, (0.5f * 9.8f) / sin(XMConvertToRadians(ANGLE)));
+		ARGUMENT_INITIALIZE(v0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 		ARGUMENT_INITIALIZE(moveTime_, Random(1, 2))
 		ARGUMENT_INITIALIZE(upStrength_, Random(1, 5));
 		Time::Reset(hTime_);
