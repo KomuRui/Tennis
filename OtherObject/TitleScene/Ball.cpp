@@ -58,9 +58,9 @@ void Ball::ChildUpdate()
 
 	//現在の位置
 	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * ratio));
-	nowPos.y = ((vY0_ * sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) * 1;
+	nowPos.y = ((vY0_ * sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) * strengthY_;
 	nowPos.x = ((vX0_ * sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) + nowPos.x * (1.0f - ratio);
-	nowPos.x -= sin(XMConvertToRadians(180 * ratio)) * 5;
+	nowPos.x -= sin(XMConvertToRadians(180 * ratio)) * strengthX_;
 
 	//求めたポジション設定
 	ARGUMENT_INITIALIZE(transform_.position_, nowPos);
