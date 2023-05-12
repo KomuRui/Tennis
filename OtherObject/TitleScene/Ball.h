@@ -9,7 +9,8 @@ class Ball : public NormalObject
 {
 	int hTime_;                  //タイマーハンドル
 	float ratio;			     //割合(始点から終点のどこの割合にいるか)
-	float upStrength_;			 //上方向の強さ
+	float strengthY_;			 //上方向の強さY
+	float strengthX_;			 //上方向の強さX
 	float moveTime_;			 //始点から終点まで動く時間
 	float vY0_;					 //初速度Y
 	float vX0_;					 //初速度X

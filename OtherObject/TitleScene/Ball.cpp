@@ -14,14 +14,16 @@ namespace
 
 //コンストラクタ
 Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
-	:NormalObject(parent, modelPath, name), ratio(ZERO), upStrength_(ZERO), endPointDirection_(XMVectorSet(ZERO, ZERO, ZERO, ZERO)),
-	startPoint_(ZERO, ZERO, ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), vY0_(ZERO), vX0_(ZERO), pLine_(nullptr)
+	:NormalObject(parent, modelPath, name), ratio(ZERO), strengthY_(ZERO), endPointDirection_(XMVectorSet(ZERO, ZERO, ZERO, ZERO)),
+	startPoint_(ZERO, ZERO, ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), vY0_(ZERO), vX0_(ZERO), pLine_(nullptr),
+	strengthX_(ZERO)
 {
 }
 
 Ball::Ball(GameObject* parent)
-	:NormalObject(parent, "Ball/Ball.fbx", "Ball"), ratio(ZERO), upStrength_(ZERO), endPointDirection_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
-	startPoint_(ZERO,ZERO,ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), vY0_(ZERO), vX0_(ZERO), pLine_(nullptr)
+	:NormalObject(parent, "Ball/Ball.fbx", "Ball"), ratio(ZERO), strengthY_(ZERO), endPointDirection_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
+	startPoint_(ZERO,ZERO,ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), vY0_(ZERO), vX0_(ZERO), pLine_(nullptr),
+	strengthX_(ZERO)
 {}
 
 //初期化
@@ -32,7 +34,8 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(startPoint_,BasePointManager::GetBasePoint("Back_R", true));
 	ARGUMENT_INITIALIZE(endPoint_,BasePointManager::GetBasePoint("Back_R", false));
 	ARGUMENT_INITIALIZE(endPointDirection_,endPoint_ - startPoint_);
-	ARGUMENT_INITIALIZE(upStrength_, Random(1, 5));
+	ARGUMENT_INITIALIZE(strengthY_, Random(1, 5));
+	ARGUMENT_INITIALIZE(strengthX_, Random(1, 5));
 	ARGUMENT_INITIALIZE(moveTime_, Random(1, 2));
 	ARGUMENT_INITIALIZE(hTime_, Time::Add());
 	ARGUMENT_INITIALIZE(vY0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
@@ -55,9 +58,11 @@ void Ball::ChildUpdate()
 
 	//現在の位置
 	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * ratio));
-	nowPos.y = ((vY0_ *  sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) * upStrength_;
+	nowPos.y = ((vY0_ * sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) * 1;
 	nowPos.x = ((vX0_ * sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) + nowPos.x * (1.0f - ratio);
+	nowPos.x -= sin(XMConvertToRadians(180 * ratio)) * 5;
 
+	//求めたポジション設定
 	ARGUMENT_INITIALIZE(transform_.position_, nowPos);
 	pLine_->AddPosition(transform_.position_);
 
@@ -85,7 +90,8 @@ void Ball::Reset()
 		ARGUMENT_INITIALIZE(vY0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 		ARGUMENT_INITIALIZE(vX0_, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 		ARGUMENT_INITIALIZE(moveTime_, Random(1, 2))
-		ARGUMENT_INITIALIZE(upStrength_, Random(1, 5));
+		ARGUMENT_INITIALIZE(strengthY_, Random(1, 5));
+		ARGUMENT_INITIALIZE(strengthX_, Random(1, 5));
 		Time::Reset(hTime_);
 
 		flag = false;
@@ -99,7 +105,8 @@ void Ball::Reset()
 		ARGUMENT_INITIALIZE(vY0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 		ARGUMENT_INITIALIZE(vX0_, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 		ARGUMENT_INITIALIZE(moveTime_, Random(1, 2))
-		ARGUMENT_INITIALIZE(upStrength_, Random(1, 5));
+		ARGUMENT_INITIALIZE(strengthY_, Random(1, 5));
+		ARGUMENT_INITIALIZE(strengthX_, Random(1, 5));
 		Time::Reset(hTime_);
 
 		flag = true;
