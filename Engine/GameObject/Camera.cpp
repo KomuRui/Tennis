@@ -62,16 +62,6 @@ void Camera::Update()
 	//ƒJƒƒ‰‚ÌU“® 
 	_target = Float3Add(_target,Vibration());
 
-	//ƒQ[ƒ€‰æ–Ê‚ªƒtƒ‹‚È‚ç
-	if (Direct3D::GetGameFull())
-	{
-		_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), (FLOAT)Direct3D::screenWidth_ / (FLOAT)Direct3D::screenHeight_, 0.1f, 1000.0f);
-	}
-	else
-	{
-		_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), ((FLOAT)Direct3D::screenWidth_ / 1.5f) / ((FLOAT)Direct3D::screenHeight_ /1.5f + 100), 0.1f, 1000.0f);
-	}
-
 	//‰æ–Ê‚ªƒQ[ƒ€ó‘Ô‚È‚ç
 	if (Direct3D::GetScreenGameStatus())
 	{
