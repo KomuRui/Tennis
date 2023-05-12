@@ -15,6 +15,9 @@ using namespace std;
 //0“x
 #define ZEROPI_DEGREES  0
 
+//180“x
+#define PI_DEGREES 180
+
 //360“x
 #define TWOPI_DEGREES  360
 

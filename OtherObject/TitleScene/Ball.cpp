@@ -36,7 +36,7 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(endPointDirection_,endPoint_ - startPoint_);
 	ARGUMENT_INITIALIZE(strengthY_, Random(1, 5));
 	ARGUMENT_INITIALIZE(strengthX_, Random(1, 5));
-	ARGUMENT_INITIALIZE(moveTime_, Random(1, 2));
+	ARGUMENT_INITIALIZE(moveTime_, Random(1, 4));
 	ARGUMENT_INITIALIZE(hTime_, Time::Add());
 	ARGUMENT_INITIALIZE(vY0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(vX0_, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
@@ -60,7 +60,7 @@ void Ball::ChildUpdate()
 	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * ratio));
 	nowPos.y = ((vY0_ * sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) * strengthY_;
 	nowPos.x = ((vX0_ * sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) + nowPos.x * (1.0f - ratio);
-	nowPos.x -= sin(XMConvertToRadians(180 * ratio)) * strengthX_;
+	nowPos.x -= sin(XMConvertToRadians(PI_DEGREES * ratio)) * strengthX_;
 
 	//ãÅÇﬂÇΩÉ|ÉWÉVÉáÉìê›íË
 	ARGUMENT_INITIALIZE(transform_.position_, nowPos);
