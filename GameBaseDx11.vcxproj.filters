@@ -315,6 +315,9 @@
     <ClCompile Include="OtherObject\TitleScene\Ball.cpp">
       <Filter>OtherObject\TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\NetAround.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -529,6 +532,9 @@
       <Filter>01Engine\nlohmann</Filter>
     </ClInclude>
     <ClInclude Include="OtherObject\TitleScene\Ball.h">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\NetAround.h">
       <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>

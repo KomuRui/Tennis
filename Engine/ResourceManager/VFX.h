@@ -122,6 +122,10 @@ namespace VFX
 	//引数：handle	エフェクトの番号
 	void End(int handle);
 
+	//エミッタを強制削除（エフェクト終了）
+	//引数：handle	エフェクトの番号
+	void ForcedEnd(int handle);
+
 	/// <summary>
 	/// エミッター取得
 	/// </summary>

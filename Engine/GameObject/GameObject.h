@@ -61,6 +61,10 @@ public:
 	virtual void TwoWindowDraw() {};
 	void TwoWindowDrawSub();
 
+	//透明・半透明なオブジェクト用
+	virtual void TransparentDraw() {};
+	void TransparentDrawSub();
+
 	//Emissionを適用させたいオブジェクトの描画
 	void EmissionDraw();
 

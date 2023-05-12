@@ -33,6 +33,6 @@ void BasePointModel::TwoWindowDraw()
 void BasePointModel::Draw()
 {
 	//•`‰æ
-	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	//Model::SetTransform(hModel_, transform_);
+	//Model::Draw(hModel_);
 }

@@ -278,6 +278,37 @@ void VFX::End(int handle)
             break;
         }
     }
+
+}
+
+//エミッタを強制削除（エフェクト終了）
+//引数：handle	エフェクトの番号
+void VFX::ForcedEnd(int handle)
+{
+    Emitter* p = nullptr;
+
+    for (auto i = emitterList_.begin(); i != emitterList_.end(); i++)
+    {
+        if ((*i)->handle == handle)
+        {
+            p = (*i);
+            break;
+        }
+    }
+
+    for (auto particle = particleList_.begin(); particle != particleList_.end();)
+    {
+        //同じエミッターなら
+        if ((*particle)->pEmitter == p)
+        {
+            (*particle)->pEmitter->particleNum = 0;
+            delete (*particle);
+            particle = particleList_.erase(particle);
+        }
+        else
+            particle++;
+    }
+
 }
 
 /// エミッター取得

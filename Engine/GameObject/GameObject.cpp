@@ -541,6 +541,28 @@ void GameObject::TwoWindowDrawSub()
 	}
 }
 
+void GameObject::TransparentDrawSub()
+{
+	//nullならこの先処理しない
+	if (this == nullptr) return;
+
+	//シェーダをSHADER_3Dにセットしておく
+	Direct3D::SetShader(Direct3D::SHADER_3D);
+
+	//もし描画が許可されているのなら
+	if (this->IsVisibled())
+	{
+		//描画
+		TransparentDraw();
+	}
+
+	//その子オブジェクトの描画処理
+	for (auto it = childList_.begin(); it != childList_.end(); it++)
+	{
+		(*it)->TransparentDrawSub();
+	}
+}
+
 void GameObject::EmissionDraw()
 {
 	if(this->GetEmission())

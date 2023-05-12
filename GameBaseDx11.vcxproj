@@ -179,6 +179,7 @@
     <ClCompile Include="Manager\TextManager\TextManager.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Ball.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Net.cpp" />
+    <ClCompile Include="OtherObject\TitleScene\NetAround.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Racket.cpp" />
     <ClCompile Include="OtherObject\TitleScene\TennisCourt.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Water.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="Manager\TextManager\TextManager.h" />
     <ClInclude Include="OtherObject\TitleScene\Ball.h" />
     <ClInclude Include="OtherObject\TitleScene\Net.h" />
+    <ClInclude Include="OtherObject\TitleScene\NetAround.h" />
     <ClInclude Include="OtherObject\TitleScene\Racket.h" />
     <ClInclude Include="OtherObject\TitleScene\TennisCourt.h" />
     <ClInclude Include="OtherObject\TitleScene\Water.h" />

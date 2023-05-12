@@ -194,4 +194,14 @@ namespace BasePointManager
 		else
 			return basePointEnemyCourt[name];
 	}
+
+	//基準点をランダムに取得
+	XMFLOAT3 GetRandomBasePoint(bool isPlayer)
+	{
+		//プレイヤーの基準点取得なら
+		if (isPlayer)
+			return basePointPlayerCourt[BASE_POINT[Random(0,8)]];
+		else
+			return basePointEnemyCourt[BASE_POINT[Random(0,8)]];
+	}
 }

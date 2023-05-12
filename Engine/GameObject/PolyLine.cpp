@@ -114,7 +114,6 @@ HRESULT PolyLine::Load(std::string fileName)
 void PolyLine::Draw()
 {
 	Direct3D::SetShader(Direct3D::SHADER_BILLBOARD);
-	Direct3D::SetBlendMode(Direct3D::BLEND_ADD);
 
 	if (moveAlpha_)
 		alpha_ -= 0.005f;

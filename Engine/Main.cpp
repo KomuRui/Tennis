@@ -158,16 +158,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//カメラの更新
 				Camera::Update();
 
+				//描画開始
+				Direct3D::BeginDraw();
+
 				//エフェクトエディタモードじゃないのなら
 				if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
-				{
-					Direct3D::BeginDraw();
-					pRootObject->DrawSub();    //ここで普通に描画して
-				}
-				else
-				{
-					Direct3D::BeginDraw();
-				}  
+					pRootObject->DrawSub();   
 
 				//時間止めていないかエフェクトエディタモードなら
 				if (!Direct3D::GetTimeScale() || ImGuiSet::GetScreenMode() == static_cast<int>(Mode::EFFECT_EDIT))
@@ -182,10 +178,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//エフェクトエディタモードじゃないのなら
 				if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
 				{
+					//透明・半透明描画
+					pRootObject->TransparentDrawSub();
+				
 					//様々な描画処理をする
 					GameManager::Draw();
 				}
-
 
 				//ゲーム画面のサイズごとの各GUI描画
 				Direct3D::GetGameFull() ? ImGuiSet::GameScreenFullDraw()

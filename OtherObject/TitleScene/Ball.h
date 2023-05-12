@@ -8,13 +8,14 @@
 class Ball : public NormalObject
 {
 	int hTime_;                  //タイマーハンドル
+	int hEffect_;                //エフェクトハンドル
 	float ratio;			     //割合(始点から終点のどこの割合にいるか)
-	float strengthY_;			 //上方向の強さY
-	float strengthX_;			 //上方向の強さX
 	float moveTime_;			 //始点から終点まで動く時間
-	float vY0_;					 //初速度Y
-	float vX0_;					 //初速度X
+	bool flag;
 	XMVECTOR endPointDirection_; //終点までのベクトル
+
+	XMFLOAT2 strength_;   //強さ(XとY方向の)
+	XMFLOAT2 v0_;		  //初速度(XとY方向の)
 
 	XMFLOAT3 startPoint_; //ボールの始点
 	XMFLOAT3 endPoint_;   //ボールの終点

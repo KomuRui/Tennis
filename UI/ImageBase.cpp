@@ -40,7 +40,7 @@ void ImageBase::Draw()
 {
 	//‰æ‘œ•\¦
 	Image::SetTransform(hPict_, transform_);
-	Image::Draw(hPict_);
+	Image::SetUi(hPict_);
 
 	//Œp³—p‚Ì•`‰æ
 	ChildDraw();

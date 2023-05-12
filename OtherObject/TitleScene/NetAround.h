@@ -2,17 +2,17 @@
 #include "../../Base/NormalObject.h"
 
 /// <summary>
-/// ネット
+/// コートの周りのネット
 /// </summary>
-class Net : public NormalObject
+class NetAround : public NormalObject
 {
 public:
 
 	//コンストラクタ
-	Net(GameObject* parent, std::string modelPath, std::string name);
+	NetAround(GameObject* parent, std::string modelPath, std::string name);
 
 	//デストラクタ
-	~Net() {};
+	~NetAround() {};
 
 	//描画
 	void Draw() override {};
