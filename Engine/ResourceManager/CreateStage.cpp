@@ -11,6 +11,7 @@
 #include "../../OtherObject/TitleScene/TennisCourt.h"
 #include "../../OtherObject/TitleScene/Net.h"
 #include "../../OtherObject/TitleScene/Water.h"
+#include "../../OtherObject/TitleScene/Ball.h"
 #include "../../Player/PlayerBase.h"
 #include <fstream>
 
@@ -67,6 +68,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "Water")
 	{
 		InstantiateNormal<Water>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "Ball")
+	{
+		InstantiateNormal<Ball>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////Camera////////////////////////
