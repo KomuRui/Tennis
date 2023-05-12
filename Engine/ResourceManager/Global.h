@@ -131,10 +131,10 @@ static float GetPrivateProfilefloat(LPCTSTR lpAppName, LPCTSTR lpKeyName, LPCTST
 		return strtof(lpDefault, NULL); //Defaultの情報を返す
 }
 
-//内積の結果をラジアン角で取得する
-static float GetDotRadians(XMVECTOR a, XMVECTOR b)
+//内積の結果を取得する
+static float GetDot(XMVECTOR a, XMVECTOR b)
 {
-	return acos(XMVectorGetX(XMVector3Dot(XMVector3Normalize(a), XMVector3Normalize(b))));
+	return XMVectorGetX(XMVector3Dot(XMVector3Normalize(a), XMVector3Normalize(b)));
 }
 
 //ベクトルの長さ取得
