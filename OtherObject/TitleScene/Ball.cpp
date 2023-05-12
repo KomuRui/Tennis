@@ -36,7 +36,7 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(moveTime_, Random(1, 2));
 	ARGUMENT_INITIALIZE(hTime_, Time::Add());
 	ARGUMENT_INITIALIZE(vY0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-	ARGUMENT_INITIALIZE(vX0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
+	ARGUMENT_INITIALIZE(vX0_, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(pLine_, new PolyLine);
 	pLine_->Load("Image/Effect/tex.png");
 	pLine_->AddPosition(transform_.position_);
@@ -56,7 +56,7 @@ void Ball::ChildUpdate()
 	//Œ»Ý‚ÌˆÊ’u
 	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * ratio));
 	nowPos.y = ((vY0_ *  sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) * upStrength_;
-	nowPos.x = ((vX0_ * sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio));
+	nowPos.x = ((vX0_ * sin(XMConvertToRadians(ANGLE)) * ratio) - (0.5f * GRAVITY * ratio * ratio)) + nowPos.x * (1.0f - ratio);
 
 	ARGUMENT_INITIALIZE(transform_.position_, nowPos);
 	pLine_->AddPosition(transform_.position_);
@@ -83,7 +83,7 @@ void Ball::Reset()
 		ARGUMENT_INITIALIZE(endPoint_, BasePointManager::GetBasePoint("Back_R", false));
 		ARGUMENT_INITIALIZE(endPointDirection_, endPoint_ - startPoint_);
 		ARGUMENT_INITIALIZE(vY0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-		ARGUMENT_INITIALIZE(vX0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
+		ARGUMENT_INITIALIZE(vX0_, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 		ARGUMENT_INITIALIZE(moveTime_, Random(1, 2))
 		ARGUMENT_INITIALIZE(upStrength_, Random(1, 5));
 		Time::Reset(hTime_);
@@ -97,7 +97,7 @@ void Ball::Reset()
 		ARGUMENT_INITIALIZE(endPoint_, BasePointManager::GetBasePoint("Back_R", true));
 		ARGUMENT_INITIALIZE(endPointDirection_, endPoint_ - startPoint_);
 		ARGUMENT_INITIALIZE(vY0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-		ARGUMENT_INITIALIZE(vX0_, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
+		ARGUMENT_INITIALIZE(vX0_, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 		ARGUMENT_INITIALIZE(moveTime_, Random(1, 2))
 		ARGUMENT_INITIALIZE(upStrength_, Random(1, 5));
 		Time::Reset(hTime_);
