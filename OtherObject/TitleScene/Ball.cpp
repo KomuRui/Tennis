@@ -156,9 +156,9 @@ void Ball::BoundMove()
 		a++;
 
 		XMVECTOR v = { XMVectorGetX(progressVector_),0,XMVectorGetZ(progressVector_),0 };
-		angle = GetDot(progressVector_, v) + XMConvertToRadians(25);
-
-		//v0_.y *= 0.8f;
+		angle = GetDot(progressVector_, v);
+		Time::Reset(hTime_);
+		v0_.y *= 0.4f;
 
 
 		if (a == 3)
