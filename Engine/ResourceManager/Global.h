@@ -134,7 +134,7 @@ static float GetPrivateProfilefloat(LPCTSTR lpAppName, LPCTSTR lpKeyName, LPCTST
 //“àÏ‚ÌŒ‹‰Ê‚ğæ“¾‚·‚é
 static float GetDot(XMVECTOR a, XMVECTOR b)
 {
-	return XMVectorGetX(XMVector3Dot(XMVector3Normalize(a), XMVector3Normalize(b)));
+	return acos(XMVectorGetX(XMVector3Dot(XMVector3Normalize(a), XMVector3Normalize(b))));
 }
 
 //ƒxƒNƒgƒ‹‚Ì’·‚³æ“¾

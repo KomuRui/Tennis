@@ -122,6 +122,12 @@ void Ball::MoveToPurpose()
 		
 		Time::Reset(hTime_);
 		VFX::ForcedEnd(hEffect_);
+
+
+		XMVECTOR v = { XMVectorGetX(progressVector_),0,XMVectorGetZ(progressVector_),0 };
+		angle = GetDot(progressVector_, v) + XMConvertToRadians(25);
+
+		//v0_.y *= 0.8f;
 		//Reset();
 	}
 }
@@ -135,6 +141,12 @@ void Ball::BoundMove()
 
 	progressVector_ -= XMVectorSet(ZERO, 0.015f, ZERO, ZERO);
 
+	float time = Time::GetTimef(hTime_);
+	XMFLOAT3 nowPos = transform_.position_;
+	nowPos.y = (v0_.y * sin(angle) * time) - (0.5f * GRAVITY * (time * time));
+
+	transform_.position_.y = nowPos.y;
+
 	pLine_->AddPosition(transform_.position_);
 
 	if (transform_.position_.y < ZERO)
@@ -143,11 +155,18 @@ void Ball::BoundMove()
 		ARGUMENT_INITIALIZE(progressVector_, XMVector3Reflect(progressVector_, UP_VECTOR));
 		a++;
 
+		XMVECTOR v = { XMVectorGetX(progressVector_),0,XMVectorGetZ(progressVector_),0 };
+		angle = GetDot(progressVector_, v) + XMConvertToRadians(25);
+
+		//v0_.y *= 0.8f;
+
+
 		if (a == 3)
 		{
 			//ƒoƒEƒ“ƒhó‘Ô‚É
 			ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
 			a = 1;
+
 			Time::Reset(hTime_);
 			VFX::ForcedEnd(hEffect_);
 			Reset();

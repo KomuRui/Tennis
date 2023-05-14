@@ -20,6 +20,7 @@ class Ball : public NormalObject
 	int hEffect_;                //エフェクトハンドル
 	float ratio_;			     //割合(始点から終点のどこの割合にいるか)
 	float moveTime_;			 //始点から終点まで動く時間
+	float angle;
 	bool flag;
 
 	XMVECTOR endPointDirection_; //終点までのベクトル
