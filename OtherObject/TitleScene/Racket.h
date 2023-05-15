@@ -15,6 +15,9 @@ public:
 	//初期化
 	void ChildInitialize() override;
 
+	//更新
+	void ChildUpdate() override;
+
 	//デストラクタ
 	~Racket() {};
 };

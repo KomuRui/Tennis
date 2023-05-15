@@ -1,6 +1,16 @@
 #include "Racket.h"
 #include "../../Engine/ResourceManager/Model.h"
 #include "../../Engine/DirectX/Direct3D.h"
+#include "../../Engine/Collider/SphereCollider.h"
+
+
+//定数
+namespace
+{		
+	////////////////コライダー///////////////////
+
+	static const float    COLLIDER_SIZE = 1.0f;               //コライダーのサイズ
+}
 
 //コンストラクタ
 Racket::Racket(GameObject* parent, std::string modelPath, std::string name)
@@ -15,13 +25,18 @@ Racket::Racket(GameObject* parent)
 //初期化
 void Racket::ChildInitialize()
 {
+	//明るさ最大値に設定
 	Model::SetBrightness(hModel_, 1.0f);
+	
+	//当たり判定
+	SphereCollider* collision = new SphereCollider(Model::GetBonePosition(hModel_, "Base"), COLLIDER_SIZE);
+	AddCollider(collision);
 
-	//ポジション調整
-	transform_.position_.x += 0.85f;
-	transform_.position_.y -= 0.80f;
+}
 
-	transform_.scale_.x = 1.5f;
-	transform_.scale_.y = 1.5f;
-	transform_.scale_.z = 1.5f;
+//更新
+void Racket::ChildUpdate()
+{
+	//コライダーの位置更新
+	//SetPosCollider(Model::GetBonePosition(hModel_, "Base"));
 }

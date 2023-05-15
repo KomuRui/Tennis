@@ -18,7 +18,7 @@ void BackhandingState::Update2D(PlayerBase* player)
 void BackhandingState::Update3D(PlayerBase* player)
 {
 	//もしアニメーションが最後まで終わったのなら
-	if (Model::GetAnimFrame(player->GetModelNum()) == 130)
+	if (Model::GetAnimFrame(player->GetModelNum()) == 200)
 	{
 		//状態変更
 		PlayerStateManager::playerState_ = PlayerStateManager::playerStanding_;
@@ -42,7 +42,7 @@ void BackhandingState::HandleInput(PlayerBase* player)
 void BackhandingState::Enter(PlayerBase* player)
 {
 	//アニメーション
-	Model::SetAnimFrame(player->GetModelNum(), 70, 130, 4.0f);
-	Model::SetAnimFrame(player->GetRacket()->GetModelNum(), 70, 130, 4.0f);
+	Model::SetAnimFrame(player->GetModelNum(), 140, 200, 4.0f);
+	Model::SetAnimFrame(player->GetRacket()->GetModelNum(), 140, 200, 4.0f);
 	Model::SetAnimLoop(player->GetRacket()->GetModelNum(), false);
 }
