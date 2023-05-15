@@ -23,14 +23,14 @@ namespace
 Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
 	:NormalObject(parent, modelPath, name), ratio_(ZERO), strength_(ZERO,ZERO), endPointDirection_(XMVectorSet(ZERO, ZERO, ZERO, ZERO)),
 	startPoint_(ZERO, ZERO, ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO,ZERO), pLine_(nullptr),
-	hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE)
+	hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO)
 {
 }
 
 Ball::Ball(GameObject* parent)
 	:NormalObject(parent, "Ball/Ball.fbx", "Ball"), ratio_(ZERO), strength_(ZERO, ZERO), endPointDirection_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
 	startPoint_(ZERO,ZERO,ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO, ZERO), pLine_(nullptr),
-    hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE)
+    hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO)
 {}
 
 //初期化
@@ -143,7 +143,6 @@ void Ball::MoveToPurpose()
 //バウンド移動
 void Ball::BoundMove()
 {
-	static int a = 1;
 
 	ARGUMENT_INITIALIZE(transform_.position_, VectorToFloat3(transform_.position_ + XMVector3Normalize(progressVector_) * 0.2f));
 
@@ -159,19 +158,19 @@ void Ball::BoundMove()
 	{
 
 		ARGUMENT_INITIALIZE(progressVector_, XMVector3Reflect(progressVector_, UP_VECTOR));
-		a++;
-
+		
 		XMVECTOR v = { XMVectorGetX(progressVector_),ZERO,XMVectorGetZ(progressVector_),ZERO };
 		firstAngle_ = GetDot(progressVector_, v);
 		Time::Reset(hTime_);
 		v0_.y *= 0.4f;
 
+		boundCount_++;
 
-		if (a == 3)
+		if (boundCount_ == 2)
 		{
-			//バウンド状態に
+			//次の目的地に移動するように
 			ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
-			a = 1;
+			ARGUMENT_INITIALIZE(boundCount_,ZERO);
 
 			Time::Reset(hTime_);
 			VFX::ForcedEnd(hEffect_);
