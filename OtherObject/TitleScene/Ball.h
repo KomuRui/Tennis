@@ -20,8 +20,8 @@ class Ball : public NormalObject
 	int hEffect_;                //エフェクトハンドル
 	float ratio_;			     //割合(始点から終点のどこの割合にいるか)
 	float moveTime_;			 //始点から終点まで動く時間
-	float angle;
-	bool flag;
+	float firstAngle_;           //放物線の最初の角度
+	bool isGoToBasePoint_;       //プレイヤーの基準点に向かうか
 
 	XMVECTOR endPointDirection_; //終点までのベクトル
 	XMVECTOR progressVector_;    //進行ベクトル
