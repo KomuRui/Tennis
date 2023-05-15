@@ -20,4 +20,8 @@ void Racket::ChildInitialize()
 	//ƒ|ƒWƒVƒ‡ƒ“’²®
 	transform_.position_.x += 0.85f;
 	transform_.position_.y -= 0.80f;
+
+	transform_.scale_.x = 1.5f;
+	transform_.scale_.y = 1.5f;
+	transform_.scale_.z = 1.5f;
 }
