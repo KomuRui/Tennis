@@ -9,7 +9,7 @@ namespace
 {		
 	////////////////コライダー///////////////////
 
-	static const float    COLLIDER_SIZE = 1.0f;               //コライダーのサイズ
+	static const float    COLLIDER_SIZE = 0.3f;               //コライダーのサイズ
 }
 
 //コンストラクタ
@@ -28,8 +28,10 @@ void Racket::ChildInitialize()
 	//明るさ最大値に設定
 	Model::SetBrightness(hModel_, 1.0f);
 	
+	XMFLOAT3 a = Model::GetBonePosition(hModel_, "Base");
+	a.z += 1.1f;
 	//当たり判定
-	SphereCollider* collision = new SphereCollider(Model::GetBonePosition(hModel_, "Base"), COLLIDER_SIZE);
+	SphereCollider* collision = new SphereCollider(a, COLLIDER_SIZE);
 	AddCollider(collision);
 
 }
@@ -37,6 +39,4 @@ void Racket::ChildInitialize()
 //更新
 void Racket::ChildUpdate()
 {
-	//コライダーの位置更新
-	//SetPosCollider(Model::GetBonePosition(hModel_, "Base"));
 }
