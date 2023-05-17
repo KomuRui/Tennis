@@ -2,6 +2,7 @@
 #include "../../Engine/ResourceManager/Model.h"
 #include "../../Engine/DirectX/Direct3D.h"
 #include "../../Engine/Collider/SphereCollider.h"
+#include "../../Engine/Collider/BoxCollider.h"
 
 
 //定数
@@ -9,7 +10,10 @@ namespace
 {		
 	////////////////コライダー///////////////////
 
-	static const float    COLLIDER_SIZE = 0.3f;               //コライダーのサイズ
+	static const int      ADD_ANGLE_VALUE = -117;   //加算する角度の値
+	static const float    COLLIDER_SIZE_X = 0.5f;   //コライダーのサイズ
+	static const float    COLLIDER_SIZE_Y = 1.2f;   //コライダーのサイズ
+	static const float    COLLIDER_SIZE_Z = 0.5f;   //コライダーのサイズ
 }
 
 //コンストラクタ
@@ -28,15 +32,16 @@ void Racket::ChildInitialize()
 	//明るさ最大値に設定
 	Model::SetBrightness(hModel_, 1.0f);
 	
-	XMFLOAT3 a = Model::GetBonePosition(hModel_, "Base");
-	a.z += 1.1f;
 	//当たり判定
-	SphereCollider* collision = new SphereCollider(a, COLLIDER_SIZE);
+	BoxCollider * collision = new BoxCollider({ ZERO,ZERO,ZERO }, { COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
 	AddCollider(collision);
-
 }
 
 //更新
 void Racket::ChildUpdate()
 {
+	//コライダーのポジション求めて新しく設定(骨のポジションおかしいので力ずくで回転)
+	XMFLOAT3 colliderPos = VectorToFloat3(Model::GetBonePosition(hModel_, "Base") - GetParent()->GetPosition());
+	colliderPos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos), XMMatrixRotationY(XMConvertToRadians(ADD_ANGLE_VALUE))));
+	SetPosCollider(colliderPos);
 }

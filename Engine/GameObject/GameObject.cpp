@@ -379,7 +379,7 @@ void GameObject::CollisionDraw()
 
 	for (auto i = this->colliderList_.begin(); i != this->colliderList_.end(); i++)
 	{
-		(*i)->Draw(GetWorldPosition(),GetWorldRotate());
+		(*i)->Draw(GetWorldPosition(),GetWorldRotate(),transform_);
 	}
 
 	Direct3D::SetShader(Direct3D::SHADER_3D);

@@ -9,6 +9,7 @@ Transform::Transform(): pParent_(nullptr)
 	matRotate_ = XMMatrixIdentity();
 	matScale_ = XMMatrixIdentity();
 	mmRotate_ = XMMatrixIdentity();
+	mmTranslate_ = XMMatrixIdentity();
 	mFlag_ = false;
 }
 
@@ -54,7 +55,7 @@ XMMATRIX Transform::GetWorldMatrix()
 		Calclation();
 		if (pParent_)
 		{
-			return  matScale_ * matRotate_ * matTranslate_ * pParent_->GetWorldMatrix();
+			return  matScale_ * matRotate_ * matTranslate_ * mmTranslate_ * pParent_->GetWorldMatrix();
 		}
 
 		return  matScale_ * matRotate_ * matTranslate_;
@@ -66,7 +67,7 @@ XMMATRIX Transform::GetWorldMatrix()
 
 		if (pParent_)
 		{
-			return  matScale_ * mmRotate_  *  matTranslate_  * pParent_->GetWorldMatrix();
+			return  matScale_ * mmRotate_  *  matTranslate_ * mmTranslate_ * pParent_->GetWorldMatrix();
 		}
 	
 		return matScale_ * mmRotate_ * matTranslate_;
