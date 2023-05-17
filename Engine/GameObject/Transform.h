@@ -18,7 +18,6 @@ public:
 	XMFLOAT3 rotate_;		//向き
 	XMFLOAT3 scale_;		//拡大率
 	XMMATRIX mmRotate_;	    //自由回転行列	
-	XMMATRIX mmTranslate_;  //自由移動行列
 	bool     mFlag_;        //フラグ
 	Transform* pParent_;	//親オブジェクトの情報
 

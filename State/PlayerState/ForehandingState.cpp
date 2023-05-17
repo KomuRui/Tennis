@@ -44,5 +44,5 @@ void ForehandingState::Enter(PlayerBase* player)
 	//アニメーション
 	Model::SetAnimFrame(player->GetModelNum(), 70, 130, 4.0f);
 	Model::SetAnimFrame(player->GetRacket()->GetModelNum(), 70, 130, 4.0f);
-	Model::SetAnimLoop(player->GetRacket()->GetModelNum(), false);
+	Model::SetAnimFlag(player->GetModelNum(), false);
 }
