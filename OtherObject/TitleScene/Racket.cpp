@@ -10,10 +10,10 @@ namespace
 {		
 	////////////////コライダー///////////////////
 
-	static const int      ADD_ANGLE_VALUE = -117;   //加算する角度の値
-	static const float    COLLIDER_SIZE_X = 0.5f;   //コライダーのサイズ
-	static const float    COLLIDER_SIZE_Y = 1.2f;   //コライダーのサイズ
-	static const float    COLLIDER_SIZE_Z = 0.5f;   //コライダーのサイズ
+	static const int      ADD_ANGLE_VALUE = -110;   //加算する角度の値
+	static const float    COLLIDER_SIZE_X = 1.0f;   //コライダーのサイズ
+	static const float    COLLIDER_SIZE_Y = 1.5f;   //コライダーのサイズ
+	static const float    COLLIDER_SIZE_Z = 1.0f;   //コライダーのサイズ
 }
 
 //コンストラクタ
