@@ -18,6 +18,9 @@ public:
 	//更新
 	void ChildUpdate() override;
 
+	//当たり判定
+	void OnCollision(GameObject* pTarget) override;
+
 	//デストラクタ
 	~Racket() {};
 };

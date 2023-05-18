@@ -200,8 +200,8 @@ namespace BasePointManager
 	{
 		//プレイヤーの基準点取得なら
 		if (isPlayer)
-			return basePointPlayerCourt[BASE_POINT[Random(0,8)]];
+			return basePointPlayerCourt[BASE_POINT[Random(0,2)]];
 		else
-			return basePointEnemyCourt[BASE_POINT[Random(0,8)]];
+			return basePointEnemyCourt[BASE_POINT[Random(0,2)]];
 	}
 }

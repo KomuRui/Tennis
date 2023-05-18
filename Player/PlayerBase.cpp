@@ -71,8 +71,3 @@ void PlayerBase::CameraBehavior()
 {
 }
 
-
-//“–‚½‚è”»’è
-void PlayerBase::OnCollision(GameObject* pTarget)
-{
-}

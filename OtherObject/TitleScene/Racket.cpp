@@ -3,7 +3,8 @@
 #include "../../Engine/DirectX/Direct3D.h"
 #include "../../Engine/Collider/SphereCollider.h"
 #include "../../Engine/Collider/BoxCollider.h"
-
+#include "../../Player/PlayerBase.h"
+#include "Ball.h"
 
 //定数
 namespace
@@ -56,4 +57,14 @@ void Racket::ChildUpdate()
 	colliderPos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos), XMMatrixInverse(nullptr, XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)) *  XMMatrixRotationY(XMConvertToRadians(BASE_ADD_ANGLE_VALUE))));
 	colliderPos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos), XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)));
 	SetPosCollider(colliderPos);
+}
+
+//当たり判定
+void Racket::OnCollision(GameObject* pTarget)
+{
+	//ボールに当たってないか、打つ動作をしていないのならこの先の処理はしない
+	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->pState_->IsHitMove()) return;
+
+	//ボールを次のコートへ
+	((Ball*)pTarget)->Reset(false);
 }

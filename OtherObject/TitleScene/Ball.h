@@ -68,7 +68,7 @@ public:
 	/// <summary>
 	/// リセット(始点終点すべて再設定)
 	/// </summary>
-	void Reset();
+	void Reset(bool isGotoPlayer);
 
 };
 

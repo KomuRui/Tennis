@@ -45,9 +45,6 @@ public:
 	//XV
 	void ChildUpdate() override;
 
-	//“–‚½‚è”»’è
-	void OnCollision(GameObject* pTarget) override;
-
 	///////////////////////////ŠÖ”////////////////////////////
 
 	/// <summary>

@@ -5,6 +5,7 @@
 #include "../../Engine/ResourceManager/Time.h"
 #include "../../Manager/EffectManager/OtherEffectManager/OtherEffectManager.h"
 #include "../../Engine/ResourceManager/VFX.h"
+#include "../../Engine/Collider/SphereCollider.h"
 #include <math.h>
 #include <cmath>
 
@@ -43,7 +44,7 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(endPointDirection_,endPoint_ - startPoint_);
 	ARGUMENT_INITIALIZE(strength_.x, Random(1, 5));
 	ARGUMENT_INITIALIZE(strength_.y, Random(2, 5));
-	ARGUMENT_INITIALIZE(moveTime_, Random(1, 2));
+	ARGUMENT_INITIALIZE(moveTime_, 0.7f);
 	ARGUMENT_INITIALIZE(hTime_, Time::Add());
 	ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
@@ -55,6 +56,10 @@ void Ball::ChildInitialize()
 	XMFLOAT3 pos = endPoint_;
 	ARGUMENT_INITIALIZE(pos.y, LANDING_EFFECT_POS_Y);
 	ARGUMENT_INITIALIZE(hEffect_,OtherEffectManager::LandingEffect(pos, moveTime_));
+
+	//当たり判定
+	SphereCollider* collision = new SphereCollider({ ZERO,ZERO,ZERO },0.2f);
+	AddCollider(collision);
 
 	//アンビエント
 	Model::SetAmbient(hModel_, AMBIENT_COLOR);
@@ -104,8 +109,13 @@ void Ball::MoveToPurpose()
 	//現在の位置
 	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * ratio_));
 	nowPos.y = ((v0_.y * sin(XMConvertToRadians(ANGLE)) * ratio_) - (0.5f * GRAVITY * ratio_ * ratio_)) * strength_.y;
-	nowPos.x = ((v0_.x * sin(XMConvertToRadians(ANGLE)) * ratio_) - (0.5f * GRAVITY * ratio_ * ratio_)) + nowPos.x * (MAX_RATIO - ratio_);
-	nowPos.x -= sin(XMConvertToRadians(PI_DEGREES * ratio_)) * strength_.x;
+
+	//X方向の強さが0以外のなら
+	if (strength_.x != ZERO)
+	{
+		nowPos.x = ((v0_.x * sin(XMConvertToRadians(ANGLE)) * ratio_) - (0.5f * GRAVITY * ratio_ * ratio_)) + nowPos.x * (MAX_RATIO - ratio_);
+		nowPos.x -= sin(XMConvertToRadians(PI_DEGREES * ratio_)) * strength_.x;
+	}
 
 	//移動前のポジション保存
 	XMFLOAT3 beforePos = transform_.position_;
@@ -174,23 +184,23 @@ void Ball::BoundMove()
 
 			Time::Reset(hTime_);
 			VFX::ForcedEnd(hEffect_);
-			Reset();
+			Reset(isGoToBasePoint_);
 		}
 	}
 }
 
 //リセット(始点終点すべて再設定)
-void Ball::Reset()
+void Ball::Reset(bool isGotoPlayer)
 {
 	//各情報再設定
 	ARGUMENT_INITIALIZE(startPoint_, transform_.position_);
-	ARGUMENT_INITIALIZE(endPoint_, BasePointManager::GetRandomBasePoint(isGoToBasePoint_));
+	ARGUMENT_INITIALIZE(endPoint_, BasePointManager::GetRandomBasePoint(isGotoPlayer));
 	ARGUMENT_INITIALIZE(endPointDirection_, endPoint_ - startPoint_);
 	ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-	ARGUMENT_INITIALIZE(moveTime_, Random(1, 2))
-	ARGUMENT_INITIALIZE(strength_.y, Random(2, 5));
-	ARGUMENT_INITIALIZE(strength_.x, Random(1, 5));
+	ARGUMENT_INITIALIZE(moveTime_, 0.7f)
+	ARGUMENT_INITIALIZE(strength_.y, 1);
+	ARGUMENT_INITIALIZE(strength_.x, 0);
 	Time::Reset(hTime_);
 
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
@@ -199,6 +209,12 @@ void Ball::Reset()
 	VFX::ForcedEnd(hEffect_);
 	ARGUMENT_INITIALIZE(hEffect_, OtherEffectManager::LandingEffect(pos, moveTime_));
 	
+	//次の目的地に移動するように
+	ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
+
 	//逆にする
-	ARGUMENT_INITIALIZE(isGoToBasePoint_,!isGoToBasePoint_);
+	if(isGotoPlayer)
+		isGoToBasePoint_ = false;
+	else
+		isGoToBasePoint_ = true;
 }

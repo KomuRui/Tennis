@@ -27,7 +27,7 @@ namespace
 }
 
 //コンストラクタ
-PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR),hTime_(Time::Add()), isRestorePosture_(false)
+PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR),hTime_(Time::Add()), isRestorePosture_(false), isHitMove_(false)
 {
 }
 
@@ -97,7 +97,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
         XMMATRIX matRotate = rotateZ * rotateX * rotateY;
 
         //Playerの移動
-        player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord(front_ / 10.0f, matRotate))));
+        player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord((front_ / 10.0f) * RUN_SPEED, matRotate))));
         player->SetRotateY(XMConvertToDegrees(atan2(-PadLx, -PadLy)));
     }
     //動いていないのならアニメーションを止める

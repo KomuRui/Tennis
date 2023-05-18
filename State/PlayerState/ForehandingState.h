@@ -9,7 +9,6 @@ class PlayerBase;
 class ForehandingState : public PlayerState
 {
 	int hTime_;		 //タイマーハンドル
-	bool isHitMove_; //打つ動きをしているか
 
 public:
 

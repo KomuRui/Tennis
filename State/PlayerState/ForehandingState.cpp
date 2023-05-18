@@ -18,7 +18,7 @@ namespace
 	static const int RACKET_END_ROTATION_ANGLE = -185;  //ラケットの終了角度
 
 	static const float FOREHAND_PULL_TIME = 0.2f;       //フォアハンドの引く時間
-	static const float FOREHAND_HIT_TIME = 0.1f;        //フォアハンドの打つ時間
+	static const float FOREHAND_HIT_TIME = 0.2f;        //フォアハンドの打つ時間
 }
 
 //更新
@@ -32,7 +32,7 @@ void ForehandingState::Update2D(PlayerBase* player)
 void ForehandingState::Update3D(PlayerBase* player)
 {
 	//打つ動作なら
-	if (isHitMove_)
+	if (player->pState_->IsHitMove())
 	{
 		//割合を求める
 		float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / FOREHAND_HIT_TIME);
@@ -51,6 +51,9 @@ void ForehandingState::Update3D(PlayerBase* player)
 			//元の角度に戻す
 			player->SetRotateY(PLAYER_END_ROTATION_ANGLE);
 			player->GetRacket()->SetRotateY(RACKET_END_ROTATION_ANGLE);
+
+			//打っていない状態にする
+			player->pState_->SetHitMove(false);
 		}
 	}
 	else
@@ -69,7 +72,7 @@ void ForehandingState::Update3D(PlayerBase* player)
 			Time::Reset(hTime_);
 
 			//打つ動作に切り替える
-			ARGUMENT_INITIALIZE(isHitMove_, true);
+			player->pState_->SetHitMove(true);
 		}
 	}
 	
@@ -89,7 +92,7 @@ void ForehandingState::Enter(PlayerBase* player)
 	ARGUMENT_INITIALIZE(hTime_, Time::Add());
 
 	//引く動作をするのfalseを設定しておく
-	ARGUMENT_INITIALIZE(isHitMove_, false);
+	player->pState_->SetHitMove(false);
 
 	//開始角度
 	player->SetRotateY(PLAYER_END_ROTATION_ANGLE);

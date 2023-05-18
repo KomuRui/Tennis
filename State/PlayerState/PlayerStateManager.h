@@ -57,7 +57,10 @@ public:
 	void SetRestorePosture(bool flag) { isRestorePosture_ = flag; }
 
 	//打つ動作かどうか設定
-	void SetHitMove(bool flag) { isRestorePosture_ = flag; }
+	void SetHitMove(bool flag) { isHitMove_ = flag; }
+
+	//打つ動作をしているか取得
+	bool IsHitMove() { return isHitMove_; }
 
 	//前ベクトルを取得
 	XMVECTOR GetFrontVec() { return front_; }
