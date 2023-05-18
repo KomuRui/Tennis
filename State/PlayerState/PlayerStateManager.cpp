@@ -5,6 +5,8 @@
 #include "../../Player/PlayerBase.h"
 #include "../../Engine/GUI/ImGuiSet.h"
 #include "../../OtherObject/TitleScene/Racket.h"
+#include "../../Engine/ResourceManager/Time.h"
+#include "../../Engine/ResourceManager/Easing.h"
 #include <math.h>
 
 //各static変数の初期化
@@ -17,13 +19,15 @@ PlayerState* PlayerStateManager::playerState_ = playerStanding_;
 ////定数
 namespace
 {
-    const float RUN_SPEED = 1.5f;                 //走っているときのキャラのスピード
-    const float PLAYER_WALK_ANIM_SPEED = 1.0f;    //アニメーションの再生速度
-    const float ANIM_RUN_SPEED = 2.0f;            //アニメーションの再生速度(走ってるとき)
+    static const int RACKET_END_ROTATION_ANGLE = -185;   //ラケットの終了角度
+    static const float RUN_SPEED = 1.5f;                 //走っているときのキャラのスピード
+    static const float PLAYER_WALK_ANIM_SPEED = 1.0f;    //アニメーションの再生速度
+    static const float ANIM_RUN_SPEED = 2.0f;            //アニメーションの再生速度(走ってるとき)
+    static const float POSSTURE_RESTORE_TIME = 5.0f;     //元の姿勢に戻す時間
 }
 
 //コンストラクタ
-PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR)
+PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR),hTime_(Time::Add()), isRestorePosture_(false)
 {
 }
 
@@ -41,13 +45,38 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     //立っている状態じゃないのなら
     if (playerState_ != PlayerStateManager::playerStanding_)
     {
-        //動いたのでアニメーション
-        Model::SetAnimFlag(player->GetModelNum(), true);
-        Model::SetAnimFlag(player->GetRacket()->GetModelNum(), true);
-
         //現在の状態の更新を呼ぶ
         playerState_->Update3D(player);
+
+        //タイマー初期化
+        Time::Reset(hTime_);
+        Time::Lock(hTime_);
+
         return;
+    }
+
+    //元の姿勢に戻すのなら
+    if (isRestorePosture_)
+    {
+        //ロックされているのなら解除
+        if (Time::isLock(hTime_))Time::UnLock(hTime_);
+
+        //割合を求める
+        float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / POSSTURE_RESTORE_TIME);
+
+        //各角度を求める
+        player->GetRacket()->SetRotateY(player->GetRacket()->GetRotate().y - (player->GetRacket()->GetRotate().y - RACKET_END_ROTATION_ANGLE) * ratio);
+
+        //もし回転が最後まで終わったのなら
+        if (ratio >= 1)
+        {
+            //戻ったに設定
+            ARGUMENT_INITIALIZE(isRestorePosture_, false);
+
+            //タイマー初期化
+            Time::Reset(hTime_);
+            Time::Lock(hTime_);
+        }
     }
 
     //Lスティックの傾きを取得
@@ -59,7 +88,6 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     {
         //動いたのでアニメーション
         Model::SetAnimFlag(player->GetModelNum(), true);
-        //Model::SetAnimFlag(player->GetRacket()->GetModelNum(), true);
 
         //回転行列
         XMMATRIX rotateX, rotateY, rotateZ;
@@ -73,10 +101,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     }
     //動いていないのならアニメーションを止める
     else
-    {
         Model::SetAnimFlag(player->GetModelNum(), false);
-        //Model::SetAnimFlag(player->GetRacket()->GetModelNum(), false);
-    }
 
     //現在の状態の更新を呼ぶ
     playerState_->Update3D(player);

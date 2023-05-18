@@ -8,6 +8,9 @@ class PlayerBase;
 /// </summary>
 class ForehandingState : public PlayerState
 {
+	int hTime_;		 //タイマーハンドル
+	bool isHitMove_; //打つ動きをしているか
+
 public:
 
 	//2D用更新

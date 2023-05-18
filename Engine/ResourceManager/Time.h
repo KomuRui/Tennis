@@ -25,6 +25,11 @@ namespace Time
 	/// <summary>
 	/// ‰ð•ú
 	/// </summary>
+	void Release(int handle);
+
+	/// <summary>
+	/// ‚·‚×‚Ä‰ð•ú
+	/// </summary>
 	void AllRelease();
 
 	/// <summary>

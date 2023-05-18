@@ -1,7 +1,7 @@
 #include "csvReader.h"
 #include <fstream>
 #include <assert.h>
-#include "Global.h"
+
 
 //コンストラクタ
 CsvReader::CsvReader(std::string filename)

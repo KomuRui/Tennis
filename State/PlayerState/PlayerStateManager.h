@@ -20,6 +20,12 @@ private:
 	//キャラの前方向のベクトル
 	XMVECTOR front_;        
 
+	//タイマーハンドル
+	int hTime_;
+
+	//元の姿勢に戻すかどうか
+	bool isRestorePosture_;
+
 public:
 
 	//状態を示す変数
@@ -48,6 +54,9 @@ public:
 
 	//状態チェンジ用
 	void ChangeState(PlayerState* change, PlayerBase* player);
+
+	//元の姿勢に戻すかどうか設定
+	void SetRestorePosture(bool flag) { isRestorePosture_ = flag; }
 
 	//前ベクトルを取得
 	XMVECTOR GetFrontVec() { return front_; }

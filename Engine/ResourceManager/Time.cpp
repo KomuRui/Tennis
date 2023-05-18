@@ -86,6 +86,18 @@ namespace Time
 	}
 
 	//‰ğ•ú
+	void Release(int handle)
+	{
+		//íœ
+		for (auto i = date.begin(); i != date.end(); i++)
+		{
+			//ˆê’v‚µ‚Ä‚¢‚½‚çíœ
+			if(date[handle] == (*i))
+				SAFE_DELETE((*i));
+		}
+	}
+
+	//‰ğ•ú
 	void AllRelease()
 	{
 		//íœ
