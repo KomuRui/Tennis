@@ -43,6 +43,13 @@ void StandingState::HandleInput(PlayerBase* player)
 		PlayerStateManager::playerState_ = PlayerStateManager::playerServing_;
 		PlayerStateManager::playerState_->Enter(player);
 	}
+
+	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_Y))
+	{
+		//ó‘Ô•ÏX
+		PlayerStateManager::playerState_ = PlayerStateManager::playerServing_;
+		PlayerStateManager::playerState_->Enter(player);
+	}
 }
 
 //ó‘Ô•Ï‰»‚µ‚½‚Æ‚«ˆê‰ñ‚¾‚¯ŒÄ‚Î‚ê‚éŠÖ”

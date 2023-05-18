@@ -1,11 +1,24 @@
 #pragma once
 #include "../../Base/NormalObject.h"
 
+//ボールを打つ時の球
+enum class Type {
+	FLAT,      //フラット
+	TOP_SPIN,  //トップスピン
+	SLICE,     //スライス
+	LOB,       //ロブ
+	MAX
+};
+
 /// <summary>
 /// ラケット
 /// </summary>
 class Racket : public NormalObject
 {
+
+	//ボールを打つ時の球
+	Type type_;
+
 public:
 
 	//コンストラクタ
