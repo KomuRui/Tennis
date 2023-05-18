@@ -98,6 +98,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
 
         //Playerの移動
         player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord(front_ / 10.0f, matRotate))));
+        player->SetRotateY(XMConvertToDegrees(atan2(-PadLx, -PadLy)));
     }
     //動いていないのならアニメーションを止める
     else

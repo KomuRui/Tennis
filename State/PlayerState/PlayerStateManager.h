@@ -17,14 +17,12 @@ class PlayerStateManager : public PlayerState
 {
 private:
 
-	//キャラの前方向のベクトル
-	XMVECTOR front_;        
+	
+	XMVECTOR front_; //キャラの前方向のベクトル       
+	int hTime_;      //タイマーハンドル
 
-	//タイマーハンドル
-	int hTime_;
-
-	//元の姿勢に戻すかどうか
-	bool isRestorePosture_;
+	bool isRestorePosture_; //元の姿勢に戻すかどうか
+	bool isHitMove_;		//打つ動きをしているか
 
 public:
 
@@ -57,6 +55,9 @@ public:
 
 	//元の姿勢に戻すかどうか設定
 	void SetRestorePosture(bool flag) { isRestorePosture_ = flag; }
+
+	//打つ動作かどうか設定
+	void SetHitMove(bool flag) { isRestorePosture_ = flag; }
 
 	//前ベクトルを取得
 	XMVECTOR GetFrontVec() { return front_; }
