@@ -10,7 +10,7 @@ PolyLine::PolyLine() :
 	length_(15),	   //長さ（あくまで位置を記憶する数で、実際の長さは移動速度によって変わる）
 	alpha_(1.0f),      //透明度 (最初は透明にしないでおく)
 	moveAlpha_(false), //徐々に透明にしてく
-	color_(1,1,1),     //色
+	color_(1,1,1,1),     //色
 
 	pVertexBuffer_(nullptr), pConstantBuffer_(nullptr), pTexture_(nullptr)
 {

@@ -28,14 +28,14 @@ namespace
 Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
 	:NormalObject(parent, modelPath, name), ratio_(ZERO), strength_(ZERO,ZERO), endPointDirection_(XMVectorSet(ZERO, ZERO, ZERO, ZERO)),
 	startPoint_(ZERO, ZERO, ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO,ZERO), pLine_(nullptr),
-	hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO)
+	hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), type_(Type::FLAT)
 {
 }
 
 Ball::Ball(GameObject* parent)
 	:NormalObject(parent, "Ball/Ball.fbx", "Ball"), ratio_(ZERO), strength_(ZERO, ZERO), endPointDirection_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
 	startPoint_(ZERO,ZERO,ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO, ZERO), pLine_(nullptr),
-    hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO)
+    hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), type_(Type::FLAT)
 {}
 
 //初期化
@@ -55,6 +55,11 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(pLine_, new PolyLine);
 	pLine_->Load("Image/Effect/tex.png");
 	pLine_->AddPosition(transform_.position_);
+
+	ARGUMENT_INITIALIZE(lineColor_[Type::FLAT], XMFLOAT4(1, ZERO, 1, 1));
+	ARGUMENT_INITIALIZE(lineColor_[Type::LOB], XMFLOAT4(1, 1, ZERO, 1));
+	ARGUMENT_INITIALIZE(lineColor_[Type::SLICE], XMFLOAT4(ZERO, 1, 1, 1));
+	ARGUMENT_INITIALIZE(lineColor_[Type::TOP_SPIN], XMFLOAT4(1, ZERO, ZERO, 1));
 
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
 	XMFLOAT3 pos = endPoint_;
@@ -222,6 +227,9 @@ void Ball::Reset(bool isGotoPlayer)
 	VFX::ForcedEnd(hEffect_);
 	ARGUMENT_INITIALIZE(hEffect_, OtherEffectManager::LandingEffect(pos, moveTime_));
 	
+	//ポリラインの色を設定
+	pLine_->SetColor(lineColor_[type_]);
+
 	//次の目的地に移動するように
 	ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
 

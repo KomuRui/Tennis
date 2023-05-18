@@ -21,7 +21,7 @@ class PolyLine
 
 	list<XMFLOAT3> positions_;	    //過去length_回分の位置
 
-	XMFLOAT3 color_;                //色
+	XMFLOAT4 color_;                //色
 	float alpha_;                   //透明度
 	bool  moveAlpha_;               //徐々に透明にしておく
 
@@ -51,7 +51,7 @@ public:
 	/// <summary>
 	/// 色セット
 	/// </summary>
-	void SetColor(XMFLOAT3 color) { color_ = color; }
+	void SetColor(XMFLOAT4 color) { color_ = color; }
 
 	/// <summary>
 	/// 長さセット

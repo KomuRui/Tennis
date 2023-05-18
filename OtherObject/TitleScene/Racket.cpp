@@ -21,12 +21,12 @@ namespace
 
 //コンストラクタ
 Racket::Racket(GameObject* parent, std::string modelPath, std::string name)
-	:NormalObject(parent, modelPath, name), type_(Type::FLAT)
+	:NormalObject(parent, modelPath, name)
 {
 }
 
 Racket::Racket(GameObject* parent)
-	:NormalObject(parent, "Racket/Normal.fbx", "Racket"),type_(Type::FLAT)
+	:NormalObject(parent, "Racket/Normal.fbx", "Racket")
 {}
 
 //初期化
