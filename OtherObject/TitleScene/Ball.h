@@ -3,15 +3,6 @@
 #include  "../../Engine/GameObject/PolyLine.h"
 #include <map>
 
-//ボールを打つ時の球
-enum class Type {
-	FLAT,      //フラット
-	TOP_SPIN,  //トップスピン
-	SLICE,     //スライス
-	LOB,       //ロブ
-	MAX
-};
-
 /// <summary>
 /// テニスボール
 /// </summary>
@@ -24,10 +15,7 @@ class Ball : public NormalObject
 		BOUND_MOVE,   //バウンド移動
 	};
 
-	map<Type, XMFLOAT4> lineColor_; //ボールの型ごとのライン色
-
 	BallStatus ballStatus_;      //ボールの状態
-	Type type_;					 //ボールの型
 
 	int hTime_;                  //タイマーハンドル
 	int hEffect_;                //エフェクトハンドル
@@ -90,9 +78,9 @@ public:
 	XMFLOAT3 GetEndPosition() { return endPoint_; }
 
 	/// <summary>
-    /// 型を設定
-    /// </summary>
-    /// <param name="t">設定したい型</param>
-	void SetType(Type t) { type_ = t; }
+	/// ボールの軌跡色を設定
+	/// </summary>
+	/// <param name="color">設定したい軌跡色</param>
+	void SetBallLineColor(XMFLOAT4 color) { pLine_->SetColor(color); }
 };
 

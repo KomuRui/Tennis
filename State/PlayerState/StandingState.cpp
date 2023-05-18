@@ -28,14 +28,11 @@ void StandingState::HandleInput(PlayerBase* player)
 	//打ったかどうか
 	bool isShot = false;
 
-	//ボールのポインタを格納しておく
-	Ball* pBall = ((Ball*)player->FindObject("Ball"));
-
 	//フラット
 	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_A))
 	{
 		//設定
-		pBall->SetType(Type::FLAT);
+		player->GetRacket()->SetType(Type::FLAT);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -43,7 +40,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_B))
 	{
 		//設定
-		pBall->SetType(Type::TOP_SPIN);
+		player->GetRacket()->SetType(Type::TOP_SPIN);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -51,7 +48,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_X))
 	{
 		//設定
-		pBall->SetType(Type::SLICE);
+		player->GetRacket()->SetType(Type::SLICE);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -59,7 +56,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_Y))
 	{
 		//設定
-		pBall->SetType(Type::LOB);
+		player->GetRacket()->SetType(Type::LOB);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -67,7 +64,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	if (isShot)
 	{
 		//各ポジションを記憶
-		float ballX = pBall->GetEndPosition().x;
+		float ballX = ((Ball*)player->FindObject("Ball"))->GetEndPosition().x;
 		float playerX = player->GetPosition().x;
 
 		//ボールがプレイヤーの右側にあるのなら

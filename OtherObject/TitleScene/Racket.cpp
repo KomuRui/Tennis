@@ -21,12 +21,12 @@ namespace
 
 //コンストラクタ
 Racket::Racket(GameObject* parent, std::string modelPath, std::string name)
-	:NormalObject(parent, modelPath, name)
+	:NormalObject(parent, modelPath, name), type_(Type::FLAT)
 {
 }
 
 Racket::Racket(GameObject* parent)
-	:NormalObject(parent, "Racket/Normal.fbx", "Racket")
+	:NormalObject(parent, "Racket/Normal.fbx", "Racket"), type_(Type::FLAT)
 {}
 
 //初期化
@@ -35,6 +35,12 @@ void Racket::ChildInitialize()
 	//明るさ最大値に設定
 	Model::SetBrightness(hModel_, 1.0f);
 	
+	//球種ごとのボールの色を設定
+	ARGUMENT_INITIALIZE(lineColor_[Type::FLAT], XMFLOAT4(1, ZERO, 1, 1));
+	ARGUMENT_INITIALIZE(lineColor_[Type::LOB], XMFLOAT4(1, 1, ZERO, 1));
+	ARGUMENT_INITIALIZE(lineColor_[Type::SLICE], XMFLOAT4(ZERO, 1, 1, 1));
+	ARGUMENT_INITIALIZE(lineColor_[Type::TOP_SPIN], XMFLOAT4(1, ZERO, ZERO, 1));
+
 	//Mayaで原点を0,0,0に設定した分戻す
 	ARGUMENT_INITIALIZE(transform_.position_, XMFLOAT3(0.643f,0.835f,0.011f));
 		
@@ -64,6 +70,9 @@ void Racket::OnCollision(GameObject* pTarget)
 {
 	//ボールに当たってないか、打つ動作をしていないのならこの先の処理はしない
 	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->pState_->IsHitMove()) return;
+
+	//ボールの軌跡色を指定
+	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);
 
 	//ボールを次のコートへ
 	((Ball*)pTarget)->Reset(false);
