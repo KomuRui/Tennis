@@ -14,7 +14,7 @@ namespace
 	////////////////コライダー///////////////////
 
 	static const int      BASE_ADD_ANGLE_VALUE = -80;    //ベースに加算する角度の値
-	static const float    COLLIDER_SIZE_X = 1.0f;        //コライダーのサイズ
+	static const float    COLLIDER_SIZE_X = 1.5f;        //コライダーのサイズ
 	static const float    COLLIDER_SIZE_Y = 2.0f;        //コライダーのサイズ
 	static const float    COLLIDER_SIZE_Z = 1.0f;        //コライダーのサイズ
 }

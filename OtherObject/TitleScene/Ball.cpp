@@ -16,6 +16,10 @@ namespace
 	static const float GRAVITY = 9.8f;		        //重力
 	static const float MAX_RATIO = 1.0f;	        //最大の割合
 	static const float LANDING_EFFECT_POS_Y = 0.1f; //着地エフェクトのYポジション
+	static const float MAX_POS_X = 4.34f;           //最大X値
+	static const float MAX_POS_Z = 11.9f;           //最大Z値
+	static const float MIN_POS_X = -4.34f;          //最小X値
+	static const float MIN_POS_Z = -11.9f;          //最小Z値
 
 	static const XMFLOAT4 AMBIENT_COLOR = { 1.0f, 1.0f, ZERO, ZERO }; //アンビエント色
 }
@@ -192,9 +196,18 @@ void Ball::BoundMove()
 //リセット(始点終点すべて再設定)
 void Ball::Reset(bool isGotoPlayer)
 {
+	//向かうポジションを取得(少しランダムにずらす)
+	XMFLOAT3 endPos = BasePointManager::GetRandomBasePoint(isGotoPlayer);
+	endPos.x += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
+	endPos.z += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
+
+	//クランプする
+	ARGUMENT_INITIALIZE(endPos.x, Clamp<float>(endPos.x, MAX_POS_X, MIN_POS_X));
+	ARGUMENT_INITIALIZE(endPos.z, Clamp<float>(endPos.z, MAX_POS_Z, MIN_POS_Z));
+
 	//各情報再設定
 	ARGUMENT_INITIALIZE(startPoint_, transform_.position_);
-	ARGUMENT_INITIALIZE(endPoint_, BasePointManager::GetRandomBasePoint(isGotoPlayer));
+	ARGUMENT_INITIALIZE(endPoint_, endPos);
 	ARGUMENT_INITIALIZE(endPointDirection_, endPoint_ - startPoint_);
 	ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));

@@ -186,6 +186,12 @@ static XMVECTOR MaxVector(XMVECTOR a, XMVECTOR b)
 		return b;
 }
 
+template<class T>
+static T Clamp(T v, T high, T low)
+{
+	return min<T>(max<T>(v, low), high);
+}
+
 ////////////////////////////////////オペレーター////////////////////////////////////////////
 
 static XMVECTOR operator*(const XMVECTOR& v, const XMMATRIX& m)
