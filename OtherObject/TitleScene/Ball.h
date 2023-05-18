@@ -70,5 +70,11 @@ public:
 	/// </summary>
 	void Reset(bool isGotoPlayer);
 
+	/// <summary>
+	/// 終点のポジションを取得
+	/// </summary>
+	/// <returns>終点のポジション</returns>
+	XMFLOAT3 GetEndPosition() { return endPoint_; }
+
 };
 

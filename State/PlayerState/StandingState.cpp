@@ -5,6 +5,8 @@
 #include "../../Engine/GUI/ImGuiSet.h"
 #include "PlayerStateManager.h"
 #include "../../Player/PlayerBase.h"
+#include "../../OtherObject/TitleScene/Racket.h"
+#include "../../OtherObject/TitleScene/Ball.h"
 
 //更新
 void StandingState::Update2D(PlayerBase* player)
@@ -23,32 +25,60 @@ void StandingState::Update3D(PlayerBase* player)
 //入力によって状態変化する
 void StandingState::HandleInput(PlayerBase* player)
 {
+	//打ったかどうか
+	bool isShot = false;
+
+	//フラット
 	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_A))
 	{
-		//状態変更
-		PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
-		PlayerStateManager::playerState_->Enter(player);
+		//設定
+		player->GetRacket()->SetType(Type::FLAT);
+		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
+	//トップスピン
 	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_B))
 	{
-		//状態変更
-		PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
-		PlayerStateManager::playerState_->Enter(player);
+		//設定
+		player->GetRacket()->SetType(Type::TOP_SPIN);
+		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
+	//スライス
 	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_X))
 	{
-		//状態変更
-		PlayerStateManager::playerState_ = PlayerStateManager::playerServing_;
-		PlayerStateManager::playerState_->Enter(player);
+		//設定
+		player->GetRacket()->SetType(Type::SLICE);
+		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
+	//ロブ
 	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_Y))
 	{
-		//状態変更
-		PlayerStateManager::playerState_ = PlayerStateManager::playerServing_;
-		PlayerStateManager::playerState_->Enter(player);
+		//設定
+		player->GetRacket()->SetType(Type::LOB);
+		ARGUMENT_INITIALIZE(isShot, true);
+	}
+
+	//打ったのなら
+	if (isShot)
+	{
+		//各ポジションを記憶
+		float ballX = ((Ball*)player->FindObject("Ball"))->GetEndPosition().x;
+		float playerX = player->GetPosition().x;
+
+		//ボールがプレイヤーの右側にあるのなら
+		if (ballX <= playerX)
+		{
+			PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
+			PlayerStateManager::playerState_->Enter(player);
+		}
+		//左側
+		else
+		{
+			PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
+			PlayerStateManager::playerState_->Enter(player);
+		}
 	}
 }
 

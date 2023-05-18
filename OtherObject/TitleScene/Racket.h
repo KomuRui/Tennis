@@ -25,6 +25,9 @@ public:
 	Racket(GameObject* parent, std::string modelPath, std::string name);
 	Racket(GameObject* parent);
 
+	//デストラクタ
+	~Racket() {};
+
 	//初期化
 	void ChildInitialize() override;
 
@@ -34,7 +37,10 @@ public:
 	//当たり判定
 	void OnCollision(GameObject* pTarget) override;
 
-	//デストラクタ
-	~Racket() {};
+	/// <summary>
+	/// 型を設定
+	/// </summary>
+	/// <param name="t">設定したい型</param>
+	void SetType(Type t) { type_ = t; }
 };
 
