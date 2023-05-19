@@ -85,5 +85,10 @@ public:
 	/// </summary>
 	/// <param name="color">設定したい軌跡色</param>
 	void SetBallLineColor(XMFLOAT4 color) { pLine_->SetColor(color); }
+
+	/// <summary>
+	/// プレイヤーの基準点に向かっているか
+	/// </summary>
+	bool isGoToPlayerBasePoint() { return isGoToBasePoint_; }
 };
 

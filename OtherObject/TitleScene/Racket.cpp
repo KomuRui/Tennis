@@ -42,6 +42,12 @@ void Racket::ChildInitialize()
 	ARGUMENT_INITIALIZE(lineColor_[Type::SLICE], XMFLOAT4(ZERO, 1, 1, 1));
 	ARGUMENT_INITIALIZE(lineColor_[Type::TOP_SPIN], XMFLOAT4(1, ZERO, ZERO, 1));
 
+	//球種ごとのエフェクトのファイルパスを設定
+	ARGUMENT_INITIALIZE(effectFilePath_[Type::FLAT], "Effect/FlatEffect.txt");
+	ARGUMENT_INITIALIZE(effectFilePath_[Type::LOB], "Effect/LobEffect.txt");
+	ARGUMENT_INITIALIZE(effectFilePath_[Type::SLICE], "Effect/SliceEffect.txt");
+	ARGUMENT_INITIALIZE(effectFilePath_[Type::TOP_SPIN], "Effect/TopSpinEffect.txt");
+
 	//Mayaで原点を0,0,0に設定した分戻す
 	ARGUMENT_INITIALIZE(transform_.position_, XMFLOAT3(0.643f,0.835f,0.011f));
 		
@@ -70,7 +76,7 @@ void Racket::ChildUpdate()
 void Racket::OnCollision(GameObject* pTarget)
 {
 	//ボールに当たってないか、打つ動作をしていないのならこの先の処理はしない
-	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->pState_->IsHitMove()) return;
+	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->pState_->IsHitMove() || ((Ball*)pTarget)->isGoToPlayerBasePoint()) return;
 
 	//ヒットストップ演出(動きを止める)
 	Leave();
@@ -86,13 +92,8 @@ void Racket::OnCollision(GameObject* pTarget)
 	//ボールを次のコートへ
 	((Ball*)pTarget)->Reset(false);
 
-	//ボールのポジションを修正
-	XMFLOAT3 pos = VectorToFloat3(colliderPos_ + GetParent()->GetPosition());
-	ARGUMENT_INITIALIZE(pos.y, COLLIDER_SIZE_Y / 2.0f);
-	((Ball*)pTarget)->SetPosition(pos);
-
 	//エフェクト表示
-	EffectManager::Draw("Effect/TopSpinEffect.txt", pos);
+	EffectManager::Draw(effectFilePath_[type_], ((Ball*)pTarget)->GetPosition());
 }
 
 //何かのオブジェクトに当たった時に呼ばれる関数
