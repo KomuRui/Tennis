@@ -77,8 +77,8 @@ void Racket::OnCollision(GameObject* pTarget)
 	pTarget->Leave();
 
 	//Player‚à“G‚à0.1•bŒã‚É“®‚«o‚·
-	SetTimeMethod(0.05f);
-	pTarget->SetTimeMethod(0.05f);
+	SetTimeMethod(0.1f);
+	pTarget->SetTimeMethod(0.1f);
 
 	//ƒ{[ƒ‹‚Ì‹OÕF‚ðŽw’è
 	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);
