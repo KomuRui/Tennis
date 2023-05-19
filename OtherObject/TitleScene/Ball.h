@@ -72,7 +72,7 @@ public:
 	/// <summary>
 	/// リセット(始点終点すべて再設定)
 	/// </summary>
-	void Reset(bool isGotoPlayer);
+	void Reset(bool isGotoPlayer,string basePpointName);
 
 	/// <summary>
 	/// 終点のポジションを取得

@@ -72,6 +72,32 @@ void Racket::ChildUpdate()
 	SetPosCollider(colliderPos_);
 }
 
+//入力に対する基準点のポイントの名前を取得
+string Racket::GetInputBasePoint()
+{
+	//最終的に返す文字列
+	string name = "";
+
+	//Lスティックの傾きを取得
+	XMFLOAT3 stickL = Input::GetPadStickL();
+
+	if (stickL.y > 0.1f)
+		name += "Back_";
+	else if (stickL.y < -0.1f)
+		name += "Front_";
+	else
+		name += "Center_";
+
+	if (stickL.x > 0.1f)
+		name += "L";
+	else if (stickL.x < -0.1f)
+		name += "R";
+	else
+		name += "C";
+
+	return name;
+}
+
 //当たり判定
 void Racket::OnCollision(GameObject* pTarget)
 {
@@ -90,7 +116,7 @@ void Racket::OnCollision(GameObject* pTarget)
 	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);
 
 	//ボールを次のコートへ
-	((Ball*)pTarget)->Reset(false);
+	((Ball*)pTarget)->Reset(false, GetInputBasePoint());
 
 	//エフェクト表示
 	EffectManager::Draw(effectFilePath_[type_], ((Ball*)pTarget)->GetPosition());

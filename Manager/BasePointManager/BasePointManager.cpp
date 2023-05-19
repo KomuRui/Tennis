@@ -204,4 +204,7 @@ namespace BasePointManager
 		else
 			return basePointEnemyCourt[BASE_POINT[Random(0,2)]];
 	}
+
+	//Šî€“_‚Ì–¼‘O‚ğƒ‰ƒ“ƒ_ƒ€‚Éæ“¾
+	string GetRandomBasePointName() { return BASE_POINT[Random(0, 8)]; }
 }

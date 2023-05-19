@@ -188,16 +188,16 @@ void Ball::BoundMove()
 
 			Time::Reset(hTime_);
 			VFX::ForcedEnd(hEffect_);
-			Reset(isGoToBasePoint_);
+			Reset(isGoToBasePoint_,BasePointManager::GetRandomBasePointName());
 		}
 	}
 }
 
 //リセット(始点終点すべて再設定)
-void Ball::Reset(bool isGotoPlayer)
+void Ball::Reset(bool isGotoPlayer, string basePpointName)
 {
 	//向かうポジションを取得(少しランダムにずらす)
-	XMFLOAT3 endPos = BasePointManager::GetRandomBasePoint(isGotoPlayer);
+	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePpointName, isGotoPlayer);
 	endPos.x += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
 	endPos.z += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
 

@@ -38,5 +38,11 @@ namespace BasePointManager
 	/// <param name="isPlayer">Playerの基準点かどうか</param>
 	/// <returns>基準点</returns>
 	XMFLOAT3 GetRandomBasePoint(bool isPlayer);
+
+	/// <summary>
+	/// 基準点の名前をランダムに取得
+	/// </summary>
+	/// <returns>基準点の名前</returns>
+	string GetRandomBasePointName();
 };
 
