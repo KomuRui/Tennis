@@ -231,3 +231,9 @@ void Ball::Reset(bool isGotoPlayer)
 	else
 		isGoToBasePoint_ = true;
 }
+
+//何かのオブジェクトに当たった時に呼ばれる関数
+void Ball::TimeMethod()
+{
+	Enter();
+}

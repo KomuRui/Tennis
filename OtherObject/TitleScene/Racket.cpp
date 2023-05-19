@@ -3,6 +3,7 @@
 #include "../../Engine/DirectX/Direct3D.h"
 #include "../../Engine/Collider/SphereCollider.h"
 #include "../../Engine/Collider/BoxCollider.h"
+#include "../../Manager/EffectManager/EffectManager.h"
 #include "../../Player/PlayerBase.h"
 #include "Ball.h"
 
@@ -21,12 +22,12 @@ namespace
 
 //コンストラクタ
 Racket::Racket(GameObject* parent, std::string modelPath, std::string name)
-	:NormalObject(parent, modelPath, name), type_(Type::FLAT)
+	:NormalObject(parent, modelPath, name), type_(Type::FLAT), colliderPos_(ZERO, ZERO, ZERO)
 {
 }
 
 Racket::Racket(GameObject* parent)
-	:NormalObject(parent, "Racket/Normal.fbx", "Racket"), type_(Type::FLAT)
+	:NormalObject(parent, "Racket/Normal.fbx", "Racket"), type_(Type::FLAT), colliderPos_(ZERO, ZERO, ZERO)
 {}
 
 //初期化
@@ -59,10 +60,10 @@ void Racket::ChildUpdate()
 	XMFLOAT3 edgePos = VectorToFloat3(Model::GetBonePosition(hModel_, "Edge") - GetParent()->GetPosition() - transform_.position_);
 	
 	//コライダーのポジション求めて新しく設定(骨のポジションおかしいので力ずくで回転)
-	XMFLOAT3 colliderPos = VectorToFloat3(Model::GetBonePosition(hModel_, "Base") - GetParent()->GetPosition() - transform_.position_);
-	colliderPos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos), XMMatrixInverse(nullptr, XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)) *  XMMatrixRotationY(XMConvertToRadians(BASE_ADD_ANGLE_VALUE))));
-	colliderPos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos), XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)));
-	SetPosCollider(colliderPos);
+	colliderPos_ = VectorToFloat3(Model::GetBonePosition(hModel_, "Base") - GetParent()->GetPosition() - transform_.position_);
+	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixInverse(nullptr, XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)) *  XMMatrixRotationY(XMConvertToRadians(BASE_ADD_ANGLE_VALUE))));
+	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)));
+	SetPosCollider(colliderPos_);
 }
 
 //当たり判定
@@ -71,9 +72,31 @@ void Racket::OnCollision(GameObject* pTarget)
 	//ボールに当たってないか、打つ動作をしていないのならこの先の処理はしない
 	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->pState_->IsHitMove()) return;
 
+	//ヒットストップ演出(動きを止める)
+	Leave();
+	pTarget->Leave();
+
+	//Playerも敵も0.1秒後に動き出す
+	SetTimeMethod(0.05f);
+	pTarget->SetTimeMethod(0.05f);
+
 	//ボールの軌跡色を指定
 	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);
 
 	//ボールを次のコートへ
 	((Ball*)pTarget)->Reset(false);
+
+	//ボールのポジションを修正
+	XMFLOAT3 pos = VectorToFloat3(colliderPos_ + GetParent()->GetPosition());
+	ARGUMENT_INITIALIZE(pos.y, COLLIDER_SIZE_Y / 2.0f);
+	((Ball*)pTarget)->SetPosition(pos);
+
+	//エフェクト表示
+	EffectManager::Draw("Effect/TopSpinEffect.txt", pos);
+}
+
+//何かのオブジェクトに当たった時に呼ばれる関数
+void Racket::TimeMethod()
+{
+	Enter();
 }

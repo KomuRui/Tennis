@@ -68,7 +68,7 @@ namespace ImGuiSet
     //エフェクトの必要な変数
     EmitterData data;
     int effectNum = -1;
-    std::string textureFileName_ = "Image/Effect/flashB_B.png";//画像ファイル名
+    char textureFileName_[50] = "Image/Effect/flashB_B.png";   //画像ファイル名
     XMFLOAT3 position_ = XMFLOAT3(0,0,0);		               //位置
     XMFLOAT3 positionRnd_ = XMFLOAT3(4, 4, 4);	               //位置の誤差
     XMFLOAT3 direction_ = XMFLOAT3(-1, 0, -1);		           //パーティクルの移動方向
@@ -86,7 +86,7 @@ namespace ImGuiSet
     XMFLOAT2 sizeRnd_ = XMFLOAT2(0.4f, 0.4f);	               //サイズ誤差（0～1）
     XMFLOAT2 scale_ = XMFLOAT2(1.05f, 1.05f);			       //1フレームの拡大率
     float    lifeTime_ = 180.0f;		                       //パーティクルの寿命（フレーム数）
-    int delay_ = 1;			                                   //何フレームおきにパーティクルを発生させるか
+    int delay_ = 0;			                                   //何フレームおきにパーティクルを発生させるか
     int number_ = 2;				                           //1度に出すパーティクル量
     bool isBillBoard_ = true;	                               //ビルボードかどうか
 
@@ -248,21 +248,6 @@ namespace ImGuiSet
     //二つ目のウィンドウ描画
     void TwoWindowDraw()
     {
-        //{
-        //    //Imguiスタート
-        //    ImGui_ImplDX11_NewFrame();
-        //    ImGui_ImplWin32_NewFrame();
-        //    ImGui::NewFrame();
-        //}
-
-        ////二つ目のウィンドウ用のGUI描画
-        //BasePointModelPreference();
-
-        //{
-        //    ImGui::Render();
-        //    //描画
-        //    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-        //}
     }
 
     ////////////////////////////////////ステージ作成用ImGui///////////////////////////////////////
@@ -1431,8 +1416,9 @@ namespace ImGuiSet
         //エフェクトの各情報設定用
         if (ImGui::TreeNode("textureFileName")) {
 
-            ImGui::InputText("textureFileName", const_cast<char*>(textureFileName_.c_str()), sizeof(textureFileName_.c_str()));
+            ImGui::InputText("textureFileName", textureFileName_, sizeof(textureFileName_));
             ImGui::TreePop();
+            
         }
         if (ImGui::TreeNode("position")) {
 
@@ -1712,13 +1698,13 @@ namespace ImGuiSet
         ARGUMENT_INITIALIZE(data.isBillBoard, isBillBoard_);
 
         //情報があるのなら
-        if(effectNum != -1)
+        if(VFX::GetEmitter(effectNum) != nullptr)
             ARGUMENT_INITIALIZE(VFX::GetEmitter(effectNum)->data,data);
 
         //スタートボタンを押したらエフェクト再スタート
         if (ImGui::Button("START"))
         {
-            VFX::End(effectNum);
+            VFX::ForcedEnd(effectNum);
             ARGUMENT_INITIALIZE(effectNum,VFX::Start(data));
         }
 
@@ -1781,8 +1767,11 @@ namespace ImGuiSet
         //初期化状態にしておく
         ARGUMENT_INITIALIZE(info_, "");
 
+        string str;
+        str.assign(textureFileName_);
+
         //情報
-        info_ += textureFileName_ + "," + std::to_string(data.position.x) + "," + std::to_string(data.position.y) + "," + std::to_string(data.position.z) + "," +
+        info_ += str + "," + std::to_string(data.position.x) + "," + std::to_string(data.position.y) + "," + std::to_string(data.position.z) + "," +
             std::to_string(data.positionRnd.x) + "," + std::to_string(data.positionRnd.y) + "," + std::to_string(data.positionRnd.z) + "," +
             std::to_string(data.direction.x) + "," + std::to_string(data.direction.y) + "," + std::to_string(data.direction.z) + "," +
             std::to_string(data.directionRnd.x) + "," + std::to_string(data.directionRnd.y) + "," + std::to_string(data.directionRnd.z) + "," +
@@ -1827,7 +1816,7 @@ namespace ImGuiSet
         ofn.lpstrFile = fileName;               	               //ファイル名
         ofn.nMaxFile = MAX_PATH;                 	               //パスの最大文字数
         ofn.Flags = OFN_FILEMUSTEXIST;   		                   //フラグ（同名ファイルが存在したら上書き確認）
-        ofn.lpstrDefExt = "map";                  	               //デフォルト拡張子
+        ofn.lpstrDefExt = "txt";                  	               //デフォルト拡張子
 
         //「ファイルを保存」ダイアログ
         BOOL selFile;
@@ -1867,9 +1856,9 @@ namespace ImGuiSet
                     index++;
             }
         }
-
+        
         //各情報代入
-        ARGUMENT_INITIALIZE(textureFileName_, info[0]);
+        info[0].copy(textureFileName_, info[0].size());
         ARGUMENT_INITIALIZE(position_, XMFLOAT3(std::stof(info[1]), std::stof(info[2]), std::stof(info[3])));
         ARGUMENT_INITIALIZE(positionRnd_, XMFLOAT3(std::stof(info[4]), std::stof(info[5]), std::stof(info[6])));
         ARGUMENT_INITIALIZE(direction_, XMFLOAT3(std::stof(info[7]), std::stof(info[8]), std::stof(info[9])));

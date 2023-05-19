@@ -17,8 +17,10 @@ enum class Type {
 class Racket : public NormalObject
 {
 
-	map<Type, XMFLOAT4> lineColor_; //球種ごとのライン色
-	Type type_;						//球種
+	map<Type, XMFLOAT4> lineColor_;     //球種ごとのライン色
+	map<Type, string> effectFilePath_;  //球種ごとのファイルパス
+	Type type_;						    //球種
+	XMFLOAT3 colliderPos_;              //コライダーのポジション
 
 public:
 
@@ -37,6 +39,9 @@ public:
 
 	//当たり判定
 	void OnCollision(GameObject* pTarget) override;
+
+	//指定した時間で呼ばれるメソッド
+	void TimeMethod() override;
 
 	/// <summary>
 	/// 型を設定
