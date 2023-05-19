@@ -3,17 +3,18 @@
 #include  "../../Engine/GameObject/PolyLine.h"
 #include <map>
 
+//ボールの状態
+enum class BallStatus
+{
+	PURPOSE_MOVE, //目的地まで移動
+	BOUND_MOVE,   //バウンド移動
+};
+
 /// <summary>
 /// テニスボール
 /// </summary>
 class Ball : public NormalObject
 {
-	//ボールの状態
-	enum class BallStatus
-	{
-		PURPOSE_MOVE, //目的地まで移動
-		BOUND_MOVE,   //バウンド移動
-	};
 
 	BallStatus ballStatus_;      //ボールの状態
 
@@ -90,5 +91,11 @@ public:
 	/// プレイヤーの基準点に向かっているか
 	/// </summary>
 	bool isGoToPlayerBasePoint() { return isGoToBasePoint_; }
+
+	/// <summary>
+	/// ボールの状態を取得
+	/// </summary>
+	/// <returns>ボールの状態</returns>
+	BallStatus GetBallStatus() { return ballStatus_; }
 };
 

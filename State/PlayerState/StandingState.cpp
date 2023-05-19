@@ -63,21 +63,55 @@ void StandingState::HandleInput(PlayerBase* player)
 	//打ったのなら
 	if (isShot)
 	{
+		//ボールのポインタ
+		Ball* pBall = ((Ball*)player->FindObject("Ball"));
+
 		//各ポジションを記憶
-		float ballX = ((Ball*)player->FindObject("Ball"))->GetEndPosition().x;
+		float ballEndX = pBall->GetEndPosition().x;
 		float playerX = player->GetPosition().x;
 
-		//ボールがプレイヤーの右側にあるのなら
-		if (ballX <= playerX)
+		//ボールがバウンド後なら
+		if (pBall->GetBallStatus() == BallStatus::BOUND_MOVE)
 		{
-			PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
-			PlayerStateManager::playerState_->Enter(player);
+			//右側なら
+			if (pBall->GetPosition().x <= playerX)
+			{
+				PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
+				PlayerStateManager::playerState_->Enter(player);
+			}
+			//左側なら
+			else
+			{
+				PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
+				PlayerStateManager::playerState_->Enter(player);
+			}
 		}
-		//左側
+		//ボールがバウンド前なら
 		else
 		{
-			PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
-			PlayerStateManager::playerState_->Enter(player);
+			//ボールの位置が左側かつボールの終点が右側なら
+			if (pBall->GetPosition().x >= playerX && ballEndX <= playerX)
+			{
+				PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
+				PlayerStateManager::playerState_->Enter(player);
+			}
+			//ボールの位置が左側かつボールの終点が左側なら
+			else if (pBall->GetPosition().x >= playerX && ballEndX >= playerX)
+			{
+				PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
+				PlayerStateManager::playerState_->Enter(player);
+			}
+			//ボールの位置が右側かつボールの終点が左側なら
+			else if (pBall->GetPosition().x <= playerX && ballEndX >= playerX)
+			{
+				PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
+				PlayerStateManager::playerState_->Enter(player);
+			}
+			else
+			{
+				PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
+				PlayerStateManager::playerState_->Enter(player);
+			}
 		}
 	}
 }
