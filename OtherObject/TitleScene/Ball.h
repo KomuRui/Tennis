@@ -3,6 +3,9 @@
 #include  "../../Engine/GameObject/PolyLine.h"
 #include <map>
 
+//•ú•¨ü‚ÌŒvZ
+//https://juken-philo.com/hobutsuundo/
+
 //ƒ{[ƒ‹‚Ìó‘Ô
 enum class BallStatus
 {

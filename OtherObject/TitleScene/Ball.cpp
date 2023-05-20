@@ -62,7 +62,7 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(hEffect_,OtherEffectManager::LandingEffect(pos, moveTime_));
 
 	//当たり判定
-	SphereCollider* collision = new SphereCollider({ ZERO,ZERO,ZERO },0.2f);
+	SphereCollider* collision = new SphereCollider({ ZERO,ZERO,ZERO },0.1f);
 	AddCollider(collision);
 
 	//アンビエント
@@ -215,6 +215,23 @@ void Ball::Reset(bool isGotoPlayer, string basePpointName)
 	ARGUMENT_INITIALIZE(strength_.y, 1);
 	ARGUMENT_INITIALIZE(strength_.x, 0);
 	Time::Reset(hTime_);
+
+	//ネットをしていたらボールの軌道を修正する
+	//ネットのZ位置を通過するときの秒数を求める
+	float t = abs(startPoint_.z / abs(XMVectorGetZ(endPointDirection_)));
+
+	//ネットのZ位置を通過するときのY位置を求める
+	float y = (v0_.y * sin(XMConvertToRadians(ANGLE)) * t) - (0.5f * GRAVITY * pow(t, 2));
+
+	//もしYの位置がネットの位置より低いなら
+	if (y <= 1.1f)
+	{
+		//差分を求める
+		float differential = 1.1f - y;
+
+		//差分 + 定数分Yの強さを増やす
+		strength_.y += differential + 1.5f;
+	}
 
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
 	XMFLOAT3 pos = endPoint_;
