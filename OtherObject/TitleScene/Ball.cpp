@@ -224,13 +224,13 @@ void Ball::Reset(bool isGotoPlayer, string basePpointName)
 	float y = (v0_.y * sin(XMConvertToRadians(ANGLE)) * t) - (0.5f * GRAVITY * pow(t, 2));
 
 	//もしYの位置がネットの位置より低いなら
-	if (y <= 1.1f)
+	if (y <= 1.2f)
 	{
 		//差分を求める
-		float differential = 1.1f - y;
+		float differential = 1.2f - y;
 
 		//差分 + 定数分Yの強さを増やす
-		strength_.y += differential + 1.5f;
+		strength_.y += differential * 2.0f;
 	}
 
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
