@@ -18,7 +18,7 @@ class Racket : public NormalObject
 {
 
 	map<Type, XMFLOAT4> lineColor_;     //球種ごとのライン色
-	map<Type, string> effectFilePath_;  //球種ごとのファイルパス
+	map<Type, string> effectFilePath_;  //球種ごとのエフェクトのファイルパス
 	Type type_;						    //球種
 	XMFLOAT3 colliderPos_;              //コライダーのポジション
 
