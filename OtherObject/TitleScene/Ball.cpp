@@ -121,10 +121,10 @@ void Ball::MoveToPurpose()
 		
 		//負なら
 		if(signbit(strength_.x))
-			nowPos.x += 2 * (sin(XMConvertToRadians(PI_DEGREES * ratio_)) * strength_.x);
+			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * ratio_)) * strength_.x * 2);
 		//正なら
 		else 
-			nowPos.x += sin(XMConvertToRadians(PI_DEGREES * ratio_)) * strength_.x;
+			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * ratio_)) * strength_.x / 2);
 	}
 
 	//移動前のポジション保存
@@ -219,7 +219,7 @@ void Ball::Reset(bool isGotoPlayer, string basePpointName)
 	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(moveTime_, 0.7f)
 	ARGUMENT_INITIALIZE(strength_.y, 1);
-	ARGUMENT_INITIALIZE(strength_.x, 1.5f);
+	ARGUMENT_INITIALIZE(strength_.x, -1.5f);
 	Time::Reset(hTime_);
 
 	//ネットをしていたらボールの軌道を修正する
