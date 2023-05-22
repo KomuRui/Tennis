@@ -38,9 +38,17 @@ namespace Direct3D
 	//半透明のものをどのように表現するか
 	ID3D11BlendState* pBlendState[BLEND_MAX];
 
+	//もう1つのスワップチェイン作成用
 	IDXGIDevice1* pDXGI = NULL;
 	IDXGIAdapter* pAdapter = NULL;
 	IDXGIFactory* pFactory = NULL;
+
+	//影の実装に必要な変数
+	ID3D11Texture2D* pDepthTexture = nullptr;			
+	ID3D11RenderTargetView* pDepthTargetView = nullptr;	
+	XMMATRIX lightView_;
+	XMMATRIX clipToUV_;
+	ID3D11ShaderResourceView* pDepthSRV_ = nullptr;
 
 	bool		isDrawCollision_ = true;	//コリジョンを表示するか
 	bool		_isLighting = false;		//ライティングするか
@@ -301,9 +309,55 @@ namespace Direct3D
 		//コリジョン表示するか
 		isDrawCollision_ = GetPrivateProfileInt("DEBUG", "ViewCollider", 0, ".\\setup.ini") != 0;
 
-
+		//保存しておく
 		screenWidth_ = screenWidth;
 		screenHeight_ = screenHeight;
+
+		//影
+		//深度を描きこむテクスチャ
+		D3D11_TEXTURE2D_DESC texdec;
+		texdec.Width = screenWidth_;
+		texdec.Height = screenHeight_;
+		texdec.MipLevels = 1;
+		texdec.ArraySize = 1;
+		texdec.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		texdec.SampleDesc.Count = 1;
+		texdec.SampleDesc.Quality = 0;
+		texdec.Usage = D3D11_USAGE_DEFAULT;
+		texdec.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+		texdec.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		texdec.MiscFlags = 0;
+		pDevice_->CreateTexture2D(&texdec, nullptr, &pDepthTexture);
+
+
+		D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
+		ZeroMemory(&renderTargetViewDesc, sizeof(D3D11_RENDER_TARGET_VIEW_DESC));
+		renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+		renderTargetViewDesc.Texture2D.MipSlice = 0;
+		pDevice_->CreateRenderTargetView(pDepthTexture, &renderTargetViewDesc, &pDepthTargetView);
+
+
+		// シェーダリソースビュー(テクスチャ用)の設定
+		D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};
+		srv.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		srv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		srv.Texture2D.MipLevels = 1;
+		Direct3D::pDevice_->CreateShaderResourceView(pDepthTexture, &srv, &pDepthSRV_);
+
+
+		//カメラから見たある点が、ライタから見た時どの位置になるかを求めるために必要な行列
+		XMFLOAT4X4 clip;
+		ZeroMemory(&clip, sizeof(XMFLOAT4X4));
+		clip._11 = 0.5;
+		clip._22 = -0.5;
+		clip._33 = 1;
+		clip._41 = 0.5;
+		clip._42 = 0.5;
+		clip._44 = 1;
+
+		clipToUV_ = XMLoadFloat4x4(&clip);
+
 
 		return S_OK;
 	}
@@ -812,6 +866,24 @@ namespace Direct3D
 
 		//画面をクリア
 		pContext_->ClearRenderTargetView(pRenderTargetView_2, clearColor);
+	}
+
+	//影に必要なテクスチャを描画開始
+	void BrginDrawShadowToTexture()
+	{
+		pContext_->OMSetRenderTargets(1, &pDepthTargetView, pDepthStencilView);
+
+		//背景の色
+		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };//R,G,B,A
+
+		//画面をクリア
+		pContext_->ClearRenderTargetView(pDepthTargetView, clearColor);
+
+
+		//深度バッファクリア
+		pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+		SetShader(SHADER_SHADOW);
 	}
 
 

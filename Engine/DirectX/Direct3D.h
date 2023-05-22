@@ -27,6 +27,10 @@ namespace Direct3D
 	//GPUに命令を出すためのやつ
 	extern ID3D11DeviceContext*    pContext_;
 
+	//影用
+	extern XMMATRIX lightView_;
+	extern XMMATRIX clipToUV_;
+	extern ID3D11ShaderResourceView* pDepthSRV_;
 
 	//■シェーダー関連で必要なセット
 	enum SHADER_TYPE
@@ -41,6 +45,7 @@ namespace Direct3D
 		SHADER_REVERS_COLOR,  //色反転
 		SHADER_NORMALMAP,     //ノーマルマップ
 		SHADER_OUTLINE,       //アウトライン
+		SHADER_SHADOW,        //影
 		SHADER_MAX			  //シェーダの数
 	};
 
@@ -103,6 +108,7 @@ namespace Direct3D
 	void SetBlendMode(BLEND_MODE blendMode);
 
 	//描画開始
+	void BrginDrawShadowToTexture();
 	void BeginDrawTwo();
 	void BeginDraw();
 	

@@ -10,22 +10,7 @@ SamplerState	g_sampler : register(s0);	//サンプラー
 //───────────────────────────────────────
 cbuffer global
 {
-	float4x4	g_matWVP;			  // ワールド・ビュー・プロジェクションの合成行列
-	float4x4	g_matNormalTrans;	  // 法線の変換行列（回転行列と拡大の逆行列）
-	float4x4	g_matWorld;			  // ワールド変換行列
-	float4x4	g_mWLP;				  //ワールド・”ライトビュー”・プロジェクションの合成 
-	float4x4	g_mWLPT;			  //ワールド・”ライトビュー”・プロジェクション・UV 行列の合成 
-	float4		g_vecLightDir;		  // ライトの方向ベクトル
-	float4		g_vecDiffuse;		  // ディフューズカラー（マテリアルの色）
-	float4		g_vecAmbient;		  // アンビエントカラー（影の色）
-	float4		g_vecSpeculer;		  // スペキュラーカラー（ハイライトの色）
-	float4      g_isSpeculerColor;    // 任意で決めれるスペキュラーカラー
-	float4		g_vecCameraPosition;  // 視点（カメラの位置）
-	float4      g_vecLightPosition;   // ライトの位置
-	float4      g_LightPosition[15];  // ライトの個数分の位置
-	float4      g_LightIntensity[15]; // ライトの個数分の強さ
-	float4      g_isAmbient;          // アンビエントの力の大きさ 
-	float4		g_outLineColor;		  //アウトラインの色
+	float4x4	g_matWVP;			// ワールド・ビュー・プロジェクションの合成行列
 };
 
 //───────────────────────────────────────
@@ -33,21 +18,18 @@ cbuffer global
 //───────────────────────────────────────
 struct VS_OUT
 {
-	float4 pos    : SV_POSITION;	//位置
+	float4 Pos : SV_POSITION;
+	float4 Depth : TEXCOORD0;
 };
 
 //───────────────────────────────────────
 // 頂点シェーダ
 //───────────────────────────────────────
-VS_OUT VS(float4 pos : POSITION, float4 normal : NORMAL, float2 uv : TEXCOORD)
+VS_OUT VS(float4 pos : POSITION)
 {
-	//ピクセルシェーダーへ渡す情報
 	VS_OUT outData;
-
-	//法線
-	normal.w = 0;
-	pos = pos + normal * 0.2f;
-	outData.pos = mul(pos, g_matWVP);
+	outData.Pos = mul(pos, g_matWVP);
+	outData.Depth = outData.Pos;
 
 	return outData;
 }
@@ -57,5 +39,7 @@ VS_OUT VS(float4 pos : POSITION, float4 normal : NORMAL, float2 uv : TEXCOORD)
 //───────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
 {
-	return g_outLineColor;
+	float4 color = inData.Depth.z / inData.Depth.w;
+	color.a = 1;  //透明にはしたくない 
+	return color;
 }
