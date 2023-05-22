@@ -11,16 +11,31 @@ enum class Type {
 	MAX
 };
 
+//ストローク
+enum class Stroke{
+	FOREHAND,  //フォア
+	BACKHAND,  //バック
+	MAX
+};
+
 /// <summary>
 /// ラケット
 /// </summary>
 class Racket : public NormalObject
 {
 
-	map<Type, XMFLOAT4> lineColor_;     //球種ごとのライン色
-	map<Type, string> effectFilePath_;  //球種ごとのエフェクトのファイルパス
-	Type type_;						    //球種
-	XMFLOAT3 colliderPos_;              //コライダーのポジション
+	//打つ時の必要な情報
+	struct HitStrength {
+		XMFLOAT2 strength_;   //強さ(XとY方向の)
+		float moveTime_;	  //始点から終点まで動く時間
+	};
+
+	map<Type, XMFLOAT4> lineColor_;         //球種ごとのライン色
+	map<Type, string> effectFilePath_;      //球種ごとのエフェクトのファイルパス
+	map<Type, HitStrength> hitStrength_;    //球種ごとの打つ時の強さ
+	Stroke stroke_;                         //ストローク
+	Type type_;						        //球種
+	XMFLOAT3 colliderPos_;                  //コライダーのポジション
 
 public:
 
@@ -54,5 +69,11 @@ public:
 	/// </summary>
 	/// <param name="t">設定したい型</param>
 	void SetType(Type t) { type_ = t; }
+
+	/// <summary>
+	/// ストロークを設定
+	/// </summary>
+	/// <param name="t">設定したいストローク</param>
+	void SetStroke(Stroke t) { stroke_ = t; }
 };
 

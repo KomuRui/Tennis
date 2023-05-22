@@ -76,12 +76,16 @@ void StandingState::HandleInput(PlayerBase* player)
 			//右側なら
 			if (pBall->GetPosition().x <= playerX)
 			{
+				player->GetRacket()->SetStroke(Stroke::FOREHAND);
+
 				PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
 				PlayerStateManager::playerState_->Enter(player);
 			}
 			//左側なら
 			else
 			{
+				player->GetRacket()->SetStroke(Stroke::BACKHAND);
+
 				PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
 				PlayerStateManager::playerState_->Enter(player);
 			}
@@ -92,23 +96,31 @@ void StandingState::HandleInput(PlayerBase* player)
 			//ボールの位置が左側かつボールの終点が右側なら
 			if (pBall->GetPosition().x >= playerX && ballEndX <= playerX)
 			{
+				player->GetRacket()->SetStroke(Stroke::FOREHAND);
+
 				PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
 				PlayerStateManager::playerState_->Enter(player);
 			}
 			//ボールの位置が左側かつボールの終点が左側なら
 			else if (pBall->GetPosition().x >= playerX && ballEndX >= playerX)
 			{
+				player->GetRacket()->SetStroke(Stroke::BACKHAND);
+
 				PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
 				PlayerStateManager::playerState_->Enter(player);
 			}
 			//ボールの位置が右側かつボールの終点が左側なら
 			else if (pBall->GetPosition().x <= playerX && ballEndX >= playerX)
 			{
+				player->GetRacket()->SetStroke(Stroke::BACKHAND);
+
 				PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
 				PlayerStateManager::playerState_->Enter(player);
 			}
 			else
 			{
+				player->GetRacket()->SetStroke(Stroke::FOREHAND);
+
 				PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
 				PlayerStateManager::playerState_->Enter(player);
 			}

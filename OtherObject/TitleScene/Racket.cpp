@@ -22,12 +22,12 @@ namespace
 
 //コンストラクタ
 Racket::Racket(GameObject* parent, std::string modelPath, std::string name)
-	:NormalObject(parent, modelPath, name), type_(Type::FLAT), colliderPos_(ZERO, ZERO, ZERO)
+	:NormalObject(parent, modelPath, name), type_(Type::FLAT), stroke_(Stroke::FOREHAND), colliderPos_(ZERO, ZERO, ZERO)
 {
 }
 
 Racket::Racket(GameObject* parent)
-	:NormalObject(parent, "Racket/Normal.fbx", "Racket"), type_(Type::FLAT), colliderPos_(ZERO, ZERO, ZERO)
+	:NormalObject(parent, "Racket/Normal.fbx", "Racket"), type_(Type::FLAT), stroke_(Stroke::FOREHAND), colliderPos_(ZERO, ZERO, ZERO)
 {}
 
 //初期化
@@ -47,6 +47,31 @@ void Racket::ChildInitialize()
 	ARGUMENT_INITIALIZE(effectFilePath_[Type::LOB], "Effect/LobEffect.txt");
 	ARGUMENT_INITIALIZE(effectFilePath_[Type::SLICE], "Effect/SliceEffect.txt");
 	ARGUMENT_INITIALIZE(effectFilePath_[Type::TOP_SPIN], "Effect/TopSpinEffect.txt");
+
+	//球種ごとのエフェクトのファイルパスを設定
+	HitStrength h;
+
+	//フラット
+	ARGUMENT_INITIALIZE(h.strength_.x, ZERO);
+	ARGUMENT_INITIALIZE(h.strength_.y, 1.0f);
+	ARGUMENT_INITIALIZE(h.moveTime_, 0.7f);
+	ARGUMENT_INITIALIZE(hitStrength_[Type::FLAT],h);
+	
+	//ロブ
+	ARGUMENT_INITIALIZE(h.strength_.y, 4.0f);
+	ARGUMENT_INITIALIZE(h.moveTime_, 1.4f);
+	ARGUMENT_INITIALIZE(hitStrength_[Type::LOB],h);
+
+	//トップスピン
+	ARGUMENT_INITIALIZE(h.strength_.y, 1.8f);
+	ARGUMENT_INITIALIZE(h.moveTime_, 0.6f);
+	ARGUMENT_INITIALIZE(hitStrength_[Type::TOP_SPIN],h);
+
+	//スライス
+	ARGUMENT_INITIALIZE(h.strength_.x, 1.0f);
+	ARGUMENT_INITIALIZE(h.strength_.y, 1.4f);
+	ARGUMENT_INITIALIZE(h.moveTime_, 0.7f);
+	ARGUMENT_INITIALIZE(hitStrength_[Type::SLICE],h);
 
 	//Mayaで原点を0,0,0に設定した分戻す
 	ARGUMENT_INITIALIZE(transform_.position_, XMFLOAT3(0.643f,0.835f,0.011f));
@@ -112,14 +137,24 @@ void Racket::OnCollision(GameObject* pTarget)
 	SetTimeMethod(0.1f);
 	pTarget->SetTimeMethod(0.1f);
 
+	//保存しておく
+	float s = hitStrength_[type_].strength_.x;
+
+	//バックハンドならXの強さを逆にする
+	if (stroke_ == Stroke::BACKHAND)
+		hitStrength_[type_].strength_.x *= -1;
+
 	//ボールの軌跡色を指定
 	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);
 
 	//ボールを次のコートへ
-	((Ball*)pTarget)->Reset(false, GetInputBasePoint());
+	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_,false, GetInputBasePoint());
 
 	//エフェクト表示
 	EffectManager::Draw(effectFilePath_[type_], ((Ball*)pTarget)->GetPosition());
+
+	//元に戻す
+	ARGUMENT_INITIALIZE(hitStrength_[type_].strength_.x,s);
 }
 
 //何かのオブジェクトに当たった時に呼ばれる関数

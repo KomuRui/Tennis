@@ -194,13 +194,13 @@ void Ball::BoundMove()
 
 			Time::Reset(hTime_);
 			VFX::ForcedEnd(hEffect_);
-			Reset(isGoToBasePoint_,BasePointManager::GetRandomBasePointName());
+			Reset(0,1.0f,0.7f,isGoToBasePoint_,BasePointManager::GetRandomBasePointName());
 		}
 	}
 }
 
 //リセット(始点終点すべて再設定)
-void Ball::Reset(bool isGotoPlayer, string basePpointName)
+void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPlayer, string basePpointName)
 {
 	//向かうポジションを取得(少しランダムにずらす)
 	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePpointName, isGotoPlayer);
@@ -217,9 +217,9 @@ void Ball::Reset(bool isGotoPlayer, string basePpointName)
 	ARGUMENT_INITIALIZE(endPointDirection_, endPoint_ - startPoint_);
 	ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-	ARGUMENT_INITIALIZE(moveTime_, 0.7f)
-	ARGUMENT_INITIALIZE(strength_.y, 1);
-	ARGUMENT_INITIALIZE(strength_.x, 1.5f);
+	ARGUMENT_INITIALIZE(moveTime_, moveTime)
+	ARGUMENT_INITIALIZE(strength_.y, strengthY);
+	ARGUMENT_INITIALIZE(strength_.x, strengthX);
 	Time::Reset(hTime_);
 
 	//ネットをしていたらボールの軌道を修正する
