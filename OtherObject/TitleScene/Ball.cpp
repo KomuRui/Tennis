@@ -219,7 +219,7 @@ void Ball::Reset(bool isGotoPlayer, string basePpointName)
 	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(moveTime_, 0.7f)
 	ARGUMENT_INITIALIZE(strength_.y, 1);
-	ARGUMENT_INITIALIZE(strength_.x, -1.5f);
+	ARGUMENT_INITIALIZE(strength_.x, 1.5f);
 	Time::Reset(hTime_);
 
 	//ネットをしていたらボールの軌道を修正する
