@@ -28,14 +28,14 @@ namespace
 Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
 	:NormalObject(parent, modelPath, name), ratio_(ZERO), strength_(ZERO,ZERO), endPointDirection_(XMVectorSet(ZERO, ZERO, ZERO, ZERO)),
 	startPoint_(ZERO, ZERO, ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO,ZERO), pLine_(nullptr),
-	hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO)
+	hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO)
 {
 }
 
 Ball::Ball(GameObject* parent)
 	:NormalObject(parent, "Ball/Ball.fbx", "Ball"), ratio_(ZERO), strength_(ZERO, ZERO), endPointDirection_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
 	startPoint_(ZERO,ZERO,ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO, ZERO), pLine_(nullptr),
-    hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO)
+    hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO)
 {}
 
 //初期化
@@ -55,6 +55,12 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(pLine_, new PolyLine);
 	pLine_->Load("Image/Effect/tex.png");
 	pLine_->AddPosition(transform_.position_);
+
+	//影のモデルロード
+	ARGUMENT_INITIALIZE(hShadowModel_, Model::Load("Ball/BallShadow.fbx"));
+	assert(hShadowModel_ >= ZERO);
+	ARGUMENT_INITIALIZE(tShadow_, transform_);
+	ARGUMENT_INITIALIZE(tShadow_.position_.y, 0.2f);
 
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
 	XMFLOAT3 pos = endPoint_;
@@ -92,11 +98,19 @@ void Ball::ChildUpdate()
 	default:
 		break;
 	}
+
+	//影のポジション更新
+	ARGUMENT_INITIALIZE(tShadow_, transform_);
+	ARGUMENT_INITIALIZE(tShadow_.position_.y, 0.01f);
 }
 
 //描画
 void Ball::ChildDraw()
 {
+	//影描画
+	Model::SetTransform(hShadowModel_, tShadow_);
+	Model::Draw(hShadowModel_);
+
 	//ポリライン描画
 	pLine_->Draw();
 }

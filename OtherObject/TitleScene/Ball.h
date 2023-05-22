@@ -21,6 +21,7 @@ class Ball : public NormalObject
 
 	BallStatus ballStatus_;      //ボールの状態
 
+	int hShadowModel_;           //影のモデル
 	int hTime_;                  //タイマーハンドル
 	int hEffect_;                //エフェクトハンドル
 	int boundCount_;             //バウンドの回数
@@ -28,6 +29,8 @@ class Ball : public NormalObject
 	float moveTime_;			 //始点から終点まで動く時間
 	float firstAngle_;           //放物線の最初の角度
 	bool isGoToBasePoint_;       //プレイヤーの基準点に向かうか
+
+	Transform tShadow_;          //影のトランスフォーム
 
 	XMVECTOR endPointDirection_; //終点までのベクトル
 	XMVECTOR progressVector_;    //進行ベクトル
