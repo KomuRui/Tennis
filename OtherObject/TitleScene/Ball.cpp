@@ -127,6 +127,7 @@ void Ball::MoveToPurpose()
 	//Œ»İ‚ÌˆÊ’u
 	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * ratio_));
 	nowPos.y = ((v0_.y * sin(XMConvertToRadians(ANGLE)) * ratio_) - (0.5f * GRAVITY * ratio_ * ratio_)) * strength_.y;
+	nowPos.y += startPoint_.y * (MAX_RATIO - ratio_);
 
 	//X•ûŒü‚Ì‹­‚³‚ª0ˆÈŠO‚Ì‚È‚ç
 	if (strength_.x != ZERO)
