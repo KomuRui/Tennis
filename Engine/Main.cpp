@@ -18,6 +18,7 @@
 #include "../Manager/GameManager/GameManager.h"
 #include "../Manager/BasePointManager/BasePointManager.h"
 #include "GUI/ImGuiSet.h"
+#include "../Manager/FrameWorkUpdateManager/FrameWorkUpdateManager.h"
 
 #pragma comment(lib,"Winmm.lib")
 
@@ -137,67 +138,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				lastUpdateTime = nowTime;	//現在の時間（最後に画面を更新した時間）を覚えておく
 				FPS++;						//画面更新回数をカウントする
 
-			    //入力（キーボード、マウス、コントローラー）情報を更新
-				Input::Update();
-
-				//時間止めていないのなら
-				if (!Direct3D::GetTimeScale())
-				{
-					//タイム更新
-					Time::Update();
-
-					//全オブジェクトの更新処理
-					//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-					pRootObject->StartUpdateSub();
-					pRootObject->UpdateSub();
-				}
-				
-				//マネージャの更新処理を呼ぶ
-				GameManager::Update();
-
-				//カメラの更新
-				Camera::Update();
-
-				//描画開始
-				Direct3D::BeginDraw();
-
-				//エフェクトエディタモードじゃないのなら
-				if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
-					pRootObject->DrawSub();   
-
-				//時間止めていないかエフェクトエディタモードなら
-				if (!Direct3D::GetTimeScale() || ImGuiSet::GetScreenMode() == static_cast<int>(Mode::EFFECT_EDIT))
-				{
-					//エフェクトの更新
-					VFX::Update();
-				}
-
-				//エフェクトの描画
-				VFX::Draw();
-
-				//エフェクトエディタモードじゃないのなら
-				if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
-				{
-					//透明・半透明描画
-					pRootObject->TransparentDrawSub();
-				
-					//様々な描画処理をする
-					GameManager::Draw();
-				}
-
-				//ゲーム画面のサイズごとの各GUI描画
-				Direct3D::GetGameFull() ? ImGuiSet::GameScreenFullDraw()
-										: ImGuiSet::GameScreenNotFullDraw();
-
-				//二つ目のウィンドウ描画
-				Camera::Update2();
-				Direct3D::BeginDrawTwo();
-				pRootObject->TwoWindowDrawSub();
-
-				//GUI表示
-				ImGuiSet::TwoWindowDraw();
-
-				Direct3D::EndDraw();
+				//更新処理
+				FrameWorkUpdateManager::Update(pRootObject);
 
 				//ちょっと休ませる
 				Sleep(1);

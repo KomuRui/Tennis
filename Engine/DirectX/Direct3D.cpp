@@ -77,7 +77,7 @@ namespace Direct3D
 	int						screenWidth_2 = 0;
 	int						screenHeight_2 = 0;
 
-	D3D11_VIEWPORT vp, vpFull2, vpEmission, vpFull,vpMini;
+	D3D11_VIEWPORT vp, vpFull2, vpEmission, vpFull,vpMini,vpLeft,vpRight;
 
 	HWND hWnd_;
 	HWND hWnd2_;
@@ -227,6 +227,24 @@ namespace Direct3D
 		vpEmission.MaxDepth = 1.0f;		//奥
 		vpEmission.TopLeftX = 0;		//左
 		vpEmission.TopLeftY = 0;		//上
+
+		/////////////////2人プレイ/////////////////
+
+		//左
+		vpLeft.Width = (float)screenWidth / 2.0f;	 //幅
+		vpLeft.Height = (float)screenHeight;         //高さ
+		vpLeft.MinDepth = 0.0f;				         //手前
+		vpLeft.MaxDepth = 1.0f;				         //奥
+		vpLeft.TopLeftX = 0;				         //左
+		vpLeft.TopLeftY = 0;				         //上
+
+		//右
+		vpRight.Width = (float)screenWidth / 2.0f;	 //幅
+		vpRight.Height = (float)screenHeight;        //高さ
+		vpRight.MinDepth = 0.0f;		             //手前
+		vpRight.MaxDepth = 1.0f;			         //奥
+		vpRight.TopLeftX = (float)screenWidth / 2.0f;//左
+		vpRight.TopLeftY = 0;				         //上
 
 		//最初の画面はミニ状態にしておく
 		vp = vpMini;

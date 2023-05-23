@@ -108,6 +108,9 @@
     <Filter Include="01Engine\nlohmann">
       <UniqueIdentifier>{e8088838-5a30-4639-9a49-641fa42e2fc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\FrameWorkUpdateManager">
+      <UniqueIdentifier>{44d4ee10-f695-4562-85f6-337eac2d11e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Main.cpp">
@@ -320,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="Manager\EffectManager\EffectManager.cpp">
       <Filter>Manager\EffectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.cpp">
+      <Filter>Manager\FrameWorkUpdateManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -542,6 +548,9 @@
     </ClInclude>
     <ClInclude Include="Manager\EffectManager\EffectManager.h">
       <Filter>Manager\EffectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.h">
+      <Filter>Manager\FrameWorkUpdateManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

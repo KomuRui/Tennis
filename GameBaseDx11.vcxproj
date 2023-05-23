@@ -174,6 +174,7 @@
     <ClCompile Include="Manager\EffectManager\EffectManager.cpp" />
     <ClCompile Include="Manager\EffectManager\OtherEffectManager\OtherEffectManager.cpp" />
     <ClCompile Include="Manager\EffectManager\PlayerEffectManager\PlayerEffectManager.cpp" />
+    <ClCompile Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.cpp" />
     <ClCompile Include="Manager\GameManager\GameManager.cpp" />
     <ClCompile Include="Manager\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Manager\ScoreManager\ScoreManager.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="Manager\EffectManager\EffectManager.h" />
     <ClInclude Include="Manager\EffectManager\OtherEffectManager\OtherEffectManager.h" />
     <ClInclude Include="Manager\EffectManager\PlayerEffectManager\PlayerEffectManager.h" />
+    <ClInclude Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.h" />
     <ClInclude Include="Manager\GameManager\GameManager.h" />
     <ClInclude Include="Manager\SceneManager\SceneManager.h" />
     <ClInclude Include="Manager\ScoreManager\ScoreManager.h" />
