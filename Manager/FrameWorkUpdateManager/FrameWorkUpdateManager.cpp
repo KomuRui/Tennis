@@ -102,6 +102,7 @@ namespace FrameWorkUpdateManager
 	void OnePlayerDraw(GameObject* root)
 	{
 		//描画開始
+		Direct3D::SetViewPort(Direct3D::vp);
 		Direct3D::BeginDraw();
 
 		//エフェクトエディタモードじゃないのなら
@@ -128,7 +129,51 @@ namespace FrameWorkUpdateManager
 	/// </summary>
 	void TwoPlayerDraw(GameObject* root)
 	{
+		/////////////左
 
+		//描画開始
+		Direct3D::BeginDraw();
+		Direct3D::SetViewPort(Direct3D::vpLeft);
+
+		//エフェクトエディタモードじゃないのなら
+		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+			root->DrawSub();
+
+		//エフェクトの描画
+		VFX::Draw();
+
+		//エフェクトエディタモードじゃないのなら
+		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+		{
+			//透明・半透明描画
+			root->TransparentDrawSub();
+
+			//様々な描画処理をする
+			GameManager::Draw();
+		}
+
+		/////////////右
+
+		//描画開始
+		Direct3D::SetViewPort(Direct3D::vpRight);
+
+		//エフェクトエディタモードじゃないのなら
+		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+			root->DrawSub();
+
+		//エフェクトの描画
+		VFX::Draw();
+
+		//エフェクトエディタモードじゃないのなら
+		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+		{
+			//透明・半透明描画
+			root->TransparentDrawSub();
+
+			//様々な描画処理をする
+			GameManager::Draw();
+		}
 	}
+
 };
 

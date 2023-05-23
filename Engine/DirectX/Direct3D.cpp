@@ -77,7 +77,19 @@ namespace Direct3D
 	int						screenWidth_2 = 0;
 	int						screenHeight_2 = 0;
 
-	D3D11_VIEWPORT vp, vpFull2, vpEmission, vpFull,vpMini,vpLeft,vpRight;
+	//一人プレイ用
+	D3D11_VIEWPORT vp, vpFull, vpMini;
+	
+	//二人プレイ用
+	D3D11_VIEWPORT vpLeft, vpLeftFull, vpLeftMini;
+	D3D11_VIEWPORT vpRight, vpRightFull, vpRightMini;
+
+	//ぼかし用
+	D3D11_VIEWPORT vpEmission;
+
+	//二つ目のウィンドウ用
+	D3D11_VIEWPORT vpFull2;
+
 
 	HWND hWnd_;
 	HWND hWnd2_;
@@ -105,9 +117,17 @@ namespace Direct3D
 	{
 		//画面の大きさによってビューポートのサイズを変更する
 		if (a)
+		{
 			vp = vpFull;
+			vpLeft = vpLeftFull;
+			vpRight = vpRightFull;
+		}
 		else
+		{
 			vp = vpMini;
+			vpLeft = vpLeftMini;
+			vpRight = vpRightMini;
+		}
 
 		//状態をセット
 		isGameFull = a;
@@ -123,6 +143,13 @@ namespace Direct3D
 	void SetScreenGameStatus(bool a)
 	{
 		isScreenGameStatus = a;
+	}
+
+	//ビューポートセット
+	void SetViewPort(D3D11_VIEWPORT v)
+	{
+		vp = v;
+		pContext_->RSSetViewports(1, &vp);
 	}
 
 	HWND GetWindowHandle()
@@ -231,23 +258,41 @@ namespace Direct3D
 		/////////////////2人プレイ/////////////////
 
 		//左
-		vpLeft.Width = (float)screenWidth / 2.0f;	 //幅
-		vpLeft.Height = (float)screenHeight;         //高さ
-		vpLeft.MinDepth = 0.0f;				         //手前
-		vpLeft.MaxDepth = 1.0f;				         //奥
-		vpLeft.TopLeftX = 0;				         //左
-		vpLeft.TopLeftY = 0;				         //上
+		vpLeftFull.Width = (float)screenWidth / 2.0f;	 //幅
+		vpLeftFull.Height = (float)screenHeight;         //高さ
+		vpLeftFull.MinDepth = 0.0f;				         //手前
+		vpLeftFull.MaxDepth = 1.0f;				         //奥
+		vpLeftFull.TopLeftX = 0;				         //左
+		vpLeftFull.TopLeftY = 0;				         //上
+
+		//左
+		vpLeftMini.Width = ((float)screenWidth / 2.0f) / 1.5f;	//幅
+		vpLeftMini.Height = (float)screenHeight / 1.5f;			//高さ
+		vpLeftMini.MinDepth = 0.0f;								//手前
+		vpLeftMini.MaxDepth = 1.0f;								//奥
+		vpLeftMini.TopLeftX = 0;								//左
+		vpLeftMini.TopLeftY = 100;								//上
 
 		//右
-		vpRight.Width = (float)screenWidth / 2.0f;	 //幅
-		vpRight.Height = (float)screenHeight;        //高さ
-		vpRight.MinDepth = 0.0f;		             //手前
-		vpRight.MaxDepth = 1.0f;			         //奥
-		vpRight.TopLeftX = (float)screenWidth / 2.0f;//左
-		vpRight.TopLeftY = 0;				         //上
+		vpRightFull.Width = (float)screenWidth / 2.0f;	 //幅
+		vpRightFull.Height = (float)screenHeight;        //高さ
+		vpRightFull.MinDepth = 0.0f;		             //手前
+		vpRightFull.MaxDepth = 1.0f;			         //奥
+		vpRightFull.TopLeftX = (float)screenWidth / 2.0f;//左
+		vpRightFull.TopLeftY = 0;				         //上
+
+		//右
+		vpRightMini.Width = ((float)screenWidth / 2.0f) / 1.5f;	  //幅
+		vpRightMini.Height = (float)screenHeight / 1.5f;		  //高さ
+		vpRightMini.MinDepth = 0.0f;							  //手前
+		vpRightMini.MaxDepth = 1.0f;							  //奥
+		vpRightMini.TopLeftX = ((float)screenWidth / 2.0f) / 1.5f;//左
+		vpRightMini.TopLeftY = 100;								  //上
 
 		//最初の画面はミニ状態にしておく
 		vp = vpMini;
+		vpRight = vpRightMini;
+		vpLeft = vpLeftMini;
 
 		//各パターンのシェーダーセット準備
 		InitShaderBundle();
@@ -320,8 +365,8 @@ namespace Direct3D
 		////パイプラインの構築
 		////データを画面に描画するための一通りの設定
 		pContext_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
-		//pContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView);  // 描画先を設定（今後はレンダーターゲットビューを介して描画してね）
-		//pContext_->RSSetViewports(1, &vp);                                         // ビューポートのセット
+		pContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView);  // 描画先を設定（今後はレンダーターゲットビューを介して描画してね）
+		pContext_->RSSetViewports(1, &vp);                                         // ビューポートのセット
 
 
 		//コリジョン表示するか
@@ -851,8 +896,7 @@ namespace Direct3D
 		if (NULL == pRenderTargetView_) return;
 		if (NULL == pSwapChain_) return;
 
-		pContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView);            // 描画先を設定
-		pContext_->RSSetViewports(1, &vp);
+		pContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView);   // 描画先を設定
 
 		//背景の色
 		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 1 };//R,G,B,A

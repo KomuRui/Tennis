@@ -82,6 +82,9 @@ namespace Direct3D
 	extern int		screenWidth_2;		//スクリーンの幅
 	extern int		screenHeight_2;		//スクリーンの高さ
 	extern bool		isDrawCollision_;	//コリジョンを表示するかフラグ
+	extern D3D11_VIEWPORT vp;
+	extern D3D11_VIEWPORT vpLeft;
+	extern D3D11_VIEWPORT vpRight;
 
 	////////////////////////ここからは関数///////////////////////////////
 
@@ -138,6 +141,9 @@ namespace Direct3D
 
 	//背景色を設定
 	void SetBackScreenColor(XMFLOAT4 color);
+
+	//ビューポートセット
+	void SetViewPort(D3D11_VIEWPORT v);
 
 	//ウィンドウハンドル取得
 	HWND GetWindowHandle();
