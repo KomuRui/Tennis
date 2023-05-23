@@ -124,6 +124,6 @@ namespace GameManager
 	void GameManager::SetPlayers(Players s) { player_ = s; }
 
 	//プレイヤー人数の取得
-	Players GameManager::GetPlayers() { player_; };
+	Players GameManager::GetPlayers() { return player_; };
 
 }

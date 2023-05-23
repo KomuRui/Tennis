@@ -12,10 +12,15 @@ XMVECTOR _UpDirection;
 XMMATRIX _billBoard;
 int _field_angle;
 
+//////////二つ目のカメラに必要な変数
+XMFLOAT3 _positionTwo;
+XMFLOAT3 _targetTwo;
+XMVECTOR _UpDirectionTwo;
+
 //////////二つ目のウィンドウのカメラに必要な変数
-XMFLOAT3 _position2;
-XMFLOAT3 _target2;
-XMVECTOR _UpDirection2;
+XMFLOAT3 _twoWindowPosition2;
+XMFLOAT3 _twoWindowTarget2;
+XMVECTOR _twoWindowUpDirection2;
 
 //////////フレームワーク上でカメラを操作する時に必要な変数
 XMFLOAT3 _fPosition;
@@ -36,13 +41,16 @@ int   _sign;                  //符号
 void Camera::Initialize()
 {
 	ARGUMENT_INITIALIZE(_position,XMFLOAT3(ZERO, 50, -50));	            //カメラの位置
-	ARGUMENT_INITIALIZE(_position2,XMFLOAT3(ZERO, 50, -50));	        //カメラの位置
+	ARGUMENT_INITIALIZE(_positionTwo,XMFLOAT3(ZERO, 50, -50));	        //カメラの位置
+	ARGUMENT_INITIALIZE(_twoWindowPosition2,XMFLOAT3(ZERO, 50, -50));	//カメラの位置
 	ARGUMENT_INITIALIZE(_fPosition, _position);							//フレームワーク上でカメラを操作する時のカメラの位置
 	ARGUMENT_INITIALIZE(_target,XMFLOAT3(ZERO, ZERO, ZERO));	        //カメラの焦点
-	ARGUMENT_INITIALIZE(_target2,XMFLOAT3(ZERO, ZERO, ZERO));	        //カメラの焦点
+	ARGUMENT_INITIALIZE(_twoWindowTarget2,XMFLOAT3(ZERO, ZERO, ZERO));	//カメラの焦点
+	ARGUMENT_INITIALIZE(_targetTwo,XMFLOAT3(ZERO, ZERO, ZERO));	        //カメラの焦点
 	ARGUMENT_INITIALIZE(_fTarget, _target);								//フレームワーク上でカメラを操作する時のカメラの焦点
 	ARGUMENT_INITIALIZE(_UpDirection,XMVectorSet(ZERO, 1, ZERO, ZERO)); //カメラの上方向のベクトル
-	ARGUMENT_INITIALIZE(_UpDirection2,XMVectorSet(ZERO, 1, ZERO, ZERO));//カメラの上方向のベクトル
+	ARGUMENT_INITIALIZE(_twoWindowUpDirection2,XMVectorSet(ZERO, 1, ZERO, ZERO));//カメラの上方向のベクトル
+	ARGUMENT_INITIALIZE(_UpDirectionTwo,XMVectorSet(ZERO, 1, ZERO, ZERO));//カメラの上方向のベクトル
 	ARGUMENT_INITIALIZE(_fUpDirection, _UpDirection);					//フレームワーク上でカメラを操作する時のカメラの上方向のベクトル
 	ARGUMENT_INITIALIZE(_fFront, STRAIGHT_VECTOR);					    //フレームワーク上でカメラを操作する時のカメラの前方向のベクトル
 	ARGUMENT_INITIALIZE(_field_angle,45);                               //カメラの画角
@@ -97,17 +105,33 @@ void Camera::Update()
 	
 }
 
-void Camera::Update2()
+//更新（ビュー行列作成）
+void Camera::TwoWindowUpdate()
 {
 	//ビュー行列
-	_view = XMMatrixLookAtLH(XMVectorSet(_position2.x, _position2.y, _position2.z, ZERO),
-		XMVectorSet(_target2.x, _target2.y, _target2.z, ZERO), _UpDirection2);
+	_view = XMMatrixLookAtLH(XMVectorSet(_twoWindowPosition2.x, _twoWindowPosition2.y, _twoWindowPosition2.z, ZERO),
+		XMVectorSet(_twoWindowTarget2.x, _twoWindowTarget2.y, _twoWindowTarget2.z, ZERO), _twoWindowUpDirection2);
 
 	//ビルボード行列
 	//（常にカメラの方を向くように回転させる行列。パーティクルでしか使わない）
-	_billBoard = XMMatrixLookAtLH(XMVectorSet(ZERO, ZERO, ZERO, ZERO), XMLoadFloat3(&_target2) - XMLoadFloat3(&_position2), _UpDirection2);
+	_billBoard = XMMatrixLookAtLH(XMVectorSet(ZERO, ZERO, ZERO, ZERO), XMLoadFloat3(&_twoWindowTarget2) - XMLoadFloat3(&_twoWindowPosition2), _twoWindowUpDirection2);
 	_billBoard = XMMatrixInverse(nullptr, _billBoard);
 }
+
+//更新（ビュー行列作成）
+void Camera::UpdateTwo()
+{
+	//ビュー行列
+	_view = XMMatrixLookAtLH(XMVectorSet(_positionTwo.x, _positionTwo.y, _positionTwo.z, ZERO),
+		XMVectorSet(_targetTwo.x, _targetTwo.y, _targetTwo.z, ZERO), _UpDirectionTwo);
+
+	//ビルボード行列
+	//（常にカメラの方を向くように回転させる行列。パーティクルでしか使わない）
+	_billBoard = XMMatrixLookAtLH(XMVectorSet(ZERO, ZERO, ZERO, ZERO), XMLoadFloat3(&_targetTwo) - XMLoadFloat3(&_positionTwo), _UpDirectionTwo);
+	_billBoard = XMMatrixInverse(nullptr, _billBoard);
+}
+
+
 
 //カメラの振動
 XMFLOAT3 Camera::Vibration()
@@ -266,7 +290,7 @@ RayCastData Camera::GetTwoWindowClickRayCastData()
 	//ビューポート行列の逆行列
 	XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
 	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
-	XMMATRIX invView = XMMatrixInverse(nullptr, XMMatrixLookAtLH(XMVectorSet(_position2.x, _position2.y, _position2.z, ZERO), XMVectorSet(_target2.x, _target2.y, _target2.z, ZERO), _UpDirection2));
+	XMMATRIX invView = XMMatrixInverse(nullptr, XMMatrixLookAtLH(XMVectorSet(_twoWindowPosition2.x, _twoWindowPosition2.y, _twoWindowPosition2.z, ZERO), XMVectorSet(_twoWindowTarget2.x, _twoWindowTarget2.y, _twoWindowTarget2.z, ZERO), _twoWindowUpDirection2));
 
 	//マウス位置(手前)
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();
@@ -293,15 +317,18 @@ RayCastData Camera::GetTwoWindowClickRayCastData()
 
 //焦点を設定
 void Camera::SetTarget(const XMFLOAT3& target) { _target = target;}
-void Camera::SetTarget2(const XMFLOAT3& target) { _target2 = target;}
+void Camera::SetTargetTwo(const XMFLOAT3& target) { _targetTwo = target;}
+void Camera::TwoWindowSetTarget(const XMFLOAT3& target) { _twoWindowTarget2 = target;}
 
 //位置を設定
 void Camera::SetPosition(const XMFLOAT3& position) { _position = position; }
-void Camera::SetPosition2(const XMFLOAT3& position) { _position2 = position; }
+void Camera::SetPositionTwo(const XMFLOAT3& position) { _positionTwo = position; }
+void Camera::TwoWindowSetPosition(const XMFLOAT3& position) { _twoWindowPosition2 = position; }
 
 //上方向のベクトルを設定
 void Camera::SetUpDirection(XMVECTOR direction) { _UpDirection = direction; }
-void Camera::SetUpDirection2(XMVECTOR direction) { _UpDirection2 = direction; }
+void Camera::SetUpDirectionTwo(XMVECTOR direction) { _UpDirectionTwo = direction; }
+void Camera::SetTwoWindowUpDirection(XMVECTOR direction) { _twoWindowUpDirection2 = direction; }
 
 //画角を設定
 void Camera::SetFieldAngle(int angle) 

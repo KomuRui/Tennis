@@ -85,7 +85,7 @@ namespace FrameWorkUpdateManager
 	void TwoWindowDraw(GameObject* root)
 	{
 		//二つ目のウィンドウ描画
-		Camera::Update2();
+		Camera::TwoWindowUpdate();
 		Direct3D::BeginDrawTwo();
 		root->TwoWindowDrawSub();
 
