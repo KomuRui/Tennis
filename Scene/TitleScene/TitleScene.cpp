@@ -17,17 +17,17 @@
 //定数
 namespace
 {
-	static const float RATATION_SPEED = 0.5f;        //回転速度
-	static const XMFLOAT3 CAM_POS = { 0, 7, 15 };    //カメラの位置
-	static const XMFLOAT3 CAM_TAR = { 0, 0, 0 };	 //カメラのターゲット
-	
-	static const XMFLOAT3 CAM_POS_2 = { 0, 7, -15 }; //カメラの位置
-	static const XMFLOAT3 CAM_TAR_2 = { 0, 0, 0 };   //カメラのターゲット
+	static const float RATATION_SPEED = 0.5f;                  //回転速度
+	static const XMFLOAT3 CAM_POS = { 0, 4.51f, 19 };          //カメラの位置
+	static const XMFLOAT3 CAM_TAR = { 0, -0.65f, 1.54f };      //カメラのターゲット
+															   
+	static const XMFLOAT3 CAM_POS_2 = { 0, 4.51f, -19 };       //カメラの位置
+	static const XMFLOAT3 CAM_TAR_2 = { 0, -0.65f, -1.54f };   //カメラのターゲット
 
 	static const XMFLOAT3 CAM_POS_TOW_WINDOW = { 0, 20, 0 };   //カメラの位置2
 	static const XMFLOAT3 CAM_TAR_TOW_WINDOW = { 0, 0, 0 };    //カメラのターゲット2
 	static const XMVECTOR CAM_UP_TOW_WINDOW = { -1, 0, 0, 0 }; //カメラの上方向
-	static const int FIELD_ANGLE = 45;							//カメラの画角
+	static const int FIELD_ANGLE = 45;						//カメラの画角
 }
 
 //コンストラクタ

@@ -154,6 +154,15 @@ namespace FrameWorkUpdateManager
 
 		/////////////右
 
+		//カメラ替える
+		XMFLOAT3 pos = Camera::GetPosition();
+		XMFLOAT3 tar = Camera::GetTarget();
+		XMVECTOR up = Camera::GetUp();
+		Camera::SetPosition(Camera::GetPositionTwo());
+		Camera::SetTarget(Camera::GetTargetTwo());
+		Camera::SetUpDirection(Camera::GetUpTwo());
+		Camera::UpdateTwo();
+
 		//描画開始
 		Direct3D::SetViewPort(Direct3D::vpRight);
 
@@ -173,6 +182,10 @@ namespace FrameWorkUpdateManager
 			//様々な描画処理をする
 			GameManager::Draw();
 		}
+
+		Camera::SetPosition(pos);
+		Camera::SetTarget(tar);
+		Camera::SetUpDirection(up);
 	}
 
 };

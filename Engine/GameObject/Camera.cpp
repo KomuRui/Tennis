@@ -61,7 +61,7 @@ void Camera::Initialize()
 	ARGUMENT_INITIALIZE(_sign,1);                                       //符号
 
 	//プロジェクション行列
-	_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), (FLOAT)Direct3D::screenWidth_ / (FLOAT)Direct3D::screenHeight_, 0.1f, 1000.0f);
+	_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), (FLOAT)Direct3D::screenWidth_ / ((FLOAT)Direct3D::screenHeight_ / 2), 0.1f, 1000.0f);
 }
 
 //更新（ビュー行列作成）
@@ -122,16 +122,14 @@ void Camera::TwoWindowUpdate()
 void Camera::UpdateTwo()
 {
 	//ビュー行列
-	_view = XMMatrixLookAtLH(XMVectorSet(_positionTwo.x, _positionTwo.y, _positionTwo.z, ZERO),
-		XMVectorSet(_targetTwo.x, _targetTwo.y, _targetTwo.z, ZERO), _UpDirectionTwo);
+	_view = XMMatrixLookAtLH(XMVectorSet(_position.x, _position.y, _position.z, ZERO),
+		XMVectorSet(_target.x, _target.y, _target.z, ZERO), _UpDirection);
 
 	//ビルボード行列
 	//（常にカメラの方を向くように回転させる行列。パーティクルでしか使わない）
-	_billBoard = XMMatrixLookAtLH(XMVectorSet(ZERO, ZERO, ZERO, ZERO), XMLoadFloat3(&_targetTwo) - XMLoadFloat3(&_positionTwo), _UpDirectionTwo);
+	_billBoard = XMMatrixLookAtLH(XMVectorSet(ZERO, ZERO, ZERO, ZERO), XMLoadFloat3(&_target) - XMLoadFloat3(&_position), _UpDirection);
 	_billBoard = XMMatrixInverse(nullptr, _billBoard);
 }
-
-
 
 //カメラの振動
 XMFLOAT3 Camera::Vibration()
@@ -336,7 +334,7 @@ void Camera::SetFieldAngle(int angle)
 	//画角更新
 	_field_angle = angle;
 	//プロジェクション行列
-	_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), (FLOAT)Direct3D::screenWidth_ / (FLOAT)Direct3D::screenHeight_, 0.1f, 1000.0f);
+	_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), ((FLOAT)Direct3D::screenWidth_ / 2.0f) / (FLOAT)Direct3D::screenHeight_, 0.1f, 1000.0f);
 }
 
 //フレームワーク上のカメラを初期化
@@ -365,6 +363,11 @@ void Camera::KeepGameSceneFieldAngle(int angle) { _keep_field_angle = angle; }
 
 //焦点を取得
 XMFLOAT3 Camera::GetTarget() { return _target; }
+XMFLOAT3 Camera::GetTargetTwo() { return _targetTwo; }
+
+//上ベクトルを取得
+XMVECTOR Camera::GetUp() { return _UpDirection; }
+XMVECTOR Camera::GetUpTwo() { return _UpDirectionTwo; }
 
 //カメラ振動
 //引数 : 振動の強さ
@@ -383,6 +386,7 @@ void Camera::SetCameraVibration(float strength,float attenuation)
 
 //位置を取得
 XMFLOAT3 Camera::GetPosition() { return _position; }
+XMFLOAT3 Camera::GetPositionTwo() { return _positionTwo; }
 
 //ビュー行列を取得
 XMMATRIX Camera::GetViewMatrix() { return _view; }
