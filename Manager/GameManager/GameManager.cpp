@@ -28,6 +28,9 @@ namespace GameManager
 	//シーンマネージャーのポインタ格納用
 	SceneManager* pSceneManager_;
 
+	//プレイヤー人数
+	Players player_;
+
 	///////////////////////////////関数//////////////////////////////////
 
 	//初期化
@@ -53,6 +56,7 @@ namespace GameManager
 		ARGUMENT_INITIALIZE(pNowPlayer_, nullptr);
 		ARGUMENT_INITIALIZE(pNowStage_, nullptr);
 		ARGUMENT_INITIALIZE(pSceneManager_, nullptr);
+		ARGUMENT_INITIALIZE(player_, Players::ONE);
 	}
 
 	//シーン遷移の時の初期化
@@ -115,5 +119,11 @@ namespace GameManager
 
 	//シーンマネージャーのポインタゲット
 	SceneManager* GameManager::GetpSceneManager() { return pSceneManager_; }
+
+	//プレイヤー人数の設定
+	void GameManager::SetPlayers(Players s) { player_ = s; }
+
+	//プレイヤー人数の取得
+	Players GameManager::GetPlayers() { player_; };
 
 }

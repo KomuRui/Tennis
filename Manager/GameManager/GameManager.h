@@ -3,6 +3,14 @@
 #include "../../Player/PlayerBase.h"
 #include "../../Manager/SceneManager/SceneManager.h"
 
+//画面総数
+enum class Players
+{
+	ONE, //一人プレイ
+	TWO, //二人プレイ
+	MAX
+};
+
 //ゲームのいろいろな管理をする
 namespace GameManager
 {
@@ -52,5 +60,12 @@ namespace GameManager
 
 	//シーンマネージャーのポインタゲット
 	SceneManager* GetpSceneManager();
+
+	//プレイヤー人数の設定
+	void SetPlayers(Players s);
+
+	//プレイヤー人数の取得
+	Players GetPlayers();
+
 };
 
