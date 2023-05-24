@@ -24,6 +24,8 @@ private:
 	bool isRestorePosture_; //元の姿勢に戻すかどうか
 	bool isHitMove_;		//打つ動きをしているか
 
+	int buttonCode_; //打つ時のボタンコード格納用
+
 public:
 
 	//状態を示す変数
@@ -64,6 +66,12 @@ public:
 
 	//前ベクトルを取得
 	XMVECTOR GetFrontVec() { return front_; }
+
+	//ボタンコードを取得
+	int GetNowButtonCode() { return buttonCode_; }
+
+	//ボタンコードをセット
+	void SetNowButtonCode(int code) { buttonCode_ = code; }
 
 };
 

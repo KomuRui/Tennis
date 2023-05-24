@@ -317,7 +317,6 @@ void GameObject::AddCollider(Collider* collider)
 //コライダー削除
 void GameObject::KillCollider(Collider* collider)
 {
-
 	for (auto i = colliderList_.begin(); i != colliderList_.end(); i++)
 	{
 		if ((*i)->Getcenter().x == collider->Getcenter().x || (*i)->Getcenter().y == collider->Getcenter().y || (*i)->Getcenter().z == collider->Getcenter().z)
@@ -326,7 +325,6 @@ void GameObject::KillCollider(Collider* collider)
 			break;
 		}
 	}
-	
 }
 
 //衝突判定

@@ -179,10 +179,8 @@ namespace FrameWorkUpdateManager
 		Camera::SetUpDirection(Camera::GetUpTwo());
 		Camera::UpdateTwo();
 
-		//プロジェクションを更新
+		//プロジェクションとビューポートを更新
 		Camera::SetProj(Direct3D::vpRight.Width, Direct3D::vpRight.Height);
-
-		//描画開始
 		Direct3D::SetViewPort(Direct3D::vpRight);
 
 		//エフェクトエディタモードじゃないのなら

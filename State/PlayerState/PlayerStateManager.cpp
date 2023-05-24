@@ -27,7 +27,8 @@ namespace
 }
 
 //コンストラクタ
-PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR),hTime_(Time::Add()), isRestorePosture_(false), isHitMove_(false)
+PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR),hTime_(Time::Add()), 
+    isRestorePosture_(false), isHitMove_(false), buttonCode_(XINPUT_GAMEPAD_A)
 {
 }
 

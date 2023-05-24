@@ -33,6 +33,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	{
 		//Ý’è
 		player->GetRacket()->SetType(Type::FLAT);
+		player->pState_->SetNowButtonCode(XINPUT_GAMEPAD_A);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -41,6 +42,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	{
 		//Ý’è
 		player->GetRacket()->SetType(Type::TOP_SPIN);
+		player->pState_->SetNowButtonCode(XINPUT_GAMEPAD_B);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -49,6 +51,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	{
 		//Ý’è
 		player->GetRacket()->SetType(Type::SLICE);
+		player->pState_->SetNowButtonCode(XINPUT_GAMEPAD_X);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -57,6 +60,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	{
 		//Ý’è
 		player->GetRacket()->SetType(Type::LOB);
+		player->pState_->SetNowButtonCode(XINPUT_GAMEPAD_Y);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 

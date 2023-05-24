@@ -65,8 +65,11 @@ void ForehandingState::Update3D(PlayerBase* player)
 		player->SetRotateY(PLAYER_END_ROTATION_ANGLE - (PLAYER_END_ROTATION_ANGLE - PLAYER_START_ROTATION_ANGLE) * ratio);
 		player->GetRacket()->SetRotateY(RACKET_END_ROTATION_ANGLE - (RACKET_END_ROTATION_ANGLE - RACKET_START_ROTATION_ANGLE) * ratio);
 
-		//もし回転が最後まで終わったのなら
-		if (ratio >= 1)
+		//1以上にならないように
+		ARGUMENT_INITIALIZE(ratio,min<float>(ratio, 1.0f));
+
+		//もし回転が最後まで終わったかつボタンを離していたら
+		if (ratio >= 1 && Input::IsPadButtonUp(player->pState_->GetNowButtonCode()))
 		{
 			//タイマーリセット
 			Time::Reset(hTime_);
