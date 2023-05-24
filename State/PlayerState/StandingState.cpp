@@ -7,6 +7,7 @@
 #include "../../Player/PlayerBase.h"
 #include "../../OtherObject/TitleScene/Racket.h"
 #include "../../OtherObject/TitleScene/Ball.h"
+#include "../../Manager/EffectManager/EffectManager.h"
 
 //更新
 void StandingState::Update2D(PlayerBase* player)
@@ -67,6 +68,11 @@ void StandingState::HandleInput(PlayerBase* player)
 	//打ったのなら
 	if (isShot)
 	{
+		//エフェクト表示
+		XMFLOAT3 pos = player->GetPosition();
+		pos.y += 1;
+		player->pState_->SetChargeEffectNum(EffectManager::Draw("Effect/charge.txt",pos));
+
 		//ボールのポインタ
 		Ball* pBall = ((Ball*)player->FindObject("Ball"));
 

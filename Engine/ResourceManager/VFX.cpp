@@ -309,6 +309,11 @@ void VFX::ForcedEnd(int handle)
             particle++;
     }
 
+    if (p != nullptr)
+    {
+        p->particleNum = 0;
+        p->isDead = true;
+    }
 }
 
 /// エミッター取得

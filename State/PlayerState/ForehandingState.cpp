@@ -8,6 +8,7 @@
 #include "../../OtherObject/TitleScene/Racket.h"
 #include "../../Engine/ResourceManager/Time.h"
 #include "../../Engine/ResourceManager/Easing.h"
+#include "../../Engine/ResourceManager/VFX.h"
 
 //定数
 namespace
@@ -71,6 +72,9 @@ void ForehandingState::Update3D(PlayerBase* player)
 		//もし回転が最後まで終わったかつボタンを離しているかもともボタンを離していたら
 		if (ratio >= 1 && (Input::IsPadButtonUp(player->pState_->GetNowButtonCode()) || !Input::IsPadButton(player->pState_->GetNowButtonCode())))
 		{
+			//チャージエフェクト削除
+			VFX::ForcedEnd(player->pState_->GetChargeEffectNum());
+
 			//タイマーリセット
 			Time::Reset(hTime_);
 
