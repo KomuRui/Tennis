@@ -68,8 +68,8 @@ void ForehandingState::Update3D(PlayerBase* player)
 		//1以上にならないように
 		ARGUMENT_INITIALIZE(ratio,min<float>(ratio, 1.0f));
 
-		//もし回転が最後まで終わったかつボタンを離していたら
-		if (ratio >= 1 && Input::IsPadButtonUp(player->pState_->GetNowButtonCode()))
+		//もし回転が最後まで終わったかつボタンを離しているかもともボタンを離していたら
+		if (ratio >= 1 && (Input::IsPadButtonUp(player->pState_->GetNowButtonCode()) || !Input::IsPadButton(player->pState_->GetNowButtonCode())))
 		{
 			//タイマーリセット
 			Time::Reset(hTime_);

@@ -18,17 +18,17 @@ enum class Stroke{
 	MAX
 };
 
+//打つ時の必要な情報
+struct HitStrength {
+	XMFLOAT2 strength_;   //強さ(XとY方向の)
+	float moveTime_;	  //始点から終点まで動く時間
+};
+
 /// <summary>
 /// ラケット
 /// </summary>
 class Racket : public NormalObject
 {
-
-	//打つ時の必要な情報
-	struct HitStrength {
-		XMFLOAT2 strength_;   //強さ(XとY方向の)
-		float moveTime_;	  //始点から終点まで動く時間
-	};
 
 	map<Type, XMFLOAT4> lineColor_;         //球種ごとのライン色
 	map<Type, string> effectFilePath_;      //球種ごとのエフェクトのファイルパス
@@ -75,5 +75,11 @@ public:
 	/// </summary>
 	/// <param name="t">設定したいストローク</param>
 	void SetStroke(Stroke t) { stroke_ = t; }
+
+	/// <summary>
+	/// ランダムに打つ時の強さを取得
+	/// </summary>
+	/// <returns>打つ時の強さ</returns>
+	HitStrength GetRamdomHitStrength();
 };
 

@@ -103,5 +103,11 @@ public:
 	/// </summary>
 	/// <returns>ボールの状態</returns>
 	BallStatus GetBallStatus() { return ballStatus_; }
+
+	/// <summary>
+	/// 指定したZ位置を通過するときのボールの位置を取得
+	/// </summary>
+	/// <returns>ボールの状態</returns>
+	XMFLOAT3 GetSpecifyPosZBallPosition(float zPos);
 };
 

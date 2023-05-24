@@ -54,23 +54,23 @@ void Racket::ChildInitialize()
 	//フラット
 	ARGUMENT_INITIALIZE(h.strength_.x, ZERO);
 	ARGUMENT_INITIALIZE(h.strength_.y, 1.0f);
-	ARGUMENT_INITIALIZE(h.moveTime_, 0.7f);
+	ARGUMENT_INITIALIZE(h.moveTime_, 1.0f);
 	ARGUMENT_INITIALIZE(hitStrength_[Type::FLAT],h);
 	
 	//ロブ
 	ARGUMENT_INITIALIZE(h.strength_.y, 4.0f);
-	ARGUMENT_INITIALIZE(h.moveTime_, 1.4f);
+	ARGUMENT_INITIALIZE(h.moveTime_, 1.6f);
 	ARGUMENT_INITIALIZE(hitStrength_[Type::LOB],h);
 
 	//トップスピン
 	ARGUMENT_INITIALIZE(h.strength_.y, 1.8f);
-	ARGUMENT_INITIALIZE(h.moveTime_, 0.6f);
+	ARGUMENT_INITIALIZE(h.moveTime_, 0.9f);
 	ARGUMENT_INITIALIZE(hitStrength_[Type::TOP_SPIN],h);
 
 	//スライス
 	ARGUMENT_INITIALIZE(h.strength_.x, 1.0f);
 	ARGUMENT_INITIALIZE(h.strength_.y, 1.4f);
-	ARGUMENT_INITIALIZE(h.moveTime_, 0.7f);
+	ARGUMENT_INITIALIZE(h.moveTime_, 1.0f);
 	ARGUMENT_INITIALIZE(hitStrength_[Type::SLICE],h);
 
 	//Mayaで原点を0,0,0に設定した分戻す
@@ -161,4 +161,48 @@ void Racket::OnCollision(GameObject* pTarget)
 void Racket::TimeMethod()
 {
 	Enter();
+}
+
+//ランダムに打つ時の強さを取得
+HitStrength Racket::GetRamdomHitStrength() {
+
+
+	//ボールのポインタを保存しておく
+	Ball* pBall = ((Ball*)FindObject("Ball"));
+
+	//ランダムな数を取得
+	int num = Random(ZERO, static_cast<int>(Type::MAX) - 1);
+
+	//数字によって返す値を変更
+	switch (num)
+	{
+
+	//フラット
+	case static_cast<int>(Type::FLAT):
+
+		pBall->SetBallLineColor(lineColor_[Type::FLAT]);
+		return hitStrength_[Type::FLAT];
+
+	//ロブ
+	case static_cast<int>(Type::LOB):
+
+		pBall->SetBallLineColor(lineColor_[Type::LOB]);
+		return hitStrength_[Type::LOB];
+
+	//スライス
+	case static_cast<int>(Type::SLICE):
+
+		pBall->SetBallLineColor(lineColor_[Type::SLICE]);
+		return hitStrength_[Type::SLICE];
+
+	//トップスピン
+	case static_cast<int>(Type::TOP_SPIN):
+
+		pBall->SetBallLineColor(lineColor_[Type::TOP_SPIN]);
+		return hitStrength_[Type::TOP_SPIN];
+	default:
+
+		pBall->SetBallLineColor(lineColor_[Type::FLAT]);
+		return hitStrength_[Type::FLAT];
+	}
 }

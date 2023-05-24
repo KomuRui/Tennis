@@ -6,6 +6,8 @@
 #include "../../Manager/EffectManager/OtherEffectManager/OtherEffectManager.h"
 #include "../../Engine/ResourceManager/VFX.h"
 #include "../../Engine/Collider/SphereCollider.h"
+#include "../../Manager/GameManager/GameManager.h"
+#include "../../OtherObject/TitleScene/Racket.h"
 #include <math.h>
 #include <cmath>
 
@@ -209,7 +211,12 @@ void Ball::BoundMove()
 
 			Time::Reset(hTime_);
 			VFX::ForcedEnd(hEffect_);
-			Reset(0,1.0f,0.7f,isGoToBasePoint_,BasePointManager::GetRandomBasePointName());
+
+			//打つ強さをランダムに取得
+			HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
+
+			//リセット
+			Reset(h.strength_.x, h.strength_.y,h.moveTime_,isGoToBasePoint_,BasePointManager::GetRandomBasePointName());
 		}
 	}
 }
@@ -274,4 +281,28 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPl
 void Ball::TimeMethod()
 {
 	Enter();
+}
+
+//指定したZ位置を通過するときのボールの位置を取得
+XMFLOAT3  Ball::GetSpecifyPosZBallPosition(float zPos)
+{
+	//ネットのZ位置を通過するときの秒数を求める
+	float t = (zPos - startPoint_.z) / XMVectorGetZ(endPointDirection_);
+
+	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * t));
+
+	//X方向の強さが0以外のなら
+	if (strength_.x != ZERO)
+	{
+		nowPos.x = ((v0_.x * sin(XMConvertToRadians(ANGLE)) * t) - (0.5f * GRAVITY * t * t)) + nowPos.x * (MAX_RATIO - t);
+
+		//負なら
+		if (signbit(strength_.x))
+			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * t)) * strength_.x * 2);
+		//正なら
+		else
+			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * t)) * strength_.x / 2);
+	}
+
+	return nowPos;
 }

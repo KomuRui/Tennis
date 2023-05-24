@@ -71,63 +71,24 @@ void StandingState::HandleInput(PlayerBase* player)
 		Ball* pBall = ((Ball*)player->FindObject("Ball"));
 
 		//各ポジションを記憶
-		float ballEndX = pBall->GetEndPosition().x;
+		float ballEndX = pBall->GetSpecifyPosZBallPosition(player->GetPosition().z).x;
 		float playerX = player->GetPosition().x;
 
-		//ボールがバウンド後なら
-		if (pBall->GetBallStatus() == BallStatus::BOUND_MOVE)
+		//右側なら
+		if (ballEndX <= playerX)
 		{
-			//右側なら
-			if (pBall->GetPosition().x <= playerX)
-			{
-				player->GetRacket()->SetStroke(Stroke::FOREHAND);
+			player->GetRacket()->SetStroke(Stroke::FOREHAND);
 
-				PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
-				PlayerStateManager::playerState_->Enter(player);
-			}
-			//左側なら
-			else
-			{
-				player->GetRacket()->SetStroke(Stroke::BACKHAND);
-
-				PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
-				PlayerStateManager::playerState_->Enter(player);
-			}
+			PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
+			PlayerStateManager::playerState_->Enter(player);
 		}
-		//ボールがバウンド前なら
+		//左側なら
 		else
 		{
-			//ボールの位置が左側かつボールの終点が右側なら
-			if (pBall->GetPosition().x >= playerX && ballEndX <= playerX)
-			{
-				player->GetRacket()->SetStroke(Stroke::FOREHAND);
+			player->GetRacket()->SetStroke(Stroke::BACKHAND);
 
-				PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
-				PlayerStateManager::playerState_->Enter(player);
-			}
-			//ボールの位置が左側かつボールの終点が左側なら
-			else if (pBall->GetPosition().x >= playerX && ballEndX >= playerX)
-			{
-				player->GetRacket()->SetStroke(Stroke::BACKHAND);
-
-				PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
-				PlayerStateManager::playerState_->Enter(player);
-			}
-			//ボールの位置が右側かつボールの終点が左側なら
-			else if (pBall->GetPosition().x <= playerX && ballEndX >= playerX)
-			{
-				player->GetRacket()->SetStroke(Stroke::BACKHAND);
-
-				PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
-				PlayerStateManager::playerState_->Enter(player);
-			}
-			else
-			{
-				player->GetRacket()->SetStroke(Stroke::FOREHAND);
-
-				PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
-				PlayerStateManager::playerState_->Enter(player);
-			}
+			PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
+			PlayerStateManager::playerState_->Enter(player);
 		}
 	}
 }
