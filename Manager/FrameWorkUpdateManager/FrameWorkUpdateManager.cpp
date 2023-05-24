@@ -68,6 +68,19 @@ namespace FrameWorkUpdateManager
 		default:
 			break;
 		}
+
+		//プロジェクションを更新
+		Camera::SetProj(Direct3D::vp.Width, Direct3D::vp.Height);
+
+		//描画開始
+		Direct3D::SetViewPort(Direct3D::vp);
+
+		//エフェクトエディタモードじゃないのなら
+		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+		{
+			//様々な描画処理をする
+			GameManager::Draw();
+		}
 		
 		//ゲーム画面のサイズごとの各GUI描画
 		Direct3D::GetGameFull() ? ImGuiSet::GameScreenFullDraw()
@@ -101,6 +114,9 @@ namespace FrameWorkUpdateManager
 	/// </summary>
 	void OnePlayerDraw(GameObject* root)
 	{
+		//プロジェクションを更新
+		Camera::SetProj(Direct3D::vp.Width, Direct3D::vp.Height);
+
 		//描画開始
 		Direct3D::SetViewPort(Direct3D::vp);
 		Direct3D::BeginDraw();
@@ -131,6 +147,9 @@ namespace FrameWorkUpdateManager
 	{
 		/////////////左
 
+		//プロジェクションを更新
+		Camera::SetProj(Direct3D::vpLeft.Width, Direct3D::vpLeft.Height);
+
 		//描画開始
 		Direct3D::BeginDraw();
 		Direct3D::SetViewPort(Direct3D::vpLeft);
@@ -147,9 +166,6 @@ namespace FrameWorkUpdateManager
 		{
 			//透明・半透明描画
 			root->TransparentDrawSub();
-
-			//様々な描画処理をする
-			GameManager::Draw();
 		}
 
 		/////////////右
@@ -162,6 +178,9 @@ namespace FrameWorkUpdateManager
 		Camera::SetTarget(Camera::GetTargetTwo());
 		Camera::SetUpDirection(Camera::GetUpTwo());
 		Camera::UpdateTwo();
+
+		//プロジェクションを更新
+		Camera::SetProj(Direct3D::vpRight.Width, Direct3D::vpRight.Height);
 
 		//描画開始
 		Direct3D::SetViewPort(Direct3D::vpRight);
@@ -178,9 +197,6 @@ namespace FrameWorkUpdateManager
 		{
 			//透明・半透明描画
 			root->TransparentDrawSub();
-
-			//様々な描画処理をする
-			GameManager::Draw();
 		}
 
 		Camera::SetPosition(pos);

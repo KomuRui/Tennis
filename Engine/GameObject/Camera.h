@@ -49,6 +49,9 @@ namespace Camera
 	//エフェクトエディタのカメラにセット
 	void SetEffectEditCamera();
 
+	//プロジェクション行列をセット
+	void SetProj(float width, float height);
+
 	//画角を元に戻す
 	void UndoFiledAngle();
 

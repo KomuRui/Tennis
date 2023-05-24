@@ -77,6 +77,9 @@ namespace Direct3D
 	int						screenWidth_2 = 0;
 	int						screenHeight_2 = 0;
 
+	//現在のビューポート
+	D3D11_VIEWPORT vpNow;
+
 	//一人プレイ用
 	D3D11_VIEWPORT vp, vpFull, vpMini;
 	
@@ -148,8 +151,8 @@ namespace Direct3D
 	//ビューポートセット
 	void SetViewPort(D3D11_VIEWPORT v)
 	{
-		vp = v;
-		pContext_->RSSetViewports(1, &vp);
+		vpNow = v;
+		pContext_->RSSetViewports(1, &vpNow);
 	}
 
 	HWND GetWindowHandle()

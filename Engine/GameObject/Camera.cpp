@@ -337,6 +337,13 @@ void Camera::SetFieldAngle(int angle)
 	_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), ((FLOAT)Direct3D::screenWidth_ / 2.0f) / (FLOAT)Direct3D::screenHeight_, 0.1f, 1000.0f);
 }
 
+//プロジェクション行列をセット
+void Camera::SetProj(float width, float height)
+{
+	//プロジェクション行列
+	_proj = XMMatrixPerspectiveFovLH(XMConvertToRadians((float)_field_angle), width / height, 0.1f, 1000.0f);
+}
+
 //フレームワーク上のカメラを初期化
 void Camera::FrameCameraInitialize()
 {
