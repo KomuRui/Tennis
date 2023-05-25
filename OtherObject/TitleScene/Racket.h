@@ -31,7 +31,8 @@ class Racket : public NormalObject
 {
 
 	map<Type, XMFLOAT4> lineColor_;         //球種ごとのライン色
-	map<Type, string> effectFilePath_;      //球種ごとのエフェクトのファイルパス
+	map<Type, string> hitEffectFilePath_;   //球種ごとのヒットエフェクトのファイルパス
+	map<Type, string> dropEffectFilePath_;  //球種ごとの雫エフェクトのファイルパス
 	map<Type, HitStrength> hitStrength_;    //球種ごとの打つ時の強さ
 	Stroke stroke_;                         //ストローク
 	Type type_;						        //球種

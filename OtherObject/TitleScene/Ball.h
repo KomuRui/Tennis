@@ -30,6 +30,8 @@ class Ball : public NormalObject
 	float moveTime_;			 //始点から終点まで動く時間
 	float firstAngle_;           //放物線の最初の角度
 	bool isGoToBasePoint_;       //プレイヤーの基準点に向かうか
+	
+	string dropEffectFilePath_;  //雫エフェクトのファイルパス
 
 	Transform tShadow_;          //影のトランスフォーム
 
@@ -93,6 +95,11 @@ public:
 	/// </summary>
 	/// <param name="color">設定したい軌跡色</param>
 	void SetBallLineColor(XMFLOAT4 color) { pLine_->SetColor(color); }
+
+	/// <summary>
+	/// ボールの雫エフェクトのファイルパスを設定
+	/// </summary>
+	void SetBallDropEffectFilePath(string file) { dropEffectFilePath_ = file; }
 
 	/// <summary>
 	/// プレイヤーの基準点に向かっているか

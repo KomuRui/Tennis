@@ -37,18 +37,24 @@ void Racket::ChildInitialize()
 	Model::SetBrightness(hModel_, 1.0f);
 	
 	//球種ごとのボールの色を設定
-	ARGUMENT_INITIALIZE(lineColor_[Type::FLAT], XMFLOAT4(1, ZERO, 1, 1));
+	ARGUMENT_INITIALIZE(lineColor_[Type::FLAT], XMFLOAT4(1, 0.5f, 1, 1));
 	ARGUMENT_INITIALIZE(lineColor_[Type::LOB], XMFLOAT4(1, 1, ZERO, 1));
-	ARGUMENT_INITIALIZE(lineColor_[Type::SLICE], XMFLOAT4(ZERO, 1, 1, 1));
+	ARGUMENT_INITIALIZE(lineColor_[Type::SLICE], XMFLOAT4(ZERO, 0.5f, 1, 1));
 	ARGUMENT_INITIALIZE(lineColor_[Type::TOP_SPIN], XMFLOAT4(1, ZERO, ZERO, 1));
 
 	//球種ごとのエフェクトのファイルパスを設定
-	ARGUMENT_INITIALIZE(effectFilePath_[Type::FLAT], "Effect/FlatEffect.txt");
-	ARGUMENT_INITIALIZE(effectFilePath_[Type::LOB], "Effect/LobEffect.txt");
-	ARGUMENT_INITIALIZE(effectFilePath_[Type::SLICE], "Effect/SliceEffect.txt");
-	ARGUMENT_INITIALIZE(effectFilePath_[Type::TOP_SPIN], "Effect/TopSpinEffect.txt");
+	ARGUMENT_INITIALIZE(hitEffectFilePath_[Type::FLAT], "Effect/FlatEffect.txt");
+	ARGUMENT_INITIALIZE(hitEffectFilePath_[Type::LOB], "Effect/LobEffect.txt");
+	ARGUMENT_INITIALIZE(hitEffectFilePath_[Type::SLICE], "Effect/SliceEffect.txt");
+	ARGUMENT_INITIALIZE(hitEffectFilePath_[Type::TOP_SPIN], "Effect/TopSpinEffect.txt");
 
 	//球種ごとのエフェクトのファイルパスを設定
+	ARGUMENT_INITIALIZE(dropEffectFilePath_[Type::FLAT], "Effect/FlatDrop.txt");
+	ARGUMENT_INITIALIZE(dropEffectFilePath_[Type::LOB], "Effect/LobDrop.txt");
+	ARGUMENT_INITIALIZE(dropEffectFilePath_[Type::SLICE], "Effect/SliceDrop.txt");
+	ARGUMENT_INITIALIZE(dropEffectFilePath_[Type::TOP_SPIN], "Effect/TopSpinDrop.txt");
+
+	//打つ時の強さを格納する用
 	HitStrength h;
 
 	//フラット
@@ -146,12 +152,13 @@ void Racket::OnCollision(GameObject* pTarget)
 
 	//ボールの軌跡色を指定
 	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);
+	((Ball*)pTarget)->SetBallDropEffectFilePath(dropEffectFilePath_[type_]);
 
 	//ボールを次のコートへ
 	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_,false, GetInputBasePoint());
 
 	//エフェクト表示
-	EffectManager::Draw(effectFilePath_[type_], ((Ball*)pTarget)->GetPosition());
+	EffectManager::Draw(hitEffectFilePath_[type_], ((Ball*)pTarget)->GetPosition());
 
 	//元に戻す
 	ARGUMENT_INITIALIZE(hitStrength_[type_].strength_.x,s);

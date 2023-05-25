@@ -31,14 +31,14 @@ namespace
 Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
 	:NormalObject(parent, modelPath, name), ratio_(ZERO), strength_(ZERO,ZERO), endPointDirection_(XMVectorSet(ZERO, ZERO, ZERO, ZERO)),
 	startPoint_(ZERO, ZERO, ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO,ZERO), pLine_(nullptr),
-	hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO)
+	hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO), dropEffectFilePath_("Effect/SliceDrop.txt")
 {
 }
 
 Ball::Ball(GameObject* parent)
 	:NormalObject(parent, "Ball/Ball.fbx", "Ball"), ratio_(ZERO), strength_(ZERO, ZERO), endPointDirection_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
 	startPoint_(ZERO,ZERO,ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO, ZERO), pLine_(nullptr),
-    hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO)
+    hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO), dropEffectFilePath_("Effect/SliceDrop.txt")
 {}
 
 //初期化
@@ -56,7 +56,7 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(pLine_, new PolyLine);
-	pLine_->Load("Image/Effect/tex.png");
+	pLine_->Load("Image/Effect/circle_Wh.png");
 	pLine_->AddPosition(transform_.position_);
 
 	//影のモデルロード
@@ -273,7 +273,7 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPl
 	ARGUMENT_INITIALIZE(hEffect_, OtherEffectManager::LandingEffect(pos, moveTime_));
 
 	//雫みたいなエフェクト表示
-	ARGUMENT_INITIALIZE(hDropEffect_,EffectManager::Draw("Effect/Drop.txt", transform_.position_));
+	ARGUMENT_INITIALIZE(hDropEffect_,EffectManager::Draw(dropEffectFilePath_, transform_.position_));
 
 	//次の目的地に移動するように
 	ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
