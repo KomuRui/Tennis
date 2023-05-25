@@ -26,6 +26,7 @@ private:
 	bool isHitMove_;		//打つ動きをしているか
 
 	int buttonCode_;		//打つ時のボタンコード格納用
+	float chargeTime_;      //チャージ時間             
 
 public:
 
@@ -80,6 +81,11 @@ public:
 	//エフェクト番号セット
 	void SetChargeEffectNum(int num) { hChargeEffect_ = num; }
 
+	//チャージ時間を取得
+	float GetChargeTime() { return chargeTime_; }
+
+	//チャージ時間を設定
+	void SetChargeTime(float t) { chargeTime_ = t; }
 };
 
 

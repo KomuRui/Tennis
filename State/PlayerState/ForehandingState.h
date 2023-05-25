@@ -8,7 +8,8 @@ class PlayerBase;
 /// </summary>
 class ForehandingState : public PlayerState
 {
-	int hTime_;		 //タイマーハンドル
+	int hTime_;		       //タイマーハンドル
+	XMFLOAT2 effectSize_;  //エフェクトのサイズ
 
 public:
 

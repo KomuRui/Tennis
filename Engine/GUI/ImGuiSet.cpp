@@ -1532,7 +1532,7 @@ namespace ImGuiSet
         if (ImGui::TreeNode("color")) {
 
             float color[4] = { color_.x, color_.y, color_.z, color_.w };
-            ImGui::ColorPicker3("Color", color, ImGuiColorEditFlags_PickerHueWheel);
+            ImGui::ColorPicker4("Color", color, ImGuiColorEditFlags_PickerHueWheel);
             color_ = XMFLOAT4(color[0], color[1], color[2], color[3]);
 
             ImGui::TreePop();
@@ -1540,7 +1540,7 @@ namespace ImGuiSet
         if (ImGui::TreeNode("deltaColor")) {
 
             float deltaColor[4] = { deltaColor_.x, deltaColor_.y, deltaColor_.z, deltaColor_.w };
-            ImGui::ColorPicker3("deltaColor", deltaColor, ImGuiColorEditFlags_PickerHueWheel);
+            ImGui::ColorPicker4("deltaColor", deltaColor, ImGuiColorEditFlags_PickerHueWheel);
             deltaColor_ = XMFLOAT4(deltaColor[0], deltaColor[1], deltaColor[2], deltaColor[3]);
 
             ImGui::TreePop();

@@ -24,6 +24,7 @@ class Ball : public NormalObject
 	int hShadowModel_;           //影のモデル
 	int hTime_;                  //タイマーハンドル
 	int hEffect_;                //エフェクトハンドル
+	int hDropEffect_;            //エフェクトハンドル
 	int boundCount_;             //バウンドの回数
 	float ratio_;			     //割合(始点から終点のどこの割合にいるか)
 	float moveTime_;			 //始点から終点まで動く時間

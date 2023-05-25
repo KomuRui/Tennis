@@ -316,6 +316,21 @@ void VFX::ForcedEnd(int handle)
     }
 }
 
+//エミッターデータを再設定
+void VFX::SetEmitterData(int handle, EmitterData data)
+{
+    Emitter* p = GetEmitter(handle);
+
+    for (auto particle = particleList_.begin(); particle != particleList_.end(); particle++)
+    {
+        //同じエミッターなら
+        if ((*particle)->pEmitter == p)
+        {
+            (*particle)->pEmitter->data = data;
+        }      
+    }
+}
+
 /// エミッター取得
 VFX::Emitter* VFX::GetEmitter(int handle)
 {

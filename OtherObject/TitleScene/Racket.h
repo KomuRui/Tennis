@@ -36,6 +36,7 @@ class Racket : public NormalObject
 	Stroke stroke_;                         //ストローク
 	Type type_;						        //球種
 	XMFLOAT3 colliderPos_;                  //コライダーのポジション
+	float ratio_;                           //倍率
 
 public:
 
@@ -77,9 +78,27 @@ public:
 	void SetStroke(Stroke t) { stroke_ = t; }
 
 	/// <summary>
+	/// 倍率を設定
+	/// </summary>
+	/// <param name="ratio">設定したい倍率</param>
+	void SetRatio(float ratio) { ratio_ = ratio; }
+
+	/// <summary>
+	/// 倍率を取得
+	/// </summary>
+	/// <returns>倍率</returns>
+	float GetRatio() { return ratio_; }
+
+	/// <summary>
 	/// ランダムに打つ時の強さを取得
 	/// </summary>
 	/// <returns>打つ時の強さ</returns>
 	HitStrength GetRamdomHitStrength();
+
+	/// <summary>
+	/// タイプごとの色を取得
+	/// </summary>
+	/// <returns>タイプごとの色</returns>
+	XMFLOAT4 GetTypeColor() { return lineColor_[type_]; }
 };
 

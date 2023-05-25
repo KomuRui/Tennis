@@ -127,6 +127,13 @@ namespace VFX
 	void ForcedEnd(int handle);
 
 	/// <summary>
+	/// エミッターデータを再設定
+	/// </summary>
+	/// <param name="handle">エフェクトの番号</param>
+	/// <param name="data">再設定エミッターデータ</param>
+	void SetEmitterData(int handle, EmitterData data);
+	
+	/// <summary>
 	/// エミッター取得
 	/// </summary>
 	/// <param name="handle">番号</param>

@@ -4,6 +4,7 @@
 #include "../../Manager/BasePointManager/BasePointManager.h"
 #include "../../Engine/ResourceManager/Time.h"
 #include "../../Manager/EffectManager/OtherEffectManager/OtherEffectManager.h"
+#include "../../Manager/EffectManager/EffectManager.h"
 #include "../../Engine/ResourceManager/VFX.h"
 #include "../../Engine/Collider/SphereCollider.h"
 #include "../../Manager/GameManager/GameManager.h"
@@ -151,6 +152,9 @@ void Ball::MoveToPurpose()
 	ARGUMENT_INITIALIZE(transform_.position_, nowPos);
 	pLine_->AddPosition(transform_.position_);
 
+	//エフェクトのポジション更新
+	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffect_)->data.position,transform_.position_);
+
 	//進行ベクトルを求める
 	ARGUMENT_INITIALIZE(progressVector_, transform_.position_ - beforePos);
 
@@ -168,6 +172,7 @@ void Ball::MoveToPurpose()
 
 		//エフェクト削除
 		VFX::ForcedEnd(hEffect_);
+		VFX::ForcedEnd(hDropEffect_);
 
 		//正反射ベクトルの角度を求めたいので正反射ベクトルのYを無視したベクトルを作る
 		XMVECTOR v = { XMVectorGetX(progressVector_),ZERO,XMVectorGetZ(progressVector_),ZERO };
@@ -266,6 +271,9 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPl
 	ARGUMENT_INITIALIZE(pos.y, LANDING_EFFECT_POS_Y);
 	VFX::ForcedEnd(hEffect_);
 	ARGUMENT_INITIALIZE(hEffect_, OtherEffectManager::LandingEffect(pos, moveTime_));
+
+	//雫みたいなエフェクト表示
+	ARGUMENT_INITIALIZE(hDropEffect_,EffectManager::Draw("Effect/Drop.txt", transform_.position_));
 
 	//次の目的地に移動するように
 	ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);

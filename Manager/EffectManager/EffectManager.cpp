@@ -1,5 +1,4 @@
 #include "EffectManager.h"
-#include "../../Engine/ResourceManager/VFX.h"
 #include <fstream>
 #include <map>
 
@@ -101,4 +100,7 @@ namespace EffectManager
         //エフェクトテーブルに保存
         ARGUMENT_INITIALIZE(effectTable_[fileNamePath],data);
 	}
+
+    //エミッターデータを取得
+    EmitterData GetEmitterData(string fileNamePath) { return effectTable_[fileNamePath]; }
 }

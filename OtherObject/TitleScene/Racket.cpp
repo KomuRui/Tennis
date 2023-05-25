@@ -22,12 +22,12 @@ namespace
 
 //コンストラクタ
 Racket::Racket(GameObject* parent, std::string modelPath, std::string name)
-	:NormalObject(parent, modelPath, name), type_(Type::FLAT), stroke_(Stroke::FOREHAND), colliderPos_(ZERO, ZERO, ZERO)
+	:NormalObject(parent, modelPath, name), type_(Type::FLAT), stroke_(Stroke::FOREHAND), colliderPos_(ZERO, ZERO, ZERO), ratio_(1.0)
 {
 }
 
 Racket::Racket(GameObject* parent)
-	:NormalObject(parent, "Racket/Normal.fbx", "Racket"), type_(Type::FLAT), stroke_(Stroke::FOREHAND), colliderPos_(ZERO, ZERO, ZERO)
+	:NormalObject(parent, "Racket/Normal.fbx", "Racket"), type_(Type::FLAT), stroke_(Stroke::FOREHAND), colliderPos_(ZERO, ZERO, ZERO), ratio_(1.0)
 {}
 
 //初期化
@@ -148,7 +148,7 @@ void Racket::OnCollision(GameObject* pTarget)
 	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);
 
 	//ボールを次のコートへ
-	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_,false, GetInputBasePoint());
+	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_,false, GetInputBasePoint());
 
 	//エフェクト表示
 	EffectManager::Draw(effectFilePath_[type_], ((Ball*)pTarget)->GetPosition());
