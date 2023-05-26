@@ -7,6 +7,7 @@
 #include "../../OtherObject/TitleScene/Racket.h"
 #include "../../Engine/ResourceManager/Time.h"
 #include "../../Engine/ResourceManager/Easing.h"
+#include "../../OtherObject/TitleScene/Ball.h"
 #include <math.h>
 
 //各static変数の初期化
@@ -52,8 +53,6 @@ void PlayerStateManager::Update3D(PlayerBase* player)
         //タイマー初期化
         Time::Reset(hTime_);
         Time::Lock(hTime_);
-
-        return;
     }
 
     //元の姿勢に戻すのなら
@@ -98,8 +97,44 @@ void PlayerStateManager::Update3D(PlayerBase* player)
         XMMATRIX matRotate = rotateZ * rotateX * rotateY;
 
         //Playerの移動
-        player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord((front_ / 10.0f) * RUN_SPEED, matRotate))));
-       // player->SetRotateY(XMConvertToDegrees(atan2(-PadLx, -PadLy)));
+        //フォアかバックハンド状態なら
+        if (playerState_ == PlayerStateManager::playerBackhanding_ || playerState_ == PlayerStateManager::playerForehanding_)
+        {
+            //アニメーション止める
+            Model::SetAnimFlag(player->GetModelNum(), false);
+
+            //ボールのポインタ
+            Ball* pBall = ((Ball*)player->FindObject("Ball"));
+
+            //各ポジションを記憶用
+            float ballEndX = ZERO;
+            float playerX = ZERO;
+
+            //nullptrじゃないのなら
+            if (pBall != nullptr)
+            {
+                ballEndX = pBall->GetSpecifyPosZBallPosition(player->GetPosition().z).x;
+                playerX = player->GetPosition().x;
+            }
+
+            //割合を取得
+            float dis = abs(playerX - ballEndX);
+
+            //距離が定数以下なら
+            if (dis <= 3.0f)
+            {
+                player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * (dis / 3.0f * 0.5f), matRotate))));
+            }
+            else
+            {
+                player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * 0.5f, matRotate))));
+            }
+        }
+        //サーブ状態じゃないのなら
+        else if(playerState_ != PlayerStateManager::playerServing_)
+            player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord((front_ / 10.0f) * RUN_SPEED, matRotate))));
+       
+        //player->SetRotateY(XMConvertToDegrees(atan2(-PadLx, -PadLy)));
     }
     //動いていないのならアニメーションを止める
     else

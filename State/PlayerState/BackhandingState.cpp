@@ -86,12 +86,18 @@ void BackhandingState::Update3D(PlayerBase* player)
 		//徐々に縮小するように
 		if (d != nullptr)
 		{
+			//位置更新
+			ARGUMENT_INITIALIZE(d->data.position, player->GetPosition());
+			d->data.position.y += 1.0f;
+
+			//サイズ更新
 			d->data.size.x += EFFECT_SIZE_ADD_VALUE;
 			d->data.size.y += EFFECT_SIZE_ADD_VALUE;
 
 			ARGUMENT_INITIALIZE(d->data.size.x, Clamp(d->data.size.x, EFFECT_MAX_SIZE, effectSize_.x));
 			ARGUMENT_INITIALIZE(d->data.size.y, Clamp(d->data.size.y, EFFECT_MAX_SIZE, effectSize_.y));
 
+			//色更新
 			d->data.color.x += EFFECT_COLOR_ADD_VALUE;
 			d->data.color.y -= EFFECT_COLOR_ADD_VALUE;
 			d->data.color.z -= EFFECT_COLOR_ADD_VALUE;
