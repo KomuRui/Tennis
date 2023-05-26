@@ -15,9 +15,9 @@ namespace
 	////////////////コライダー///////////////////
 
 	static const int      BASE_ADD_ANGLE_VALUE = -80;    //ベースに加算する角度の値
-	static const float    COLLIDER_SIZE_X = 1.5f;        //コライダーのサイズ
+	static const float    COLLIDER_SIZE_X = 2.0f;        //コライダーのサイズ
 	static const float    COLLIDER_SIZE_Y = 2.0f;        //コライダーのサイズ
-	static const float    COLLIDER_SIZE_Z = 1.0f;        //コライダーのサイズ
+	static const float    COLLIDER_SIZE_Z = 2.0f;        //コライダーのサイズ
 }
 
 //コンストラクタ
@@ -158,7 +158,7 @@ void Racket::OnCollision(GameObject* pTarget)
 	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_,false, GetInputBasePoint());
 
 	//エフェクト表示
-	EffectManager::Draw(hitEffectFilePath_[type_], ((Ball*)pTarget)->GetPosition());
+	EffectManager::Draw("HitEffect",hitEffectFilePath_[type_], ((Ball*)pTarget)->GetPosition());
 
 	//元に戻す
 	ARGUMENT_INITIALIZE(hitStrength_[type_].strength_.x,s);

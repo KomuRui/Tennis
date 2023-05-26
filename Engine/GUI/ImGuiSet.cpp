@@ -1698,14 +1698,14 @@ namespace ImGuiSet
         ARGUMENT_INITIALIZE(data.isBillBoard, isBillBoard_);
 
         //情報があるのなら
-        if(VFX::GetEmitter(effectNum) != nullptr)
-            ARGUMENT_INITIALIZE(VFX::GetEmitter(effectNum)->data,data);
+        if (VFX::GetEmitter("a") != nullptr)
+            ARGUMENT_INITIALIZE(VFX::GetEmitter("a")->data,data);
 
         //スタートボタンを押したらエフェクト再スタート
         if (ImGui::Button("START"))
         {
-            VFX::ForcedEnd(effectNum);
-            ARGUMENT_INITIALIZE(effectNum,VFX::Start(data));
+            VFX::ForcedEnd("a");
+            VFX::Start("a",data);
         }
 
         //作ったエフェクトエクスポート機能

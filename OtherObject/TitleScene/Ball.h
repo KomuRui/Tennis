@@ -23,14 +23,14 @@ class Ball : public NormalObject
 
 	int hShadowModel_;           //影のモデル
 	int hTime_;                  //タイマーハンドル
-	int hEffect_;                //エフェクトハンドル
-	int hDropEffect_;            //エフェクトハンドル
 	int boundCount_;             //バウンドの回数
 	float ratio_;			     //割合(始点から終点のどこの割合にいるか)
 	float moveTime_;			 //始点から終点まで動く時間
 	float firstAngle_;           //放物線の最初の角度
 	bool isGoToBasePoint_;       //プレイヤーの基準点に向かうか
 	
+	string hLandEffectName_;     //着地エフェクトハンドル
+	string hDropEffectName_;     //雫エフェクトハンドル
 	string dropEffectFilePath_;  //雫エフェクトのファイルパス
 
 	Transform tShadow_;          //影のトランスフォーム

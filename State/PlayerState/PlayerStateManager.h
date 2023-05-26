@@ -18,9 +18,9 @@ class PlayerStateManager : public PlayerState
 private:
 
 	
-	XMVECTOR front_;        //キャラの前方向のベクトル       
-	int hTime_;             //タイマーハンドル
-	int hChargeEffect_;     //チャージエフェクト番号
+	XMVECTOR front_;			//キャラの前方向のベクトル       
+	int hTime_;					//タイマーハンドル
+	string hChargeEffectName_;  //チャージエフェクト番号
 
 	bool isRestorePosture_; //元の姿勢に戻すかどうか
 	bool isHitMove_;		//打つ動きをしているか
@@ -76,10 +76,10 @@ public:
 	void SetNowButtonCode(int code) { buttonCode_ = code; }
 
 	//エフェクト番号取得
-	int GetChargeEffectNum() { return hChargeEffect_; }
+	string GetChargeEffectNum() { return hChargeEffectName_; }
 
 	//エフェクト番号セット
-	void SetChargeEffectNum(int num) { hChargeEffect_ = num; }
+	void SetChargeEffectNum(string s) { hChargeEffectName_ = s; }
 
 	//チャージ時間を取得
 	float GetChargeTime() { return chargeTime_; }

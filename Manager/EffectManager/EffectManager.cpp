@@ -13,7 +13,7 @@ namespace EffectManager
 	map<string, EmitterData> effectTable_;
 
 	//エフェクト表示
-	int Draw(string fileNamePath, XMFLOAT3 pos)
+	void Draw(string effectName, string fileNamePath, XMFLOAT3 pos)
 	{
 		//存在しているかどうか
 		bool isExist = false;
@@ -36,7 +36,7 @@ namespace EffectManager
         ARGUMENT_INITIALIZE(effectTable_[fileNamePath].position, pos);
 
         //エフェクトスタート
-        return VFX::Start(effectTable_[fileNamePath]);
+        return VFX::Start(effectName,effectTable_[fileNamePath]);
 	}
 
 	//エフェクトロード

@@ -71,7 +71,7 @@ void StandingState::HandleInput(PlayerBase* player)
 		//エフェクト表示
 		XMFLOAT3 pos = player->GetPosition();
 		pos.y += 1;
-		player->pState_->SetChargeEffectNum(EffectManager::Draw("Effect/charge.txt",pos));
+		EffectManager::Draw(player->pState_->GetChargeEffectNum(),"Effect/charge.txt",pos);
 
 		//ボールのポインタ
 		Ball* pBall = ((Ball*)player->FindObject("Ball"));

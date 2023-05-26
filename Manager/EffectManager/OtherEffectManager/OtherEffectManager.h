@@ -7,5 +7,5 @@
 namespace OtherEffectManager
 {
 	//着地エフェクト
-	int LandingEffect(const XMFLOAT3& pos, const float& lifeTime);
+	void LandingEffect(string effectName, const XMFLOAT3& pos, const float& lifeTime);
 }

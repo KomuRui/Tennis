@@ -244,35 +244,26 @@ void VFX::Release()
 
 
 //エミッタの作成
-int VFX::Start(EmitterData emitterData)
+void VFX::Start(string id,EmitterData emitterData)
 {
-    int handle = 0;
-    for (auto i = emitterList_.begin(); i != emitterList_.end(); i++)
-    {
-        handle++;
-    }
-
-
     Emitter* pEmitter = new Emitter;
 
     pEmitter->data = emitterData;
-    pEmitter->handle = handle;
+    pEmitter->id = id;
     pEmitter->frameCount = 0;
 
     pEmitter->pBillBoard = new BillBoard;
     pEmitter->pBillBoard->Load(emitterData.textureFileName);
 
     emitterList_.push_back(pEmitter);
-
-    return handle;
 }
 
 //エミッタの削除
-void VFX::End(int handle)
+void VFX::End(string id)
 {
     for (auto i = emitterList_.begin(); i != emitterList_.end(); i++)
     {
-        if ((*i)->handle == handle)
+        if ((*i)->id == id)
         {
             (*i)->isDead = true;
             break;
@@ -283,13 +274,13 @@ void VFX::End(int handle)
 
 //エミッタを強制削除（エフェクト終了）
 //引数：handle	エフェクトの番号
-void VFX::ForcedEnd(int handle)
+void VFX::ForcedEnd(string id)
 {
     Emitter* p = nullptr;
 
     for (auto i = emitterList_.begin(); i != emitterList_.end(); i++)
     {
-        if ((*i)->handle == handle)
+        if ((*i)->id == id)
         {
             p = (*i);
             break;
@@ -317,9 +308,9 @@ void VFX::ForcedEnd(int handle)
 }
 
 //エミッターデータを再設定
-void VFX::SetEmitterData(int handle, EmitterData data)
+void VFX::SetEmitterData(string id, EmitterData data)
 {
-    Emitter* p = GetEmitter(handle);
+    Emitter* p = GetEmitter(id);
 
     for (auto particle = particleList_.begin(); particle != particleList_.end(); particle++)
     {
@@ -332,11 +323,11 @@ void VFX::SetEmitterData(int handle, EmitterData data)
 }
 
 /// エミッター取得
-VFX::Emitter* VFX::GetEmitter(int handle)
+VFX::Emitter* VFX::GetEmitter(string id)
 {
     for (auto i = emitterList_.begin(); i != emitterList_.end(); i++)
     {
-        if ((*i)->handle == handle)
+        if ((*i)->id == id)
         {
             return (*i);
         }

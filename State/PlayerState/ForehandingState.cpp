@@ -108,8 +108,12 @@ void ForehandingState::Update3D(PlayerBase* player)
 			//チャージエフェクト削除
 			VFX::ForcedEnd(player->pState_->GetChargeEffectNum());
 
+			//タイムを取得
+			float time = Time::GetTimef(hTime_);
+			ARGUMENT_INITIALIZE(time, min<float>(time, 1.5f));
+
 			//打つ時の倍率を設定
-			player->GetRacket()->SetRatio(1 - (Time::GetTimef(hTime_) / 3));
+			player->GetRacket()->SetRatio(1 - (time / 3));
 
 			//タイマーリセット
 			Time::Reset(hTime_);

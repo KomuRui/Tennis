@@ -31,14 +31,14 @@ namespace
 Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
 	:NormalObject(parent, modelPath, name), ratio_(ZERO), strength_(ZERO,ZERO), endPointDirection_(XMVectorSet(ZERO, ZERO, ZERO, ZERO)),
 	startPoint_(ZERO, ZERO, ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO,ZERO), pLine_(nullptr),
-	hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO), dropEffectFilePath_("Effect/SliceDrop.txt")
+	hLandEffectName_("LandEffect"), hDropEffectName_("DropEffect"), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO), dropEffectFilePath_("Effect/SliceDrop.txt")
 {
 }
 
 Ball::Ball(GameObject* parent)
 	:NormalObject(parent, "Ball/Ball.fbx", "Ball"), ratio_(ZERO), strength_(ZERO, ZERO), endPointDirection_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
 	startPoint_(ZERO,ZERO,ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO, ZERO), pLine_(nullptr),
-    hEffect_(ZERO), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO), dropEffectFilePath_("Effect/SliceDrop.txt")
+	hLandEffectName_("LandEffect"), hDropEffectName_("DropEffect"), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO), dropEffectFilePath_("Effect/SliceDrop.txt")
 {}
 
 //初期化
@@ -68,7 +68,10 @@ void Ball::ChildInitialize()
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
 	XMFLOAT3 pos = endPoint_;
 	ARGUMENT_INITIALIZE(pos.y, LANDING_EFFECT_POS_Y);
-	ARGUMENT_INITIALIZE(hEffect_,OtherEffectManager::LandingEffect(pos, moveTime_));
+	OtherEffectManager::LandingEffect(hLandEffectName_,pos, moveTime_);
+
+	//雫みたいなエフェクト表示
+	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_.position_);
 
 	//当たり判定
 	SphereCollider* collision = new SphereCollider({ ZERO,ZERO,ZERO },0.1f);
@@ -153,7 +156,7 @@ void Ball::MoveToPurpose()
 	pLine_->AddPosition(transform_.position_);
 
 	//エフェクトのポジション更新
-	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffect_)->data.position,transform_.position_);
+	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffectName_)->data.position,transform_.position_);
 
 	//進行ベクトルを求める
 	ARGUMENT_INITIALIZE(progressVector_, transform_.position_ - beforePos);
@@ -169,10 +172,6 @@ void Ball::MoveToPurpose()
 		
 		//タイマーリセット
 		Time::Reset(hTime_);
-
-		//エフェクト削除
-		VFX::ForcedEnd(hEffect_);
-		VFX::ForcedEnd(hDropEffect_);
 
 		//正反射ベクトルの角度を求めたいので正反射ベクトルのYを無視したベクトルを作る
 		XMVECTOR v = { XMVectorGetX(progressVector_),ZERO,XMVectorGetZ(progressVector_),ZERO };
@@ -194,7 +193,10 @@ void Ball::BoundMove()
 
 	transform_.position_.y = nowPos.y;
 
+	//エフェクトのポジション更新
 	pLine_->AddPosition(transform_.position_);
+	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffectName_)->data.position, transform_.position_);
+
 
 	if (transform_.position_.y < ZERO)
 	{
@@ -215,7 +217,8 @@ void Ball::BoundMove()
 			ARGUMENT_INITIALIZE(boundCount_,ZERO);
 
 			Time::Reset(hTime_);
-			VFX::ForcedEnd(hEffect_);
+			VFX::ForcedEnd(hLandEffectName_);
+			VFX::ForcedEnd(hDropEffectName_);
 
 			//打つ強さをランダムに取得
 			HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
@@ -269,11 +272,12 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPl
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
 	XMFLOAT3 pos = endPoint_;
 	ARGUMENT_INITIALIZE(pos.y, LANDING_EFFECT_POS_Y);
-	VFX::ForcedEnd(hEffect_);
-	ARGUMENT_INITIALIZE(hEffect_, OtherEffectManager::LandingEffect(pos, moveTime_));
+	VFX::ForcedEnd(hLandEffectName_);
+    OtherEffectManager::LandingEffect(hLandEffectName_,pos, moveTime_);
 
 	//雫みたいなエフェクト表示
-	ARGUMENT_INITIALIZE(hDropEffect_,EffectManager::Draw(dropEffectFilePath_, transform_.position_));
+	VFX::ForcedEnd(hDropEffectName_);
+	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_.position_);
 
 	//次の目的地に移動するように
 	ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);

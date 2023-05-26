@@ -102,7 +102,7 @@ void BackhandingState::Update3D(PlayerBase* player)
 			d->data.color.y -= EFFECT_COLOR_ADD_VALUE;
 			d->data.color.z -= EFFECT_COLOR_ADD_VALUE;
 			d->data.color.w += EFFECT_COLOR_ADD_VALUE;
-			d->data.spin.z += EFFECT_SPIN_ADD_VALUE;
+			d->data.spin.z  += EFFECT_SPIN_ADD_VALUE;
 		}
 
 		//もし回転が最後まで終わったかつボタンを離しているかもともボタンを離していたら
@@ -111,8 +111,12 @@ void BackhandingState::Update3D(PlayerBase* player)
 			//チャージエフェクト削除
 			VFX::ForcedEnd(player->pState_->GetChargeEffectNum());
 
+			//タイムを取得
+			float time = Time::GetTimef(hTime_);
+			ARGUMENT_INITIALIZE(time,min<float>(time, 1.5f));
+
 			//打つ時の倍率を設定
-			player->GetRacket()->SetRatio(1-(Time::GetTimef(hTime_) / 3));
+			player->GetRacket()->SetRatio(1-(time / 3));
 
 			//タイマーリセット
 			Time::Reset(hTime_);

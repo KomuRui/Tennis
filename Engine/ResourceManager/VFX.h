@@ -60,7 +60,7 @@ namespace VFX
 	struct Emitter
 	{
 		EmitterData data;		//作成時に指定されたデータ
-		int handle = -1;		//ハンドル（番号）
+		string id = "";			//ハンドル（番号）
 		DWORD frameCount = 0;	//開始してからのフレーム数
 		BillBoard* pBillBoard = nullptr;	//パーティクルに使うポリゴン
 		bool isDead = false;	//削除対象かどうか（実際はパーティクルが全部消えるまでエミッターは消えない）
@@ -116,27 +116,27 @@ namespace VFX
 	//エミッタを作成（エフェクト開始）
 	//引数：emitterData	各種情報
 	//戻値：エフェクト（エミッタ）の番号
-	int Start(EmitterData emitterData);
+	void Start(string id, EmitterData emitterData);
 
 	//エミッタを削除（エフェクト終了）
 	//引数：handle	エフェクトの番号
-	void End(int handle);
+	void End(string id);
 
 	//エミッタを強制削除（エフェクト終了）
 	//引数：handle	エフェクトの番号
-	void ForcedEnd(int handle);
+	void ForcedEnd(string id);
 
 	/// <summary>
 	/// エミッターデータを再設定
 	/// </summary>
 	/// <param name="handle">エフェクトの番号</param>
 	/// <param name="data">再設定エミッターデータ</param>
-	void SetEmitterData(int handle, EmitterData data);
+	void SetEmitterData(string id, EmitterData data);
 	
 	/// <summary>
 	/// エミッター取得
 	/// </summary>
 	/// <param name="handle">番号</param>
-	Emitter* GetEmitter(int handle);
+	Emitter* GetEmitter(string id);
 };
 

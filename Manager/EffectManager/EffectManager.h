@@ -13,7 +13,7 @@ namespace EffectManager
 	/// </summary>
 	/// <param name="pos">エフェクトが発生する位置</param>
 	/// <param name="filename">エフェクト情報が保管しているファイルネームパス</param>
-	int Draw(string fileNamePath,XMFLOAT3 pos);
+	void Draw(string effectName,string fileNamePath,XMFLOAT3 pos);
 
 	/// <summary>
 	/// エフェクトロード

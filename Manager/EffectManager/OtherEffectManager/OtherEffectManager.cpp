@@ -9,7 +9,7 @@
 namespace OtherEffectManager
 {
 	//着地エフェクト
-	int LandingEffect(const XMFLOAT3& pos , const float& lifeTime)
+	void LandingEffect(string effectName,const XMFLOAT3& pos , const float& lifeTime)
 	{
 		EmitterData data2;
 		data2.textureFileName = "Image/Effect/defaultParticle.png";
@@ -22,6 +22,6 @@ namespace OtherEffectManager
 		data2.lifeTime = lifeTime * 60;
 		data2.size = XMFLOAT2(3, 3);
 		data2.color = XMFLOAT4(1, 0, 0, 1);
-		return VFX::Start(data2);
+		VFX::Start(effectName,data2);
 	}
 }
