@@ -117,8 +117,13 @@ namespace FrameWorkUpdateManager
 		//プロジェクションを更新
 		Camera::SetProj(Direct3D::vp.Width, Direct3D::vp.Height);
 
-		//描画開始
+		//ビューポート設定
 		Direct3D::SetViewPort(Direct3D::vp);
+		
+		//先に影用のテクスチャを作成
+		ShadowDraw(root);
+
+		//描画開始
 		Direct3D::BeginDraw();
 
 		//エフェクトエディタモードじゃないのなら
@@ -200,6 +205,51 @@ namespace FrameWorkUpdateManager
 		Camera::SetPosition(pos);
 		Camera::SetTarget(tar);
 		Camera::SetUpDirection(up);
+	}
+
+	/// <summary>
+	/// 影描画
+	/// </summary>
+	void ShadowDraw(GameObject* root)
+	{
+		//影描画開始
+		ARGUMENT_INITIALIZE(Direct3D::isShadowDraw, true);
+
+		//シャドウマップ作成
+		//ライトの位置から見た画像を、遠くは白、近くは黒のグレースケールで表す
+		XMFLOAT3 pos = Camera::GetPosition();
+		XMFLOAT3 tar = Camera::GetTarget();
+		XMVECTOR up = Camera::GetUp();
+		Camera::SetPosition(XMFLOAT3(-15, 20, -1));
+		Camera::SetTarget(XMFLOAT3(0, 0, 0));
+		Camera::Update();
+		Direct3D::lightView_ = Camera::GetViewMatrix();
+
+		Direct3D::BrginDrawShadowToTexture();
+
+		root->DrawSub();
+
+		//エフェクトの描画
+		VFX::Draw();
+
+		//エフェクトエディタモードじゃないのなら
+		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+		{
+			//透明・半透明描画
+			root->TransparentDrawSub();
+		}
+
+		//描画終了
+		Direct3D::EndDraw();
+
+		//カメラ元に戻す
+		Camera::SetPosition(pos);
+		Camera::SetTarget(tar);
+		Camera::SetUpDirection(up);
+		Camera::Update();
+
+		//影描画終了
+		ARGUMENT_INITIALIZE(Direct3D::isShadowDraw, false);
 	}
 
 };

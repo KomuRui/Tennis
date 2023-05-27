@@ -545,6 +545,8 @@ void FbxParts::Draw(Transform& transform)
 		else
 			cb.normalTrans = XMMatrixTranspose(transform.mmRotate_ * XMMatrixInverse(nullptr, transform.matScale_));
 
+		cb.mWLP = XMMatrixTranspose(transform.GetWorldMatrix() * Direct3D::lightView_ * Camera::GetProjectionMatrix());
+		cb.mWLPT = XMMatrixTranspose(transform.GetWorldMatrix() * Direct3D::lightView_ * Camera::GetProjectionMatrix() * Direct3D::clipToUV_);
 		cb.lightDirection = Light::GetDirection();
 		cb.ambient = pMaterial_[i].ambient;
 		cb.diffuse = pMaterial_[i].diffuse;
@@ -585,6 +587,9 @@ void FbxParts::Draw(Transform& transform)
 			ID3D11ShaderResourceView* pSRV = pMaterial_[i].pNormalTex->GetSRV();
 			Direct3D::pContext_->PSSetShaderResources(1, 1, &pSRV);
 		}
+
+		ID3D11ShaderResourceView* pSRV = Direct3D::pDepthSRV_;
+		Direct3D::pContext_->PSSetShaderResources(2, 1, &pSRV);
 
 		Direct3D::pContext_->Unmap(pConstantBuffer_, 0);									// GPUからのリソースアクセスを再開
 

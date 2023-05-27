@@ -3,6 +3,7 @@
 //───────────────────────────────────────
 Texture2D		g_texture: register(t0);	//テクスチャー
 SamplerState	g_sampler : register(s0);	//サンプラー
+Texture2D		g_texDepth : register(t2);  //深度テクスチャー
 
 //───────────────────────────────────────
  // コンスタントバッファ
@@ -13,6 +14,8 @@ cbuffer global
 	float4x4	g_matWVP;			  // ワールド・ビュー・プロジェクションの合成行列
 	float4x4	g_matNormalTrans;	  // 法線の変換行列（回転行列と拡大の逆行列）
 	float4x4	g_matWorld;			  // ワールド変換行列
+	float4x4	g_mWLP;				  //ワールド・”ライトビュー”・プロジェクションの合成 
+	float4x4	g_mWLPT;			  //ワールド・”ライトビュー”・プロジェクション・UV 行列の合成 
 	float4		g_vecLightDir;		  // ライトの方向ベクトル
 	float4		g_vecDiffuse;		  // ディフューズカラー（マテリアルの色）
 	float4		g_vecAmbient;		  // アンビエントカラー（影の色）
@@ -41,6 +44,8 @@ struct VS_OUT
 	float4 eye	  : TEXCOORD1;		//視線
 	float4 norw   : TEXCOORD3;      //ワールドマトリクスだけかけた法線
 	float4 posw   : TEXCOORD4;      //ワールドマトリクスだけかけた位置
+	float4 LightTexCoord : TEXCOORD5;
+	float4 LighViewPos	 : TEXCOORD6;
 };
 
 //───────────────────────────────────────
@@ -70,6 +75,11 @@ VS_OUT VS(float4 pos : POSITION, float4 Normal : NORMAL, float2 Uv : TEXCOORD)
 	//UV「座標
 	outData.uv = Uv;	//そのままピクセルシェーダーへ
 
+	//ライトビューを参照するとき、手がかりとなるテクスチャー座標 
+	outData.LightTexCoord = mul(pos, g_mWLPT); //この点が、ライトビューであったときの位置がわかる 
+
+	//ライトビューにおける位置(変換後) 
+	outData.LighViewPos = mul(pos, g_mWLP);
 
 	//まとめて出力
 	return outData;
@@ -128,8 +138,18 @@ float4 PS(VS_OUT inData) : SV_Target
 	float4 color = diffuse * shade + diffuse * ambient + speculer;
 	color += g_isAmbient;
 
+	//影の処理 
+	inData.LightTexCoord /= inData.LightTexCoord.w;
+	float TexValue = g_texDepth.Sample(g_sampler, inData.LightTexCoord).r;
+
+	float LightLength = inData.LighViewPos.z / inData.LighViewPos.w;
+	if (TexValue + 0.003 < LightLength) //ライトビューでの長さが短い（ライトビューでは遮蔽物がある） 
+	{
+		color *= 0.6; //影（明るさを 60%） 
+	}
+
 	//もしアルファ値がすこしでも透明でなければ
-	if(diffuse.a == 1)
+	if (diffuse.a == 1)
 		color.a = g_isDiffuse;
 	else
 		color.a = diffuse.a;

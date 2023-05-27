@@ -28,5 +28,10 @@ namespace FrameWorkUpdateManager
 	/// “ñlƒvƒŒƒC‚Ì•`‰æ
 	/// </summary>
 	void TwoPlayerDraw(GameObject* root);
+
+	/// <summary>
+	/// ‰e•`‰æ
+	/// </summary>
+	void ShadowDraw(GameObject* root);
 };
 

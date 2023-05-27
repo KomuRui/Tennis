@@ -120,7 +120,12 @@ XMFLOAT3 Fbx::GetBonePosition(std::string boneName)
 void Fbx::Draw(Transform& transform, int frame, float Diffuse, XMFLOAT4 Ambient,XMFLOAT4 Speculer, float Brightness, float scroll, XMFLOAT4 OutLineColor, bool isOutLineDraw, Direct3D::SHADER_TYPE shaderType)
 {
 	Direct3D::SetBlendMode(Direct3D::BLEND_DEFAULT);
-	Direct3D::SetShader(shaderType);
+
+	//‰e•`‰æ’†‚È‚ç
+	if (Direct3D::isShadowDraw)
+		Direct3D::SetShader(Direct3D::SHADER_SHADOW);
+	else
+		Direct3D::SetShader(shaderType);
 
 	//ƒp[ƒc‚ğ1ŒÂ‚¸‚Â•`‰æ
 	for (int k = 0; k < parts_.size(); k++)
