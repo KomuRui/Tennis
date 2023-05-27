@@ -62,6 +62,7 @@ void TitleScene::Initialize()
 	Camera::SetPosition(CAM_POS);
 	Camera::SetTarget(CAM_TAR);
 	Camera::SetFieldAngle(FIELD_ANGLE);
+	Camera::FrameCameraInitialize();
 
 	//“ñ‚Â–Ú‚ÌƒJƒƒ‰
 	Camera::SetPositionTwo(CAM_POS_2);
