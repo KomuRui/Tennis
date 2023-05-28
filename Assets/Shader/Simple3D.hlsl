@@ -143,7 +143,7 @@ float4 PS(VS_OUT inData) : SV_Target
 	float TexValue = g_texDepth.Sample(g_sampler, inData.LightTexCoord).r;
 
 	float LightLength = inData.LighViewPos.z / inData.LighViewPos.w;
-	if (TexValue + 0.003 < LightLength) //ライトビューでの長さが短い（ライトビューでは遮蔽物がある） 
+	if (TexValue + 0.003 >= LightLength) //ライトビューでの長さが短い（ライトビューでは遮蔽物がある） 
 	{
 		color *= 0.6; //影（明るさを 60%） 
 	}

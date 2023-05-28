@@ -113,9 +113,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Main.cpp">
-      <Filter>01Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
       <Filter>Scene\TitleScene</Filter>
@@ -329,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="OtherObject\TitleScene\TennisCourtAround.cpp">
       <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Main.cpp">
+      <Filter>01Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -152,12 +152,15 @@ namespace FrameWorkUpdateManager
 	{
 		/////////////左
 
-		//プロジェクションを更新
+		//プロジェクションとビューポートを更新
 		Camera::SetProj(Direct3D::vpLeft.Width, Direct3D::vpLeft.Height);
+		Direct3D::SetViewPort(Direct3D::vpLeft);
+
+		//影描画
+		ShadowDraw(root);
 
 		//描画開始
 		Direct3D::BeginDraw();
-		Direct3D::SetViewPort(Direct3D::vpLeft);
 
 		//エフェクトエディタモードじゃないのなら
 		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
