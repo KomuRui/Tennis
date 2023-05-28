@@ -220,7 +220,7 @@ namespace FrameWorkUpdateManager
 		XMFLOAT3 pos = Camera::GetPosition();
 		XMFLOAT3 tar = Camera::GetTarget();
 		XMVECTOR up = Camera::GetUp();
-		Camera::SetPosition(XMFLOAT3(-15, 50, -1));
+		Camera::SetPosition(XMFLOAT3(-25, 20, -25));
 		Camera::SetTarget(XMFLOAT3(0, 0, 0));
 		Camera::SetUpDirection(XMVectorSet(0,0,1,0));
 		Camera::FrameCameraInitialize();
