@@ -15,6 +15,8 @@ void NormalObject::Initialize()
 	ARGUMENT_INITIALIZE(pathName_, modelNamePath_);
 	assert(hModel_ >= ZERO);
 
+	SetShadow(true);
+	
 	//Œp³æ—p
 	ChildInitialize();
 }

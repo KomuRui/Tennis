@@ -4,7 +4,7 @@ MainCharacter/Player.fbx,Player,0,0,11.579,0,180,0,1,1,1
 Stage/RefereeStand.fbx,NormalObject,-8,0,0,0,0,0,1,1,1
 Stage/Chair.fbx,NormalObject,-7.368,0,5,0,0,0,1.5,1.5,1.5
 Stage/Chair.fbx,NormalObject,-7.368,0,-5,0,0,0,1.5,1.5,1.5
-Stage/TennisCourtAround.fbx,NormalObject,0,0.05,0,0,180,0,1,1,1
+Stage/TennisCourtAround.fbx,TennisCourtAround,0,0.05,0,0,180,0,1,1,1
 Ball/Ball.fbx,Ball,0,0.05,0,0,0,0,1,1,1
 Stage/Net.fbx,Net,0,0,0,0,0,0,1,1,1
 Stage/NetAround.fbx,NetAround,0,0.05,0,0,180,0,1,1,1

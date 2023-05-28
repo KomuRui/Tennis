@@ -327,6 +327,9 @@
     <ClCompile Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.cpp">
       <Filter>Manager\FrameWorkUpdateManager</Filter>
     </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\TennisCourtAround.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -551,6 +554,9 @@
     </ClInclude>
     <ClInclude Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.h">
       <Filter>Manager\FrameWorkUpdateManager</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\TennisCourtAround.h">
+      <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,9 @@ public:
 	//デストラクタ
 	~NetAround() {};
 
+	//初期化
+	void ChildInitialize() override;
+
 	//描画
 	void Draw() override {};
 

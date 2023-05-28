@@ -122,6 +122,16 @@ bool GameObject::GetEmission()
 	return (state_.emission != 0);
 }
 
+void GameObject::SetShadow(bool flag)
+{
+	state_.shadow = flag;
+}
+
+bool GameObject::GetShadow()
+{
+	return (state_.shadow != 0);
+}
+
 //時間メソッドを使用しているに設定
 void GameObject::SetTimeMethod(float time)
 {
@@ -563,12 +573,23 @@ void GameObject::TransparentDrawSub()
 
 void GameObject::EmissionDraw()
 {
-	if(this->GetEmission())
+	if(this->GetEmission() && this->IsVisibled())
 		Draw();
 
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
 		(*it)->EmissionDraw();
+	}
+}
+
+void GameObject::ShadowDraw()
+{
+	if (this->GetShadow() && this->IsVisibled())
+		Draw();
+
+	for (auto it = childList_.begin(); it != childList_.end(); it++)
+	{
+		(*it)->ShadowDraw();
 	}
 }
 

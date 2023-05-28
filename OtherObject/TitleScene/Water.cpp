@@ -11,6 +11,8 @@ void Water::ChildInitialize()
 {
 	//ノーマルマップを使う
 	Model::SetShederType(hModel_, Direct3D::SHADER_NORMALMAP);
+
+	SetShadow(false);
 }
 
 //更新

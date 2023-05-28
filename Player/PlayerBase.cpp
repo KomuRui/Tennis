@@ -53,6 +53,8 @@ void PlayerBase::ChildInitialize()
     ///////////////ÉâÉPÉbÉgê∂ê¨///////////////////
 
     ARGUMENT_INITIALIZE(pRacket_,Instantiate<Racket>(this));
+
+    SetShadow(true);
 }
 
 

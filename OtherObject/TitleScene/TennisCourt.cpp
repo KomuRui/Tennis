@@ -7,6 +7,12 @@ TennisCourt::TennisCourt(GameObject* parent, std::string modelPath, std::string 
 	:NormalObject(parent,modelPath,name)
 {}
 
+//初期化
+void TennisCourt::ChildInitialize()
+{
+	SetShadow(false);
+}
+
 //二つ目のウィンドウの描画
 void TennisCourt::TwoWindowDraw()
 {

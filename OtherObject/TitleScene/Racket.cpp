@@ -88,6 +88,8 @@ void Racket::ChildInitialize()
 	//ìñÇΩÇËîªíË
 	BoxCollider * collision = new BoxCollider({ ZERO,ZERO,ZERO }, { COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
 	AddCollider(collision);
+
+	SetShadow(true);
 }
 
 //çXêV

@@ -5,7 +5,7 @@
 namespace
 {
 	const XMFLOAT4 LIGHT_ATTENUATION = { 1.0f, ZERO, 0.2f, ZERO };       //ライトの減衰
-	const XMFLOAT4 LIGHT_DIR = { 15, -20, 1, ZERO };				     //ライトの向き
+	const XMFLOAT4 LIGHT_DIR = { 15, -50, 1, ZERO };				     //ライトの向き
 	const XMFLOAT4 LIGHT_INIT_POSITION = { 99999, 99999, 99999, 99999 }; //ライトのポジションの初期値(使わないときは99999にするため) 
 	const int LIGHT_STAGE_START_NUM = 1;                                 //ステージのライトのスタート番号(０番はPlayerのライトを使うため1番からスタート)
 	const int LIGHT_INTENSITY = 1;                                       //ライトの強さ

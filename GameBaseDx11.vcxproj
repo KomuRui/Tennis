@@ -184,6 +184,7 @@
     <ClCompile Include="OtherObject\TitleScene\NetAround.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Racket.cpp" />
     <ClCompile Include="OtherObject\TitleScene\TennisCourt.cpp" />
+    <ClCompile Include="OtherObject\TitleScene\TennisCourtAround.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Water.cpp" />
     <ClCompile Include="OtherObject\ToolObj\BasePointModel.cpp" />
     <ClCompile Include="Player\PlayerBase.cpp" />
@@ -261,6 +262,7 @@
     <ClInclude Include="OtherObject\TitleScene\NetAround.h" />
     <ClInclude Include="OtherObject\TitleScene\Racket.h" />
     <ClInclude Include="OtherObject\TitleScene\TennisCourt.h" />
+    <ClInclude Include="OtherObject\TitleScene\TennisCourtAround.h" />
     <ClInclude Include="OtherObject\TitleScene\Water.h" />
     <ClInclude Include="OtherObject\ToolObj\BasePointModel.h" />
     <ClInclude Include="Player\PlayerBase.h" />

@@ -9,6 +9,7 @@
 #include "../../Base/Mob.h"
 #include "../../Base/NormalObject.h"
 #include "../../OtherObject/TitleScene/TennisCourt.h"
+#include "../../OtherObject/TitleScene/TennisCourtAround.h"
 #include "../../OtherObject/TitleScene/Net.h"
 #include "../../OtherObject/TitleScene/NetAround.h"
 #include "../../OtherObject/TitleScene/Water.h"
@@ -61,6 +62,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "TennisCourt")
 	{
 		InstantiateNormal<TennisCourt>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "TennisCourtAround")
+	{
+		InstantiateNormal<TennisCourtAround>(parent, ModelPathName, inName, t);
 	}
 	if (inName == "Net")
 	{

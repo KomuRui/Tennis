@@ -7,6 +7,12 @@ NetAround::NetAround(GameObject* parent, std::string modelPath, std::string name
 	:NormalObject(parent, modelPath, name)
 {}
 
+//‰Šú‰»
+void NetAround::ChildInitialize()
+{
+	SetShadow(false);
+}
+
 //“§–¾•`‰æ
 void NetAround::TransparentDraw()
 {

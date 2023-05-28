@@ -220,24 +220,25 @@ namespace FrameWorkUpdateManager
 		XMFLOAT3 pos = Camera::GetPosition();
 		XMFLOAT3 tar = Camera::GetTarget();
 		XMVECTOR up = Camera::GetUp();
-		Camera::SetPosition(XMFLOAT3(-15, 20, -1));
+		Camera::SetPosition(XMFLOAT3(-15, 50, -1));
 		Camera::SetTarget(XMFLOAT3(0, 0, 0));
+		Camera::SetUpDirection(XMVectorSet(0,0,1,0));
 		Camera::FrameCameraInitialize();
 		Camera::Update();
 		Direct3D::lightView_ = Camera::GetViewMatrix();
 
 		Direct3D::BrginDrawShadowToTexture();
 
-		root->DrawSub();
+		root->ShadowDraw();
 
 		//エフェクトの描画
-		VFX::Draw();
+		//VFX::Draw();
 
 		//エフェクトエディタモードじゃないのなら
 		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
 		{
 			//透明・半透明描画
-			root->TransparentDrawSub();
+			//root->TransparentDrawSub();
 		}
 
 		//描画終了

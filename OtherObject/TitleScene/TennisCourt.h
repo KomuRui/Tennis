@@ -14,6 +14,9 @@ public:
 	//デストラクタ
 	~TennisCourt() {};
 
+	//初期化
+	void ChildInitialize() override;
+
 	//二つ目のウィンドウの描画
 	void TwoWindowDraw() override;
 };
