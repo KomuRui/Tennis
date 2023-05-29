@@ -15,8 +15,10 @@
 #include "../../OtherObject/TitleScene/Water.h"
 #include "../../OtherObject/TitleScene/Ball.h"
 #include "../../Player/PlayerBase.h"
+#include "../../Engine/nlohmann/json.hpp"
 #include <fstream>
 
+using json = nlohmann::json;
 
 //コンストラクタ
 CreateStage::CreateStage()
@@ -184,6 +186,26 @@ void CreateStage::LoadFileCreateStage(GameObject* parent, std::string filename)
 
 		//パラメータを基にオブジェクト作成
 		CreateObject(parent,ModelPathName, Name, t, camPos);
+
+		//書き込み用
+		json json_object;
+
+		//既存のデータを読み込む
+		std::ifstream input_file("Data/StageData/Title/Title.json");
+		input_file >> json_object;
+		input_file.close();
+
+		//保存したい値を設定
+		json_object[Name]["FileName"] = ModelPathName;
+		json_object[Name]["TypeName"] = Name;
+		json_object[Name]["Position"] = { t.position_.x,t.position_.y,t.position_.z };
+		json_object[Name]["Rotate"] = { t.rotate_.x,t.rotate_.y,t.rotate_.z };
+		json_object[Name]["Scale"] = { t.scale_.x,t.scale_.y,t.scale_.z };
+
+		//書き込み
+		std::ofstream output_file("Data/StageData/Title/Title.json");
+		output_file << json_object;
+		output_file.close();
 
 		//すべて初期化
 		for (int i = 0; i < 14; i++)

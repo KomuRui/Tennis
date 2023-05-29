@@ -16,12 +16,14 @@
 #include "../ResourceManager/VFX.h"
 #include "../GameObject/Camera.h"
 #include "../DirectX/Fbx.h"
+#include "../../Engine/nlohmann/json.hpp"
 #include <fstream>
 #include <vector>
 #include <windows.h>
 #include <psapi.h>
 
 
+using json = nlohmann::json;
 
 //定数
 namespace
@@ -459,13 +461,31 @@ namespace ImGuiSet
                     if (ImGui::TreeNode("StageSave")) {
 
                         //ファイルネーム入力欄
-                        static char text2[MAX_OBJECT_SIZE][50] = {};
+                        static char ObjectName[MAX_OBJECT_SIZE][50] = {};
 
                         //入力された文字をtext1に格納
-                        ImGui::InputText("ObjName", text2[i], sizeof(text2[i]));
+                        ImGui::InputText("ObjName", ObjectName[i], sizeof(ObjectName[i]));
 
                         if (ImGui::Button("Save"))
                         {
+                            //書き込み用
+                            json json_object;
+
+                            //既存のデータを読み込む
+                            std::ifstream input_file("Data/StageData/Title/Title.json");
+                            input_file >> json_object;
+                            input_file.close();
+
+                            //保存したい値を設定
+                            json_object[ObjectName[i]]["FileName"] = text1[i];
+                            json_object[ObjectName[i]]["Position"] = { objectPos_[i].x,objectPos_[i].y,objectPos_[i].z };
+                            json_object[ObjectName[i]]["Rotate"] = { objectRotate_[i].x,objectRotate_[i].y,objectRotate_[i].z };
+                            json_object[ObjectName[i]]["Scale"] = { objectScale_[i].x,objectScale_[i].y,objectScale_[i].z };
+
+                            //書き込み
+                            std::ofstream output_file("Data/StageData/Title/Title.json");
+                            output_file << json_object;
+                            output_file.close();
 
                             const char* fileName = stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()];
                             std::ofstream ofs;
@@ -473,7 +493,7 @@ namespace ImGuiSet
 
                             ofs << std::endl;
 
-                            ofs << text1[i] << "," << text2[i] << "," << objectPos_[i].x << "," << objectPos_[i].y << "," << objectPos_[i].z << ","
+                            ofs << text1[i] << "," << ObjectName[i] << "," << objectPos_[i].x << "," << objectPos_[i].y << "," << objectPos_[i].z << ","
                                 << objectRotate_[i].x << "," << objectRotate_[i].y << "," << objectRotate_[i].z << ","
                                 << objectScale_[i].x << "," << objectScale_[i].y << "," << objectScale_[i].z;
 

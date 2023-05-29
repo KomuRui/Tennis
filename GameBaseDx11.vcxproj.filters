@@ -111,6 +111,9 @@
     <Filter Include="Manager\FrameWorkUpdateManager">
       <UniqueIdentifier>{44d4ee10-f695-4562-85f6-337eac2d11e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\JsonManager">
+      <UniqueIdentifier>{096a8cc7-3972-4ce0-a69a-8a2d8ac73e2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -329,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Main.cpp">
       <Filter>01Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\JsonManager\JsonManager.cpp">
+      <Filter>Manager\JsonManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -557,6 +563,9 @@
     </ClInclude>
     <ClInclude Include="OtherObject\TitleScene\TennisCourtAround.h">
       <Filter>OtherObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\JsonManager\JsonManager.h">
+      <Filter>Manager\JsonManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

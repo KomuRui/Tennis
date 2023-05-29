@@ -176,6 +176,7 @@
     <ClCompile Include="Manager\EffectManager\PlayerEffectManager\PlayerEffectManager.cpp" />
     <ClCompile Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.cpp" />
     <ClCompile Include="Manager\GameManager\GameManager.cpp" />
+    <ClCompile Include="Manager\JsonManager\JsonManager.cpp" />
     <ClCompile Include="Manager\SceneManager\SceneManager.cpp" />
     <ClCompile Include="Manager\ScoreManager\ScoreManager.cpp" />
     <ClCompile Include="Manager\TextManager\TextManager.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Manager\EffectManager\PlayerEffectManager\PlayerEffectManager.h" />
     <ClInclude Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.h" />
     <ClInclude Include="Manager\GameManager\GameManager.h" />
+    <ClInclude Include="Manager\JsonManager\JsonManager.h" />
     <ClInclude Include="Manager\SceneManager\SceneManager.h" />
     <ClInclude Include="Manager\ScoreManager\ScoreManager.h" />
     <ClInclude Include="Manager\TextManager\TextManager.h" />
