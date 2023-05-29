@@ -476,8 +476,22 @@ namespace ImGuiSet
                             input_file >> json_object;
                             input_file.close();
 
+                            //名前を覚えておく
+                            string name = ObjectName[i];
+
+                            //名前が同じ時に加算する番号
+                            int num = 1;
+
+                            //もしすでにオブジェクトが存在するのならば
+                            while (json_object.contains(name))
+                            {
+                                ARGUMENT_INITIALIZE(name, ObjectName[i] + num);
+                                num++;
+                            }
+
                             //保存したい値を設定
                             json_object[ObjectName[i]]["FileName"] = text1[i];
+                            json_object[ObjectName[i]]["TypeName"] = ObjectName;
                             json_object[ObjectName[i]]["Position"] = { objectPos_[i].x,objectPos_[i].y,objectPos_[i].z };
                             json_object[ObjectName[i]]["Rotate"] = { objectRotate_[i].x,objectRotate_[i].y,objectRotate_[i].z };
                             json_object[ObjectName[i]]["Scale"] = { objectScale_[i].x,objectScale_[i].y,objectScale_[i].z };
