@@ -396,7 +396,7 @@ namespace Direct3D
 		//保存しておく
 		screenWidth_ = screenWidth;
 		screenHeight_ = screenHeight;
-
+		
 		//影
 		//深度を描きこむテクスチャ
 		D3D11_TEXTURE2D_DESC texdec;

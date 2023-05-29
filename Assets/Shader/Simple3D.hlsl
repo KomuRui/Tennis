@@ -147,6 +147,11 @@ float4 PS(VS_OUT inData) : SV_Target
 	{
 		color *= 0.6; //影（明るさを 60%） 
 	}
+	else
+	{
+		color *= 2.0f;
+	}
+
 
 	//もしアルファ値がすこしでも透明でなければ
 	if (diffuse.a == 1)

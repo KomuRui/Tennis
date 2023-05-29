@@ -234,6 +234,7 @@ namespace FrameWorkUpdateManager
 
 		Direct3D::BrginDrawShadowToTexture();
 
+		//オブジェクトの影描画
 		root->ShadowDraw();
 
 		//エフェクトの描画

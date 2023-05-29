@@ -64,7 +64,7 @@ void Ball::ChildInitialize()
 	assert(hShadowModel_ >= ZERO);
 	ARGUMENT_INITIALIZE(tShadow_, transform_);
 	ARGUMENT_INITIALIZE(tShadow_.position_.y, 0.2f);
-	SetShadow(true);
+	SetShadow(false);
 
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
 	XMFLOAT3 pos = endPoint_;
