@@ -158,6 +158,21 @@ namespace Direct3D
 		pContext_->RSSetViewports(1, &vpNow);
 	}
 
+	//ビューポートに合わせたクリッピング行列を設定
+	void SetClipToUv(D3D11_VIEWPORT v)
+	{
+		XMFLOAT4X4 clip;
+		ZeroMemory(&clip, sizeof(XMFLOAT4X4));
+		clip._11 = (v.Width / 1920) / 2.0f;
+		clip._22 = -((v.Height / 1080) / 2.0f);
+		clip._33 = 1;
+		clip._41 = ((v.Width / 1920) / 2.0f) + (v.TopLeftX / 1920);
+		clip._42 = ((v.Height / 1080) / 2.0f) + (v.TopLeftY / 1080);
+		clip._44 = 1;
+
+		clipToUV_ = XMLoadFloat4x4(&clip);
+	}
+
 	HWND GetWindowHandle()
 	{
 		return hWnd_;
@@ -415,7 +430,7 @@ namespace Direct3D
 		Direct3D::pDevice_->CreateShaderResourceView(pDepthTexture, &srv, &pDepthSRV_);
 
 
-		//カメラから見たある点が、ライタから見た時どの位置になるかを求めるために必要な行列
+		//カメラから見たある点が、ライトから見た時どの位置になるかを求めるために必要な行列
 		XMFLOAT4X4 clip;
 		ZeroMemory(&clip, sizeof(XMFLOAT4X4));
 		clip._11 = 0.5;

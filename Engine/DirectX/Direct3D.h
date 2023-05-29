@@ -146,6 +146,9 @@ namespace Direct3D
 	//ビューポートセット
 	void SetViewPort(D3D11_VIEWPORT v);
 
+	//ビューポートに合わせたクリッピング行列を設定
+	void SetClipToUv(D3D11_VIEWPORT v);
+
 	//ウィンドウハンドル取得
 	HWND GetWindowHandle();
 	HWND GetTwoWindowHandle();

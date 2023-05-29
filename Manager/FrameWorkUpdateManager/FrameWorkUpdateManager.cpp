@@ -119,6 +119,7 @@ namespace FrameWorkUpdateManager
 
 		//ビューポート設定
 		Direct3D::SetViewPort(Direct3D::vp);
+		Direct3D::SetClipToUv(Direct3D::vp);
 		
 		//先に影用のテクスチャを作成
 		ShadowDraw(root);
@@ -155,6 +156,7 @@ namespace FrameWorkUpdateManager
 		//プロジェクションとビューポートを更新
 		Camera::SetProj(Direct3D::vpLeft.Width, Direct3D::vpLeft.Height);
 		Direct3D::SetViewPort(Direct3D::vpLeft);
+		Direct3D::SetClipToUv(Direct3D::vpLeft);
 
 		//影描画
 		ShadowDraw(root);
@@ -235,13 +237,13 @@ namespace FrameWorkUpdateManager
 		root->ShadowDraw();
 
 		//エフェクトの描画
-		//VFX::Draw();
+		VFX::Draw();
 
 		//エフェクトエディタモードじゃないのなら
 		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
 		{
 			//透明・半透明描画
-			//root->TransparentDrawSub();
+			root->TransparentDrawSub();
 		}
 
 		//描画終了
