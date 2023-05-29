@@ -332,7 +332,7 @@ namespace ImGuiSet
                 sprintf_s(name, "FBX %d", i);
 
                 //window作る
-                ImGui::Begin(name);
+                ImGui::Begin("FBX" + i);
 
                 //ファイルネーム入力欄
                 static char text1[MAX_OBJECT_SIZE][50] = {};

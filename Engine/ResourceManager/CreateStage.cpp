@@ -27,7 +27,7 @@ CreateStage::CreateStage()
 }
 
 //オブジェクト作成
-void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, std::string inName, Transform t, XMFLOAT3 camPos)
+void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, std::string inName, Transform t)
 {
 	
 	/////////////////////Player///////////////////////
@@ -94,7 +94,7 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 		StageCameraTransition information;
 
 		//各情報初期化
-		information.CameraPosition = camPos;
+		information.CameraPosition = XMFLOAT3(0,0,0);
 		information.CameraTarget = t.rotate_;
 		information.CollisionSize = t.scale_;
 
@@ -128,72 +128,34 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 //各ステージのファイルロードしステージを作成してくれる
 void CreateStage::LoadFileCreateStage(GameObject* parent, std::string filename)
 {
-	//ファイルオープン
-	const char* fileName = filename.c_str();
-	std::ifstream ifs(fileName);
+	//各パラメータ格納用
+	std::string ModelPathName;
+	std::string Name;
+	Transform t;
 
-	//データを1列入れる変数
-	std::string buf;
+	//親情報があれば追加する
+	if (parent != nullptr)
+		t.pParent_ = parent->GetTransform();
+	else
+		t.pParent_ = nullptr;
 
-	//必要な各パラメータを保存する用の文字列配列(pos.x,pos,y,pos.zとか)
-	std::string data[14] = { "" };
+	//ファイル読み込み
+	ifstream ifsj("Data/StageData/Title/Title.json");
+	json json_object;
+	ifsj >> json_object;
 
-	//,の数
-	int sum = 0;
-
-	//末尾まで読む
-	while (!ifs.eof())
-	{
-		//1列bufに格納
-		std::getline(ifs, buf);
-
-		//bufのサイズ分ループ
-		for (int i = 0; i < buf.size(); i++)
-		{
-			//各パラメータを一つずつdataに格納していく
-			if (buf[i] != ',')
-			{
-				data[sum] += buf[i];
-			}
-			else
-				sum++;
-		}
-
-		//各パラメータを変数に格納していく
-		std::string ModelPathName = data[0];
-		std::string Name = data[1];
-
-		Transform t;
-
-		t.position_ = { std::stof(data[2]),std::stof(data[3]),std::stof(data[4]) };
-		t.rotate_ = { std::stof(data[5]),std::stof(data[6]),std::stof(data[7]) };
-		t.scale_ = { std::stof(data[8]),std::stof(data[9]),std::stof(data[10]) };
-
-		if(parent != nullptr)
-			t.pParent_ = parent->GetTransform();
-		else
-			t.pParent_ = nullptr;
-
-		//カメラのポジション入れる変数
-		XMFLOAT3 camPos;
-
-		//カメラのポジションを必要とするオブジェクトなら
-		if (Name.find("Camera") != std::string::npos || Name == "ShineLight")
-			camPos = { std::stof(data[11]),std::stof(data[12]),std::stof(data[13]) };
-		//それ以外は使わないので0にしておく
-		else
-			camPos = { 0,0,0 };
+	//各値取得
+	for (auto it = json_object.begin(); it != json_object.end(); it++) {
+		
+		ARGUMENT_INITIALIZE(ModelPathName,json_object[it.key()]["FileName"]);
+		ARGUMENT_INITIALIZE(Name,json_object[it.key()]["TypeName"]);
+		ARGUMENT_INITIALIZE(t.position_,XMFLOAT3(json_object[it.key()]["Position"][0], json_object[it.key()]["Position"][1], json_object[it.key()]["Position"][2]));
+		ARGUMENT_INITIALIZE(t.rotate_,XMFLOAT3(json_object[it.key()]["Rotate"][0], json_object[it.key()]["Rotate"][1], json_object[it.key()]["Rotate"][2]));
+		ARGUMENT_INITIALIZE(t.scale_,XMFLOAT3(json_object[it.key()]["Scale"][0], json_object[it.key()]["Scale"][1], json_object[it.key()]["Scale"][2]));
 
 		//パラメータを基にオブジェクト作成
-		CreateObject(parent,ModelPathName, Name, t, camPos);
-
-		//すべて初期化
-		for (int i = 0; i < 14; i++)
-		{
-			data[i] = "";
-		}
-		sum = 0;
-	}
+		CreateObject(parent, ModelPathName, Name, t);
+	}	
 
 }
 
@@ -271,7 +233,7 @@ void CreateStage::LoadFileBasedCreateStage()
 {
 	for (auto i = info_.begin(); i != info_.end(); i++)
 	{
-		CreateObject((*i).parent, (*i).ModelPathName, (*i).inName, (*i).t, (*i).camPos);
+		CreateObject((*i).parent, (*i).ModelPathName, (*i).inName, (*i).t);
 	}
 }
 

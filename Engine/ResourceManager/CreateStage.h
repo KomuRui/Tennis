@@ -40,7 +40,7 @@ public:
 	CreateStage();
 
 	//オブジェクト作成
-	void CreateObject(GameObject* parent,std::string ModelPathName, std::string inName, Transform t, XMFLOAT3 camPos);
+	void CreateObject(GameObject* parent,std::string ModelPathName, std::string inName, Transform t);
 
 	/// <summary>
 	/// 各ステージのファイルロードしステージを作成してくれる
