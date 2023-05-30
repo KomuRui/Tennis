@@ -148,6 +148,7 @@
     <ClCompile Include="Engine\GameObject\PolyLine.cpp" />
     <ClCompile Include="Engine\GameObject\RootObject.cpp" />
     <ClCompile Include="Engine\GameObject\Transform.cpp" />
+    <ClCompile Include="Engine\GUI\CreateObjGui.cpp" />
     <ClCompile Include="Engine\GUI\ImGuiSet.cpp" />
     <ClCompile Include="Engine\GUI\imgui\imgui.cpp" />
     <ClCompile Include="Engine\GUI\imgui\imgui_draw.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Engine\GameObject\PolyLine.h" />
     <ClInclude Include="Engine\GameObject\RootObject.h" />
     <ClInclude Include="Engine\GameObject\Transform.h" />
+    <ClInclude Include="Engine\GUI\CreateObjGui.h" />
     <ClInclude Include="Engine\GUI\ImGuiSet.h" />
     <ClInclude Include="Engine\GUI\imgui\imconfig.h" />
     <ClInclude Include="Engine\GUI\imgui\imgui.h" />

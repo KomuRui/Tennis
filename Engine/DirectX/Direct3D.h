@@ -84,6 +84,7 @@ namespace Direct3D
 	extern int		screenHeight_2;		//スクリーンの高さ
 	extern bool		isDrawCollision_;	//コリジョンを表示するかフラグ
 	extern D3D11_VIEWPORT vp;
+	extern D3D11_VIEWPORT vpNow;
 	extern D3D11_VIEWPORT vpLeft;
 	extern D3D11_VIEWPORT vpRight;
 

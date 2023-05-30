@@ -229,7 +229,7 @@ namespace FrameWorkUpdateManager
 		Camera::SetTarget(XMFLOAT3(0, 0, 0));
 		Camera::SetUpDirection(XMVectorSet(0,0,1,0));
 		Camera::FrameCameraInitialize();
-		Camera::Update();
+		Camera::UpdateTwo();
 		Direct3D::lightView_ = Camera::GetViewMatrix();
 
 		Direct3D::BrginDrawShadowToTexture();
@@ -255,7 +255,7 @@ namespace FrameWorkUpdateManager
 		Camera::SetTarget(tar);
 		Camera::SetUpDirection(up);
 		Camera::FrameCameraInitialize();
-		Camera::Update();
+		Camera::UpdateTwo();
 
 		//âeï`âÊèIóπ
 		ARGUMENT_INITIALIZE(Direct3D::isShadowDraw, false);

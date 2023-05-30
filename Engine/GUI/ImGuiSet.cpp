@@ -177,7 +177,7 @@ namespace ImGuiSet
         pStickFbx->Load("EffectEditModel/StickModel.fbx");
 
         //各シーンのステージ情報が入ってるファイルのパス設定
-        stageInfoFilePath_[SCENE_ID_TITLE] = "Stage/Title/StageInformation/TitleScene.txt";
+        stageInfoFilePath_[SCENE_ID_TITLE] = "Data/StageData/Title/Title.json";
     }
 
     //ゲーム画面がフルサイズではない時の描画
@@ -350,18 +350,9 @@ namespace ImGuiSet
                         //ロードしたオブジェクトに必要なトランスフォームを用意
                         Transform t;
 
-                        if (GameManager::GetpPlayer() != nullptr)
-                        {
-                            objectPos_[i] = GameManager::GetpPlayer()->GetPosition();
-                            objectRotate_[i] = GameManager::GetpPlayer()->GetRotate();
-                            objectScale_[i] = GameManager::GetpPlayer()->GetScale();
-                        }
-                        else
-                        {
-                            objectPos_[i] = XMFLOAT3(0, 0, 0);
-                            objectRotate_[i] = XMFLOAT3(0, 0, 0);
-                            objectScale_[i] = XMFLOAT3(1, 1, 1);
-                        }
+                        objectPos_[i] = XMFLOAT3(0, 0, 0);
+                        objectRotate_[i] = XMFLOAT3(0, 0, 0);
+                        objectScale_[i] = XMFLOAT3(1, 1, 1);
 
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
@@ -472,7 +463,7 @@ namespace ImGuiSet
                             json json_object;
 
                             //既存のデータを読み込む
-                            std::ifstream input_file("Data/StageData/Title/Title.json");
+                            std::ifstream input_file(stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()]);
                             input_file >> json_object;
                             input_file.close();
 
@@ -497,21 +488,10 @@ namespace ImGuiSet
                             json_object[ObjectName[i]]["Scale"] = { objectScale_[i].x,objectScale_[i].y,objectScale_[i].z };
 
                             //書き込み
-                            std::ofstream output_file("Data/StageData/Title/Title.json");
+                            std::ofstream output_file(stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()]);
                             output_file << json_object;
                             output_file.close();
 
-                            const char* fileName = stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()];
-                            std::ofstream ofs;
-                            ofs.open(fileName, std::ios::app);
-
-                            ofs << std::endl;
-
-                            ofs << text1[i] << "," << ObjectName[i] << "," << objectPos_[i].x << "," << objectPos_[i].y << "," << objectPos_[i].z << ","
-                                << objectRotate_[i].x << "," << objectRotate_[i].y << "," << objectRotate_[i].z << ","
-                                << objectScale_[i].x << "," << objectScale_[i].y << "," << objectScale_[i].z;
-
-                            ofs.close();
                         }
                         ImGui::TreePop();
                     }
@@ -1956,29 +1936,111 @@ namespace ImGuiSet
 
     void ImGuiSet::File()
     {
+
         //window作る
         if (Direct3D::GetWindowHandle() == GetForegroundWindow())
-            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
         else
-            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
+            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
 
-        //ボタン作成
-        if (ImGui::Button("Import", ImVec2(240, 55)))
-        {
-            Direct3D::SetTimeScale(true);
-            Import();
-        }
-        ImGui::SameLine();
+        ////ボタン作成
+        //if (ImGui::Button("Import", ImVec2(240, 55)))
+        //{
+        //    Direct3D::SetTimeScale(true);
+        //    Import();
+        //}
+        //ImGui::SameLine();
 
-        if (ImGui::Button("Export", ImVec2(240, 55)))
-        {
-            Direct3D::SetTimeScale(true);
-            Export();
+        //if (ImGui::Button("Export", ImVec2(240, 55)))
+        //{
+        //    Direct3D::SetTimeScale(true);
+        //    Export();
+        //}
+        //ImGui::SameLine();
+
+        //メニューバー作成
+        if (ImGui::BeginMenuBar()) {
+
+            //ファイルメニュー
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("StageImport")) {
+                    Direct3D::SetTimeScale(true);
+                    Import();
+                }
+                if (ImGui::MenuItem("StageLoad")) {
+                    Direct3D::SetTimeScale(true);
+                    Export();
+                }
+
+                ImGui::EndMenu();
+            }
+
+            //ゲームオブジェクト作成メニュー
+            if (ImGui::BeginMenu("GameObject"))
+            {
+
+                if (ImGui::MenuItem("SelfMade3D")) {
+                    Direct3D::SetTimeScale(true);
+                    Import();
+                }
+                if (ImGui::MenuItem("Cube")) {
+                    Direct3D::SetTimeScale(true);
+                    Export();
+                }
+                if (ImGui::MenuItem("Sphere")) {
+                    Direct3D::SetTimeScale(true);
+                    Export();
+                }
+                if (ImGui::MenuItem("Cylinder")) {
+                    Direct3D::SetTimeScale(true);
+                    Export();
+                }
+                if (ImGui::MenuItem("Plane")) {
+                    Direct3D::SetTimeScale(true);
+                    Export();
+                }
+                if (ImGui::MenuItem("Light")) {
+                    Direct3D::SetTimeScale(true);
+                    Export();
+                }
+                if (ImGui::MenuItem("Image")) {
+                    Direct3D::SetTimeScale(true);
+                    Export();
+                }
+                if (ImGui::MenuItem("Button")) {
+                    Direct3D::SetTimeScale(true);
+                    Export();
+                }
+
+
+                ImGui::EndMenu();
+            }
+
+            //コンポーネント
+            if (ImGui::BeginMenu("Component"))
+            {
+                ImGui::EndMenu();
+            }
+
+            //ウィンドウ設定
+            if (ImGui::BeginMenu("Windows"))
+            {
+                ImGui::EndMenu();
+            }
+
+            //ウィンドウ設定
+            if (ImGui::BeginMenu("SceneChange"))
+            {
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMenuBar();
         }
-        ImGui::SameLine();
 
         //終わり
         ImGui::End();
+
     }
 
     //ステージインポート

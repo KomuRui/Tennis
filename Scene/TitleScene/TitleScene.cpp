@@ -48,13 +48,13 @@ void TitleScene::Initialize()
 	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
 
 	CreateStage* pCreateStage = new CreateStage;
-	pCreateStage->LoadFileCreateStage(this, "Stage/Title/StageInformation/TitleScene.txt");
+	pCreateStage->LoadFileCreateStage(this, "Data/StageData/Title/Title.json");
 
 	////////////////////////ツールの基準点モデルを生成/////////////////////////////////
 
 	BasePointManager::InstantiateBasePointModel();
 
-	GameManager::SetPlayers(Players::TWO);
+	GameManager::SetPlayers(Players::ONE);
 
 	///////////////カメラ///////////////////
 

@@ -140,9 +140,9 @@ void CreateStage::LoadFileCreateStage(GameObject* parent, std::string filename)
 		t.pParent_ = nullptr;
 
 	//ファイル読み込み
-	ifstream ifsj("Data/StageData/Title/Title.json");
+	ifstream ifs("Data/StageData/Title/Title.json");
 	json json_object;
-	ifsj >> json_object;
+	ifs >> json_object;
 
 	//各値取得
 	for (auto it = json_object.begin(); it != json_object.end(); it++) {
@@ -162,68 +162,36 @@ void CreateStage::LoadFileCreateStage(GameObject* parent, std::string filename)
 //各ステージのファイルロードだけしてくれる
 void CreateStage::LoadFile(GameObject* parent, std::string filename)
 {
-	//ファイルオープン
-	const char* fileName = filename.c_str();
-	std::ifstream ifs(fileName);
+	//各パラメータ格納用
+	std::string ModelPathName;
+	std::string Name;
+	Transform t;
 
-	//データを1列入れる変数
-	std::string buf;
+	//親情報があれば追加する
+	if (parent != nullptr)
+		t.pParent_ = parent->GetTransform();
+	else
+		t.pParent_ = nullptr;
 
-	//必要な各パラメータを保存する用の文字列配列(pos.x,pos,y,pos.zとか)
-	std::string data[14] = { "" };
+	//ファイル読み込み
+	ifstream ifs(filename);
+	json json_object;
+	ifs >> json_object;
 
-	//,の数
-	int sum = 0;
-
-	//末尾まで読む
-	while (!ifs.eof())
-	{
-		//1列bufに格納
-		std::getline(ifs, buf);
-
-		//bufのサイズ分ループ
-		for (int i = 0; i < buf.size(); i++)
-		{
-			//各パラメータを一つずつdataに格納していく
-			if (buf[i] != ',')
-			{
-				data[sum] += buf[i];
-			}
-			else
-				sum++;
-		}
+	//各値取得
+	for (auto it = json_object.begin(); it != json_object.end(); it++) {
 
 		//情報を格納しておく変数
 		CreateStageInfo info;
 
+		ARGUMENT_INITIALIZE(info.ModelPathName, json_object[it.key()]["FileName"]);
+		ARGUMENT_INITIALIZE(info.inName, json_object[it.key()]["TypeName"]);
+		ARGUMENT_INITIALIZE(info.t.position_, XMFLOAT3(json_object[it.key()]["Position"][0], json_object[it.key()]["Position"][1], json_object[it.key()]["Position"][2]));
+		ARGUMENT_INITIALIZE(info.t.rotate_, XMFLOAT3(json_object[it.key()]["Rotate"][0], json_object[it.key()]["Rotate"][1], json_object[it.key()]["Rotate"][2]));
+		ARGUMENT_INITIALIZE(info.t.scale_, XMFLOAT3(json_object[it.key()]["Scale"][0], json_object[it.key()]["Scale"][1], json_object[it.key()]["Scale"][2]));
 
-		//各パラメータを変数に格納していく
-		info.parent = parent;
-		info.ModelPathName = data[0];
-		info .inName = data[1];
-
-		Transform t;
-
-		info.t.position_ = { std::stof(data[2]),std::stof(data[3]),std::stof(data[4]) };
-		info.t.rotate_ = { std::stof(data[5]),std::stof(data[6]),std::stof(data[7]) };
-		info.t.scale_ = { std::stof(data[8]),std::stof(data[9]),std::stof(data[10]) };
-
-
-		//カメラのポジションを必要とするオブジェクトなら
-		if (info.inName.find("Camera") != std::string::npos || info.inName == "ShineLight")
-			info.camPos = { std::stof(data[11]),std::stof(data[12]),std::stof(data[13]) };
-		//それ以外は使わないので0にしておく
-		else
-			info.camPos = { 0,0,0 };
-
+		//保存しておく
 		info_.push_back(info);
-
-		//すべて初期化
-		for (int i = 0; i < 14; i++)
-		{
-			data[i] = "";
-		}
-		sum = 0;
 	}
 
 }

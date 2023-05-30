@@ -220,25 +220,17 @@ void Camera::CamMouseMove()
 			float w = 0;
 			float h = 0;
 
-			//スクリーンの横と縦の長さ入れる
-			if (Direct3D::GetGameFull())
-			{
-				w = Direct3D::screenWidth_ / 2.0f;
-				h = Direct3D::screenHeight_ / 2.0f;
-			}
-			//マップエディタ状態なら
-			else
-			{
-				w = (Direct3D::screenWidth_ / 1.5f) / 2.0f;
-				h = (Direct3D::screenHeight_ / 1.5f) / 2.0f + 100;
-			}
+			w = Direct3D::vpNow.Width / 2.0f;
+			h = Direct3D::vpNow.Height / 2.0f;
 
 			XMMATRIX vp = {
 				w, 0, 0, 0,
 				0,-h, 0, 0,
 				0, 0, 1, 0,
-				w, h, 0, 1
+				w, h + Direct3D::vpNow.TopLeftY, 0, 1
 			};
+
+			Camera::SetProj(Direct3D::vpNow.Width, Direct3D::vpNow.Height);
 
 			//ビューポート行列の逆行列
 			XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
@@ -264,7 +256,7 @@ void Camera::CamMouseMove()
 			RayCastData data;
 			XMStoreFloat3(&data.start, vFront);
 			XMStoreFloat3(&data.dir, vBack - vFront);
-			//Model::RayCastOutLineSet(&data,XMFLOAT4(0,1,1,1));
+			Model::RayCastOutLineSet(&data,XMFLOAT4(0,1,1,1));
 		}
 	}
 }

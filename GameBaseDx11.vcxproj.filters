@@ -336,6 +336,9 @@
     <ClCompile Include="Manager\JsonManager\JsonManager.cpp">
       <Filter>Manager\JsonManager</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\GUI\CreateObjGui.cpp">
+      <Filter>01Engine\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -566,6 +569,9 @@
     </ClInclude>
     <ClInclude Include="Manager\JsonManager\JsonManager.h">
       <Filter>Manager\JsonManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUI\CreateObjGui.h">
+      <Filter>01Engine\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
