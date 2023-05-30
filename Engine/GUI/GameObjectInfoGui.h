@@ -6,6 +6,11 @@
 /// </summary>
 namespace GameObjectInfoGui
 {
+	/// </summary>
+	/// 初期化
+	/// </summary>
+	void Initialize();
+
 	/// <summary>
 	/// ゲームオブジェクトの情報を描画
 	/// </summary>
@@ -20,4 +25,9 @@ namespace GameObjectInfoGui
 	/// 色情報描画
 	/// </summary>
 	void ColorInfoDraw();
+
+	/// </summary>
+	/// モデル情報描画
+	/// </summary>
+	void ModelInfoDraw();
 }

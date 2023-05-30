@@ -194,6 +194,9 @@ namespace ImGuiSet
         hr = tex3_->Load("Image/GUI/MobIcon_Normal.png");
         hr = tex4_->Load("Image/GUI/PigIcon_Normal.png");
         hr = tex5_->Load("Image/GUI/PrincessIcon_Normal.png");
+
+        //他のGUI初期化
+        GameObjectInfoGui::Initialize();
     }
 
     //ゲーム画面がフルサイズではない時の描画
