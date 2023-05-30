@@ -88,4 +88,5 @@ public:
 	//戻値：画像サイズ
 	XMFLOAT3 GetTextureSize() {	return pTexture_->GetSize();}
 
+	ID3D11ShaderResourceView* GetSRV() { return pTexture_->GetSRV(); }	//シェーダーリソースビューの取得
 };

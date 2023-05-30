@@ -17,6 +17,7 @@
 #include "../GameObject/Camera.h"
 #include "../DirectX/Fbx.h"
 #include "../../Engine/nlohmann/json.hpp"
+#include "../DirectX/Sprite.h"
 #include <fstream>
 #include <vector>
 #include <windows.h>
@@ -147,6 +148,13 @@ namespace ImGuiSet
     
     std::string info_;
 
+    //表示画像
+    Sprite* tex1_ = new Sprite();
+    Sprite* tex2_ = new Sprite();
+    Sprite* tex3_ = new Sprite();
+    Sprite* tex4_ = new Sprite();
+    Sprite* tex5_ = new Sprite();
+
     ////////////////ツールの基準点モデルをゲームシーンに描画するか設定//////////////////////////
 
     //0->Off 1->On
@@ -178,6 +186,13 @@ namespace ImGuiSet
 
         //各シーンのステージ情報が入ってるファイルのパス設定
         stageInfoFilePath_[SCENE_ID_TITLE] = "Data/StageData/Title/Title.json";
+
+        //画像
+        HRESULT hr = tex1_->Load("Image/GUI/MainCharIcon_Normal.png");
+        hr = tex2_->Load("Image/GUI/DropIcon_Normal.png");
+        hr = tex3_->Load("Image/GUI/MobIcon_Normal.png");
+        hr = tex4_->Load("Image/GUI/PigIcon_Normal.png");
+        hr = tex5_->Load("Image/GUI/PrincessIcon_Normal.png");
     }
 
     //ゲーム画面がフルサイズではない時の描画
@@ -1932,31 +1947,17 @@ namespace ImGuiSet
         ImGui::End();
     }
 
-    ///////////////////////////////ファイル(インポート・エクスポート)///////////////////////////////////////
+    ///////////////////////////////ファイル///////////////////////////////////////
 
     void ImGuiSet::File()
     {
 
         //window作る
         if (Direct3D::GetWindowHandle() == GetForegroundWindow())
-            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
+            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
         else
-            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
+            ImGui::Begin("File", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_MenuBar);
 
-        ////ボタン作成
-        //if (ImGui::Button("Import", ImVec2(240, 55)))
-        //{
-        //    Direct3D::SetTimeScale(true);
-        //    Import();
-        //}
-        //ImGui::SameLine();
-
-        //if (ImGui::Button("Export", ImVec2(240, 55)))
-        //{
-        //    Direct3D::SetTimeScale(true);
-        //    Export();
-        //}
-        //ImGui::SameLine();
 
         //メニューバー作成
         if (ImGui::BeginMenuBar()) {
@@ -2034,9 +2035,32 @@ namespace ImGuiSet
             {
                 ImGui::EndMenu();
             }
-
+           
             ImGui::EndMenuBar();
         }
+
+        //画像配置
+        ImTextureID textureID1 = (ImTextureID)tex1_->GetSRV();
+        ImTextureID textureID2 = (ImTextureID)tex2_->GetSRV();
+        ImTextureID textureID3 = (ImTextureID)tex3_->GetSRV();
+        ImTextureID textureID4 = (ImTextureID)tex4_->GetSRV();
+        ImTextureID textureID5 = (ImTextureID)tex5_->GetSRV();
+        ImVec2 imageSize(150, 150); // 画像のサイズを指定する
+        ImGui::SetCursorPosX(-15);
+        ImGui::SetCursorPosY(-10);
+        ImGui::Image(textureID1, imageSize); // 画像アイコンを描画する
+        ImGui::SetCursorPosX(60);
+        ImGui::SetCursorPosY(-10);
+        ImGui::Image(textureID2, imageSize); // 画像アイコンを描画する
+        ImGui::SetCursorPosX(135);
+        ImGui::SetCursorPosY(-10);
+        ImGui::Image(textureID3, imageSize); // 画像アイコンを描画する
+        ImGui::SetCursorPosX(210);
+        ImGui::SetCursorPosY(-10);
+        ImGui::Image(textureID4, imageSize); // 画像アイコンを描画する
+        ImGui::SetCursorPosX(285);
+        ImGui::SetCursorPosY(-10);
+        ImGui::Image(textureID5, imageSize); // 画像アイコンを描画する
 
         //終わり
         ImGui::End();
