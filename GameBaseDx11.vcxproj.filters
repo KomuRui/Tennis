@@ -339,6 +339,9 @@
     <ClCompile Include="Engine\GUI\CreateObjGui.cpp">
       <Filter>01Engine\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\GUI\GameObjectInfoGui.cpp">
+      <Filter>01Engine\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -571,6 +574,9 @@
       <Filter>Manager\JsonManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GUI\CreateObjGui.h">
+      <Filter>01Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUI\GameObjectInfoGui.h">
       <Filter>01Engine\GUI</Filter>
     </ClInclude>
   </ItemGroup>

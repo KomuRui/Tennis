@@ -18,6 +18,7 @@
 #include "../DirectX/Fbx.h"
 #include "../../Engine/nlohmann/json.hpp"
 #include "../DirectX/Sprite.h"
+#include "GameObjectInfoGui.h"
 #include <fstream>
 #include <vector>
 #include <windows.h>
@@ -205,17 +206,14 @@ namespace ImGuiSet
             ImGui::NewFrame();
         }
 
-        //ステージ作成用UI
-        StageCreater();
-
         //ステージオブジェのトランスフォームすべて表示するImGuiを表示
         StageObjImGuiDisplay();
 
         //デバッグ用のログ表示
         DebugLogManager();
 
-        //シーンチェンジ用のボタン表示
-        //SceneChangeButton();
+        //選択したゲームオブジェクトの情報を描画
+        GameObjectInfoGui::GameObjectInfoDraw();
 
         //ゲーム画面設定の表示
         GameScreenNotFullPreference();
@@ -1101,9 +1099,9 @@ namespace ImGuiSet
 
         //window作る
         if (Direct3D::GetWindowHandle() == GetForegroundWindow())
-            ImGui::Begin("StageObjTransformDisplay", NULL);
+            ImGui::Begin("StageObjTransformDisplay", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
         else
-            ImGui::Begin("StageObjTransformDisplay", NULL,ImGuiWindowFlags_NoInputs);
+            ImGui::Begin("StageObjTransformDisplay", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
         //ステージオブジェのトランスフォームすべて表示
         StageObjTransformDisplay(GameManager::GetpSceneManager());
