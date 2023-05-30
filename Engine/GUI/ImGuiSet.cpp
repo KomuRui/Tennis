@@ -215,7 +215,7 @@ namespace ImGuiSet
         DebugLogManager();
 
         //シーンチェンジ用のボタン表示
-        SceneChangeButton();
+        //SceneChangeButton();
 
         //ゲーム画面設定の表示
         GameScreenNotFullPreference();
@@ -1101,9 +1101,9 @@ namespace ImGuiSet
 
         //window作る
         if (Direct3D::GetWindowHandle() == GetForegroundWindow())
-            ImGui::Begin("StageObjTransformDisplay", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+            ImGui::Begin("StageObjTransformDisplay", NULL);
         else
-            ImGui::Begin("StageObjTransformDisplay", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
+            ImGui::Begin("StageObjTransformDisplay", NULL,ImGuiWindowFlags_NoInputs);
 
         //ステージオブジェのトランスフォームすべて表示
         StageObjTransformDisplay(GameManager::GetpSceneManager());
@@ -1246,17 +1246,7 @@ namespace ImGuiSet
     /// </summary>
     void ImGuiSet::SceneChangeButton()
     {
-        //window作る
-        if (Direct3D::GetWindowHandle() == GetForegroundWindow())
-            ImGui::Begin("SceneChangeButton", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
-        else
-            ImGui::Begin("SceneChangeButton", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
-        //ボタン作成
-        if (ImGui::Button("TITLE", ImVec2(300, 50)))                 { GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_TITLE); }
-
-        //終わり
-        ImGui::End();
     }
 
     ///////////////////////////////ゲーム画面設定///////////////////////////////////////
@@ -2033,6 +2023,7 @@ namespace ImGuiSet
             //ウィンドウ設定
             if (ImGui::BeginMenu("SceneChange"))
             {
+                if(ImGui::MenuItem("Title")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_TITLE); }
                 ImGui::EndMenu();
             }
            
