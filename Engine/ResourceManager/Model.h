@@ -22,6 +22,12 @@ namespace Model
 		//ファイル名
 		std::string fileName;
 
+		//モデル名
+		std::string modelName;
+
+		//ゲームオブジェクト
+		GameObject* pObject;
+
 		//レイで障害物と当たった時を知りたいので用意しておく
 		GameObject* pObstacle;
 
@@ -73,7 +79,7 @@ namespace Model
 
 
 		//初期化
-		ModelData() : pFbx(nullptr), isRay(false), nowFrame(ZERO), startFrame((int)ZERO), endFrame((int)ZERO), animSpeed(ZERO), shaderType(Direct3D::SHADER_3D), outLineColor(ZERO, ZERO, ZERO, 1.0f),
+		ModelData() : fileName(""),modelName(""), pObject(nullptr),pFbx(nullptr), isRay(false), nowFrame(ZERO), startFrame((int)ZERO), endFrame((int)ZERO), animSpeed(ZERO), shaderType(Direct3D::SHADER_3D), outLineColor(ZERO, ZERO, ZERO, 1.0f),
 			alpha(1), ambient(ZERO, ZERO, ZERO, ZERO), isAnim(false), speculer(ZERO, ZERO, ZERO, ZERO), brightness(ZERO), pBasePoint(nullptr), pObstacle(nullptr), uvScroll(ZERO), isOutLineDraw(false), isAnimLoop(true)
 		{
 		}
@@ -112,6 +118,13 @@ namespace Model
 	//全てのモデルを解放
 	//（シーンが切り替わるときは必ず実行）
 	void AllRelease();
+
+	/// <summary>
+	/// モデル名を設定
+	/// </summary>
+	/// <param name="handle">モデル番号</param>
+	/// <param name="name">設定したい名前</param>
+	void SetModelName(int handle, std::string name);
 
 	//ワールド行列を設定
 	//引数：handle	設定したいモデルの番号
@@ -165,6 +178,13 @@ namespace Model
 	void SetObstacleObj(int handle, GameObject* Obstacle);
 
 	/// <summary>
+	/// ゲームオブジェクトのポインタをセット
+	/// </summary>
+	/// <param name="handle">モデル番号</param>
+	/// <param name="block">ポインタ</param>
+	void SetGameObject(int handle, GameObject* object);
+
+	/// <summary>
 	/// 使うシェーダをセット
 	/// </summary>
 	/// <param name="type">使いたいシェーダ</param>
@@ -212,6 +232,38 @@ namespace Model
 	//戻値：ワールド行列
 	XMMATRIX GetMatrix(int handle);
 
+	/// <summary>
+	/// モデル名取得
+	/// </summary>
+	/// <param name="handle">モデル番号</param>
+	/// <returns>モデル名</returns>
+	std::string GetModelName(int handle);
+
+	/// <summary>
+	/// モデル名に対応するモデル番号取得
+	/// </summary>
+	/// <param name="name">名前</param>
+	/// <returns>モデル番号</returns>
+	int GetModelNum(string name);
+
+	/// <summary>
+	/// ゲームオブジェクトのポインタを取得
+	/// </summary>
+	/// <param name="handle">モデル番号</param>
+	/// <param name="block">ポインタ</param>
+	GameObject* GetGameObject(int handle);
+
+	/// <summary>
+	///アンビエント取得
+	/// </summary>
+	/// <param name="handle">モデル番号</param>
+	XMFLOAT4 GetAmbient(int handle);
+
+	/// <summary>
+	///スペキュラー取得
+	/// </summary>
+	/// <param name="handle">モデル番号</param>
+	XMFLOAT4 GetSpeculer(int handle);
 
 	//レイキャスト（レイを飛ばして当たり判定）
 	//引数：handle	判定したいモデルの番号

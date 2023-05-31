@@ -30,4 +30,10 @@ namespace GameObjectInfoGui
 	/// ƒ‚ƒfƒ‹î•ñ•`‰æ
 	/// </summary>
 	void ModelInfoDraw();
+
+	/// <summary>
+	/// ƒ‚ƒfƒ‹İ’è
+	/// </summary>
+	/// <param name="ModelNum">ƒ‚ƒfƒ‹”Ô†</param>
+	void SetModel(int ModelNum);
 }
