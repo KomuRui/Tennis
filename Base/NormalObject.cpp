@@ -15,6 +15,13 @@ void NormalObject::Initialize()
 	ARGUMENT_INITIALIZE(pathName_, modelNamePath_);
 	assert(hModel_ >= ZERO);
 
+	//モデルの名前設定
+	Model::SetModelName(hModel_,GetObjectName());
+
+	//ゲームオブジェクト追加
+	Model::SetGameObject(hModel_, this);
+
+	//影ONにしておく
 	SetShadow(true);
 	
 	//継承先用

@@ -127,7 +127,7 @@ float4 PS(VS_OUT inData) : SV_Target
 
 	if (g_isBrightness == 0)
 	{
-		if (g_vecSpeculer.a != 0)	//スペキュラーの情報があれば
+		if (speculer.a != 0)	//スペキュラーの情報があれば
 		{
 			float4 R = reflect(lightDir, inData.normal);		//正反射ベクトル
 			speculer = pow(saturate(dot(R, inData.eye)), g_shuniness) * g_vecSpeculer;	//ハイライトを求める

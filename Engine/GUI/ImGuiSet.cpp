@@ -1131,6 +1131,9 @@ namespace ImGuiSet
         //オブジェクトの名前で名前表示する
         if (ImGui::TreeNode(objName.c_str()))
         {
+            //モデル設定
+            GameObjectInfoGui::SetModel(Model::GetModelNum(pObj->GetObjectName()));
+
             //位置
             float pos[3] = { pObj->GetPosition().x,pObj->GetPosition().y ,pObj->GetPosition().z };
             ImGui::DragFloat3("position", pos);

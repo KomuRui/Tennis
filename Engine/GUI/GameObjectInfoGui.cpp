@@ -5,6 +5,7 @@
 #include "../../Manager/GameManager/GameManager.h"
 #include <map>
 
+
 /// <summary>
 /// ゲームオブジェクトの情報を表示するGUI
 /// </summary>
@@ -55,14 +56,18 @@ namespace GameObjectInfoGui
         else
             ImGui::Begin("SelectGameObjectInfo", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs);
 
-        //名前とトランスフォーム描画
-        NameAndTransformDraw();
+        //モデル番号がエラー値なら
+        if (hModelNum != -1)
+        {
+            //名前とトランスフォーム描画
+            NameAndTransformDraw();
 
-        //色情報描画
-        ColorInfoDraw();
+            //色情報描画
+            ColorInfoDraw();
 
-        //モデル情報描画
-        ModelInfoDraw();
+            //モデル情報描画
+            ModelInfoDraw();
+        }
 
         //終わり
         ImGui::End();
@@ -72,7 +77,9 @@ namespace GameObjectInfoGui
     void NameAndTransformDraw()
     {
         /////名前とチェックボタン
-        ImGui::InputText("objName", objName, sizeof(objName)); //オブジェクトの名前
+        
+        //オブジェクトの名前
+        ImGui::InputText("objName", &Model::GetModelName(hModelNum)[0], Model::GetModelName(hModelNum).size()); 
 
         /////トランスフォーム
         float windowFontScale = 1.5f;
@@ -80,17 +87,26 @@ namespace GameObjectInfoGui
         ImGui::Text("Transform");  
         ImGui::SetWindowFontScale(1.0f);  
 
+        //ゲームオブジェクト取得
+        GameObject* p = Model::GetGameObject(hModelNum);
+
         //位置
-        float pos[3] = { 0,0 ,0 };
+        XMFLOAT3 xmPos = p->GetPosition();
+        float pos[3] = { xmPos.x,xmPos.y,xmPos.z };
         ImGui::DragFloat3("position", pos);
+        p->SetPosition(XMFLOAT3(pos[0], pos[1], pos[2]));
 
         //回転
-        float rotate[3] = { 0,0,0 };
+        XMFLOAT3 xmRotate = p->GetRotate();
+        float rotate[3] = { xmRotate.x,xmRotate.y,xmRotate.z };
         ImGui::DragFloat3("rotate", rotate);
+        p->SetRotate(XMFLOAT3(rotate[0], rotate[1], rotate[2]));
 
         //拡大縮小
-        float scale[3] = { 0,0,0 };
+        XMFLOAT3 xmScale = p->GetScale();
+        float scale[3] = { xmScale.x,xmScale.y,xmScale.z };
         ImGui::DragFloat3("scale", scale);
+        p->SetScale(XMFLOAT3(scale[0], scale[1], scale[2]));
     }
 
     //色情報描画
@@ -104,8 +120,10 @@ namespace GameObjectInfoGui
         //アンビエント
         if (ImGui::TreeNode("AmbientColor")) {
            
-            float color[4] = { 0, 0, 0, 0 };
+            XMFLOAT4 xmColor = Model::GetAmbient(hModelNum);
+            float color[4] = { xmColor.x,xmColor.y,xmColor.z,xmColor.w };
             ImGui::ColorPicker4("AmbientColor", color, ImGuiColorEditFlags_PickerHueWheel);
+            Model::SetAmbient(hModelNum, XMFLOAT4(color[0], color[1], color[2], color[3]));
 
             ImGui::TreePop();
         }
@@ -113,8 +131,10 @@ namespace GameObjectInfoGui
         //スペキュラー
         if (ImGui::TreeNode("SpeculerColor")) {
 
-            float colora[4] = { 0, 0, 0, 0 };
-            ImGui::ColorPicker4("SpeculerColor", colora, ImGuiColorEditFlags_PickerHueWheel);
+            XMFLOAT4 xmColor = Model::GetSpeculer(hModelNum);
+            float color[4] = { xmColor.x,xmColor.y,xmColor.z,xmColor.w };
+            ImGui::ColorPicker4("SpeculerColor", color, ImGuiColorEditFlags_PickerHueWheel);
+            Model::SetSpeculer(hModelNum, XMFLOAT4(color[0], color[1], color[2], color[3]));
 
             ImGui::TreePop();
         }
@@ -159,5 +179,17 @@ namespace GameObjectInfoGui
         }
 
         ImGui::EndChild();
+    }
+
+    //モデル設定
+    void SetModel(int ModelNum)
+    {
+        if (ModelNum == hModelNum || ModelNum < 0)
+        {
+            return;
+        }
+
+        //モデル設定
+        ARGUMENT_INITIALIZE(hModelNum, ModelNum);
     }
 }

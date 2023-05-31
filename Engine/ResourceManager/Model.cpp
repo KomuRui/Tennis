@@ -105,6 +105,18 @@ namespace Model
 		}
 	}
 
+	//モデル名を設定
+	void SetModelName(int handle, std::string name)
+	{
+		if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
+		{
+			return;
+		}
+
+		_datas[handle]->modelName = name;
+	}
+
+	//透明度を設定
 	void SetAlpha(int handle, float Alpha)
 	{
 		if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
@@ -184,6 +196,17 @@ namespace Model
 		}
 
 		_datas[handle]->pBasePoint = basePoint;
+	}
+
+	//ゲームオブジェクトのポインタをセット
+	void SetGameObject(int handle, GameObject* object)
+	{
+		if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
+		{
+			return;
+		}
+
+		_datas[handle]->pObject = object;
 	}
 
 	void SetObstacleObj(int handle, GameObject* Obstacle)
@@ -302,7 +325,6 @@ namespace Model
 		return pos;
 	}
 
-
 	//ワールド行列を設定
 	void SetTransform(int handle, Transform & transform)
 	{
@@ -321,6 +343,60 @@ namespace Model
 		return _datas[handle]->transform.GetWorldMatrix();
 	}
 
+	//モデル名取得
+	std::string GetModelName(int handle)
+	{
+		return _datas[handle]->modelName;
+	}
+
+	//モデル名に対応するモデル番号取得
+	int GetModelNum(string name)
+	{
+		//対応するモデルをゲットする
+		for (int i = 0; i < _datas.size(); i++)
+		{
+			//モデル名一緒なら番号返す
+			if (_datas[i]->modelName == name)
+			{
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	//ゲームオブジェクトのポインタを取得
+	GameObject* GetGameObject(int handle)
+	{
+		if (handle < 0 || handle >= _datas.size())
+		{
+			return nullptr;
+		}
+
+		return _datas[handle]->pObject;
+	}
+
+	//アンビエント取得
+	XMFLOAT4 GetAmbient(int handle)
+	{
+		if (handle < 0 || handle >= _datas.size())
+		{
+			return XMFLOAT4(0,0,0,0);
+		}
+
+		return _datas[handle]->ambient;
+	}
+
+	//スペキュラー取得
+	XMFLOAT4 GetSpeculer(int handle)
+	{
+		if (handle < 0 || handle >= _datas.size())
+		{
+			return XMFLOAT4(0, 0, 0, 0);
+		}
+
+		return _datas[handle]->speculer;
+	}
 
 	//レイキャスト（レイを飛ばして当たり判定）
 	void RayCast(int handle, RayCastData *data)
