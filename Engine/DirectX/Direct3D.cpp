@@ -7,7 +7,6 @@
 #include "../GUI/imgui/imgui_impl_dx11.h"
 #include "Sprite.h"
 
-
 //‰æ–Ê‚Ì•`‰æ‚ÉŠÖ‚·‚éˆ—
 namespace Direct3D
 {
