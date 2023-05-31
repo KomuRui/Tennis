@@ -131,6 +131,7 @@
     <ClCompile Include="Engine\Collider\BoxCollider.cpp" />
     <ClCompile Include="Engine\Collider\Collider.cpp" />
     <ClCompile Include="Engine\Collider\SphereCollider.cpp" />
+    <ClCompile Include="Engine\Component\Component.cpp" />
     <ClCompile Include="Engine\Component\EasingMove.cpp" />
     <ClCompile Include="Engine\Component\Gauge.cpp" />
     <ClCompile Include="Engine\Component\Posture.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="Engine\Collider\BoxCollider.h" />
     <ClInclude Include="Engine\Collider\Collider.h" />
     <ClInclude Include="Engine\Collider\SphereCollider.h" />
+    <ClInclude Include="Engine\Component\Component.h" />
     <ClInclude Include="Engine\Component\EasingMove.h" />
     <ClInclude Include="Engine\Component\Gauge.h" />
     <ClInclude Include="Engine\Component\Posture.h" />

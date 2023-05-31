@@ -342,6 +342,9 @@
     <ClCompile Include="Engine\GUI\GameObjectInfoGui.cpp">
       <Filter>01Engine\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Component\Component.cpp">
+      <Filter>01Engine\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -578,6 +581,9 @@
     </ClInclude>
     <ClInclude Include="Engine\GUI\GameObjectInfoGui.h">
       <Filter>01Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Component.h">
+      <Filter>01Engine\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@
 #include "Transform.h"
 #include "../ResourceManager/Global.h"
 #include "../DirectX/Input.h"
+#include "../Component/Component.h"
 
 using namespace DirectX;
 
@@ -28,6 +29,9 @@ protected:
 
 	//自分のコライダー
 	Collider*               pCollider_;
+
+	//コンポーネントリスト
+	std::list<Component*> ComponentList;
 
 	//衝突判定リスト
 	std::list<Collider*>	colliderList_;	
@@ -165,6 +169,47 @@ public:
 
 	//RootJobを取得
 	GameObject* GetRootJob();
+
+
+	//オブジェクトが持っているコンポーネントを取得
+	template<class T>
+	T* GetComponent()
+	{
+		for (auto com : ComponentList) {
+			T* buff = dynamic_cast<T*>(com);
+			if (buff != nullptr)
+				return buff;
+		}
+		return nullptr;
+	}
+
+	//オブジェクトが持っているコンポーネントを削除
+	template<class T>
+	T* DeleteComponent()
+	{
+		for (auto com : ComponentList) {
+			T* buff = dynamic_cast<T*>(com);
+
+			//見つかれば削除
+			if (buff != nullptr)
+			{
+				ComponentList.remove(buff);
+				delete buff;
+			}
+		}
+		return nullptr;
+	}
+
+	//コンポーネント追加
+	template<class T>
+	T* AddComponent()
+	{
+		T* buff = new T();
+		buff->Parent = this;
+		ComponentList.push_back(buff);
+		buff->Start();
+		return buff;
+	}
 
 	//各アクセス関数
 	XMFLOAT3 GetPosition() { return transform_.position_; }
