@@ -32,7 +32,7 @@ namespace GameObjectInfoGui
     void Initialize()
     {
         //ÇªÇÍÇºÇÍñºëOê›íË
-        ARGUMENT_INITIALIZE(shaderNameTable[Direct3D::SHADER_3D], "SHADER3D");
+        ARGUMENT_INITIALIZE(shaderNameTable[Direct3D::SHADER_3D], "SHADER_3D");
         ARGUMENT_INITIALIZE(shaderNameTable[Direct3D::SHADER_2D], "SHADER_2D");
         ARGUMENT_INITIALIZE(shaderNameTable[Direct3D::SHADER_UNLIT], "SHADER_UNLIT");
         ARGUMENT_INITIALIZE(shaderNameTable[Direct3D::SHADER_BILLBOARD], "SHADER_BILLBOARD");
