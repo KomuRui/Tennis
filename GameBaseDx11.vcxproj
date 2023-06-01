@@ -136,6 +136,7 @@
     <ClCompile Include="Engine\Component\Gauge.cpp" />
     <ClCompile Include="Engine\Component\Model.cpp" />
     <ClCompile Include="Engine\Component\Posture.cpp" />
+    <ClCompile Include="Engine\Component\Transform\Transform.cpp" />
     <ClCompile Include="Engine\DirectX\BillBoard.cpp" />
     <ClCompile Include="Engine\DirectX\Direct3D.cpp" />
     <ClCompile Include="Engine\DirectX\Fbx.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Engine\Component\Gauge.h" />
     <ClInclude Include="Engine\Component\Model.h" />
     <ClInclude Include="Engine\Component\Posture.h" />
+    <ClInclude Include="Engine\Component\Transform\Transform.h" />
     <ClInclude Include="Engine\DirectX\BillBoard.h" />
     <ClInclude Include="Engine\DirectX\Direct3D.h" />
     <ClInclude Include="Engine\DirectX\Fbx.h" />

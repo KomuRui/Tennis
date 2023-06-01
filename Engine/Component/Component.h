@@ -5,18 +5,16 @@ class GameObject;
 //コンポーネント基底クラス
 class Component
 {
-private:
-    
-    //コンストラクタ
-    Component():parent(nullptr){}
-
-    //デストラクタ
-    virtual ~Component() {}
-
 public:
    
     //親
     GameObject* parent;
+
+    //コンストラクタ
+    Component() :parent(nullptr) {}
+
+    //デストラクタ
+    virtual ~Component() {}
 
     //最初の一回だけ呼ばれる
     virtual void Start() {}

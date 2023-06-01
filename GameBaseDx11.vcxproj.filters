@@ -213,9 +213,6 @@
     <ClCompile Include="Engine\GameObject\RootObject.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\GameObject\TransformA.cpp">
-      <Filter>01Engine\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\GUI\ImGuiSet.cpp">
       <Filter>01Engine\GUI</Filter>
     </ClCompile>
@@ -351,6 +348,12 @@
     <ClCompile Include="Engine\Component\Model.cpp">
       <Filter>01Engine\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\GameObject\TransformA.cpp">
+      <Filter>01Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\Transform\Transform.cpp">
+      <Filter>01Engine\Component\Transform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -445,9 +448,6 @@
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GameObject\RootObject.h">
-      <Filter>01Engine\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameObject\TransformA.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GUI\ImGuiSet.h">
@@ -596,6 +596,12 @@
     </ClInclude>
     <ClInclude Include="Engine\System.h">
       <Filter>01Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObject\TransformA.h">
+      <Filter>01Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Transform\Transform.h">
+      <Filter>01Engine\Component\Transform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
