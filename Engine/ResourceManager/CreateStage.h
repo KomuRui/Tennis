@@ -1,5 +1,5 @@
 #pragma once
-#include "../GameObject/Transform.h"
+#include "../GameObject/TransformA.h"
 #include "../GameObject/GameObject.h"
 #include <vector>
 
@@ -20,7 +20,7 @@ class CreateStage
 		GameObject* parent;         //親オブジェクト
 		std::string ModelPathName;  //モデルパスネーム
 		std::string inName;         //オブジェクトの名前
-		Transform   t;              //トランスフォーム
+		TransformA   t;              //トランスフォーム
 		XMFLOAT3    camPos;         //カメラのポジション(必要なオブジェクトと必要じゃないオブジェクトがある)
 	};
 
@@ -40,7 +40,7 @@ public:
 	CreateStage();
 
 	//オブジェクト作成
-	void CreateObject(GameObject* parent,std::string ModelPathName, std::string inName, Transform t);
+	void CreateObject(GameObject* parent,std::string ModelPathName, std::string inName, TransformA t);
 
 	/// <summary>
 	/// 各ステージのファイルロードしステージを作成してくれる
@@ -92,21 +92,21 @@ public:
 	/// <typeparam name="T">生成したいクラスの名前</typeparam>
 	/// <param name="pParent">親</param>
 	template <class T>
-	T* InstantiateNormal(GameObject* pParent,std::string modelPath,std::string name, Transform t);
+	T* InstantiateNormal(GameObject* pParent,std::string modelPath,std::string name, TransformA t);
 
 	//普通型の生成(名前とモデルパス指定しない)
 	template <class T>
-	T* InstantiateNormal(GameObject* pParent,Transform t);
+	T* InstantiateNormal(GameObject* pParent,TransformA t);
 
 	//Mobを継承した3Dオブジェ生成
 	template <class T>
-	T* InstantiateMob3D(GameObject* pParent, std::string modelPath, std::string name, Transform t);
+	T* InstantiateMob3D(GameObject* pParent, std::string modelPath, std::string name, TransformA t);
 
 	//ボタンの生成
 	template <class T>
-	T* InstantiateButton(GameObject* pParent, std::string modelPath, std::string name, Transform t);
+	T* InstantiateButton(GameObject* pParent, std::string modelPath, std::string name, TransformA t);
 
 	//星の生成
 	template <class T>
-	T* InstantiatePlanet(GameObject* pParent, std::string modelPath, std::string name, Transform t);
+	T* InstantiatePlanet(GameObject* pParent, std::string modelPath, std::string name, TransformA t);
 };

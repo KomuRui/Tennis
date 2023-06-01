@@ -1,7 +1,7 @@
 #include <d3dcompiler.h>
 #include "Direct3D.h"
 #include "../ResourceManager/Global.h"
-#include "../GameObject/Transform.h"
+#include "../GameObject/TransformA.h"
 #include "../GUI/imgui/imgui.h"
 #include "../GUI/imgui/imgui_impl_win32.h"
 #include "../GUI/imgui/imgui_impl_dx11.h"

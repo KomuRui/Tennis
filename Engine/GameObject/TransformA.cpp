@@ -1,6 +1,6 @@
-#include "Transform.h"
+#include "TransformA.h"
 
-Transform::Transform(): pParent_(nullptr)
+TransformA::TransformA(): pParent_(nullptr)
 {
 	position_ = XMFLOAT3(0, 0, 0);
 	rotate_ = XMFLOAT3(0, 0, 0);
@@ -13,11 +13,11 @@ Transform::Transform(): pParent_(nullptr)
 }
 
 
-Transform::~Transform()
+TransformA::~TransformA()
 {
 }
 
-void Transform::Calclation()
+void TransformA::Calclation()
 {
 
 	if(!mFlag_)
@@ -47,7 +47,7 @@ void Transform::Calclation()
 	
 }
 
-XMMATRIX Transform::GetWorldMatrix() 
+XMMATRIX TransformA::GetWorldMatrix()
 {
 	if (!mFlag_)
 	{
@@ -76,7 +76,7 @@ XMMATRIX Transform::GetWorldMatrix()
 
 
 //親のワールド行列を取得
-XMMATRIX Transform::GetParentWorldMatrix()
+XMMATRIX TransformA::GetParentWorldMatrix()
 {
 	if (pParent_ == nullptr) return XMMatrixIdentity();
 

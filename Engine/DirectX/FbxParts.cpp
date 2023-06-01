@@ -458,7 +458,7 @@ void FbxParts::IntConstantBuffer()
 }
 
 //描画
-void FbxParts::Draw(Transform& transform)
+void FbxParts::Draw(TransformA& transform)
 {
 	//シェーダを保存しておく
 	Direct3D::SHADER_TYPE type = Direct3D::GetShader();
@@ -600,7 +600,7 @@ void FbxParts::Draw(Transform& transform)
 }
 
 //ボーン有りのモデルを描画
-void FbxParts::DrawSkinAnime(Transform& transform, FbxTime time)
+void FbxParts::DrawSkinAnime(TransformA& transform, FbxTime time)
 {
 	//ボーンごとの現在の行列を取得する
 	for (int i = 0; i < numBone_; i++)
@@ -663,7 +663,7 @@ void FbxParts::DrawSkinAnime(Transform& transform, FbxTime time)
 
 }
 
-void FbxParts::DrawMeshAnime(Transform& transform, FbxTime time, FbxScene * scene)
+void FbxParts::DrawMeshAnime(TransformA& transform, FbxTime time, FbxScene * scene)
 {
 	//// その瞬間の自分の姿勢行列を得る
 	//FbxAnimEvaluator *evaluator = scene->GetAnimationEvaluator();

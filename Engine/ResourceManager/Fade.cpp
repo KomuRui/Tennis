@@ -47,11 +47,11 @@ namespace Fade
 	Sprite* pGameOver_;
 	EasingMove* pEasingScale_; //イージングするためのクラス(拡大縮小)
 	EasingMove* pEasingRotate_;//イージングするためのクラス(回転)
-	Transform gameOver_;       //ゲームオーバー画像用のトランスフォーム
+	TransformA gameOver_;       //ゲームオーバー画像用のトランスフォーム
 
 	//通常フェイド用の画像(黒)
 	Sprite* pNormal_;
-	Transform normal_;         //通常フェイド用の画像のトランスフォーム
+	TransformA normal_;         //通常フェイド用の画像のトランスフォーム
 	float normalAlpha_;        //通常フェイドの透明度
 
 	//円フェード用の画像の文字列(シーンの数分)
@@ -208,7 +208,7 @@ namespace Fade
 	void Fade::NormalDraw()
 	{
 		//画像用のtransform
-		Transform t;
+		TransformA t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->GetTextureSize();
@@ -228,7 +228,7 @@ namespace Fade
 	void Fade::FadeInCircleDraw()
 	{
 		//画像用のtransform
-		Transform t;
+		TransformA t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->GetTextureSize();
@@ -250,7 +250,7 @@ namespace Fade
 	void Fade::FadeOutCircleDraw()
 	{
 		//画像用のtransform
-		Transform t;
+		TransformA t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->GetTextureSize();
@@ -275,7 +275,7 @@ namespace Fade
 	void Fade::FadeInNormalDraw()
 	{
 		//画像用のtransform
-		Transform t;
+		TransformA t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pNormal_->GetTextureSize();
@@ -298,7 +298,7 @@ namespace Fade
 	void Fade::FadeOutNormalDraw()
 	{
 		//画像用のtransform
-		Transform t;
+		TransformA t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pNormal_->GetTextureSize();

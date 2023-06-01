@@ -3,7 +3,7 @@
 #include <fbxsdk.h>
 #include <vector>
 #include <string>
-#include "../GameObject/Transform.h"
+#include "../GameObject/TransformA.h"
 #include "Direct3D.h"
 
 class FbxParts;
@@ -84,7 +84,7 @@ public:
 
 	//描画
 	//引数：World	ワールド行列
-	void    Draw(Transform& transform, int frame, float Diffuse, XMFLOAT4 Ambient, XMFLOAT4 Speculer, float Brightness,float scroll,XMFLOAT4 OutLineColor,bool isOutLineDraw, Direct3D::SHADER_TYPE shaderType);
+	void    Draw(TransformA& transform, int frame, float Diffuse, XMFLOAT4 Ambient, XMFLOAT4 Speculer, float Brightness,float scroll,XMFLOAT4 OutLineColor,bool isOutLineDraw, Direct3D::SHADER_TYPE shaderType);
 
 	//解放
 	void    Release();

@@ -27,7 +27,7 @@ CreateStage::CreateStage()
 }
 
 //オブジェクト作成
-void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, std::string inName, Transform t)
+void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, std::string inName, TransformA t)
 {
 	
 	/////////////////////Player///////////////////////
@@ -131,7 +131,7 @@ void CreateStage::LoadFileCreateStage(GameObject* parent, std::string filename)
 	//各パラメータ格納用
 	std::string ModelPathName;
 	std::string Name;
-	Transform t;
+	TransformA t;
 
 	//親情報があれば追加する
 	if (parent != nullptr)
@@ -165,7 +165,7 @@ void CreateStage::LoadFile(GameObject* parent, std::string filename)
 	//各パラメータ格納用
 	std::string ModelPathName;
 	std::string Name;
-	Transform t;
+	TransformA t;
 
 	//親情報があれば追加する
 	if (parent != nullptr)
@@ -279,7 +279,7 @@ void CreateStage::AllCreateStageVisibleAndEnter()
 
 //普通の生成
 template <class T>
-T* CreateStage::InstantiateNormal(GameObject* pParent,std::string modelPath, std::string name, Transform t)
+T* CreateStage::InstantiateNormal(GameObject* pParent,std::string modelPath, std::string name, TransformA t)
 {
 	T* pNewObject = new T(pParent, modelPath,name);
 	if (pParent != nullptr)
@@ -295,7 +295,7 @@ T* CreateStage::InstantiateNormal(GameObject* pParent,std::string modelPath, std
 
 //普通型の生成(名前とモデルパス指定しない)
 template <class T>
-T* CreateStage::InstantiateNormal(GameObject* pParent, Transform t)
+T* CreateStage::InstantiateNormal(GameObject* pParent, TransformA t)
 {
 	T* pNewObject = new T(pParent);
 	if (pParent != nullptr)
@@ -310,7 +310,7 @@ T* CreateStage::InstantiateNormal(GameObject* pParent, Transform t)
 
 //Mobを継承した3Dオブジェ生成
 template <class T>
-T* CreateStage::InstantiateMob3D(GameObject* pParent, std::string modelPath, std::string name, Transform t)
+T* CreateStage::InstantiateMob3D(GameObject* pParent, std::string modelPath, std::string name, TransformA t)
 {
 	T* pNewObject = new T(pParent, modelPath, name);
 	if (pParent != nullptr)
@@ -327,7 +327,7 @@ T* CreateStage::InstantiateMob3D(GameObject* pParent, std::string modelPath, std
 
 //ボタンの生成
 template <class T>
-T* CreateStage::InstantiateButton(GameObject* pParent, std::string modelPath, std::string name, Transform t)
+T* CreateStage::InstantiateButton(GameObject* pParent, std::string modelPath, std::string name, TransformA t)
 {
 	T* p = InstantiateNormal<T>(pParent, modelPath, name, t);
 	ButtonManager::AddButton(p);
@@ -337,7 +337,7 @@ T* CreateStage::InstantiateButton(GameObject* pParent, std::string modelPath, st
 
 //星の生成
 template <class T>
-T* CreateStage::InstantiatePlanet(GameObject* pParent, std::string modelPath, std::string name, Transform t)
+T* CreateStage::InstantiatePlanet(GameObject* pParent, std::string modelPath, std::string name, TransformA t)
 {
 	T* pNewObject = new T(pParent, modelPath, name);
 	if (pParent != nullptr)

@@ -5,7 +5,7 @@
 
 #include "string"
 #include "Texture.h"
-#include "../GameObject/Transform.h"
+#include "../GameObject/TransformA.h"
 
 using namespace DirectX;
 
@@ -71,10 +71,10 @@ public:
 	virtual HRESULT Initialize(ID3D11Texture2D* pTexture);
 
 	//描画
-	void Draw(Transform& transform, RECT rect, float alpha = 1.0f);
-	void Draw(Transform& transform, float dis, RECT rect);
-	void Draw(Transform& transform, float alpha);
-	void Draw(Transform& transform);
+	void Draw(TransformA& transform, RECT rect, float alpha = 1.0f);
+	void Draw(TransformA& transform, float dis, RECT rect);
+	void Draw(TransformA& transform, float alpha);
+	void Draw(TransformA& transform);
 
 	/// <summary>
 	/// 色を反転する(透明色は指定した色にその他の色は透明に)
@@ -82,7 +82,7 @@ public:
 	/// <param name="transform">表示位置</param>
 	/// <param name="rect">切り抜き範囲</param>
 	/// <param name="color">色</param>
-	void ReversalColorDraw(Transform& transform, RECT rect, XMFLOAT4 color);
+	void ReversalColorDraw(TransformA& transform, RECT rect, XMFLOAT4 color);
 
 	//画像サイズの取得
 	//戻値：画像サイズ

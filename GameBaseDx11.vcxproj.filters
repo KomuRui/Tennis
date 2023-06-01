@@ -114,6 +114,9 @@
     <Filter Include="Manager\JsonManager">
       <UniqueIdentifier>{096a8cc7-3972-4ce0-a69a-8a2d8ac73e2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01Engine\Component\Transform">
+      <UniqueIdentifier>{95e51f23-b985-431b-817d-38c8ef6786f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -210,7 +213,7 @@
     <ClCompile Include="Engine\GameObject\RootObject.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\GameObject\Transform.cpp">
+    <ClCompile Include="Engine\GameObject\TransformA.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Engine\GUI\ImGuiSet.cpp">
@@ -444,7 +447,7 @@
     <ClInclude Include="Engine\GameObject\RootObject.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\GameObject\Transform.h">
+    <ClInclude Include="Engine\GameObject\TransformA.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GUI\ImGuiSet.h">

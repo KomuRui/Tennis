@@ -207,7 +207,7 @@ namespace ImageManager
 	}
 
 	//ƒ[ƒ‹ƒhs—ñ‚ğİ’è
-	void SetTransform(int handle, Transform& transform)
+	void SetTransform(int handle, TransformA& transform)
 	{
 		if (handle < 0 || handle >= _datas.size())
 		{

@@ -117,7 +117,7 @@ void Sprite::InitIndex()
 	Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 }
 
-void Sprite::Draw(Transform& transform, RECT rect, float alpha)
+void Sprite::Draw(TransformA& transform, RECT rect, float alpha)
 {
 	transform.Calclation();
 
@@ -184,7 +184,7 @@ void Sprite::Draw(Transform& transform, RECT rect, float alpha)
 
 }
 
-void Sprite::Draw(Transform& transform, float dis, RECT rect)
+void Sprite::Draw(TransformA& transform, float dis, RECT rect)
 {
 	//トランスふぇーむ計算する
 	transform.Calclation();
@@ -267,7 +267,7 @@ void Sprite::Draw(Transform& transform, float dis, RECT rect)
 
 }
 
-void Sprite::Draw(Transform& transform,float alpha)
+void Sprite::Draw(TransformA& transform,float alpha)
 {
 	//いろいろ設定
 	Direct3D::SetShader(Direct3D::SHADER_2D);
@@ -322,7 +322,7 @@ void Sprite::Draw(Transform& transform,float alpha)
 
 }
 
-void Sprite::Draw(Transform& transform)
+void Sprite::Draw(TransformA& transform)
 {
 	Direct3D::SetShader(Direct3D::SHADER_2D);
 
@@ -366,7 +366,7 @@ void Sprite::Draw(Transform& transform)
 }
 
 //色を反転する(透明色は指定した色にその他の色は透明に)
-void Sprite::ReversalColorDraw(Transform& transform, RECT rect, XMFLOAT4 color)
+void Sprite::ReversalColorDraw(TransformA& transform, RECT rect, XMFLOAT4 color)
 {
 	//トランスふぇーむ計算する
 	transform.Calclation();

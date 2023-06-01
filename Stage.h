@@ -30,7 +30,7 @@ protected:
 	CreateStage* pCreateStage_;
 
 	//背景モデル用のトランスフォーム
-	Transform tSpace_;
+	TransformA tSpace_;
 
 	//画角
 	int fieldAngle_;

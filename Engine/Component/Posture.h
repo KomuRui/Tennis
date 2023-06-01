@@ -10,7 +10,7 @@ class Posture
 {
 public:
 
-	Transform* transform_; //モデルのトランスフォーム
+	TransformA* transform_; //モデルのトランスフォーム
 	XMVECTOR* down_;       //キャラの下ベクトル
 	XMVECTOR* vNormal_;    //現在の真下の法線
 	int hGroundModel_;     //ステージのモデル番号

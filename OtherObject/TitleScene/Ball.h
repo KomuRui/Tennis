@@ -33,7 +33,7 @@ class Ball : public NormalObject
 	string hDropEffectName_;     //雫エフェクトハンドル
 	string dropEffectFilePath_;  //雫エフェクトのファイルパス
 
-	Transform tShadow_;          //影のトランスフォーム
+	TransformA tShadow_;          //影のトランスフォーム
 
 	XMVECTOR endPointDirection_; //終点までのベクトル
 	XMVECTOR progressVector_;    //進行ベクトル

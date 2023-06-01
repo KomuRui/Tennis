@@ -2,7 +2,7 @@
 #include "SphereCollider.h"
 #include "../GameObject/GameObject.h"
 #include "../ResourceManager/ModelManager.h"
-#include "../GameObject/Transform.h"
+#include "../GameObject/TransformA.h"
 
 //コンストラクタ
 Collider::Collider():
@@ -84,9 +84,9 @@ bool Collider::IsHitCircleVsCircle(SphereCollider* circleA, SphereCollider* circ
 
 //テスト表示用の枠を描画
 //引数：position	オブジェクトの位置
-void Collider::Draw(XMFLOAT3 position, XMFLOAT3 rotate,Transform t)
+void Collider::Draw(XMFLOAT3 position, XMFLOAT3 rotate,TransformA t)
 {
-	Transform transform;
+	TransformA transform;
 	transform.position_ = XMFLOAT3(position.x + center_.x, position.y + center_.y, position.z + center_.z);
 	transform.scale_ = size_;
 

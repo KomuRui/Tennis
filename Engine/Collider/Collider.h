@@ -7,7 +7,7 @@ using namespace DirectX;
 class GameObject;
 class BoxCollider;
 class SphereCollider;
-class Transform;
+class TransformA;
 
 //あたり判定のタイプ
 enum ColliderType
@@ -65,7 +65,7 @@ public:
 
 	//テスト表示用の枠を描画
 	//引数：position	オブジェクトの位置
-	void Draw(XMFLOAT3 position, XMFLOAT3 rotate, Transform t);
+	void Draw(XMFLOAT3 position, XMFLOAT3 rotate, TransformA t);
 
 	//セッター
 	void SetGameObject(GameObject* gameObject) { pGameObject_ = gameObject; }

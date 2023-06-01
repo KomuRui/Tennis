@@ -5,7 +5,7 @@
 #include <assert.h>
 #include "../Collider/SphereCollider.h"
 #include "../Collider/BoxCollider.h"
-#include "Transform.h"
+#include "TransformA.h"
 #include "../ResourceManager/Global.h"
 #include "../DirectX/Input.h"
 #include "../Component/Component.h"
@@ -22,16 +22,13 @@ class GameObject
 protected:
 	
 	//位置や向きなどを管理するオブジェクト
-	Transform				transform_;
+	TransformA				transform_;
 
 	//オブジェクトの名前
 	std::string				objectName_;
 
 	//自分のコライダー
 	Collider*               pCollider_;
-
-	//コンポーネントリスト
-	std::list<Component*> ComponentList;
 
 	//衝突判定リスト
 	std::list<Collider*>	colliderList_;	
@@ -175,7 +172,7 @@ public:
 	template<class T>
 	T* GetComponent()
 	{
-		for (auto com : ComponentList) {
+		for (auto com : ComponentList_) {
 			T* buff = dynamic_cast<T*>(com);
 			if (buff != nullptr)
 				return buff;
@@ -187,13 +184,13 @@ public:
 	template<class T>
 	T* DeleteComponent()
 	{
-		for (auto com : ComponentList) {
+		for (auto com : ComponentList_) {
 			T* buff = dynamic_cast<T*>(com);
 
 			//見つかれば削除
 			if (buff != nullptr)
 			{
-				ComponentList.remove(buff);
+				ComponentList_.remove(buff);
 				delete buff;
 			}
 		}
@@ -206,7 +203,7 @@ public:
 	{
 		T* buff = new T();
 		buff->Parent = this;
-		ComponentList.push_back(buff);
+		ComponentList_.push_back(buff);
 		buff->Start();
 		return buff;
 	}
@@ -218,7 +215,7 @@ public:
 	XMFLOAT3 GetWorldPosition() { return Float3Add(GetParent()->transform_.position_ , transform_.position_); }
 	XMFLOAT3 GetWorldRotate() { return Float3Add(GetParent()->transform_.rotate_, transform_.rotate_); }
 	XMFLOAT3 GetWorldScale() { return Float3Add(GetParent()->transform_.scale_, transform_.scale_); }
-	Transform* GetTransform() { return &transform_; }
+	TransformA* GetTransform() { return &transform_; }
 	std::string GetPathName() { return pathName_; }
 	float    GetColliderRadius();
 	void SetPosition(XMFLOAT3 position) { transform_.position_ = position; }
@@ -236,7 +233,7 @@ public:
 	void SetPosCollider(XMFLOAT3 position);
 	void SetScaleCollider(XMFLOAT3 scale);
 	void SetPosScaleCollider(XMFLOAT3 scale, XMFLOAT3 position);
-	void SetTransform(Transform t) { transform_ = t; }
+	void SetTransform(TransformA t) { transform_ = t; }
 	
 private:
 
@@ -269,6 +266,9 @@ private:
 
 	//子オブジェクトリスト
 	std::list<GameObject*> childList_;
+
+	//コンポーネントリスト
+	std::list<Component*> ComponentList_;
 };
 
 

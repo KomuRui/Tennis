@@ -49,7 +49,7 @@ void Gauge::Update()
 void Gauge::Draw()
 {
     //‰æ‘œ•\Ž¦—p
-    Transform gaugeTrans;
+    TransformA gaugeTrans;
 
     //HP•Ï‰»‚È‚µ
     if (abs(moveRatio_ - stopRatio_) < speed_)

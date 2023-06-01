@@ -84,7 +84,7 @@ namespace ImGuiSet
     //表示させたオブジェクトを格納する場所
     //first->モデル番号
     //second->モデル番号ごとのトランスフォーム
-    std::vector<std::pair<int, Transform>>obj_;
+    std::vector<std::pair<int, TransformA>>obj_;
 
     //first->作ったかどうか
     //second->何個作ったか
@@ -351,7 +351,7 @@ namespace ImGuiSet
                     {
 
                         //ロードしたオブジェクトに必要なトランスフォームを用意
-                        Transform t;
+                        TransformA t;
 
                         objectPos_[i] = XMFLOAT3(0, 0, 0);
                         objectRotate_[i] = XMFLOAT3(0, 0, 0);
@@ -360,7 +360,7 @@ namespace ImGuiSet
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
-                        std::pair<int, Transform> a(ModelManager::Load(text1[i]), t);
+                        std::pair<int, TransformA> a(ModelManager::Load(text1[i]), t);
                         assert(a.first > -1);
 
                         //vectorに格納する
@@ -728,7 +728,7 @@ namespace ImGuiSet
                     {
 
                         //ロードしたオブジェクトに必要なトランスフォームを用意
-                        Transform t;
+                        TransformA t;
 
                         cameraTransitionPos_[i] = basicPos;
                         cameraTar_[i] = basicRotate;
@@ -737,7 +737,7 @@ namespace ImGuiSet
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
-                        std::pair<int, Transform> a(ModelManager::Load(text1[i]), t);
+                        std::pair<int, TransformA> a(ModelManager::Load(text1[i]), t);
                         assert(a.first > 0);
 
                         //vectorに格納する
@@ -932,7 +932,7 @@ namespace ImGuiSet
                     {
 
                         //ロードしたオブジェクトに必要なトランスフォームを用意
-                        Transform t;
+                        TransformA t;
 
                         imagePos_[i] = XMFLOAT3(0, 0, 0);
                         imageRotate_[i] = XMFLOAT3(0, 0, 0);
@@ -941,7 +941,7 @@ namespace ImGuiSet
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
-                        std::pair<int, Transform> a(ImageManager::Load(text1[i]), t);
+                        std::pair<int, TransformA> a(ImageManager::Load(text1[i]), t);
                         assert(a.first >= 0);
 
                         //vectorに格納する
@@ -1416,7 +1416,7 @@ namespace ImGuiSet
     void ImGuiSet::EffectEditGui()
     {
         //モデル表示
-        Transform t;
+        TransformA t;
         pBaseFbx->Draw(t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), ZERO, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, Direct3D::SHADER_UNLIT);
         pStickFbx->Draw(t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), 1.0f, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, Direct3D::SHADER_3D);
 

@@ -8,7 +8,7 @@ using namespace DirectX;
 //-----------------------------------------------------------
 //位置、向き、拡大率などを管理するクラス
 //-----------------------------------------------------------
-class Transform
+class TransformA
 {
 public:
 	XMMATRIX matTranslate_;	//移動行列
@@ -19,13 +19,13 @@ public:
 	XMFLOAT3 scale_;		//拡大率
 	XMMATRIX mmRotate_;	    //自由回転行列	
 	bool     mFlag_;        //フラグ
-	Transform* pParent_;	//親オブジェクトの情報
+	TransformA* pParent_;	//親オブジェクトの情報
 
 	//コンストラクタ
-	Transform();
+	TransformA();
 
 	//デストラクタ
-	~Transform();
+	~TransformA();
 
 	//各行列の計算
 	//引数：なし
