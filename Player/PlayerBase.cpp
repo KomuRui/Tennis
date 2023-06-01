@@ -49,9 +49,6 @@ void PlayerBase::ChildInitialize()
 
     ARGUMENT_INITIALIZE(pRacket_,Instantiate<Racket>(this));
 
-    ///////////////トランスフォームコンポーネント追加///////////////////
-
-    ARGUMENT_INITIALIZE(transform, AddComponent<Transform>());
 
     SetShadow(true);
 }

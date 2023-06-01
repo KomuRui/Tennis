@@ -1,5 +1,6 @@
 #pragma once
 #include "../GameObject/GameObject.h"
+#include "Transform/Transform.h"
 
 //体力ゲージを管理するクラス
 class Gauge : public GameObject
@@ -23,6 +24,9 @@ class Gauge : public GameObject
 
     //画像番号
     int hPict_[PICT_MAX];
+
+    //トランスフォーム
+    Transform* transform_;
 
 public:
     //コンストラクタ

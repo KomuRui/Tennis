@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include "../DirectX/Sprite.h"
-#include "../GameObject/TransformA.h"
+#include "../Component/Transform/Transform.h"
 
 //-----------------------------------------------------------
 //2D画像を管理する
@@ -26,7 +26,7 @@ namespace ImageManager
 		float		alpha;
 
 		//行列
-		TransformA transform;
+		Transform* transform;
 
 		//コンストラクタ
 		ImageData() : pSprite(nullptr)
@@ -94,7 +94,7 @@ namespace ImageManager
 	//ワールド行列を設定
 	//引数：handle	設定したい画像の番号
 	//引数：matrix	ワールド行列
-	void SetTransform(int handle, TransformA& transform);
+	void SetTransform(int handle, Transform* transform);
 
 	//ワールド行列の取得
 	//引数：handle	知りたい画像の番号

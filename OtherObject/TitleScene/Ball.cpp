@@ -39,8 +39,8 @@ Ball::Ball(GameObject* parent)
 void Ball::ChildInitialize()
 {
 	//各初期化
-	ARGUMENT_INITIALIZE(transform_.position_, BasePointManager::GetRandomBasePoint(true));
-	ARGUMENT_INITIALIZE(startPoint_, transform_.position_);
+	ARGUMENT_INITIALIZE(transform_->position_, BasePointManager::GetRandomBasePoint(true));
+	ARGUMENT_INITIALIZE(startPoint_, transform_->position_);
 	ARGUMENT_INITIALIZE(endPoint_,BasePointManager::GetRandomBasePoint(false));
 	ARGUMENT_INITIALIZE(endPointDirection_,endPoint_ - startPoint_);
 	ARGUMENT_INITIALIZE(strength_.x, Random(1, 5));
@@ -51,12 +51,12 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(pLine_, new PolyLine);
 	pLine_->Load("Image/Effect/circle_Wh.png");
-	pLine_->AddPosition(transform_.position_);
+	pLine_->AddPosition(transform_->position_);
 
 	//影のモデルロード
 	ARGUMENT_INITIALIZE(hShadowModel_, ModelManager::Load("Ball/BallShadow.fbx"));
 	assert(hShadowModel_ >= ZERO);
-	ARGUMENT_INITIALIZE(tShadow_, transform_);
+	ARGUMENT_INITIALIZE(tShadow_.position_, transform_->position_);
 	ARGUMENT_INITIALIZE(tShadow_.position_.y, 0.2f);
 	SetShadow(false);
 
@@ -66,7 +66,7 @@ void Ball::ChildInitialize()
 	OtherEffectManager::LandingEffect(hLandEffectName_,pos, moveTime_);
 
 	//雫みたいなエフェクト表示
-	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_.position_);
+	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_->position_);
 
 	//当たり判定
 	SphereCollider* collision = new SphereCollider({ ZERO,ZERO,ZERO },0.1f);
@@ -101,7 +101,7 @@ void Ball::ChildUpdate()
 	}
 
 	//影のポジション更新
-	ARGUMENT_INITIALIZE(tShadow_, transform_);
+	ARGUMENT_INITIALIZE(tShadow_.position_, transform_->position_);
 	ARGUMENT_INITIALIZE(tShadow_.position_.y, 0.01f);
 }
 
@@ -109,7 +109,7 @@ void Ball::ChildUpdate()
 void Ball::ChildDraw()
 {
 	//影描画
-	ModelManager::SetTransform(hShadowModel_, tShadow_);
+	ModelManager::SetTransform(hShadowModel_, &tShadow_);
 	ModelManager::Draw(hShadowModel_);
 
 	//ポリライン描画
@@ -144,17 +144,17 @@ void Ball::MoveToPurpose()
 	}
 
 	//移動前のポジション保存
-	XMFLOAT3 beforePos = transform_.position_;
+	XMFLOAT3 beforePos = transform_->position_;
 
 	//求めたポジション設定
-	ARGUMENT_INITIALIZE(transform_.position_, nowPos);
-	pLine_->AddPosition(transform_.position_);
+	ARGUMENT_INITIALIZE(transform_->position_, nowPos);
+	pLine_->AddPosition(transform_->position_);
 
 	//エフェクトのポジション更新
-	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffectName_)->data.position,transform_.position_);
+	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffectName_)->data.position,transform_->position_);
 
 	//進行ベクトルを求める
-	ARGUMENT_INITIALIZE(progressVector_, transform_.position_ - beforePos);
+	ARGUMENT_INITIALIZE(progressVector_, transform_->position_ - beforePos);
 
 	//もし目標地点までの移動が終わったのなら
 	if (ratio_ >= MAX_RATIO)
@@ -180,20 +180,20 @@ void Ball::MoveToPurpose()
 void Ball::BoundMove()
 {
 
-	ARGUMENT_INITIALIZE(transform_.position_, VectorToFloat3(transform_.position_ + XMVector3Normalize(progressVector_) * 0.2f));
+	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + XMVector3Normalize(progressVector_) * 0.2f));
 
 	float time = Time::GetTimef(hTime_);
-	XMFLOAT3 nowPos = transform_.position_;
+	XMFLOAT3 nowPos = transform_->position_;
 	nowPos.y = (v0_.y * sin(firstAngle_) * time) - (0.5f * GRAVITY * (time * time));
 
-	transform_.position_.y = nowPos.y;
+	transform_->position_.y = nowPos.y;
 
 	//エフェクトのポジション更新
-	pLine_->AddPosition(transform_.position_);
-	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffectName_)->data.position, transform_.position_);
+	pLine_->AddPosition(transform_->position_);
+	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffectName_)->data.position, transform_->position_);
 
 
-	if (transform_.position_.y < ZERO)
+	if (transform_->position_.y < ZERO)
 	{
 
 		ARGUMENT_INITIALIZE(progressVector_, XMVector3Reflect(progressVector_, UP_VECTOR));
@@ -237,7 +237,7 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPl
 	ARGUMENT_INITIALIZE(endPos.z, Clamp<float>(endPos.z, MAX_POS_Z, MIN_POS_Z));
 
 	//各情報再設定
-	ARGUMENT_INITIALIZE(startPoint_, transform_.position_);
+	ARGUMENT_INITIALIZE(startPoint_, transform_->position_);
 	ARGUMENT_INITIALIZE(endPoint_, endPos);
 	ARGUMENT_INITIALIZE(endPointDirection_, endPoint_ - startPoint_);
 	ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
@@ -272,7 +272,7 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPl
 
 	//雫みたいなエフェクト表示
 	VFX::ForcedEnd(hDropEffectName_);
-	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_.position_);
+	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_->position_);
 
 	//次の目的地に移動するように
 	ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);

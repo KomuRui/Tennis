@@ -101,7 +101,7 @@ namespace ModelManager
 
 		if (_datas[handle]->pFbx)
 		{
-			_datas[handle]->pFbx->Draw(_datas[handle]->transform, (int)_datas[handle]->nowFrame, _datas[handle]->alpha, _datas[handle]->ambient,_datas[handle]->speculer, _datas[handle]->brightness,_datas[handle]->uvScroll, _datas[handle]->outLineColor, _datas[handle]->isOutLineDraw, _datas[handle]->shaderType);
+			_datas[handle]->pFbx->Draw(&_datas[handle]->transform, (int)_datas[handle]->nowFrame, _datas[handle]->alpha, _datas[handle]->ambient,_datas[handle]->speculer, _datas[handle]->brightness,_datas[handle]->uvScroll, _datas[handle]->outLineColor, _datas[handle]->isOutLineDraw, _datas[handle]->shaderType);
 		}
 	}
 
@@ -322,18 +322,19 @@ namespace ModelManager
 		XMFLOAT3 pos = _datas[handle]->pFbx->GetBonePosition(boneName);
 		XMVECTOR vec = XMVector3TransformCoord(XMLoadFloat3(&pos), _datas[handle]->transform.GetWorldMatrix());
 		XMStoreFloat3(&pos, vec);
+
 		return pos;
 	}
 
 	//ƒ[ƒ‹ƒhs—ñ‚ğİ’è
-	void SetTransform(int handle, TransformA& transform)
+	void SetTransform(int handle, Transform* transform)
 	{
 		if (handle < 0 || handle >= _datas.size())
 		{
 			return;
 		}
 
-		_datas[handle]->transform = transform;
+		_datas[handle]->transform = *transform;
 	}
 
 
@@ -460,7 +461,7 @@ namespace ModelManager
 					data->start = start;
 					matInv = (*ehandle)->transform.GetWorldMatrix();
 					XMStoreFloat3(&data->pos, XMVector3TransformCoord(XMLoadFloat3(&data->pos), matInv));
-					XMStoreFloat3(&normal, XMVector3TransformCoord(XMLoadFloat3(&data->normal), (*ehandle)->transform.mmRotate_));
+					XMStoreFloat3(&normal, XMVector3TransformCoord(XMLoadFloat3(&data->normal), (*ehandle)->transform.matRotate_));
 
 					data->basePoint = (*ehandle)->pBasePoint;
 					data->obstacle = (*ehandle)->pObstacle;
@@ -547,7 +548,7 @@ namespace ModelManager
 							data->start = start;
 							matInv = (*ehandle)->transform.GetWorldMatrix();
 							XMStoreFloat3(&data->pos, XMVector3TransformCoord(XMLoadFloat3(&data->pos), matInv));
-							XMStoreFloat3(&normal, XMVector3TransformCoord(XMLoadFloat3(&data->normal), (*ehandle)->transform.mmRotate_));
+							XMStoreFloat3(&normal, XMVector3TransformCoord(XMLoadFloat3(&data->normal), (*ehandle)->transform.matRotate_));
 
 							data->basePoint = (*ehandle)->pBasePoint;
 							data->obstacle = (*ehandle)->pObstacle;

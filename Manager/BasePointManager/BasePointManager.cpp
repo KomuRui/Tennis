@@ -92,8 +92,8 @@ namespace BasePointManager
 			BasePointModel*p = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
 			BasePointModel*e = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
 
-			p->SetPosition(basePointPlayerCourt[name]);
-			e->SetPosition(basePointEnemyCourt[name]);
+			p->GetComponent<Transform>()->SetPosition(basePointPlayerCourt[name]);
+			e->GetComponent<Transform>()->SetPosition(basePointEnemyCourt[name]);
 
 			p->SetBasePointName(name);
 			e->SetBasePointName(name);
@@ -138,9 +138,9 @@ namespace BasePointManager
 
 			//プレイヤータイプかどうか
 			if (isSelectBasePointModel->isPlayerType())
-				basePointPlayerCourt[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetPosition();
+				basePointPlayerCourt[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
 			else								       
-				basePointEnemyCourt[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetPosition();
+				basePointEnemyCourt[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
 
 		}
 
@@ -151,10 +151,10 @@ namespace BasePointManager
 			XMFLOAT3 mouseMove = Input::GetMouseMove();
 
 			//現在の位置を取得
-			XMFLOAT3 nowPos = isSelectBasePointModel->GetPosition();
+			XMFLOAT3 nowPos = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
 
 			//マウスの移動量分動かす
-			isSelectBasePointModel->SetPosition(XMFLOAT3(nowPos.x + mouseMove.y * MOVE_RATIO, nowPos.y, nowPos.z + mouseMove.x * MOVE_RATIO));
+			isSelectBasePointModel->GetComponent<Transform>()->SetPosition(XMFLOAT3(nowPos.x + mouseMove.y * MOVE_RATIO, nowPos.y, nowPos.z + mouseMove.x * MOVE_RATIO));
 		}
 	}
 

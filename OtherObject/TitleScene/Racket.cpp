@@ -80,10 +80,10 @@ void Racket::ChildInitialize()
 	ARGUMENT_INITIALIZE(hitStrength_[Type::SLICE],h);
 
 	//Mayaで原点を0,0,0に設定した分戻す
-	ARGUMENT_INITIALIZE(transform_.position_, XMFLOAT3(0.643f,0.835f,0.011f));
+	ARGUMENT_INITIALIZE(transform_->position_, XMFLOAT3(0.643f,0.835f,0.011f));
 		
 	//開始角度を設定
-	SetRotateY(RACKET_START_ROTATION_ANGLE);
+	transform_->SetRotateY(RACKET_START_ROTATION_ANGLE);
 
 	//当たり判定
 	BoxCollider * collision = new BoxCollider({ ZERO,ZERO,ZERO }, { COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
@@ -96,10 +96,10 @@ void Racket::ChildInitialize()
 void Racket::ChildUpdate()
 {
 	//ラケットの端のポジションを求める
-	XMFLOAT3 edgePos = VectorToFloat3(ModelManager::GetBonePosition(hModel_, "Edge") - GetParent()->GetPosition() - transform_.position_);
+	XMFLOAT3 edgePos = VectorToFloat3(ModelManager::GetBonePosition(hModel_, "Edge") - GetParent()->GetComponent<Transform>()->GetPosition() - transform_->position_);
 	
 	//コライダーのポジション求めて新しく設定(骨のポジションおかしいので力ずくで回転)
-	colliderPos_ = VectorToFloat3(ModelManager::GetBonePosition(hModel_, "Base") - GetParent()->GetPosition() - transform_.position_);
+	colliderPos_ = VectorToFloat3(ModelManager::GetBonePosition(hModel_, "Base") - GetParent()->GetComponent<Transform>()->GetPosition() - transform_->position_);
 	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixInverse(nullptr, XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)) *  XMMatrixRotationY(XMConvertToRadians(BASE_ADD_ANGLE_VALUE))));
 	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)));
 	SetPosCollider(colliderPos_);
@@ -160,7 +160,7 @@ void Racket::OnCollision(GameObject* pTarget)
 	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_,false, GetInputBasePoint());
 
 	//エフェクト表示
-	EffectManager::Draw("HitEffect",hitEffectFilePath_[type_], ((Ball*)pTarget)->GetPosition());
+	EffectManager::Draw("HitEffect",hitEffectFilePath_[type_], ((Ball*)pTarget)->GetComponent<Transform>()->GetPosition());
 
 	//元に戻す
 	ARGUMENT_INITIALIZE(hitStrength_[type_].strength_.x,s);

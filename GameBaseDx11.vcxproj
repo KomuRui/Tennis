@@ -85,6 +85,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <StackReserveSize>
+      </StackReserveSize>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -94,6 +98,10 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <Link>
+      <StackReserveSize>
+      </StackReserveSize>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -107,6 +115,8 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <StackReserveSize>
+      </StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,10 +133,11 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <StackReserveSize>
+      </StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Base\Mob.cpp" />
     <ClCompile Include="Base\NormalObject.cpp" />
     <ClCompile Include="Engine\Collider\BoxCollider.cpp" />
     <ClCompile Include="Engine\Collider\Collider.cpp" />
@@ -150,7 +161,6 @@
     <ClCompile Include="Engine\GameObject\Light.cpp" />
     <ClCompile Include="Engine\GameObject\PolyLine.cpp" />
     <ClCompile Include="Engine\GameObject\RootObject.cpp" />
-    <ClCompile Include="Engine\GameObject\TransformA.cpp" />
     <ClCompile Include="Engine\GUI\CreateObjGui.cpp" />
     <ClCompile Include="Engine\GUI\GameObjectInfoGui.cpp" />
     <ClCompile Include="Engine\GUI\ImGuiSet.cpp" />
@@ -207,7 +217,6 @@
     <ClCompile Include="UI\ScalingImage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Base\Mob.h" />
     <ClInclude Include="Base\NormalObject.h" />
     <ClInclude Include="Engine\Collider\BoxCollider.h" />
     <ClInclude Include="Engine\Collider\Collider.h" />
@@ -231,7 +240,6 @@
     <ClInclude Include="Engine\GameObject\Light.h" />
     <ClInclude Include="Engine\GameObject\PolyLine.h" />
     <ClInclude Include="Engine\GameObject\RootObject.h" />
-    <ClInclude Include="Engine\GameObject\TransformA.h" />
     <ClInclude Include="Engine\GUI\CreateObjGui.h" />
     <ClInclude Include="Engine\GUI\GameObjectInfoGui.h" />
     <ClInclude Include="Engine\GUI\ImGuiSet.h" />

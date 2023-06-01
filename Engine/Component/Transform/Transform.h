@@ -54,6 +54,7 @@ public:
 	XMFLOAT3 GetWorldRotate();
 	XMFLOAT3 GetWorldScale();
 	Transform* GetTransform() { return this; }
+	void SetTransform(Transform* t);
 	void SetPosition(XMFLOAT3 position) { position_ = position; }
 	void SetPosition(float x, float y, float z) { SetPosition(XMFLOAT3(x, y, z)); }
 	void SetPositionX(float x) { SetPosition(x, position_.y, position_.z); }

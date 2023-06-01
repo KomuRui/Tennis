@@ -65,7 +65,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	if (isShot)
 	{
 		//エフェクト表示
-		XMFLOAT3 pos = player->GetPosition();
+		XMFLOAT3 pos = player->GetComponent<Transform>()->GetPosition();
 		pos.y += 1;
 		EffectManager::Draw(player->pState_->GetChargeEffectNum(),"Effect/charge.txt",pos);
 
@@ -73,8 +73,8 @@ void StandingState::HandleInput(PlayerBase* player)
 		Ball* pBall = ((Ball*)player->FindObject("Ball"));
 
 		//各ポジションを記憶
-		float ballEndX = pBall->GetSpecifyPosZBallPosition(player->GetPosition().z).x;
-		float playerX = player->GetPosition().x;
+		float ballEndX = pBall->GetSpecifyPosZBallPosition(player->GetComponent<Transform>()->GetPosition().z).x;
+		float playerX = player->GetComponent<Transform>()->GetPosition().x;
 
 		//右側なら
 		if (ballEndX <= playerX)

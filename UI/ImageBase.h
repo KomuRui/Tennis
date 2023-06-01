@@ -1,5 +1,6 @@
 #pragma once
 #include "../Engine/GameObject/GameObject.h"
+#include "../Engine/Component/Transform/Transform.h"
 
 /// <summary>
 /// 画像を表示させる基底クラス
@@ -10,6 +11,7 @@ protected:
 
 	int hPict_;                   //画像番号
 	std::string ModelNamePath_;   //ファイルネームパス
+	Transform* transform_;        //トランスフォーム
 
 public:
 

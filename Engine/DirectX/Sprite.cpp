@@ -117,9 +117,9 @@ void Sprite::InitIndex()
 	Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 }
 
-void Sprite::Draw(TransformA& transform, RECT rect, float alpha)
+void Sprite::Draw(Transform* transform, RECT rect, float alpha)
 {
-	transform.Calclation();
+	transform->Calclation();
 
 	//いろいろ設定
 	Direct3D::SetShader(Direct3D::SHADER_2D);
@@ -148,7 +148,7 @@ void Sprite::Draw(TransformA& transform, RECT rect, float alpha)
 	XMMATRIX view = XMMatrixScaling(1.0f / Direct3D::screenWidth_, 1.0f / Direct3D::screenHeight_, 1.0f);
 
 	//最終的な行列
-	XMMATRIX world = (cut * transform.matScale_ * transform.matRotate_ * view * transform.matTranslate_) * transform.GetParentWorldMatrix();
+	XMMATRIX world = (cut * transform->matScale_ * transform->matRotate_ * view * transform->matTranslate_) * transform->GetParentWorldMatrix();
 	cb.world = XMMatrixTranspose(world);
 
 	// テクスチャ座標変換行列を渡す
@@ -184,10 +184,10 @@ void Sprite::Draw(TransformA& transform, RECT rect, float alpha)
 
 }
 
-void Sprite::Draw(TransformA& transform, float dis, RECT rect)
+void Sprite::Draw(Transform* transform, float dis, RECT rect)
 {
 	//トランスふぇーむ計算する
-	transform.Calclation();
+	transform->Calclation();
 
 	//いろいろ設定
 	Direct3D::SetShader(Direct3D::SHADER_FADE_IN);
@@ -217,7 +217,7 @@ void Sprite::Draw(TransformA& transform, float dis, RECT rect)
 	XMMATRIX view = XMMatrixScaling(1.0f / Direct3D::screenWidth_, 1.0f / Direct3D::screenHeight_, 1.0f);
 
 	//最終的な行列
-	XMMATRIX world = cut * transform.matScale_ * transform.matRotate_ * view * transform.matTranslate_;
+	XMMATRIX world = cut * transform->matScale_ * transform->matRotate_ * view * transform->matTranslate_;
 	cb.world = XMMatrixTranspose(world);
 
 	// テクスチャ座標変換行列を渡す
@@ -267,7 +267,7 @@ void Sprite::Draw(TransformA& transform, float dis, RECT rect)
 
 }
 
-void Sprite::Draw(TransformA& transform,float alpha)
+void Sprite::Draw(Transform* transform,float alpha)
 {
 	//いろいろ設定
 	Direct3D::SetShader(Direct3D::SHADER_2D);
@@ -289,27 +289,12 @@ void Sprite::Draw(TransformA& transform,float alpha)
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb;
 
-
-	//画面に合わせる
-	//XMMATRIX view = XMMatrixScaling(1.0f / Direct3D::screenWidth_, 1.0f / Direct3D::screenHeight_, 1.0f);
-
-	//最終的な行列
-	//XMMATRIX world = transform.matScale_ * transform.matRotate_ /** view*/ * transform.matTranslate_;
-	//cb.world = XMMatrixTranspose(world);
-
-
 	// テクスチャ合成色情報を渡す
 	cb.color = XMFLOAT4(1, 1, 1, alpha);
 
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// リソースへ値を送る
 
-
-	/*ID3D11SamplerState* pSampler = pTexture_->GetSampler();
-	Direct3D::pContext_->PSSetSamplers(0, 1, &pSampler);
-
-	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
-	Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);*/
 
 	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);									// GPUからのリソースアクセスを再開
 
@@ -322,7 +307,7 @@ void Sprite::Draw(TransformA& transform,float alpha)
 
 }
 
-void Sprite::Draw(TransformA& transform)
+void Sprite::Draw(Transform* transform)
 {
 	Direct3D::SetShader(Direct3D::SHADER_2D);
 
@@ -330,7 +315,7 @@ void Sprite::Draw(TransformA& transform)
 
 	//コンスタントバッファに渡す情報
 	CONSTANT_BUFFER cb;
-	cb.world = XMMatrixTranspose(scaleMatrix * transform.GetWorldMatrix());
+	cb.world = XMMatrixTranspose(scaleMatrix * transform->GetWorldMatrix());
 	cb.uvTrans = XMMatrixTranspose(XMMatrixIdentity());
 	cb.color = XMFLOAT4(1, 1, 1, 1);
 
@@ -366,10 +351,10 @@ void Sprite::Draw(TransformA& transform)
 }
 
 //色を反転する(透明色は指定した色にその他の色は透明に)
-void Sprite::ReversalColorDraw(TransformA& transform, RECT rect, XMFLOAT4 color)
+void Sprite::ReversalColorDraw(Transform* transform, RECT rect, XMFLOAT4 color)
 {
 	//トランスふぇーむ計算する
-	transform.Calclation();
+	transform->Calclation();
 
 	//いろいろ設定
 	Direct3D::SetShader(Direct3D::SHADER_REVERS_COLOR);
@@ -399,7 +384,7 @@ void Sprite::ReversalColorDraw(TransformA& transform, RECT rect, XMFLOAT4 color)
 	XMMATRIX view = XMMatrixScaling(1.0f / Direct3D::screenWidth_, 1.0f / Direct3D::screenHeight_, 1.0f);
 
 	//最終的な行列
-	XMMATRIX world = cut * transform.matScale_ * transform.matRotate_ * view * transform.matTranslate_;
+	XMMATRIX world = cut * transform->matScale_ * transform->matRotate_ * view * transform->matTranslate_;
 	cb.world = XMMatrixTranspose(world);
 
 	// テクスチャ座標変換行列を渡す

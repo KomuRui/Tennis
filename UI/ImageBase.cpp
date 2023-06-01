@@ -5,6 +5,7 @@
 ImageBase::ImageBase(GameObject* parent, std::string modelPath, std::string name)
 	: GameObject(parent, name), hPict_(-1), ModelNamePath_(modelPath)
 {
+	ARGUMENT_INITIALIZE(transform_, AddComponent<Transform>());
 }
 
 //‰Šú‰»
@@ -16,6 +17,7 @@ void ImageBase::Initialize()
 	hPict_ = ImageManager::Load(ModelNamePath_);
 	ARGUMENT_INITIALIZE(pathName_, ModelNamePath_);
 	assert(hPict_ >= ZERO);
+
 
 	//Œp³—p‚Ì‰Šú‰»
 	ChildInitialize();

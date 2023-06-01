@@ -20,20 +20,20 @@ ScalingImage::ScalingImage(GameObject* parent, std::string modelPath, std::strin
 void ScalingImage::ChildStartUpdate()
 {
 	//•âŠÔ‚·‚é‘O‚ÌŠg‘å—¦•Û‘¶
-	ARGUMENT_INITIALIZE(beforeScale_, (XMLoadFloat3(&transform_.scale_) + MIN_SCALE));
+	ARGUMENT_INITIALIZE(beforeScale_, (XMLoadFloat3(&transform_->scale_) + MIN_SCALE));
 
 	//ŽŸ‚Ì–Ú•W‚Æ‚·‚éŠg‘å—¦‚Ì•Û‘¶
-	ARGUMENT_INITIALIZE(targetScale_, (XMLoadFloat3(&transform_.scale_) + MAX_SCALE));
+	ARGUMENT_INITIALIZE(targetScale_, (XMLoadFloat3(&transform_->scale_) + MAX_SCALE));
 }
 
 //XV
 void ScalingImage::ChildUpdate()
 {
 	//Šg‘å—¦‚ð•âŠÔ‚µ‚È‚ª‚ç•Ï‚¦‚Ä‚¢‚­
-	XMStoreFloat3(&transform_.scale_, XMVectorLerp(XMLoadFloat3(&transform_.scale_), targetScale_, INTERPOLATION_FACTOR));
+	XMStoreFloat3(&transform_->scale_, XMVectorLerp(XMLoadFloat3(&transform_->scale_), targetScale_, INTERPOLATION_FACTOR));
 
 	//‹——£‚ª0.01‚æ‚è’Z‚¢‚Ì‚È‚ç
-	if (RangeCalculation(transform_.scale_, VectorToFloat3(targetScale_)) < CHANGE_TARGET_DISTANCE)
+	if (RangeCalculation(transform_->scale_, VectorToFloat3(targetScale_)) < CHANGE_TARGET_DISTANCE)
 	{
 		//ƒ^[ƒQƒbƒgŒðŠ·
 		std::swap(beforeScale_, targetScale_);

@@ -282,9 +282,6 @@
     <ClCompile Include="Base\NormalObject.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Base\Mob.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
     <ClCompile Include="OtherObject\TitleScene\Net.cpp">
       <Filter>OtherObject\TitleScene</Filter>
     </ClCompile>
@@ -347,9 +344,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Component\Model.cpp">
       <Filter>01Engine\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GameObject\TransformA.cpp">
-      <Filter>01Engine\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Component\Transform\Transform.cpp">
       <Filter>01Engine\Component\Transform</Filter>
@@ -528,9 +522,6 @@
     <ClInclude Include="Base\NormalObject.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Mob.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="OtherObject\TitleScene\Net.h">
       <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
@@ -596,9 +587,6 @@
     </ClInclude>
     <ClInclude Include="Engine\System.h">
       <Filter>01Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameObject\TransformA.h">
-      <Filter>01Engine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component\Transform\Transform.h">
       <Filter>01Engine\Component\Transform</Filter>

@@ -4,7 +4,6 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_win32.h"
 #include "imgui/imgui_impl_dx11.h"
-#include "../../Base/Mob.h"
 #include "../../UI/ImageBase.h"
 #include "../DirectX/Fbx.h"
 #include "GameObjectInfoGui.h"
@@ -29,7 +28,7 @@ namespace ImGuiSet
 
     //各オブジェクトの必要な変数
     int objectStatus_[MAX_OBJECT_SIZE] = {};
-    Mob* pNewObject_[MAX_OBJECT_SIZE];
+    NormalObject* pNewObject_[MAX_OBJECT_SIZE];
     XMFLOAT3 objectPos_[MAX_OBJECT_SIZE];
     XMFLOAT3 objectRotate_[MAX_OBJECT_SIZE];
     XMFLOAT3 objectScale_[MAX_OBJECT_SIZE];
@@ -43,7 +42,7 @@ namespace ImGuiSet
 
     //各カメラ遷移の必要な変数
     int cameraTransitionStatus_[MAX_OBJECT_SIZE] = {};
-    Mob* pNewCameraTransition_[MAX_OBJECT_SIZE];
+    NormalObject* pNewCameraTransition_[MAX_OBJECT_SIZE];
     XMFLOAT3 cameraTransitionPos_[MAX_OBJECT_SIZE];
     XMFLOAT3 cameraPos_[MAX_OBJECT_SIZE];
     XMFLOAT3 cameraTar_[MAX_OBJECT_SIZE];
@@ -84,7 +83,7 @@ namespace ImGuiSet
     //表示させたオブジェクトを格納する場所
     //first->モデル番号
     //second->モデル番号ごとのトランスフォーム
-    std::vector<std::pair<int, TransformA>>obj_;
+    std::vector<std::pair<int, Transform>>obj_;
 
     //first->作ったかどうか
     //second->何個作ったか
@@ -351,7 +350,7 @@ namespace ImGuiSet
                     {
 
                         //ロードしたオブジェクトに必要なトランスフォームを用意
-                        TransformA t;
+                        Transform t;
 
                         objectPos_[i] = XMFLOAT3(0, 0, 0);
                         objectRotate_[i] = XMFLOAT3(0, 0, 0);
@@ -360,13 +359,13 @@ namespace ImGuiSet
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
-                        std::pair<int, TransformA> a(ModelManager::Load(text1[i]), t);
+                        std::pair<int, Transform> a(ModelManager::Load(text1[i]), t);
                         assert(a.first > -1);
 
                         //vectorに格納する
                         obj_.push_back(a);
 
-                        pNewObject_[i] = new Mob(GameManager::GetpSceneManager(), text1[i], "");
+                        pNewObject_[i] = new NormalObject(GameManager::GetpSceneManager(), text1[i], "");
                         if (GameManager::GetpSceneManager()->GetParent() != nullptr)
                         {
                             GameManager::GetpSceneManager()->PushBackChild(pNewObject_[i]);
@@ -512,9 +511,9 @@ namespace ImGuiSet
             //描画される
             if (objectStatus_[i] >= 1)
             {
-                pNewObject_[i]->SetPosition(objectPos_[i]);
-                pNewObject_[i]->SetAngle(objectRotate_[i].y);
-                pNewObject_[i]->SetScale(objectScale_[i]);
+                pNewObject_[i]->GetComponent<Transform>()->SetPosition(objectPos_[i]);
+                pNewObject_[i]->GetComponent<Transform>()->SetRotate(objectRotate_[i]);
+                pNewObject_[i]->GetComponent<Transform>()->SetScale(objectScale_[i]);
             }
         }
     }
@@ -698,9 +697,9 @@ namespace ImGuiSet
     void ImGuiSet::CreateCameraTransition()
     {
         //Playerのポジションを保存しておく
-        XMFLOAT3 basicPos = GameManager::GetpPlayer()->GetPosition();
-        XMFLOAT3 basicRotate = GameManager::GetpPlayer()->GetRotate();
-        XMFLOAT3 basicScale = GameManager::GetpPlayer()->GetScale();
+        XMFLOAT3 basicPos = GameManager::GetpPlayer()->GetComponent<Transform>()->GetPosition();
+        XMFLOAT3 basicRotate = GameManager::GetpPlayer()->GetComponent<Transform>()->GetRotate();
+        XMFLOAT3 basicScale = GameManager::GetpPlayer()->GetComponent<Transform>()->GetScale();
 
         //Create3Dを押した分ウィンドウを作る　
         for (int i = 0; i < createCameraTransition_.second; i++)
@@ -728,7 +727,7 @@ namespace ImGuiSet
                     {
 
                         //ロードしたオブジェクトに必要なトランスフォームを用意
-                        TransformA t;
+                        Transform t;
 
                         cameraTransitionPos_[i] = basicPos;
                         cameraTar_[i] = basicRotate;
@@ -737,13 +736,13 @@ namespace ImGuiSet
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
-                        std::pair<int, TransformA> a(ModelManager::Load(text1[i]), t);
+                        std::pair<int, Transform> a(ModelManager::Load(text1[i]), t);
                         assert(a.first > 0);
 
                         //vectorに格納する
                         obj_.push_back(a);
 
-                        pNewCameraTransition_[i] = new Mob(GameManager::GetpSceneManager(), text1[i], "");
+                        pNewCameraTransition_[i] = new NormalObject(GameManager::GetpSceneManager(), text1[i], "");
                         if (GameManager::GetpSceneManager()->GetParent() != nullptr)
                         {
                             GameManager::GetpSceneManager()->PushBackChild(pNewCameraTransition_[i]);
@@ -895,9 +894,9 @@ namespace ImGuiSet
             //描画される
             if (cameraTransitionStatus_[i] >= 1)
             {
-                pNewCameraTransition_[i]->SetPosition(cameraTransitionPos_[i]);
-                pNewCameraTransition_[i]->SetRotate(cameraTar_[i]);
-                pNewCameraTransition_[i]->SetScale(colliderSize_[i]);
+                pNewCameraTransition_[i]->GetComponent<Transform>()->SetPosition(cameraTransitionPos_[i]);
+                pNewCameraTransition_[i]->GetComponent<Transform>()->SetRotate(cameraTar_[i]);
+                pNewCameraTransition_[i]->GetComponent<Transform>()->SetScale(colliderSize_[i]);
             }
         }
     }
@@ -932,7 +931,7 @@ namespace ImGuiSet
                     {
 
                         //ロードしたオブジェクトに必要なトランスフォームを用意
-                        TransformA t;
+                        Transform t;
 
                         imagePos_[i] = XMFLOAT3(0, 0, 0);
                         imageRotate_[i] = XMFLOAT3(0, 0, 0);
@@ -941,7 +940,7 @@ namespace ImGuiSet
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
-                        std::pair<int, TransformA> a(ImageManager::Load(text1[i]), t);
+                        std::pair<int, Transform> a(ImageManager::Load(text1[i]), t);
                         assert(a.first >= 0);
 
                         //vectorに格納する
@@ -1072,8 +1071,8 @@ namespace ImGuiSet
             //描画される
             if (imageStatus_[i] >= 1)
             {
-                pNewImage_[i]->SetPosition(imagePos_[i]);
-                pNewImage_[i]->SetScale(imageScale_[i]);
+                pNewImage_[i]->GetComponent<Transform>()->SetPosition(imagePos_[i]);
+                pNewImage_[i]->GetComponent<Transform>()->SetScale(imageScale_[i]);
             }
         }
 
@@ -1118,24 +1117,6 @@ namespace ImGuiSet
         //オブジェクトの名前で名前表示する
         if (ImGui::TreeNode(objName.c_str()))
         {
-            //モデル設定
-            GameObjectInfoGui::SetModel(ModelManager::GetModelNum(pObj->GetObjectName()));
-
-            //位置
-            float pos[3] = { pObj->GetPosition().x,pObj->GetPosition().y ,pObj->GetPosition().z };
-            ImGui::DragFloat3("position", pos);
-            pObj->SetPosition({ pos[0], pos[1], pos[2] });
-
-            //回転
-            float rotate[3] = { pObj->GetRotate().x,pObj->GetRotate().y ,pObj->GetRotate().z };
-            ImGui::DragFloat3("rotation", rotate);
-            pObj->SetRotate({ rotate[0],rotate[1],rotate[2] });
-
-            //拡大率
-            float scale[3] = { pObj->GetScale().x,pObj->GetScale().y ,pObj->GetScale().z };
-            ImGui::DragFloat3("scale", scale);
-            pObj->SetScale({ scale[0],scale[1],scale[2] });
-
             //削除ボタン
             if (ImGui::Button("Kill")) { pObj->KillMe(); }
 
@@ -1416,9 +1397,9 @@ namespace ImGuiSet
     void ImGuiSet::EffectEditGui()
     {
         //モデル表示
-        TransformA t;
-        pBaseFbx->Draw(t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), ZERO, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, Direct3D::SHADER_UNLIT);
-        pStickFbx->Draw(t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), 1.0f, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, Direct3D::SHADER_3D);
+        Transform t;
+        pBaseFbx->Draw(&t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), ZERO, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, Direct3D::SHADER_UNLIT);
+        pStickFbx->Draw(&t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), 1.0f, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, Direct3D::SHADER_3D);
 
         //window作る
         ImGui::Begin("Effect", NULL, ImGuiWindowFlags_NoMove);
@@ -2093,15 +2074,15 @@ namespace ImGuiSet
         {
             info_ += pObj->GetPathName() + ",";
             info_ += pObj->GetObjectName() + ",";
-            info_ += std::to_string(pObj->GetPosition().x) + ",";
-            info_ += std::to_string(pObj->GetPosition().y) + ",";
-            info_ += std::to_string(pObj->GetPosition().z) + ",";
-            info_ += std::to_string(pObj->GetRotate().x) + ",";
-            info_ += std::to_string(pObj->GetRotate().y) + ",";
-            info_ += std::to_string(pObj->GetRotate().z) + ",";
-            info_ += std::to_string(pObj->GetScale().x) + ",";
-            info_ += std::to_string(pObj->GetScale().y) + ",";
-            info_ += std::to_string(pObj->GetScale().z) + "\r\n";
+            info_ += std::to_string(pObj->GetComponent<Transform>()->GetPosition().x) + ",";
+            info_ += std::to_string(pObj->GetComponent<Transform>()->GetPosition().y) + ",";
+            info_ += std::to_string(pObj->GetComponent<Transform>()->GetPosition().z) + ",";
+            info_ += std::to_string(pObj->GetComponent<Transform>()->GetRotate().x) + ",";
+            info_ += std::to_string(pObj->GetComponent<Transform>()->GetRotate().y) + ",";
+            info_ += std::to_string(pObj->GetComponent<Transform>()->GetRotate().z) + ",";
+            info_ += std::to_string(pObj->GetComponent<Transform>()->GetScale().x) + ",";
+            info_ += std::to_string(pObj->GetComponent<Transform>()->GetScale().y) + ",";
+            info_ += std::to_string(pObj->GetComponent<Transform>()->GetScale().z) + "\r\n";
      
         }
 

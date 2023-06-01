@@ -90,23 +90,27 @@ namespace GameObjectInfoGui
         //ゲームオブジェクト取得
         GameObject* p = ModelManager::GetGameObject(hModelNum);
 
-        //位置
-        XMFLOAT3 xmPos = p->GetPosition();
-        float pos[3] = { xmPos.x,xmPos.y,xmPos.z };
-        ImGui::DragFloat3("position", pos);
-        p->SetPosition(XMFLOAT3(pos[0], pos[1], pos[2]));
+        //トランスフォームコンポーネントがあるのならば
+        if (p->GetComponent<Transform>())
+        {
+            //位置
+            XMFLOAT3 xmPos = p->GetComponent<Transform>()->GetPosition();
+            float pos[3] = { xmPos.x,xmPos.y,xmPos.z };
+            ImGui::DragFloat3("position", pos);
+            p->GetComponent<Transform>()->SetPosition(XMFLOAT3(pos[0], pos[1], pos[2]));
 
-        //回転
-        XMFLOAT3 xmRotate = p->GetRotate();
-        float rotate[3] = { xmRotate.x,xmRotate.y,xmRotate.z };
-        ImGui::DragFloat3("rotate", rotate);
-        p->SetRotate(XMFLOAT3(rotate[0], rotate[1], rotate[2]));
+            //回転
+            XMFLOAT3 xmRotate = p->GetComponent<Transform>()->GetRotate();
+            float rotate[3] = { xmRotate.x,xmRotate.y,xmRotate.z };
+            ImGui::DragFloat3("rotate", rotate);
+            p->GetComponent<Transform>()->SetRotate(XMFLOAT3(rotate[0], rotate[1], rotate[2]));
 
-        //拡大縮小
-        XMFLOAT3 xmScale = p->GetScale();
-        float scale[3] = { xmScale.x,xmScale.y,xmScale.z };
-        ImGui::DragFloat3("scale", scale);
-        p->SetScale(XMFLOAT3(scale[0], scale[1], scale[2]));
+            //拡大縮小
+            XMFLOAT3 xmScale = p->GetComponent<Transform>()->GetScale();
+            float scale[3] = { xmScale.x,xmScale.y,xmScale.z };
+            ImGui::DragFloat3("scale", scale);
+            p->GetComponent<Transform>()->SetScale(XMFLOAT3(scale[0], scale[1], scale[2]));
+        }
     }
 
     //色情報描画

@@ -1,10 +1,5 @@
 #include "Fade.h"
-#include "../../Manager/SceneManager/SceneManager.h"
-#include "../DirectX/Sprite.h"
-#include "../Component/EasingMove.h"
-#include "Easing.h"
-#include "../../Manager/GameManager/GameManager.h"
-#include "../../Manager/AudioManager/OtherAudioManager/OtherAudioManager.h"
+#include "../System.h"
 
 //定数
 namespace
@@ -47,11 +42,11 @@ namespace Fade
 	Sprite* pGameOver_;
 	EasingMove* pEasingScale_; //イージングするためのクラス(拡大縮小)
 	EasingMove* pEasingRotate_;//イージングするためのクラス(回転)
-	TransformA gameOver_;       //ゲームオーバー画像用のトランスフォーム
+	Transform gameOver_;       //ゲームオーバー画像用のトランスフォーム
 
 	//通常フェイド用の画像(黒)
 	Sprite* pNormal_;
-	TransformA normal_;         //通常フェイド用の画像のトランスフォーム
+	Transform normal_;         //通常フェイド用の画像のトランスフォーム
 	float normalAlpha_;        //通常フェイドの透明度
 
 	//円フェード用の画像の文字列(シーンの数分)
@@ -208,7 +203,7 @@ namespace Fade
 	void Fade::NormalDraw()
 	{
 		//画像用のtransform
-		TransformA t;
+		Transform t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->GetTextureSize();
@@ -221,14 +216,14 @@ namespace Fade
 		rect.bottom = (long)size.y;
 
 		//描画
-		pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->Draw(t, rect);
+		pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->Draw(&t, rect);
 	}
 
 	//円フェードイン描画
 	void Fade::FadeInCircleDraw()
 	{
 		//画像用のtransform
-		TransformA t;
+		Transform t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->GetTextureSize();
@@ -243,14 +238,14 @@ namespace Fade
 		nowDistance_ += FADE_ADD_DISTANCE;
 
 		//描画
-		pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->Draw(t, nowDistance_, rect);
+		pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->Draw(&t, nowDistance_, rect);
 	};
 
 	//円フェードアウト描画
 	void Fade::FadeOutCircleDraw()
 	{
 		//画像用のtransform
-		TransformA t;
+		Transform t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->GetTextureSize();
@@ -268,14 +263,14 @@ namespace Fade
 			ARGUMENT_INITIALIZE(nowDistance_, ZERO);
 
 		//描画
-		pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->Draw(t, nowDistance_, rect);
+		pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->Draw(&t, nowDistance_, rect);
 	};
 
     //フェードイン描画
 	void Fade::FadeInNormalDraw()
 	{
 		//画像用のtransform
-		TransformA t;
+		Transform t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pNormal_->GetTextureSize();
@@ -291,14 +286,14 @@ namespace Fade
 		normalAlpha_ += FADE_ADD_ALPHA;
 
 		//描画
-		pNormal_->Draw(t,rect, normalAlpha_);
+		pNormal_->Draw(&t,rect, normalAlpha_);
 	}
 
 	//フェードアウト描画
 	void Fade::FadeOutNormalDraw()
 	{
 		//画像用のtransform
-		TransformA t;
+		Transform t;
 
 		//テクスチャのサイズ取得
 		XMFLOAT3 size = pNormal_->GetTextureSize();
@@ -314,6 +309,6 @@ namespace Fade
 		normalAlpha_ -= FADE_ADD_ALPHA;
 
 		//描画
-		pNormal_->Draw(t,rect, normalAlpha_);
+		pNormal_->Draw(&t,rect, normalAlpha_);
 	}
 }

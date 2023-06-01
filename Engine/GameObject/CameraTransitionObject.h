@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "../ResourceManager/CreateStage.h"
+#include "../Component/Transform/Transform.h"
 
 //各ステージで場所ごとにカメラ遷移するために必要なオブジェクト
 class CameraTransitionObject : public GameObject
@@ -9,6 +10,9 @@ private:
 
 	//必要な情報
 	StageCameraTransition info_;
+
+	//トランスフォーム
+	Transform* transform_;
 
 	//誰かと当たっているか
 	bool isHit_;

@@ -6,7 +6,6 @@
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
-#include "../../Base/Mob.h"
 #include "../../Base/NormalObject.h"
 #include "../../OtherObject/TitleScene/TennisCourt.h"
 #include "../../OtherObject/TitleScene/TennisCourtAround.h"
@@ -15,6 +14,7 @@
 #include "../../OtherObject/TitleScene/Water.h"
 #include "../../OtherObject/TitleScene/Ball.h"
 #include "../../Player/PlayerBase.h"
+#include "../Component/Transform/Transform.h"
 #include "../../Engine/nlohmann/json.hpp"
 #include <fstream>
 
@@ -27,7 +27,7 @@ CreateStage::CreateStage()
 }
 
 //オブジェクト作成
-void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, std::string inName, TransformA t)
+void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, std::string inName, Transform* t)
 {
 	
 	/////////////////////Player///////////////////////
@@ -39,10 +39,6 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 
 	/////////////////////Base///////////////////////
 
-	if (inName == "Mob")
-	{
-		InstantiateMob3D<Mob>(parent, ModelPathName, inName, t);
-	}
 	if (inName == "NormalObject")
 	{
 		InstantiateNormal<NormalObject>(parent, ModelPathName, inName, t);
@@ -95,8 +91,8 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 
 		//各情報初期化
 		information.CameraPosition = XMFLOAT3(0,0,0);
-		information.CameraTarget = t.rotate_;
-		information.CollisionSize = t.scale_;
+		information.CameraTarget = t->rotate_;
+		information.CollisionSize = t->scale_;
 
 		//コンストラクタ呼ぶ
 		CameraTransitionObject* pNewObject = new CameraTransitionObject(parent, information);
@@ -106,10 +102,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 		}
 
 		//回転と拡大を0に初期化する
-		ARGUMENT_INITIALIZE(t.rotate_, XMFLOAT3(0, 0, 0));
-		ARGUMENT_INITIALIZE(t.scale_, XMFLOAT3(0, 0, 0));
+		ARGUMENT_INITIALIZE(t->rotate_, XMFLOAT3(0, 0, 0));
+		ARGUMENT_INITIALIZE(t->scale_, XMFLOAT3(0, 0, 0));
 
-		pNewObject->SetTransform(t);
+		pNewObject->GetComponent<Transform>()->SetTransform(t);
 		pNewObject->Initialize();
 		createStageAllObject_.push_back(pNewObject);
 	}
@@ -118,7 +114,7 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 
 	if (inName == "Light")
 	{
-		Light::CreateLight(XMFLOAT4(t.position_.x, t.position_.y, t.position_.z, 0), t.scale_.x);
+		Light::CreateLight(XMFLOAT4(t->position_.x, t->position_.y, t->position_.z, 0), t->scale_.x);
 	}
 
 	/////////////////////Gimmick///////////////////////
@@ -131,13 +127,13 @@ void CreateStage::LoadFileCreateStage(GameObject* parent, std::string filename)
 	//各パラメータ格納用
 	std::string ModelPathName;
 	std::string Name;
-	TransformA t;
+	Transform t;
 
 	//親情報があれば追加する
 	if (parent != nullptr)
-		t.pParent_ = parent->GetTransform();
+		t.parent = parent;
 	else
-		t.pParent_ = nullptr;
+		t.parent = nullptr;
 
 	//ファイル読み込み
 	ifstream ifs("Data/StageData/Title/Title.json");
@@ -152,9 +148,10 @@ void CreateStage::LoadFileCreateStage(GameObject* parent, std::string filename)
 		ARGUMENT_INITIALIZE(t.position_,XMFLOAT3(json_object[it.key()]["Position"][0], json_object[it.key()]["Position"][1], json_object[it.key()]["Position"][2]));
 		ARGUMENT_INITIALIZE(t.rotate_,XMFLOAT3(json_object[it.key()]["Rotate"][0], json_object[it.key()]["Rotate"][1], json_object[it.key()]["Rotate"][2]));
 		ARGUMENT_INITIALIZE(t.scale_,XMFLOAT3(json_object[it.key()]["Scale"][0], json_object[it.key()]["Scale"][1], json_object[it.key()]["Scale"][2]));
+		ARGUMENT_INITIALIZE(t.parent, parent);
 
 		//パラメータを基にオブジェクト作成
-		CreateObject(parent, ModelPathName, Name, t);
+		CreateObject(parent, ModelPathName, Name, &t);
 	}	
 
 }
@@ -165,13 +162,13 @@ void CreateStage::LoadFile(GameObject* parent, std::string filename)
 	//各パラメータ格納用
 	std::string ModelPathName;
 	std::string Name;
-	TransformA t;
+	Transform t;
 
 	//親情報があれば追加する
 	if (parent != nullptr)
-		t.pParent_ = parent->GetTransform();
+		t.parent = parent;
 	else
-		t.pParent_ = nullptr;
+		t.parent = nullptr;
 
 	//ファイル読み込み
 	ifstream ifs(filename);
@@ -186,9 +183,10 @@ void CreateStage::LoadFile(GameObject* parent, std::string filename)
 
 		ARGUMENT_INITIALIZE(info.ModelPathName, json_object[it.key()]["FileName"]);
 		ARGUMENT_INITIALIZE(info.inName, json_object[it.key()]["TypeName"]);
-		ARGUMENT_INITIALIZE(info.t.position_, XMFLOAT3(json_object[it.key()]["Position"][0], json_object[it.key()]["Position"][1], json_object[it.key()]["Position"][2]));
-		ARGUMENT_INITIALIZE(info.t.rotate_, XMFLOAT3(json_object[it.key()]["Rotate"][0], json_object[it.key()]["Rotate"][1], json_object[it.key()]["Rotate"][2]));
-		ARGUMENT_INITIALIZE(info.t.scale_, XMFLOAT3(json_object[it.key()]["Scale"][0], json_object[it.key()]["Scale"][1], json_object[it.key()]["Scale"][2]));
+		ARGUMENT_INITIALIZE(info.t->position_, XMFLOAT3(json_object[it.key()]["Position"][0], json_object[it.key()]["Position"][1], json_object[it.key()]["Position"][2]));
+		ARGUMENT_INITIALIZE(info.t->rotate_, XMFLOAT3(json_object[it.key()]["Rotate"][0], json_object[it.key()]["Rotate"][1], json_object[it.key()]["Rotate"][2]));
+		ARGUMENT_INITIALIZE(info.t->scale_, XMFLOAT3(json_object[it.key()]["Scale"][0], json_object[it.key()]["Scale"][1], json_object[it.key()]["Scale"][2]));
+		ARGUMENT_INITIALIZE(info.t->parent, t.parent);
 
 		//保存しておく
 		info_.push_back(info);
@@ -279,15 +277,19 @@ void CreateStage::AllCreateStageVisibleAndEnter()
 
 //普通の生成
 template <class T>
-T* CreateStage::InstantiateNormal(GameObject* pParent,std::string modelPath, std::string name, TransformA t)
+T* CreateStage::InstantiateNormal(GameObject* pParent,std::string modelPath, std::string name, Transform* t)
 {
 	T* pNewObject = new T(pParent, modelPath,name);
 	if (pParent != nullptr)
 	{
 		pParent->PushBackChild(pNewObject);
 	}
-	pNewObject->SetTransform(t);
+
+	if (pNewObject->GetComponent<Transform>())
+		pNewObject->GetComponent<Transform>()->SetTransform(t);
+
 	pNewObject->Initialize();
+
 	createStageAllObject_.push_back(pNewObject);
 
 	return pNewObject;
@@ -295,57 +297,28 @@ T* CreateStage::InstantiateNormal(GameObject* pParent,std::string modelPath, std
 
 //普通型の生成(名前とモデルパス指定しない)
 template <class T>
-T* CreateStage::InstantiateNormal(GameObject* pParent, TransformA t)
+T* CreateStage::InstantiateNormal(GameObject* pParent, Transform* t)
 {
 	T* pNewObject = new T(pParent);
 	if (pParent != nullptr)
 	{
 		pParent->PushBackChild(pNewObject);
 	}
-	pNewObject->SetTransform(t);
-	pNewObject->Initialize();
 
-	return pNewObject;
-}
+	if(pNewObject->GetComponent<Transform>())
+		pNewObject->GetComponent<Transform>()->SetTransform(t);
 
-//Mobを継承した3Dオブジェ生成
-template <class T>
-T* CreateStage::InstantiateMob3D(GameObject* pParent, std::string modelPath, std::string name, TransformA t)
-{
-	T* pNewObject = new T(pParent, modelPath, name);
-	if (pParent != nullptr)
-	{
-		pParent->PushBackChild(pNewObject);
-	}
-	pNewObject->SetTransform(t);
-	pNewObject->SetAngle(t.rotate_.y);
 	pNewObject->Initialize();
-	createStageAllObject_.push_back(pNewObject);
 
 	return pNewObject;
 }
 
 //ボタンの生成
 template <class T>
-T* CreateStage::InstantiateButton(GameObject* pParent, std::string modelPath, std::string name, TransformA t)
+T* CreateStage::InstantiateButton(GameObject* pParent, std::string modelPath, std::string name, Transform* t)
 {
 	T* p = InstantiateNormal<T>(pParent, modelPath, name, t);
 	ButtonManager::AddButton(p);
 
 	return p;
-}
-
-//星の生成
-template <class T>
-T* CreateStage::InstantiatePlanet(GameObject* pParent, std::string modelPath, std::string name, TransformA t)
-{
-	T* pNewObject = new T(pParent, modelPath, name);
-	if (pParent != nullptr)
-	{
-		pParent->PushBackChild(pNewObject);
-	}
-	pNewObject->SetTransform(t);
-	pNewObject->Initialize();
-
-	return pNewObject;
 }

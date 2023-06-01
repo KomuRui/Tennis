@@ -1,5 +1,6 @@
 #pragma once
 #include "../Engine/GameObject/GameObject.h"
+#include "../Engine/Component/Transform/Transform.h"
 
 /// <summary>
 /// ただ3Dオブジェクトを表示する基底クラス
@@ -12,6 +13,7 @@ protected:
 
 	int hModel_;                     //モデル番号
 	std::string modelNamePath_;      //ファイルネームパス
+	Transform* transform_;           //トランスフォーム
 
 public:
 

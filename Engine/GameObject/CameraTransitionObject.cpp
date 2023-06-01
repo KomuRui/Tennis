@@ -16,6 +16,9 @@ CameraTransitionObject::CameraTransitionObject(GameObject* parent, const StageCa
 {
 	//各変数初期化
 	ARGUMENT_INITIALIZE(info_, camInfo);
+
+	//コンポーネント追加
+	ARGUMENT_INITIALIZE(transform_, AddComponent<Transform>());
 }
 
 //初期化
@@ -47,7 +50,7 @@ void CameraTransitionObject::OnCollision(GameObject* pTarget)
 	{
 		//カメラのポジションとターゲットセット(補間しながら変更)
 		XMVECTOR vCamPos = XMVectorLerp(XMLoadFloat3(new XMFLOAT3(Camera::GetPosition())), XMLoadFloat3(&info_.CameraPosition), INTERPOLATION_COEFFICIENT);
-		XMVECTOR vCamTar = XMVectorLerp(XMLoadFloat3(new XMFLOAT3(Camera::GetTarget())), XMLoadFloat3(new XMFLOAT3(GameManager::GetpPlayer()->GetPosition())), INTERPOLATION_COEFFICIENT);
+		XMVECTOR vCamTar = XMVectorLerp(XMLoadFloat3(new XMFLOAT3(Camera::GetTarget())), XMLoadFloat3(new XMFLOAT3(GameManager::GetpPlayer()->GetComponent<Transform>()->GetPosition())), INTERPOLATION_COEFFICIENT);
 		Camera::SetPosition(VectorToFloat3(vCamPos));
 		Camera::SetTarget(VectorToFloat3(vCamTar));
 	}

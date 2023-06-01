@@ -82,7 +82,7 @@ namespace ImageManager
 		{
 			return;
 		}
-		_datas[handle]->transform.Calclation();
+		_datas[handle]->transform->Calclation();
 		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha);
 	}
 
@@ -91,7 +91,7 @@ namespace ImageManager
 	{
 		for (auto i = _uiDrawDatas.begin(); i != _uiDrawDatas.end(); i++)
 		{
-			_datas[(*i)]->transform.Calclation();
+			_datas[(*i)]->transform->Calclation();
 			_datas[(*i)]->pSprite->Draw(_datas[(*i)]->transform, _datas[(*i)]->rect, _datas[(*i)]->alpha);
 		}
 
@@ -207,7 +207,7 @@ namespace ImageManager
 	}
 
 	//ƒ[ƒ‹ƒhs—ñ‚ğİ’è
-	void SetTransform(int handle, TransformA& transform)
+	void SetTransform(int handle, Transform* transform)
 	{
 		if (handle < 0 || handle >= _datas.size())
 		{
@@ -225,7 +225,7 @@ namespace ImageManager
 		{
 			return XMMatrixIdentity();
 		}
-		return _datas[handle]->transform.GetWorldMatrix();
+		return _datas[handle]->transform->GetWorldMatrix();
 	}
 
 

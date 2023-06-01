@@ -14,8 +14,6 @@ class PlayerBase : public NormalObject
 {
 protected:
 
-	Transform* transform;
-
 	///////////////キャラの必要な情報///////////////////
 
 	Racket* pRacket_;                   //ラケット

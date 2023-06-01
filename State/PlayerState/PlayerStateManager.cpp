@@ -60,7 +60,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
         float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / POSSTURE_RESTORE_TIME);
 
         //各角度を求める
-        player->GetRacket()->SetRotateY(player->GetRacket()->GetRotate().y - (player->GetRacket()->GetRotate().y - RACKET_END_ROTATION_ANGLE) * ratio);
+        player->GetRacket()->GetComponent<Transform>()->SetRotateY(player->GetRacket()->GetComponent<Transform>()->GetRotate().y - (player->GetRacket()->GetComponent<Transform>()->GetRotate().y - RACKET_END_ROTATION_ANGLE) * ratio);
 
         //もし回転が最後まで終わったのなら
         if (ratio >= 1)
@@ -108,8 +108,8 @@ void PlayerStateManager::Update3D(PlayerBase* player)
             //nullptrじゃないのなら
             if (pBall != nullptr)
             {
-                ballEndX = pBall->GetSpecifyPosZBallPosition(player->GetPosition().z).x;
-                playerX = player->GetPosition().x;
+                ballEndX = pBall->GetSpecifyPosZBallPosition(player->GetComponent<Transform>()->GetPosition().z).x;
+                playerX = player->GetComponent<Transform>()->GetPosition().x;
             }
 
             //割合を取得
@@ -118,16 +118,16 @@ void PlayerStateManager::Update3D(PlayerBase* player)
             //距離が定数以下なら
             if (dis <= 3.0f)
             {
-                player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * (dis / 3.0f * 0.5f), matRotate))));
+                player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * (dis / 3.0f * 0.5f), matRotate))));
             }
             else
             {
-                player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * 0.5f, matRotate))));
+                player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * 0.5f, matRotate))));
             }
         }
         //サーブ状態じゃないのなら
         else if(playerState_ != PlayerStateManager::playerServing_)
-            player->SetPosition(Float3Add(player->GetPosition(), VectorToFloat3(XMVector3TransformCoord((front_ / 10.0f) * RUN_SPEED, matRotate))));
+            player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord((front_ / 10.0f) * RUN_SPEED, matRotate))));
        
         //player->SetRotateY(XMConvertToDegrees(atan2(-PadLx, -PadLy)));
     }

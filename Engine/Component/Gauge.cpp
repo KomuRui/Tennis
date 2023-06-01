@@ -49,15 +49,15 @@ void Gauge::Update()
 void Gauge::Draw()
 {
     //‰æ‘œ•\Ž¦—p
-    TransformA gaugeTrans;
+    Transform gaugeTrans;
 
     //HP•Ï‰»‚È‚µ
     if (abs(moveRatio_ - stopRatio_) < speed_)
     {
         //—ÎƒQ[ƒW
-        gaugeTrans = transform_;
+        gaugeTrans = *transform_;
         gaugeTrans.scale_.x *= stopRatio_;
-        ImageManager::SetTransform(hPict_[PICT_GREEN], gaugeTrans);
+        ImageManager::SetTransform(hPict_[PICT_GREEN], &gaugeTrans);
         ImageManager::Draw(hPict_[PICT_GREEN]);
     }
 
@@ -66,15 +66,15 @@ void Gauge::Draw()
     else if (moveRatio_ < stopRatio_)
     {
         //‰©—ÎƒQ[ƒW
-        gaugeTrans = transform_;
+        gaugeTrans = *transform_;
         gaugeTrans.scale_.x *= stopRatio_;
-        ImageManager::SetTransform(hPict_[PICT_LGREEN], gaugeTrans);
+        ImageManager::SetTransform(hPict_[PICT_LGREEN], &gaugeTrans);
         ImageManager::Draw(hPict_[PICT_LGREEN]);
 
         //—ÎƒQ[ƒW
-        gaugeTrans = transform_;
+        gaugeTrans = *transform_;
         gaugeTrans.scale_.x *= moveRatio_;
-        ImageManager::SetTransform(hPict_[PICT_GREEN], gaugeTrans);
+        ImageManager::SetTransform(hPict_[PICT_GREEN], &gaugeTrans);
         ImageManager::Draw(hPict_[PICT_GREEN]);
     }
 
@@ -82,22 +82,22 @@ void Gauge::Draw()
     else
     {
         //ÔƒQ[ƒW
-        gaugeTrans = transform_;
+        gaugeTrans = *transform_;
         gaugeTrans.scale_.x *= moveRatio_;
-        ImageManager::SetTransform(hPict_[PICT_RED], gaugeTrans);
+        ImageManager::SetTransform(hPict_[PICT_RED], &gaugeTrans);
         ImageManager::Draw(hPict_[PICT_RED]);
 
         //—ÎƒQ[ƒW
-        gaugeTrans = transform_;
+        gaugeTrans = *transform_;
         gaugeTrans.scale_.x *= stopRatio_;
-        ImageManager::SetTransform(hPict_[PICT_GREEN], gaugeTrans);
+        ImageManager::SetTransform(hPict_[PICT_GREEN], &gaugeTrans);
         ImageManager::Draw(hPict_[PICT_GREEN]);
     }
 
 
     //˜g
-    gaugeTrans = transform_;
-    ImageManager::SetTransform(hPict_[PICT_FRAME], gaugeTrans);
+    gaugeTrans = *transform_;
+    ImageManager::SetTransform(hPict_[PICT_FRAME], &gaugeTrans);
     ImageManager::Draw(hPict_[PICT_FRAME]);
 }
 

@@ -40,8 +40,8 @@ void ForehandingState::Update3D(PlayerBase* player)
 		float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / FOREHAND_HIT_TIME);
 
 		//各角度を求める
-		player->SetRotateY(PLAYER_START_ROTATION_ANGLE - (PLAYER_START_ROTATION_ANGLE - PLAYER_END_ROTATION_ANGLE) * ratio);
-		player->GetRacket()->SetRotateY(RACKET_START_ROTATION_ANGLE - (RACKET_START_ROTATION_ANGLE - RACKET_END_ROTATION_ANGLE) * ratio);
+		player->GetComponent<Transform>()->SetRotateY(PLAYER_START_ROTATION_ANGLE - (PLAYER_START_ROTATION_ANGLE - PLAYER_END_ROTATION_ANGLE) * ratio);
+		player->GetRacket()->GetComponent<Transform>()->SetRotateY(RACKET_START_ROTATION_ANGLE - (RACKET_START_ROTATION_ANGLE - RACKET_END_ROTATION_ANGLE) * ratio);
 
 		//もし回転が最後まで終わったのなら
 		if (ratio >= 1)
@@ -51,8 +51,8 @@ void ForehandingState::Update3D(PlayerBase* player)
 			PlayerStateManager::playerState_->Enter(player);
 
 			//元の角度に戻す
-			player->SetRotateY(PLAYER_END_ROTATION_ANGLE);
-			player->GetRacket()->SetRotateY(RACKET_END_ROTATION_ANGLE);
+			player->GetComponent<Transform>()->SetRotateY(PLAYER_END_ROTATION_ANGLE);
+			player->GetRacket()->GetComponent<Transform>()->SetRotateY(RACKET_END_ROTATION_ANGLE);
 
 			//打っていない状態にする
 			player->pState_->SetHitMove(false);
@@ -64,8 +64,8 @@ void ForehandingState::Update3D(PlayerBase* player)
 		float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / FOREHAND_PULL_TIME);
 
 		//各角度を求める
-		player->SetRotateY(PLAYER_END_ROTATION_ANGLE - (PLAYER_END_ROTATION_ANGLE - PLAYER_START_ROTATION_ANGLE) * ratio);
-		player->GetRacket()->SetRotateY(RACKET_END_ROTATION_ANGLE - (RACKET_END_ROTATION_ANGLE - RACKET_START_ROTATION_ANGLE) * ratio);
+		player->GetComponent<Transform>()->SetRotateY(PLAYER_END_ROTATION_ANGLE - (PLAYER_END_ROTATION_ANGLE - PLAYER_START_ROTATION_ANGLE) * ratio);
+		player->GetRacket()->GetComponent<Transform>()->SetRotateY(RACKET_END_ROTATION_ANGLE - (RACKET_END_ROTATION_ANGLE - RACKET_START_ROTATION_ANGLE) * ratio);
 
 		//1以上にならないように
 		ARGUMENT_INITIALIZE(ratio,min<float>(ratio, 1.0f));
@@ -77,7 +77,7 @@ void ForehandingState::Update3D(PlayerBase* player)
 		if (d != nullptr)
 		{
 			//位置更新
-			ARGUMENT_INITIALIZE(d->data.position, player->GetPosition());
+			ARGUMENT_INITIALIZE(d->data.position, player->GetComponent<Transform>()->GetPosition());
 			d->data.position.y += 1.0f;
 
 			//サイズ更新
@@ -138,7 +138,7 @@ void ForehandingState::Enter(PlayerBase* player)
 	player->pState_->SetHitMove(false);
 
 	//開始角度
-	player->SetRotateY(PLAYER_END_ROTATION_ANGLE);
-	player->GetRacket()->SetRotateY(RACKET_END_ROTATION_ANGLE);
+	player->GetComponent<Transform>()->SetRotateY(PLAYER_END_ROTATION_ANGLE);
+	player->GetRacket()->GetComponent<Transform>()->SetRotateY(RACKET_END_ROTATION_ANGLE);
 	ModelManager::SetAnimFlag(player->GetModelNum(), false);
 }

@@ -458,7 +458,7 @@ void FbxParts::IntConstantBuffer()
 }
 
 //描画
-void FbxParts::Draw(TransformA& transform)
+void FbxParts::Draw(Transform* transform)
 {
 	//シェーダを保存しておく
 	Direct3D::SHADER_TYPE type = Direct3D::GetShader();
@@ -489,7 +489,7 @@ void FbxParts::Draw(TransformA& transform)
 			// パラメータの受け渡し
 			D3D11_MAPPED_SUBRESOURCE pdata;
 			CONSTANT_BUFFER cb;
-			cb.worldVewProj = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());						// リソースへ送る値をセット
+			cb.worldVewProj = XMMatrixTranspose(transform->GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());						// リソースへ送る値をセット
 			cb.isTexture = pMaterial_[i].pTexture != nullptr;
 			cb.outLineColor = outLineColor;
 
@@ -537,16 +537,16 @@ void FbxParts::Draw(TransformA& transform)
 		// パラメータの受け渡し
 		D3D11_MAPPED_SUBRESOURCE pdata;
 		CONSTANT_BUFFER cb;
-		cb.worldVewProj =	XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());						// リソースへ送る値をセット
-		cb.world =		XMMatrixTranspose(transform.GetWorldMatrix());
+		cb.worldVewProj =	XMMatrixTranspose(transform->GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());						// リソースへ送る値をセット
+		cb.world =		XMMatrixTranspose(transform->GetWorldMatrix());
 
-		if(!transform.mFlag_)
-			cb.normalTrans = XMMatrixTranspose(transform.matRotate_ * XMMatrixInverse(nullptr, transform.matScale_));
+		if(!transform->isAxisRotate_)
+			cb.normalTrans = XMMatrixTranspose(transform->matRotate_ * XMMatrixInverse(nullptr, transform->matScale_));
 		else
-			cb.normalTrans = XMMatrixTranspose(transform.mmRotate_ * XMMatrixInverse(nullptr, transform.matScale_));
+			cb.normalTrans = XMMatrixTranspose(transform->matAxisRotate_ * XMMatrixInverse(nullptr, transform->matScale_));
 
-		cb.mWLP = XMMatrixTranspose(transform.GetWorldMatrix() * Direct3D::lightView_ * Camera::GetProjectionMatrix());
-		cb.mWLPT = XMMatrixTranspose(transform.GetWorldMatrix() * Direct3D::lightView_ * Camera::GetProjectionMatrix() * Direct3D::clipToUV_);
+		cb.mWLP = XMMatrixTranspose(transform->GetWorldMatrix() * Direct3D::lightView_ * Camera::GetProjectionMatrix());
+		cb.mWLPT = XMMatrixTranspose(transform->GetWorldMatrix() * Direct3D::lightView_ * Camera::GetProjectionMatrix() * Direct3D::clipToUV_);
 		cb.lightDirection = Light::GetDirection();
 		cb.ambient = pMaterial_[i].ambient;
 		cb.diffuse = pMaterial_[i].diffuse;
@@ -600,7 +600,7 @@ void FbxParts::Draw(TransformA& transform)
 }
 
 //ボーン有りのモデルを描画
-void FbxParts::DrawSkinAnime(TransformA& transform, FbxTime time)
+void FbxParts::DrawSkinAnime(Transform* transform, FbxTime time)
 {
 	//ボーンごとの現在の行列を取得する
 	for (int i = 0; i < numBone_; i++)
@@ -663,7 +663,7 @@ void FbxParts::DrawSkinAnime(TransformA& transform, FbxTime time)
 
 }
 
-void FbxParts::DrawMeshAnime(TransformA& transform, FbxTime time, FbxScene * scene)
+void FbxParts::DrawMeshAnime(Transform* transform, FbxTime time, FbxScene * scene)
 {
 	//// その瞬間の自分の姿勢行列を得る
 	//FbxAnimEvaluator *evaluator = scene->GetAnimationEvaluator();

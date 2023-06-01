@@ -2,7 +2,6 @@
 #include "../../Engine/ResourceManager/Global.h"
 #include "../GameManager/GameManager.h"
 #include "../../Engine/DirectX/Sprite.h"
-#include "../../Engine/GameObject/TransformA.h"
 #include "../../Engine/ResourceManager/Text.h"
 #include <map>
 

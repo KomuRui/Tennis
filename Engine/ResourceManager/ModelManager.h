@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include "../DirectX/Fbx.h"
-#include "../GameObject/TransformA.h"
 #include "Global.h"
 #include "../GameObject/GameObject.h"
 
@@ -41,7 +40,7 @@ namespace ModelManager
 		Direct3D::SHADER_TYPE  shaderType;
 
 		//行列
-		TransformA 	transform;
+		Transform 	transform;
 
 		//アルファ
 		float		alpha;
@@ -225,7 +224,7 @@ namespace ModelManager
 	//ワールド行列を設定
 	//引数：handle	設定したいモデルの番号
 	//引数：matrix	ワールド行列
-	void SetTransform(int handle, TransformA& transform);
+	void SetTransform(int handle, Transform* transform);
 
 	//ワールド行列の取得
 	//引数：handle	知りたいモデルの番号

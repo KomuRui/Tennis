@@ -4,7 +4,10 @@
 //コンストラクタ
 NormalObject::NormalObject(GameObject* parent, std::string modelPath, std::string name)
 	:GameObject(parent,name),modelNamePath_(modelPath),hModel_(-1)
-{}
+{
+	//トランスフォームコンポーネント追加
+	ARGUMENT_INITIALIZE(transform_, AddComponent<Transform>());
+}
 
 //初期化
 void NormalObject::Initialize()

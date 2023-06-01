@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject/GameObject.h"
+#include "Engine/Component/Transform/Transform.h"
 #include <vector>
 
 //前方宣言
@@ -30,7 +31,7 @@ protected:
 	CreateStage* pCreateStage_;
 
 	//背景モデル用のトランスフォーム
-	TransformA tSpace_;
+	Transform* tSpace_;
 
 	//画角
 	int fieldAngle_;

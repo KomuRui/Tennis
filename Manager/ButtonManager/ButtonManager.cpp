@@ -67,8 +67,8 @@ namespace ButtonManager
 	void Input(ButtonBase* button)
 	{
 		//選択されているボタンのxとyを保存
-		float x = button->GetPosition().x;
-		float y = button->GetPosition().y;
+		float x = button->GetComponent<Transform>()->GetPosition().x;
+		float y = button->GetComponent<Transform>()->GetPosition().y;
 
 		//前回の傾きを取得
 		ARGUMENT_INITIALIZE(beforeXSlope, NowXSlope);
@@ -88,9 +88,9 @@ namespace ButtonManager
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
 				//Xの座標が選択されていたボタンをよりも大きければ
-				if ((*i)->GetPosition().x > x)
+				if ((*i)->GetComponent<Transform>()->GetPosition().x > x)
 				{
-					date.push_back({ (*i)->GetPosition().x,(*i)});
+					date.push_back({ (*i)->GetComponent<Transform>()->GetPosition().x,(*i)});
 				}
 			}
 		}
@@ -123,9 +123,9 @@ namespace ButtonManager
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
 				//Xの座標が選択されていたボタンをよりも小さければ
-				if ((*i)->GetPosition().x < x)
+				if ((*i)->GetComponent<Transform>()->GetPosition().x < x)
 				{
-					date.push_back({ (*i)->GetPosition().x,(*i) });
+					date.push_back({ (*i)->GetComponent<Transform>()->GetPosition().x,(*i) });
 				}
 			}
 		}
@@ -158,9 +158,9 @@ namespace ButtonManager
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
 				//Yの座標が選択されていたボタンをよりも大きければ
-				if ((*i)->GetPosition().y > y)
+				if ((*i)->GetComponent<Transform>()->GetPosition().y > y)
 				{
-					date.push_back({ (*i)->GetPosition().y,(*i) });
+					date.push_back({ (*i)->GetComponent<Transform>()->GetPosition().y,(*i) });
 				}
 			}
 		}
@@ -193,9 +193,9 @@ namespace ButtonManager
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
 				//Xの座標が選択されていたボタンをよりも小さければ
-				if ((*i)->GetPosition().y < y)
+				if ((*i)->GetComponent<Transform>()->GetPosition().y < y)
 				{
-					date.push_back({ (*i)->GetPosition().y,(*i) });
+					date.push_back({ (*i)->GetComponent<Transform>()->GetPosition().y,(*i) });
 				}
 			}
 		}

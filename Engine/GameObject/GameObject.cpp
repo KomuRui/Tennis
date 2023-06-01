@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "../ResourceManager/Global.h"
 #include "Camera.h"
+#include "../Component/Transform/Transform.h"
 
 //コンストラクタ（親も名前もなし）
 GameObject::GameObject(void) :
@@ -27,8 +28,8 @@ GameObject::GameObject(GameObject * parent, const std::string& name)
 	childList_.clear();
 	state_ = { 0, 1, 1, 0 };
 
-	if(parent != nullptr)
-		transform_.pParent_ = &parent->transform_;
+	//if(parent != nullptr)
+		//transform_.pParent_ = &parent->transform_;
 
 }
 
@@ -387,7 +388,7 @@ void GameObject::CollisionDraw()
 
 	for (auto i = this->colliderList_.begin(); i != this->colliderList_.end(); i++)
 	{
-		(*i)->Draw(GetWorldPosition(),GetWorldRotate(),transform_);
+		(*i)->Draw(GetComponent<Transform>()->GetWorldPosition(), GetComponent<Transform>()->GetWorldRotate());
 	}
 
 	Direct3D::SetShader(Direct3D::SHADER_3D);
@@ -612,14 +613,14 @@ void GameObject::ReleaseSub()
 //引数でもらったtargetの方を向く
 void GameObject::LookObject(XMFLOAT3 target, XMVECTOR up)
 {
-	target.y += 2;
-	transform_.mmRotate_ = XMMatrixInverse(nullptr, XMMatrixLookAtLH(XMVectorSet(ZERO,ZERO,ZERO,ZERO), XMLoadFloat3(&target) - XMLoadFloat3(&transform_.position_), up));
+	//target.y += 2;
+	//transform_.mmRotate_ = XMMatrixInverse(nullptr, XMMatrixLookAtLH(XMVectorSet(ZERO,ZERO,ZERO,ZERO), XMLoadFloat3(&target) - XMLoadFloat3(&transform_.position_), up));
 }
 
 //ワールド行列の取得（親の影響を受けた最終的な行列）
 XMMATRIX GameObject::GetWorldMatrix(void)
 {
-	return transform_.GetWorldMatrix();
+	return GetComponent<Transform>()->GetWorldMatrix();
 }
 
 

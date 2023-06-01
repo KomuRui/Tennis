@@ -2,7 +2,6 @@
 #include "SphereCollider.h"
 #include "../GameObject/GameObject.h"
 #include "../ResourceManager/ModelManager.h"
-#include "../GameObject/TransformA.h"
 
 //コンストラクタ
 Collider::Collider():
@@ -22,8 +21,8 @@ Collider::~Collider()
 bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 {
 
-	XMFLOAT3 boxPosA = Float3Add(boxA->pGameObject_->GetWorldPosition(), boxA->center_);
-	XMFLOAT3 boxPosB = Float3Add(boxB->pGameObject_->GetWorldPosition(), boxB->center_);
+	XMFLOAT3 boxPosA = Float3Add(boxA->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), boxA->center_);
+	XMFLOAT3 boxPosB = Float3Add(boxB->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), boxB->center_);
 
 
 	if ((boxPosA.x + boxA->size_.x / 2) > (boxPosB.x - boxB->size_.x / 2) &&
@@ -44,8 +43,8 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 //戻値：接触していればtrue
 bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 {
-	XMFLOAT3 circlePos = Float3Add(sphere->pGameObject_->GetWorldPosition(), sphere->center_);
-	XMFLOAT3 boxPos = Float3Add(box->pGameObject_->GetWorldPosition(), box->center_);
+	XMFLOAT3 circlePos = Float3Add(sphere->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), sphere->center_);
+	XMFLOAT3 boxPos = Float3Add(box->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), box->center_);
 
 	if (circlePos.x > boxPos.x - box->size_.x / 2 - sphere->size_.x &&
 		circlePos.x < boxPos.x + box->size_.x / 2 + sphere->size_.x &&
@@ -67,9 +66,9 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 bool Collider::IsHitCircleVsCircle(SphereCollider* circleA, SphereCollider* circleB)
 {
 	XMFLOAT3 centerA = circleA->center_;
-	XMFLOAT3 positionA = circleA->pGameObject_->GetWorldPosition();
+	XMFLOAT3 positionA = circleA->pGameObject_->GetComponent<Transform>()->GetWorldPosition();
 	XMFLOAT3 centerB = circleB->center_;
-	XMFLOAT3 positionB = circleB->pGameObject_->GetWorldPosition();
+	XMFLOAT3 positionB = circleB->pGameObject_->GetComponent<Transform>()->GetWorldPosition();
 
 	XMVECTOR v = (XMLoadFloat3(&centerA) + XMLoadFloat3(&positionA))
 		- (XMLoadFloat3(&centerB) + XMLoadFloat3(&positionB));
@@ -84,9 +83,9 @@ bool Collider::IsHitCircleVsCircle(SphereCollider* circleA, SphereCollider* circ
 
 //テスト表示用の枠を描画
 //引数：position	オブジェクトの位置
-void Collider::Draw(XMFLOAT3 position, XMFLOAT3 rotate,TransformA t)
+void Collider::Draw(XMFLOAT3 position, XMFLOAT3 rotate)
 {
-	TransformA transform;
+	Transform transform;
 	transform.position_ = XMFLOAT3(position.x + center_.x, position.y + center_.y, position.z + center_.z);
 	transform.scale_ = size_;
 
@@ -96,6 +95,6 @@ void Collider::Draw(XMFLOAT3 position, XMFLOAT3 rotate,TransformA t)
 	
 	//描画
 	ModelManager::SetShederType(hDebugModel_,Direct3D::SHADER_UNLIT);
-	ModelManager::SetTransform(hDebugModel_, transform);
+	ModelManager::SetTransform(hDebugModel_, &transform);
 	ModelManager::Draw(hDebugModel_);
 }

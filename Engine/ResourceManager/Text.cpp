@@ -68,7 +68,7 @@ void Text::NumberDraw(int x, int y, const char* str, float ratio, float textInte
 		int y = id / rowLength_;	//上から何番目
 
 		//表示する位置
-		TransformA transform;
+		Transform transform;
 		transform.position_.x = px;
 		transform.position_.y = py;
 
@@ -76,7 +76,7 @@ void Text::NumberDraw(int x, int y, const char* str, float ratio, float textInte
 		transform.scale_.x *= ratio;
 		transform.scale_.y *= ratio;
 
-		ImageManager::SetTransform(hPict_, transform);
+		ImageManager::SetTransform(hPict_, &transform);
 
 		//表示する範囲
 		ImageManager::SetRect(hPict_, width_ * x , height_ * y, width_, height_);
@@ -161,7 +161,7 @@ bool Text::SlowlyDraw(int x, int y, const wchar_t* str, float ratio, float textI
 					int y = id / rowLength_;	//上から何番目
 
 					//表示する位置
-					TransformA transform;
+					Transform transform;
 					transform.position_.x = px;
 					transform.position_.y = py;
 
@@ -169,7 +169,7 @@ bool Text::SlowlyDraw(int x, int y, const wchar_t* str, float ratio, float textI
 					transform.scale_.x *= ratio;
 					transform.scale_.y *= ratio;
 
-					ImageManager::SetTransform(hPict_, transform);
+					ImageManager::SetTransform(hPict_,&transform);
 
 					//表示する範囲
 					ImageManager::SetRect(hPict_, width_ * x, height_ * y, width_, height_);
@@ -250,7 +250,7 @@ void Text::Draw(int x, int y, const wchar_t* str, float ratio, float textInterva
 			int y = id / rowLength_;	//上から何番目
 
 			//表示する位置
-			TransformA transform;
+			Transform transform;
 			transform.position_.x = px;
 			transform.position_.y = py;
 
@@ -258,7 +258,7 @@ void Text::Draw(int x, int y, const wchar_t* str, float ratio, float textInterva
 			transform.scale_.x *= ratio;
 			transform.scale_.y *= ratio;
 
-			ImageManager::SetTransform(hPict_, transform);
+			ImageManager::SetTransform(hPict_, &transform);
 
 			//表示する範囲
 			ImageManager::SetRect(hPict_, width_ * x, height_ * y, width_, height_);
