@@ -53,7 +53,7 @@ XMMATRIX Transform::GetWorldMatrix()
 	if (!isAxisRotate_)
 	{
 		Calclation();
-		if (parent->GetComponent<Transform>())
+		if (parent && parent->GetComponent<Transform>())
 		{
 			return  matScale_ * matRotate_ * matTranslate_ * parent->GetComponent<Transform>()->GetWorldMatrix();
 		}
@@ -65,7 +65,7 @@ XMMATRIX Transform::GetWorldMatrix()
 
 		Calclation();
 
-		if (parent->GetComponent<Transform>())
+		if (parent && parent->GetComponent<Transform>())
 		{
 			return  matScale_ * matAxisRotate_ * matTranslate_ * parent->GetComponent<Transform>()->GetWorldMatrix();
 		}
