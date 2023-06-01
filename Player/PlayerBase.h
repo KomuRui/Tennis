@@ -3,6 +3,7 @@
 #include "../Engine/GameObject/GameObject.h"
 #include "../State/PlayerState/PlayerStateManager.h"
 #include "../Engine/ResourceManager/ModelManager.h"
+#include "../Engine/Component/Transform/Transform.h"
 
 class Racket;
 
@@ -12,6 +13,8 @@ class Racket;
 class PlayerBase : public NormalObject
 {
 protected:
+
+	Transform* transform;
 
 	///////////////ƒLƒƒƒ‰‚Ì•K—v‚Èî•ñ///////////////////
 

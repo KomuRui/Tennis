@@ -52,6 +52,7 @@ XMMATRIX TransformA::GetWorldMatrix()
 	if (!mFlag_)
 	{
 		Calclation();
+
 		if (pParent_)
 		{
 			return  matScale_ * matRotate_ * matTranslate_  *  pParent_->GetWorldMatrix();

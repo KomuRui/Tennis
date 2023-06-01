@@ -50,24 +50,9 @@ public:
 	XMFLOAT3 GetPosition() { return position_; }
 	XMFLOAT3 GetRotate() { return rotate_; }
 	XMFLOAT3 GetScale() { return scale_; }
-	XMFLOAT3 GetWorldPosition() { 
-		if (parent && parent->GetComponent<Transform>())
-			return Float3Add(parent->GetComponent<Transform>()->position_, position_);
-		else
-			return position_;
-	}
-	XMFLOAT3 GetWorldRotate() {
-		if (parent && parent->GetComponent<Transform>())
-			return Float3Add(parent->GetComponent<Transform>()->rotate_, rotate_);
-		else
-			return rotate_;
-	}
-	XMFLOAT3 GetWorldScale() { 
-		if (parent && parent->GetComponent<Transform>())
-			return Float3Add(parent->GetComponent<Transform>()->scale_, scale_);
-		else
-			return scale_;
-	}
+	XMFLOAT3 GetWorldPosition();
+	XMFLOAT3 GetWorldRotate();
+	XMFLOAT3 GetWorldScale();
 	Transform* GetTransform() { return this; }
 	void SetPosition(XMFLOAT3 position) { position_ = position; }
 	void SetPosition(float x, float y, float z) { SetPosition(XMFLOAT3(x, y, z)); }

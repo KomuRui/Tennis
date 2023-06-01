@@ -53,7 +53,8 @@ XMMATRIX Transform::GetWorldMatrix()
 	if (!isAxisRotate_)
 	{
 		Calclation();
-		if (parent && parent->GetComponent<Transform>())
+
+		if (parent != nullptr && parent->GetComponent<Transform>() != nullptr)
 		{
 			return  matScale_ * matRotate_ * matTranslate_ * parent->GetComponent<Transform>()->GetWorldMatrix();
 		}
@@ -65,7 +66,7 @@ XMMATRIX Transform::GetWorldMatrix()
 
 		Calclation();
 
-		if (parent && parent->GetComponent<Transform>())
+		if (parent != nullptr && parent->GetComponent<Transform>() != nullptr)
 		{
 			return  matScale_ * matAxisRotate_ * matTranslate_ * parent->GetComponent<Transform>()->GetWorldMatrix();
 		}
@@ -79,7 +80,26 @@ XMMATRIX Transform::GetWorldMatrix()
 //親のワールド行列を取得
 XMMATRIX Transform::GetParentWorldMatrix()
 {
-	if (parent == nullptr) return XMMatrixIdentity();
+	if (parent == nullptr || !parent->GetComponent<Transform>()) return XMMatrixIdentity();
 
 	return parent->GetComponent<Transform>()->GetWorldMatrix();
+}
+
+XMFLOAT3 Transform::GetWorldPosition() {
+	if (parent && parent->GetComponent<Transform>())
+		return Float3Add(parent->GetComponent<Transform>()->position_, position_);
+	else
+		return position_;
+}
+XMFLOAT3 Transform::GetWorldRotate() {
+	if (parent && parent->GetComponent<Transform>())
+		return Float3Add(parent->GetComponent<Transform>()->rotate_, rotate_);
+	else
+		return rotate_;
+}
+XMFLOAT3 Transform::GetWorldScale() {
+	if (parent && parent->GetComponent<Transform>())
+		return Float3Add(parent->GetComponent<Transform>()->scale_, scale_);
+	else
+		return scale_;
 }

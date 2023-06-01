@@ -27,6 +27,9 @@ GameObject::GameObject(GameObject * parent, const std::string& name)
 	childList_.clear();
 	state_ = { 0, 1, 1, 0 };
 
+	if(parent != nullptr)
+		transform_.pParent_ = &parent->transform_;
+
 }
 
 //デストラクタ

@@ -202,7 +202,7 @@ public:
 	T* AddComponent()
 	{
 		T* buff = new T();
-		buff->Parent = this;
+		buff->parent = this;
 		ComponentList_.push_back(buff);
 		buff->Start();
 		return buff;
