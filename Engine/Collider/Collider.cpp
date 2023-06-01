@@ -46,6 +46,24 @@ bool Collider::IsHitBoxVsCircle(BoxColliderA* box, SphereColliderA* sphere)
 	XMFLOAT3 circlePos = Float3Add(sphere->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), sphere->center_);
 	XMFLOAT3 boxPos = Float3Add(box->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), box->center_);
 
+	//‰ñ“]s—ñ
+	XMFLOAT3 rotateB_ = (box->pGameObject_->GetComponent<Transform>()->GetWorldRotate());
+	XMMATRIX rotateX, rotateY, rotateZ;
+	rotateX = XMMatrixRotationX(XMConvertToRadians(rotateB_.x));
+	rotateY = XMMatrixRotationY(XMConvertToRadians(rotateB_.y));
+	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateB_.z));
+	XMMATRIX matRotate_ = rotateZ * rotateX * rotateY;
+
+	boxPos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxPos), matRotate_));
+
+	XMFLOAT3 rotateS_ = (sphere->pGameObject_->GetComponent<Transform>()->GetWorldRotate());
+	rotateX = XMMatrixRotationX(XMConvertToRadians(rotateB_.x));
+	rotateY = XMMatrixRotationY(XMConvertToRadians(rotateB_.y));
+	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateB_.z));
+	matRotate_ = rotateZ * rotateX * rotateY;
+
+	circlePos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&circlePos), matRotate_));
+
 	if (circlePos.x > boxPos.x - box->size_.x / 2 - sphere->size_.x &&
 		circlePos.x < boxPos.x + box->size_.x / 2 + sphere->size_.x &&
 		circlePos.y > boxPos.y - box->size_.y / 2 - sphere->size_.x &&
@@ -88,10 +106,7 @@ void Collider::Draw(XMFLOAT3 position, XMFLOAT3 rotate)
 	Transform transform;
 	transform.position_ = XMFLOAT3(position.x + center_.x, position.y + center_.y, position.z + center_.z);
 	transform.scale_ = size_;
-
-	//‰ñ“]flag‚ªtrue‚È‚çƒRƒ‰ƒCƒ_[‚à‰ñ“]‚³‚¹‚é
-	if(rotateflag_)
-		transform.rotate_ = rotate;
+	transform.rotate_ = rotate;
 	
 	//•`‰æ
 	ModelManager::SetShederType(hDebugModel_,Direct3D::SHADER_UNLIT);
