@@ -91,7 +91,7 @@ void Collider::Draw(XMFLOAT3 position, XMFLOAT3 rotate)
 
 	//回転flagがtrueならコライダーも回転させる
 	if(rotateflag_)
-	transform.rotate_ = rotate;
+		transform.rotate_ = rotate;
 	
 	//描画
 	ModelManager::SetShederType(hDebugModel_,Direct3D::SHADER_UNLIT);

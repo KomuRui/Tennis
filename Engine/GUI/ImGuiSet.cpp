@@ -1117,6 +1117,9 @@ namespace ImGuiSet
         //オブジェクトの名前で名前表示する
         if (ImGui::TreeNode(objName.c_str()))
         {
+            //モデル情報表示
+            GameObjectInfoGui::SetModel(ModelManager::GetModelNum(pObj->GetObjectName()));
+
             //削除ボタン
             if (ImGui::Button("Kill")) { pObj->KillMe(); }
 

@@ -19,9 +19,6 @@ using namespace DirectX;
 class GameObject
 {
 protected:
-	
-	//位置や向きなどを管理するオブジェクト
-	//TransformA				transform_;
 
 	//オブジェクトの名前
 	std::string				objectName_;
@@ -208,31 +205,11 @@ public:
 	}
 
 	//各アクセス関数
-	//XMFLOAT3 GetPosition() { return transform_.position_; }
-	//XMFLOAT3 GetRotate() { return transform_.rotate_; }
-	//XMFLOAT3 GetScale() { return transform_.scale_; }
-	//XMFLOAT3 GetWorldPosition() { return Float3Add(GetParent()->transform_.position_ , transform_.position_); }
-	//XMFLOAT3 GetWorldRotate() { return Float3Add(GetParent()->transform_.rotate_, transform_.rotate_); }
-	//XMFLOAT3 GetWorldScale() { return Float3Add(GetParent()->transform_.scale_, transform_.scale_); }
-	//TransformA* GetTransform() { return &transform_; }
 	std::string GetPathName() { return pathName_; }
 	float    GetColliderRadius();
-	/*void SetPosition(XMFLOAT3 position) { transform_.position_ = position; }
-	void SetPosition(float x, float y, float z) { SetPosition(XMFLOAT3( x, y, z )); }
-	void SetPositionX(float x) { SetPosition(x, transform_.position_.y, transform_.position_.z); }
-	void SetPositionY(float y) { SetPosition(transform_.position_.x, y, transform_.position_.z); }
-	void SetPositionZ(float z) { SetPosition(transform_.position_.x, transform_.position_.y, z); }
-	void SetRotate(XMFLOAT3 rotate) { transform_.rotate_ = rotate; }
-	void SetRotate(float x, float y, float z) { SetRotate(XMFLOAT3( x, y, z )); }
-	void SetRotateX(float x) { SetRotate(x, transform_.rotate_.y, transform_.rotate_.z); }
-	void SetRotateY(float y) { SetRotate(transform_.rotate_.x, y, transform_.rotate_.z); }
-	void SetRotateZ(float z) { SetRotate(transform_.rotate_.x, transform_.rotate_.y, z); }
-	void SetScale(XMFLOAT3 scale) { transform_.scale_ = scale; }
-	void SetScale(float x, float y, float z) { SetScale(XMFLOAT3(x, y, z)); }*/
 	void SetPosCollider(XMFLOAT3 position);
 	void SetScaleCollider(XMFLOAT3 scale);
 	void SetPosScaleCollider(XMFLOAT3 scale, XMFLOAT3 position);
-	//void SetTransform(TransformA t) { transform_ = t; }
 	
 private:
 
