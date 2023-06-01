@@ -1,10 +1,6 @@
 #include "Mob.h"
-#include "../Engine/ResourceManager/Model.h"
-#include "../Engine/DirectX/Input.h"
-#include "../Manager/SceneManager/SceneManager.h"
+#include "../Engine/System.h"
 #include "../Player/PlayerBase.h"
-#include "../Manager/GameManager/GameManager.h"
-#include "../Engine/GUI/ImGuiSet.h"
 
 //コンストラクタ
 Mob::Mob(GameObject* parent, std::string modelPath,std::string name)

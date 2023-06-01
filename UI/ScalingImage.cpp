@@ -1,5 +1,5 @@
 #include "ScalingImage.h"
-#include "../Engine/ResourceManager/Image.h"
+#include "../Engine/ResourceManager/ImageManager.h"
 
 //’è”
 namespace

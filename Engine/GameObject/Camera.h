@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "../ResourceManager/Model.h"
+#include "../ResourceManager/ModelManager.h"
 
 //-----------------------------------------------------------
 //ƒJƒƒ‰

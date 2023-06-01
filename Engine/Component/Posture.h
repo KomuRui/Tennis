@@ -1,5 +1,5 @@
 #pragma once
-#include "../ResourceManager/Model.h"
+#include "../ResourceManager/ModelManager.h"
 
 /// <summary>
 /// どんな地形でも正しい姿勢を取ってくれるコンポーネント(3Dモデル)

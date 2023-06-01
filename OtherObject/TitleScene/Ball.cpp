@@ -1,13 +1,7 @@
 #include "Ball.h"
-#include "../../Engine/ResourceManager/Model.h"
-#include "../../Engine/DirectX/Direct3D.h"
-#include "../../Manager/BasePointManager/BasePointManager.h"
+#include "../../Engine/System.h"
 #include "../../Engine/ResourceManager/Time.h"
-#include "../../Manager/EffectManager/OtherEffectManager/OtherEffectManager.h"
-#include "../../Manager/EffectManager/EffectManager.h"
-#include "../../Engine/ResourceManager/VFX.h"
 #include "../../Engine/Collider/SphereCollider.h"
-#include "../../Manager/GameManager/GameManager.h"
 #include "../../OtherObject/TitleScene/Racket.h"
 #include <math.h>
 #include <cmath>

@@ -4,7 +4,7 @@
 #include "../Engine/Collider/SphereCollider.h"
 #include "../Engine/ResourceManager/Global.h"
 #include "../Stage.h"
-#include "../Engine/ResourceManager/Model.h"
+#include "../Engine/ResourceManager/ModelManager.h"
 
 /// <summary>
 /// 地形に合わせて回転させたいオブジェクトの基底クラス(Mob,Enemy,Warp,Coinなど...)

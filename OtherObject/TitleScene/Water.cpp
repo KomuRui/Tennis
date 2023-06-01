@@ -1,5 +1,5 @@
 #include "Water.h"
-#include "../../Engine/ResourceManager/Model.h"
+#include "../../Engine/ResourceManager/ModelManager.h"
 
 //コンストラクタ
 Water::Water(GameObject* parent, std::string modelFilePath_, std::string name)

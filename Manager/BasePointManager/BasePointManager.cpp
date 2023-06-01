@@ -4,7 +4,7 @@
 #include <fstream>
 #include "../../Engine/nlohmann/json.hpp"
 #include "../../OtherObject/ToolObj/BasePointModel.h"
-#include "../../Engine/ResourceManager/Model.h"
+#include "../../Engine/ResourceManager/ModelManager.h"
 #include "../../Engine/GameObject/Camera.h"
 
 using json = nlohmann::json;

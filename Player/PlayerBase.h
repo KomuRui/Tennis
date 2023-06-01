@@ -2,7 +2,7 @@
 #include "../Base/NormalObject.h"
 #include "../Engine/GameObject/GameObject.h"
 #include "../State/PlayerState/PlayerStateManager.h"
-#include "../Engine/ResourceManager/Model.h"
+#include "../Engine/ResourceManager/ModelManager.h"
 
 class Racket;
 

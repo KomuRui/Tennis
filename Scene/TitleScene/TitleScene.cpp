@@ -1,17 +1,6 @@
 #include "TitleScene.h"
-#include "../../Engine/ResourceManager/Image.h"
-#include "../../Engine/DirectX/Input.h"
-#include "../../Manager/SceneManager/SceneManager.h"
-#include "../../Engine/GameObject/Camera.h"
+#include "../../Engine/System.h"
 #include "../../Player/PlayerBase.h"
-#include "../../Engine/ResourceManager/Model.h"
-#include "../../Engine/GameObject/Light.h"
-#include "../../Engine/ResourceManager/CreateStage.h"
-#include "../../Engine/ResourceManager/Fade.h"
-#include "../../Engine/ResourceManager/Audio.h"
-#include "../../Manager/GameManager/GameManager.h"
-#include "../../Manager/AudioManager/OtherAudioManager/OtherAudioManager.h"
-#include "../../Manager/BasePointManager/BasePointManager.h"
 #include "../../OtherObject/TitleScene/Ball.h"
 
 //íËêî

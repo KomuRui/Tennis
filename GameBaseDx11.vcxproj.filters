@@ -591,6 +591,9 @@
     <ClInclude Include="Engine\Component\Model.h">
       <Filter>01Engine\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\System.h">
+      <Filter>01Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

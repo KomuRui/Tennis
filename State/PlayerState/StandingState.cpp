@@ -1,13 +1,9 @@
 #include "StandingState.h"
-#include "../../Engine/DirectX/Input.h"
-#include "../../Manager/GameManager/GameManager.h"
-#include "../../Engine/ResourceManager/Model.h"
-#include "../../Engine/GUI/ImGuiSet.h"
+#include "../../Engine/System.h"
 #include "PlayerStateManager.h"
 #include "../../Player/PlayerBase.h"
 #include "../../OtherObject/TitleScene/Racket.h"
 #include "../../OtherObject/TitleScene/Ball.h"
-#include "../../Manager/EffectManager/EffectManager.h"
 
 //çXêV
 void StandingState::Update2D(PlayerBase* player)

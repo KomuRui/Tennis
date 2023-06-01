@@ -5,7 +5,7 @@
 #include "../../Engine/ResourceManager/Easing.h"
 #include "../../Engine/GameObject/Light.h"
 #include "../../Engine/ResourceManager/Fade.h"
-#include "../../Engine/ResourceManager/Image.h"
+#include "../../Engine/ResourceManager/ImageManager.h"
 #include "../TextManager/TextManager.h"
 #include "../ButtonManager/ButtonManager.h"
 #include "../ScoreManager/ScoreManager.h"

@@ -1,6 +1,6 @@
 #include "BoxCollider.h"
 #include "SphereCollider.h"
-#include "../ResourceManager/Model.h"
+#include "../ResourceManager/ModelManager.h"
 
 
 //コンストラクタ（当たり判定の作成）

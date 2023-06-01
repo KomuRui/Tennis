@@ -1,7 +1,7 @@
 #include "BoxCollider.h"
 #include "SphereCollider.h"
 #include "../GameObject/GameObject.h"
-#include "../ResourceManager/Model.h"
+#include "../ResourceManager/ModelManager.h"
 #include "../GameObject/Transform.h"
 
 //コンストラクタ

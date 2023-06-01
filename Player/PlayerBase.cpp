@@ -1,10 +1,5 @@
 #include "PlayerBase.h"
-#include "../Engine/GameObject/Camera.h"
-#include "../Engine/GameObject/Light.h"
-#include "../Manager/EffectManager/PlayerEffectManager/PlayerEffectManager.h"
-#include "../Manager/GameManager/GameManager.h"
-#include "../Manager/AudioManager/PlayerAudioManager/PlayerAudioManager.h"
-#include "../Engine/ResourceManager/Audio.h"
+#include "../Engine/System.h"
 #include "../OtherObject/TitleScene/Racket.h"
 
 ////’è”

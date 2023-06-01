@@ -1,12 +1,7 @@
 #include "PlayerStateManager.h"
-#include "../../Manager/GameManager/GameManager.h"
-#include "../../Manager/AudioManager/PlayerAudioManager/PlayerAudioManager.h"
-#include "../../Engine/ResourceManager/Model.h"
+#include "../../Engine/System.h"
 #include "../../Player/PlayerBase.h"
-#include "../../Engine/GUI/ImGuiSet.h"
 #include "../../OtherObject/TitleScene/Racket.h"
-#include "../../Engine/ResourceManager/Time.h"
-#include "../../Engine/ResourceManager/Easing.h"
 #include "../../OtherObject/TitleScene/Ball.h"
 #include <math.h>
 

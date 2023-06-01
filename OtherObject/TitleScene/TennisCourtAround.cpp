@@ -1,5 +1,5 @@
 #include "TennisCourtAround.h"
-#include "../../Engine/ResourceManager/Model.h"
+#include "../../Engine/ResourceManager/ModelManager.h"
 #include "../../Engine/DirectX/Direct3D.h"
 
 //コンストラクタ

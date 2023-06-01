@@ -1,5 +1,5 @@
 #include "Global.h"
-#include "Image.h"
+#include "ImageManager.h"
 
 //3D‰æ‘œ‚ğŠÇ—‚·‚é
 namespace ImageManager

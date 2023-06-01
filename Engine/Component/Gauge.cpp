@@ -1,5 +1,5 @@
 #include "Gauge.h"
-#include "../ResourceManager/Image.h"
+#include "../ResourceManager/ImageManager.h"
 
 //コンストラクタ
 Gauge::Gauge(GameObject* parent)

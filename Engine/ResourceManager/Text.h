@@ -1,5 +1,5 @@
 #pragma once
-#include "Image.h"
+#include "ImageManager.h"
 #include "Global.h"
 
 /// <summary>

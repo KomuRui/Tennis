@@ -254,6 +254,7 @@
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\ResourceManager\Time.h" />
     <ClInclude Include="Engine\ResourceManager\VFX.h" />
+    <ClInclude Include="Engine\System.h" />
     <ClInclude Include="Manager\AudioManager\OtherAudioManager\OtherAudioManager.h" />
     <ClInclude Include="Manager\AudioManager\PlayerAudioManager\PlayerAudioManager.h" />
     <ClInclude Include="Manager\BasePointManager\BasePointManager.h" />

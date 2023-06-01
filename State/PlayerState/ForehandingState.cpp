@@ -1,15 +1,8 @@
 #include "ForehandingState.h"
-#include "../../Engine/DirectX/Input.h"
-#include "../../Manager/GameManager/GameManager.h"
-#include "../../Engine/ResourceManager/Model.h"
-#include "../../Engine/GUI/ImGuiSet.h"
+#include "../../Engine/System.h"
 #include "PlayerStateManager.h"
 #include "../../Player/PlayerBase.h"
 #include "../../OtherObject/TitleScene/Racket.h"
-#include "../../Engine/ResourceManager/Time.h"
-#include "../../Engine/ResourceManager/Easing.h"
-#include "../../Engine/ResourceManager/VFX.h"
-#include "../../Manager/EffectManager/EffectManager.h"
 
 //’è”
 namespace

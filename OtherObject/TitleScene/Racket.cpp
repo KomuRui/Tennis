@@ -1,5 +1,5 @@
 #include "Racket.h"
-#include "../../Engine/ResourceManager/Model.h"
+#include "../../Engine/ResourceManager/ModelManager.h"
 #include "../../Engine/DirectX/Direct3D.h"
 #include "../../Engine/Collider/SphereCollider.h"
 #include "../../Engine/Collider/BoxCollider.h"

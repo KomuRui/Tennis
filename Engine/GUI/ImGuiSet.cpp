@@ -1,8 +1,4 @@
-#include "../ResourceManager/Image.h"
-#include "../ResourceManager/CreateStage.h"
-#include "../DirectX/Input.h"
-#include "ImGuiSet.h"
-#include "../ResourceManager/Model.h"
+#include "../../Engine/System.h"
 #include "../Collider/SphereCollider.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui.h"
@@ -10,22 +6,13 @@
 #include "imgui/imgui_impl_dx11.h"
 #include "../../Base/Mob.h"
 #include "../../UI/ImageBase.h"
-#include "../../Manager/GameManager/GameManager.h"
-#include "../../Manager/SceneManager/SceneManager.h"
-#include "../../Manager/AudioManager/OtherAudioManager/OtherAudioManager.h"
-#include "../ResourceManager/VFX.h"
-#include "../GameObject/Camera.h"
 #include "../DirectX/Fbx.h"
-#include "../../Engine/nlohmann/json.hpp"
-#include "../DirectX/Sprite.h"
 #include "GameObjectInfoGui.h"
 #include <fstream>
 #include <vector>
 #include <windows.h>
 #include <psapi.h>
 
-
-using json = nlohmann::json;
 
 //íËêî
 namespace

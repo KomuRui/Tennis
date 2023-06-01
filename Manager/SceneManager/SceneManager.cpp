@@ -1,6 +1,6 @@
 #include "sceneManager.h"
-#include "../../Engine/ResourceManager/Model.h"
-#include "../../Engine/ResourceManager/Image.h"
+#include "../../Engine/ResourceManager/ModelManager.h"
+#include "../../Engine/ResourceManager/ImageManager.h"
 #include "../../Engine/ResourceManager/Audio.h"
 #include "../../Engine/GameObject/Light.h"
 #include "../../Engine/ResourceManager/Time.h"

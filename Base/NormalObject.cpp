@@ -1,5 +1,5 @@
 #include "NormalObject.h"
-#include "../Engine/ResourceManager/Model.h"
+#include "../Engine/ResourceManager/ModelManager.h"
 
 //コンストラクタ
 NormalObject::NormalObject(GameObject* parent, std::string modelPath, std::string name)
