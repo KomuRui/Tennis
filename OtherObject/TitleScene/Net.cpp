@@ -11,6 +11,6 @@ Net::Net(GameObject* parent, std::string modelPath, std::string name)
 void Net::TransparentDraw()
 {
 	//•`‰æ
-	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	ModelManager::SetTransform(hModel_, transform_);
+	ModelManager::Draw(hModel_);
 }

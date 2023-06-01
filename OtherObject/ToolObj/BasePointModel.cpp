@@ -15,18 +15,18 @@ BasePointModel::BasePointModel(GameObject* parent)
 void BasePointModel::ChildInitialize()
 {
 	//基準点として追加
-	Model::SetBasePointObj(hModel_,this);
+	ModelManager::SetBasePointObj(hModel_,this);
 
 	//レイの判定に含まれるように設定
-	Model::SetRayFlag(hModel_, true);
+	ModelManager::SetRayFlag(hModel_, true);
 }
 
 //二つ目のウィンドウの描画
 void BasePointModel::TwoWindowDraw()
 {
 	//描画
-	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	ModelManager::SetTransform(hModel_, transform_);
+	ModelManager::Draw(hModel_);
 }
 
 //描画

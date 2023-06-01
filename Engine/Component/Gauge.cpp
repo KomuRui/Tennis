@@ -28,7 +28,7 @@ void Gauge::Initialize()
     //ロード
     for (int i = (int)ZERO; i < PICT_MAX; i++)
     {
-        hPict_[i] = Image::Load("Image/Gauge/" + fileName[i] + ".png");
+        hPict_[i] = ImageManager::Load("Image/Gauge/" + fileName[i] + ".png");
         assert(hPict_[i] >= ZERO);
     }
 }
@@ -57,8 +57,8 @@ void Gauge::Draw()
         //緑ゲージ
         gaugeTrans = transform_;
         gaugeTrans.scale_.x *= stopRatio_;
-        Image::SetTransform(hPict_[PICT_GREEN], gaugeTrans);
-        Image::Draw(hPict_[PICT_GREEN]);
+        ImageManager::SetTransform(hPict_[PICT_GREEN], gaugeTrans);
+        ImageManager::Draw(hPict_[PICT_GREEN]);
     }
 
 
@@ -68,14 +68,14 @@ void Gauge::Draw()
         //黄緑ゲージ
         gaugeTrans = transform_;
         gaugeTrans.scale_.x *= stopRatio_;
-        Image::SetTransform(hPict_[PICT_LGREEN], gaugeTrans);
-        Image::Draw(hPict_[PICT_LGREEN]);
+        ImageManager::SetTransform(hPict_[PICT_LGREEN], gaugeTrans);
+        ImageManager::Draw(hPict_[PICT_LGREEN]);
 
         //緑ゲージ
         gaugeTrans = transform_;
         gaugeTrans.scale_.x *= moveRatio_;
-        Image::SetTransform(hPict_[PICT_GREEN], gaugeTrans);
-        Image::Draw(hPict_[PICT_GREEN]);
+        ImageManager::SetTransform(hPict_[PICT_GREEN], gaugeTrans);
+        ImageManager::Draw(hPict_[PICT_GREEN]);
     }
 
     //ダメージ中
@@ -84,21 +84,21 @@ void Gauge::Draw()
         //赤ゲージ
         gaugeTrans = transform_;
         gaugeTrans.scale_.x *= moveRatio_;
-        Image::SetTransform(hPict_[PICT_RED], gaugeTrans);
-        Image::Draw(hPict_[PICT_RED]);
+        ImageManager::SetTransform(hPict_[PICT_RED], gaugeTrans);
+        ImageManager::Draw(hPict_[PICT_RED]);
 
         //緑ゲージ
         gaugeTrans = transform_;
         gaugeTrans.scale_.x *= stopRatio_;
-        Image::SetTransform(hPict_[PICT_GREEN], gaugeTrans);
-        Image::Draw(hPict_[PICT_GREEN]);
+        ImageManager::SetTransform(hPict_[PICT_GREEN], gaugeTrans);
+        ImageManager::Draw(hPict_[PICT_GREEN]);
     }
 
 
     //枠
     gaugeTrans = transform_;
-    Image::SetTransform(hPict_[PICT_FRAME], gaugeTrans);
-    Image::Draw(hPict_[PICT_FRAME]);
+    ImageManager::SetTransform(hPict_[PICT_FRAME], gaugeTrans);
+    ImageManager::Draw(hPict_[PICT_FRAME]);
 }
 
 

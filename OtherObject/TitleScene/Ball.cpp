@@ -60,7 +60,7 @@ void Ball::ChildInitialize()
 	pLine_->AddPosition(transform_.position_);
 
 	//影のモデルロード
-	ARGUMENT_INITIALIZE(hShadowModel_, Model::Load("Ball/BallShadow.fbx"));
+	ARGUMENT_INITIALIZE(hShadowModel_, ModelManager::Load("Ball/BallShadow.fbx"));
 	assert(hShadowModel_ >= ZERO);
 	ARGUMENT_INITIALIZE(tShadow_, transform_);
 	ARGUMENT_INITIALIZE(tShadow_.position_.y, 0.2f);
@@ -79,7 +79,7 @@ void Ball::ChildInitialize()
 	AddCollider(collision);
 
 	//アンビエント
-	Model::SetAmbient(hModel_, AMBIENT_COLOR);
+	ModelManager::SetAmbient(hModel_, AMBIENT_COLOR);
 
 	//タイムスタート
 	Time::UnLock(hTime_);
@@ -115,8 +115,8 @@ void Ball::ChildUpdate()
 void Ball::ChildDraw()
 {
 	//影描画
-	Model::SetTransform(hShadowModel_, tShadow_);
-	Model::Draw(hShadowModel_);
+	ModelManager::SetTransform(hShadowModel_, tShadow_);
+	ModelManager::Draw(hShadowModel_);
 
 	//ポリライン描画
 	pLine_->Draw();

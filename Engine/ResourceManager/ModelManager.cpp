@@ -3,7 +3,7 @@
 #include "../../OtherObject/ToolObj/BasePointModel.h"
 
 //3Dモデル（FBXファイル）を管理する
-namespace Model
+namespace ModelManager
 {
 	//ロード済みのモデルデータ一覧
 	std::vector<ModelData*>	_datas;

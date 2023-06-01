@@ -23,7 +23,7 @@ void Mob::Initialize()
 {
 	///////////////モデルデータのロード///////////////////
 
-	hModel_ = Model::Load(modelNamePath_);
+	hModel_ = ModelManager::Load(modelNamePath_);
     ARGUMENT_INITIALIZE(pathName_, modelNamePath_);
 	assert(hModel_ >= ZERO);
 
@@ -50,7 +50,7 @@ void Mob::StartUpdate()
         //近くのポリゴンを調べる
         NearPolyData dataNormal;
         dataNormal.start = transform_.position_;
-        Model::NearPolyNormal(polyModel, &dataNormal);
+        ModelManager::NearPolyNormal(polyModel, &dataNormal);
 
         //法線を追加
         ARGUMENT_INITIALIZE(vNormal_,XMLoadFloat3(&dataNormal.normal));
@@ -129,8 +129,8 @@ void Mob::RotationInStage()
 //描画
 void Mob::Draw()
 {
-	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	ModelManager::SetTransform(hModel_, transform_);
+	ModelManager::Draw(hModel_);
 
 	ChildDraw();
 }

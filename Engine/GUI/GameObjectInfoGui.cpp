@@ -79,7 +79,7 @@ namespace GameObjectInfoGui
         /////名前とチェックボタン
         
         //オブジェクトの名前
-        ImGui::InputText("objName", &Model::GetModelName(hModelNum)[0], Model::GetModelName(hModelNum).size()); 
+        ImGui::InputText("objName", &ModelManager::GetModelName(hModelNum)[0], ModelManager::GetModelName(hModelNum).size()); 
 
         /////トランスフォーム
         float windowFontScale = 1.5f;
@@ -88,7 +88,7 @@ namespace GameObjectInfoGui
         ImGui::SetWindowFontScale(1.0f);  
 
         //ゲームオブジェクト取得
-        GameObject* p = Model::GetGameObject(hModelNum);
+        GameObject* p = ModelManager::GetGameObject(hModelNum);
 
         //位置
         XMFLOAT3 xmPos = p->GetPosition();
@@ -120,10 +120,10 @@ namespace GameObjectInfoGui
         //アンビエント
         if (ImGui::TreeNode("AmbientColor")) {
            
-            XMFLOAT4 xmColor = Model::GetAmbient(hModelNum);
+            XMFLOAT4 xmColor = ModelManager::GetAmbient(hModelNum);
             float color[4] = { xmColor.x,xmColor.y,xmColor.z,xmColor.w };
             ImGui::ColorPicker4("AmbientColor", color, ImGuiColorEditFlags_PickerHueWheel);
-            Model::SetAmbient(hModelNum, XMFLOAT4(color[0], color[1], color[2], color[3]));
+            ModelManager::SetAmbient(hModelNum, XMFLOAT4(color[0], color[1], color[2], color[3]));
 
             ImGui::TreePop();
         }
@@ -131,10 +131,10 @@ namespace GameObjectInfoGui
         //スペキュラー
         if (ImGui::TreeNode("SpeculerColor")) {
 
-            XMFLOAT4 xmColor = Model::GetSpeculer(hModelNum);
+            XMFLOAT4 xmColor = ModelManager::GetSpeculer(hModelNum);
             float color[4] = { xmColor.x,xmColor.y,xmColor.z,xmColor.w };
             ImGui::ColorPicker4("SpeculerColor", color, ImGuiColorEditFlags_PickerHueWheel);
-            Model::SetSpeculer(hModelNum, XMFLOAT4(color[0], color[1], color[2], color[3]));
+            ModelManager::SetSpeculer(hModelNum, XMFLOAT4(color[0], color[1], color[2], color[3]));
 
             ImGui::TreePop();
         }

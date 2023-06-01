@@ -231,10 +231,10 @@
     <ClCompile Include="Engine\ResourceManager\Fade.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ResourceManager\Image.cpp">
+    <ClCompile Include="Engine\ResourceManager\ImageManager.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ResourceManager\Model.cpp">
+    <ClCompile Include="Engine\ResourceManager\ModelManager.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ResourceManager\Sound.cpp">
@@ -343,6 +343,9 @@
       <Filter>01Engine\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Component\Component.cpp">
+      <Filter>01Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\Model.cpp">
       <Filter>01Engine\Component</Filter>
     </ClCompile>
   </ItemGroup>
@@ -465,10 +468,10 @@
     <ClInclude Include="Engine\ResourceManager\Global.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ResourceManager\Image.h">
+    <ClInclude Include="Engine\ResourceManager\ImageManager.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ResourceManager\Model.h">
+    <ClInclude Include="Engine\ResourceManager\ModelManager.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ResourceManager\Sound.h">
@@ -583,6 +586,9 @@
       <Filter>01Engine\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component\Component.h">
+      <Filter>01Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Model.h">
       <Filter>01Engine\Component</Filter>
     </ClInclude>
   </ItemGroup>

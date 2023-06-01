@@ -153,8 +153,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//‚¢‚ë‚¢‚ë‰ð•ú
 	Audio::AllRelease();
-	Model::AllRelease();
-	Image::AllRelease();
+	ModelManager::AllRelease();
+	ImageManager::AllRelease();
 	pRootObject->ReleaseSub();
 	SAFE_DELETE(pRootObject);
 	Direct3D::Release();

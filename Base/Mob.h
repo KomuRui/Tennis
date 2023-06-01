@@ -121,7 +121,7 @@ public:
 	/// アニメーションするかどうかセット
 	/// </summary>
 	/// <param name="flag">trueならアニメーションする,falseならアニメーションしない</param>
-	void SetAnimFlag(const bool& flag) { Model::SetAnimFlag(hModel_, flag); }
+	void SetAnimFlag(const bool& flag) { ModelManager::SetAnimFlag(hModel_, flag); }
 
 	/// <summary>
 	/// 継承先用のUpdate

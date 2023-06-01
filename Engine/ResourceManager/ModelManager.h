@@ -14,7 +14,7 @@ class BasePointModel;
 //-----------------------------------------------------------
 //3Dモデル（FBXファイル）を管理する
 //-----------------------------------------------------------
-namespace Model
+namespace ModelManager
 {
 	//モデル情報
 	struct ModelData

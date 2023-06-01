@@ -101,8 +101,8 @@ namespace BasePointManager
 			p->SetPlayerType(true);
 			e->SetPlayerType(false);
 
-			Model::SetAmbient(p->GetModelNum(), AMBIENT_COLOR_PLAYER);
-			Model::SetAmbient(e->GetModelNum(), AMBIENT_COLOR_ENEMY);
+			ModelManager::SetAmbient(p->GetModelNum(), AMBIENT_COLOR_PLAYER);
+			ModelManager::SetAmbient(e->GetModelNum(), AMBIENT_COLOR_ENEMY);
 
 		}
 	}
@@ -115,7 +115,7 @@ namespace BasePointManager
 		{
 			//2つ目のウィンドウでクリックした位置にレイを飛ばしたデータをとってくる
 			RayCastData data = Camera::GetTwoWindowClickRayCastData();
-			Model::AllRayCast(-1, &data);
+			ModelManager::AllRayCast(-1, &data);
 
 			//当たった基準点のオブジェクトがnullならこの先処理しない
 			if (data.basePoint == nullptr) return;

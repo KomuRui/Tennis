@@ -87,7 +87,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     if (PadLx != ZERO || PadLy != ZERO)
     {
         //動いたのでアニメーション
-        Model::SetAnimFlag(player->GetModelNum(), true);
+        ModelManager::SetAnimFlag(player->GetModelNum(), true);
 
         //回転行列
         XMMATRIX rotateX, rotateY, rotateZ;
@@ -101,7 +101,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
         if (playerState_ == PlayerStateManager::playerBackhanding_ || playerState_ == PlayerStateManager::playerForehanding_)
         {
             //アニメーション止める
-            Model::SetAnimFlag(player->GetModelNum(), false);
+            ModelManager::SetAnimFlag(player->GetModelNum(), false);
 
             //ボールのポインタ
             Ball* pBall = ((Ball*)player->FindObject("Ball"));
@@ -138,7 +138,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     }
     //動いていないのならアニメーションを止める
     else
-        Model::SetAnimFlag(player->GetModelNum(), false);
+        ModelManager::SetAnimFlag(player->GetModelNum(), false);
 
     //現在の状態の更新を呼ぶ
     playerState_->Update3D(player);

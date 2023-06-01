@@ -48,7 +48,7 @@ void PlayerBase::ChildInitialize()
     ///////////////アニメーション設定///////////////////
 
     //アニメーション
-    Model::SetAnimFrame(hModel_, ANIM_START_FRAME, ANIM_END_FRAME, PLAYER_ANIM_SPEED);
+    ModelManager::SetAnimFrame(hModel_, ANIM_START_FRAME, ANIM_END_FRAME, PLAYER_ANIM_SPEED);
 
     ///////////////ラケット生成///////////////////
 

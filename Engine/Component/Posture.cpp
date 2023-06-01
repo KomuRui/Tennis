@@ -25,7 +25,7 @@ void Posture::Update()
 	RayCastData downData;
 	downData.start = transform_->position_;        //レイのスタート位置
 	downData.dir = VectorToFloat3(*down_);         //レイの方向
-	Model::AllRayCast(hGroundModel_, &downData);   //レイを発射(All)
+	ModelManager::AllRayCast(hGroundModel_, &downData);   //レイを発射(All)
 
 	 //真下の法線を調べてキャラの上軸を決定する
 	CheckUnderNormal(downData);

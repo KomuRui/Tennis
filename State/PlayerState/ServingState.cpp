@@ -18,15 +18,15 @@ void ServingState::Update2D(PlayerBase* player)
 void ServingState::Update3D(PlayerBase* player)
 {
 	//もしアニメーションが最後まで終わったのなら
-	if (Model::GetAnimFrame(player->GetModelNum()) == 270)
+	if (ModelManager::GetAnimFrame(player->GetModelNum()) == 270)
 	{
 		//状態変更
 		PlayerStateManager::playerState_ = PlayerStateManager::playerStanding_;
 		PlayerStateManager::playerState_->Enter(player);
 
 		//アニメーション
-		Model::SetAnimFrame(player->GetModelNum(), 1, 60, 2.0f);
-		Model::SetAnimFrame(player->GetRacket()->GetModelNum(), 1, 60, 2.0f);
+		ModelManager::SetAnimFrame(player->GetModelNum(), 1, 60, 2.0f);
+		ModelManager::SetAnimFrame(player->GetRacket()->GetModelNum(), 1, 60, 2.0f);
 	}
 
 	//入力処理関数を呼ぶ
@@ -42,6 +42,6 @@ void ServingState::HandleInput(PlayerBase* player)
 void ServingState::Enter(PlayerBase* player)
 {
 	//アニメーション
-	Model::SetAnimFrame(player->GetModelNum(), 210, 270, 2.0f);
-	Model::SetAnimFrame(player->GetRacket()->GetModelNum(), 210, 270, 2.0f);
+	ModelManager::SetAnimFrame(player->GetModelNum(), 210, 270, 2.0f);
+	ModelManager::SetAnimFrame(player->GetRacket()->GetModelNum(), 210, 270, 2.0f);
 }

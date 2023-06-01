@@ -34,7 +34,7 @@ Racket::Racket(GameObject* parent)
 void Racket::ChildInitialize()
 {
 	//明るさ最大値に設定
-	Model::SetBrightness(hModel_, 1.0f);
+	ModelManager::SetBrightness(hModel_, 1.0f);
 	
 	//球種ごとのボールの色を設定
 	ARGUMENT_INITIALIZE(lineColor_[Type::FLAT], XMFLOAT4(1, 0.5f, 1, 1));
@@ -96,10 +96,10 @@ void Racket::ChildInitialize()
 void Racket::ChildUpdate()
 {
 	//ラケットの端のポジションを求める
-	XMFLOAT3 edgePos = VectorToFloat3(Model::GetBonePosition(hModel_, "Edge") - GetParent()->GetPosition() - transform_.position_);
+	XMFLOAT3 edgePos = VectorToFloat3(ModelManager::GetBonePosition(hModel_, "Edge") - GetParent()->GetPosition() - transform_.position_);
 	
 	//コライダーのポジション求めて新しく設定(骨のポジションおかしいので力ずくで回転)
-	colliderPos_ = VectorToFloat3(Model::GetBonePosition(hModel_, "Base") - GetParent()->GetPosition() - transform_.position_);
+	colliderPos_ = VectorToFloat3(ModelManager::GetBonePosition(hModel_, "Base") - GetParent()->GetPosition() - transform_.position_);
 	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixInverse(nullptr, XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)) *  XMMatrixRotationY(XMConvertToRadians(BASE_ADD_ANGLE_VALUE))));
 	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)));
 	SetPosCollider(colliderPos_);

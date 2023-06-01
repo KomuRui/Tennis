@@ -17,6 +17,6 @@ void NetAround::ChildInitialize()
 void NetAround::TransparentDraw()
 {
 	//•`‰æ
-	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	ModelManager::SetTransform(hModel_, transform_);
+	ModelManager::Draw(hModel_);
 }

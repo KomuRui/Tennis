@@ -19,7 +19,7 @@ Text::~Text()
 HRESULT Text::Initialize(float speed, float textInterval)
 {
 	//画像のロード
-	hPict_ = Image::Load(fileName_);
+	hPict_ = ImageManager::Load(fileName_);
 	assert(hPict_ >= 0);
 
 	//60FPSと仮定する
@@ -76,13 +76,13 @@ void Text::NumberDraw(int x, int y, const char* str, float ratio, float textInte
 		transform.scale_.x *= ratio;
 		transform.scale_.y *= ratio;
 
-		Image::SetTransform(hPict_, transform);
+		ImageManager::SetTransform(hPict_, transform);
 
 		//表示する範囲
-		Image::SetRect(hPict_, width_ * x , height_ * y, width_, height_);
+		ImageManager::SetRect(hPict_, width_ * x , height_ * y, width_, height_);
 
 		//表示
-		Image::Draw(hPict_);
+		ImageManager::Draw(hPict_);
 
 		//次の位置にずらす
 		px += (width_ / (float)(Direct3D::screenWidth_ / 2.0f) * transform.scale_.x) - textInterval;
@@ -169,13 +169,13 @@ bool Text::SlowlyDraw(int x, int y, const wchar_t* str, float ratio, float textI
 					transform.scale_.x *= ratio;
 					transform.scale_.y *= ratio;
 
-					Image::SetTransform(hPict_, transform);
+					ImageManager::SetTransform(hPict_, transform);
 
 					//表示する範囲
-					Image::SetRect(hPict_, width_ * x, height_ * y, width_, height_);
+					ImageManager::SetRect(hPict_, width_ * x, height_ * y, width_, height_);
 
 					//表示
-					Image::Draw(hPict_);
+					ImageManager::Draw(hPict_);
 
 					//次の位置にずらす
 					px += (width_ / (float)(Direct3D::screenWidth_ / 2.0f) * transform.scale_.x) + textInterval;
@@ -258,13 +258,13 @@ void Text::Draw(int x, int y, const wchar_t* str, float ratio, float textInterva
 			transform.scale_.x *= ratio;
 			transform.scale_.y *= ratio;
 
-			Image::SetTransform(hPict_, transform);
+			ImageManager::SetTransform(hPict_, transform);
 
 			//表示する範囲
-			Image::SetRect(hPict_, width_ * x, height_ * y, width_, height_);
+			ImageManager::SetRect(hPict_, width_ * x, height_ * y, width_, height_);
 
 			//表示
-			Image::Draw(hPict_);
+			ImageManager::Draw(hPict_);
 
 			//次の位置にずらす
 			px += (width_ / (float)(Direct3D::screenWidth_ / 2.0f) * transform.scale_.x) + textInterval;
@@ -285,5 +285,5 @@ void Text::NumberDraw(int x, int y, int value, float ratio, float textInterval)
 //解放
 void Text::Release()
 {
-	Image::Release(hPict_);
+	ImageManager::Release(hPict_);
 }

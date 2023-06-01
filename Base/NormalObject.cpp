@@ -11,15 +11,15 @@ void NormalObject::Initialize()
 {
 	///////////////モデルデータのロード///////////////////
 
-	ARGUMENT_INITIALIZE(hModel_,Model::Load(modelNamePath_));
+	ARGUMENT_INITIALIZE(hModel_,ModelManager::Load(modelNamePath_));
 	ARGUMENT_INITIALIZE(pathName_, modelNamePath_);
 	assert(hModel_ >= ZERO);
 
 	//モデルの名前設定
-	Model::SetModelName(hModel_,GetObjectName());
+	ModelManager::SetModelName(hModel_,GetObjectName());
 
 	//ゲームオブジェクト追加
-	Model::SetGameObject(hModel_, this);
+	ModelManager::SetGameObject(hModel_, this);
 
 	//影ONにしておく
 	SetShadow(true);
@@ -46,8 +46,8 @@ void NormalObject::Update()
 void NormalObject::Draw()
 {
 	//描画
-	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	ModelManager::SetTransform(hModel_, transform_);
+	ModelManager::Draw(hModel_);
 
 	//継承先用
 	ChildDraw();

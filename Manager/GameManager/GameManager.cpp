@@ -90,7 +90,7 @@ namespace GameManager
 	void GameManager::Draw()
 	{
 		//Uiなどを表示
-		Image::UiDraw();
+		ImageManager::UiDraw();
 
 		//スコアマネージャーの描画
 		ScoreManager::Draw();

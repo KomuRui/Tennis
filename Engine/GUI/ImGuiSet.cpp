@@ -373,7 +373,7 @@ namespace ImGuiSet
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
-                        std::pair<int, Transform> a(Model::Load(text1[i]), t);
+                        std::pair<int, Transform> a(ModelManager::Load(text1[i]), t);
                         assert(a.first > -1);
 
                         //vectorに格納する
@@ -750,7 +750,7 @@ namespace ImGuiSet
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
-                        std::pair<int, Transform> a(Model::Load(text1[i]), t);
+                        std::pair<int, Transform> a(ModelManager::Load(text1[i]), t);
                         assert(a.first > 0);
 
                         //vectorに格納する
@@ -954,7 +954,7 @@ namespace ImGuiSet
                         //プッシュするためにpair型を作る
                         //first->ロードしたモデル番号
                         //second->ロードしたモデルのtransform
-                        std::pair<int, Transform> a(Image::Load(text1[i]), t);
+                        std::pair<int, Transform> a(ImageManager::Load(text1[i]), t);
                         assert(a.first >= 0);
 
                         //vectorに格納する
@@ -1132,7 +1132,7 @@ namespace ImGuiSet
         if (ImGui::TreeNode(objName.c_str()))
         {
             //モデル設定
-            GameObjectInfoGui::SetModel(Model::GetModelNum(pObj->GetObjectName()));
+            GameObjectInfoGui::SetModel(ModelManager::GetModelNum(pObj->GetObjectName()));
 
             //位置
             float pos[3] = { pObj->GetPosition().x,pObj->GetPosition().y ,pObj->GetPosition().z };

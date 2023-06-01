@@ -134,6 +134,7 @@
     <ClCompile Include="Engine\Component\Component.cpp" />
     <ClCompile Include="Engine\Component\EasingMove.cpp" />
     <ClCompile Include="Engine\Component\Gauge.cpp" />
+    <ClCompile Include="Engine\Component\Model.cpp" />
     <ClCompile Include="Engine\Component\Posture.cpp" />
     <ClCompile Include="Engine\DirectX\BillBoard.cpp" />
     <ClCompile Include="Engine\DirectX\Direct3D.cpp" />
@@ -164,8 +165,8 @@
     <ClCompile Include="Engine\ResourceManager\CsvReader.cpp" />
     <ClCompile Include="Engine\ResourceManager\Easing.cpp" />
     <ClCompile Include="Engine\ResourceManager\Fade.cpp" />
-    <ClCompile Include="Engine\ResourceManager\Image.cpp" />
-    <ClCompile Include="Engine\ResourceManager\Model.cpp" />
+    <ClCompile Include="Engine\ResourceManager\ImageManager.cpp" />
+    <ClCompile Include="Engine\ResourceManager\ModelManager.cpp" />
     <ClCompile Include="Engine\ResourceManager\Sound.cpp" />
     <ClCompile Include="Engine\ResourceManager\Text.cpp" />
     <ClCompile Include="Engine\ResourceManager\Time.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Engine\Component\Component.h" />
     <ClInclude Include="Engine\Component\EasingMove.h" />
     <ClInclude Include="Engine\Component\Gauge.h" />
+    <ClInclude Include="Engine\Component\Model.h" />
     <ClInclude Include="Engine\Component\Posture.h" />
     <ClInclude Include="Engine\DirectX\BillBoard.h" />
     <ClInclude Include="Engine\DirectX\Direct3D.h" />
@@ -246,8 +248,8 @@
     <ClInclude Include="Engine\ResourceManager\Easing.h" />
     <ClInclude Include="Engine\ResourceManager\Fade.h" />
     <ClInclude Include="Engine\ResourceManager\Global.h" />
-    <ClInclude Include="Engine\ResourceManager\Image.h" />
-    <ClInclude Include="Engine\ResourceManager\Model.h" />
+    <ClInclude Include="Engine\ResourceManager\ImageManager.h" />
+    <ClInclude Include="Engine\ResourceManager\ModelManager.h" />
     <ClInclude Include="Engine\ResourceManager\Sound.h" />
     <ClInclude Include="Engine\ResourceManager\Text.h" />
     <ClInclude Include="Engine\ResourceManager\Time.h" />

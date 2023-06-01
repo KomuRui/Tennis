@@ -8,7 +8,7 @@ class Component
 private:
     
     //コンストラクタ
-    Component() {}
+    Component():parent(nullptr){}
 
     //デストラクタ
     virtual ~Component() {}

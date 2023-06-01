@@ -59,8 +59,8 @@ void SceneManager::SceneUpdate()
 	ButtonManager::Reset();
 	VFX::Release();
 	Audio::AllRelease();
-	Model::AllRelease();
-	Image::AllRelease();
+	ModelManager::AllRelease();
+	ImageManager::AllRelease();
 	Time::AllRelease();
 
 	//ƒV[ƒ“‘JˆÚ‚Ì‰Šú‰»

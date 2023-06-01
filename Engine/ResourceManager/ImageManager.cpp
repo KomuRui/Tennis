@@ -2,7 +2,7 @@
 #include "Image.h"
 
 //3D画像を管理する
-namespace Image
+namespace ImageManager
 {
 	//ロード済みの画像データ一覧
 	std::vector<ImageData*>	_datas;

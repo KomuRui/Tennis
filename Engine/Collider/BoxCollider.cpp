@@ -16,7 +16,7 @@ BoxCollider::BoxCollider(XMFLOAT3 basePos, XMFLOAT3 size, bool rotateflag)
 	//リリース時は判定枠は表示しない
 #ifdef _DEBUG
 	//テスト表示用判定枠
-	hDebugModel_ = Model::Load("DebugCollision/boxCollider.fbx");
+	hDebugModel_ = ModelManager::Load("DebugCollision/boxCollider.fbx");
 #endif
 }
 

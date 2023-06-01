@@ -13,7 +13,7 @@ void ImageBase::Initialize()
 
 	///////////////画像データのロード///////////////////
 	
-	hPict_ = Image::Load(ModelNamePath_);
+	hPict_ = ImageManager::Load(ModelNamePath_);
 	ARGUMENT_INITIALIZE(pathName_, ModelNamePath_);
 	assert(hPict_ >= ZERO);
 
@@ -39,8 +39,8 @@ void ImageBase::Update()
 void ImageBase::Draw()
 {
 	//画像表示
-	Image::SetTransform(hPict_, transform_);
-	Image::SetUi(hPict_);
+	ImageManager::SetTransform(hPict_, transform_);
+	ImageManager::SetUi(hPict_);
 
 	//継承用の描画
 	ChildDraw();

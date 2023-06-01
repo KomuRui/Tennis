@@ -147,5 +147,5 @@ void ForehandingState::Enter(PlayerBase* player)
 	//ŠJŽnŠp“x
 	player->SetRotateY(PLAYER_END_ROTATION_ANGLE);
 	player->GetRacket()->SetRotateY(RACKET_END_ROTATION_ANGLE);
-	Model::SetAnimFlag(player->GetModelNum(), false);
+	ModelManager::SetAnimFlag(player->GetModelNum(), false);
 }
