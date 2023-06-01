@@ -1,5 +1,5 @@
-#include "BoxCollider.h"
-#include "SphereCollider.h"
+#include "BoxColliderA.h"
+#include "SphereColliderA.h"
 #include "../GameObject/GameObject.h"
 #include "../ResourceManager/ModelManager.h"
 
@@ -18,7 +18,7 @@ Collider::~Collider()
 //ˆø”FboxA	‚P‚Â–Ú‚Ì” Œ^”»’è
 //ˆø”FboxB	‚Q‚Â–Ú‚Ì” Œ^”»’è
 //–ß’lFÚG‚µ‚Ä‚¢‚ê‚Îtrue
-bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
+bool Collider::IsHitBoxVsBox(BoxColliderA* boxA, BoxColliderA* boxB)
 {
 
 	XMFLOAT3 boxPosA = Float3Add(boxA->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), boxA->center_);
@@ -41,7 +41,7 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 //ˆø”Fbox	” Œ^”»’è
 //ˆø”Fsphere	‚Q‚Â–Ú‚Ì” Œ^”»’è
 //–ß’lFÚG‚µ‚Ä‚¢‚ê‚Îtrue
-bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
+bool Collider::IsHitBoxVsCircle(BoxColliderA* box, SphereColliderA* sphere)
 {
 	XMFLOAT3 circlePos = Float3Add(sphere->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), sphere->center_);
 	XMFLOAT3 boxPos = Float3Add(box->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), box->center_);
@@ -63,7 +63,7 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 //ˆø”FcircleA	‚P‚Â–Ú‚Ì‹…‘Ì”»’è
 //ˆø”FcircleB	‚Q‚Â–Ú‚Ì‹…‘Ì”»’è
 //–ß’lFÚG‚µ‚Ä‚¢‚ê‚Îtrue
-bool Collider::IsHitCircleVsCircle(SphereCollider* circleA, SphereCollider* circleB)
+bool Collider::IsHitCircleVsCircle(SphereColliderA* circleA, SphereColliderA* circleB)
 {
 	XMFLOAT3 centerA = circleA->center_;
 	XMFLOAT3 positionA = circleA->pGameObject_->GetComponent<Transform>()->GetWorldPosition();

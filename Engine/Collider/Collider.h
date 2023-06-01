@@ -5,8 +5,8 @@ using namespace DirectX;
 
 //クラスの前方宣言
 class GameObject;
-class BoxCollider;
-class SphereCollider;
+class BoxColliderA;
+class SphereColliderA;
 class TransformA;
 
 //あたり判定のタイプ
@@ -22,8 +22,8 @@ enum ColliderType
 class Collider
 {
 	//それぞれのクラスのprivateメンバにアクセスできるようにする
-	friend class BoxCollider;
-	friend class SphereCollider;
+	friend class BoxColliderA;
+	friend class SphereColliderA;
 
 protected:
 	GameObject*		pGameObject_;	//この判定をつけたゲームオブジェクト
@@ -49,19 +49,19 @@ public:
 	//引数：boxA	１つ目の箱型判定
 	//引数：boxB	２つ目の箱型判定
 	//戻値：接触していればtrue
-	bool IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB);
+	bool IsHitBoxVsBox(BoxColliderA* boxA, BoxColliderA* boxB);
 
 	//箱型と球体の衝突判定
 	//引数：box	箱型判定
 	//引数：sphere	２つ目の箱型判定
 	//戻値：接触していればtrue
-	bool IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere);
+	bool IsHitBoxVsCircle(BoxColliderA* box, SphereColliderA* sphere);
 
 	//球体同士の衝突判定
 	//引数：circleA	１つ目の球体判定
 	//引数：circleB	２つ目の球体判定
 	//戻値：接触していればtrue
-	bool IsHitCircleVsCircle(SphereCollider* circleA, SphereCollider* circleB);
+	bool IsHitCircleVsCircle(SphereColliderA* circleA, SphereColliderA* circleB);
 
 	//テスト表示用の枠を描画
 	//引数：position	オブジェクトの位置

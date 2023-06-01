@@ -1,5 +1,5 @@
 #include "../../Engine/System.h"
-#include "../Collider/SphereCollider.h"
+#include "../Collider/SphereColliderA.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_win32.h"

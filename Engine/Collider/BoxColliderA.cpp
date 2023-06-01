@@ -1,12 +1,12 @@
-#include "BoxCollider.h"
-#include "SphereCollider.h"
+#include "BoxColliderA.h"
+#include "SphereColliderA.h"
 #include "../ResourceManager/ModelManager.h"
 
 
 //コンストラクタ（当たり判定の作成）
 //引数：basePos	当たり判定の中心位置（ゲームオブジェクトの原点から見た位置）
 //引数：size	当たり判定のサイズ
-BoxCollider::BoxCollider(XMFLOAT3 basePos, XMFLOAT3 size, bool rotateflag)
+BoxColliderA::BoxColliderA(XMFLOAT3 basePos, XMFLOAT3 size, bool rotateflag)
 {
 	center_ = basePos;
 	size_ = size;
@@ -23,10 +23,10 @@ BoxCollider::BoxCollider(XMFLOAT3 basePos, XMFLOAT3 size, bool rotateflag)
 //接触判定
 //引数：target	相手の当たり判定
 //戻値：接触してればtrue
-bool BoxCollider::IsHit(Collider* target)
+bool BoxColliderA::IsHit(Collider* target)
 {
 	if (target->type_ == COLLIDER_BOX)
-		return IsHitBoxVsBox((BoxCollider*)target, this);
+		return IsHitBoxVsBox((BoxColliderA*)target, this);
 	else
-		return IsHitBoxVsCircle(this, (SphereCollider*)target);
+		return IsHitBoxVsCircle(this, (SphereColliderA*)target);
 }

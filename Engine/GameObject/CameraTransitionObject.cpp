@@ -1,5 +1,5 @@
 #include "CameraTransitionObject.h"
-#include "../Collider/BoxCollider.h"
+#include "../Collider/BoxColliderA.h"
 #include "Camera.h"
 #include "../../Manager/GameManager/GameManager.h"
 
@@ -25,7 +25,7 @@ CameraTransitionObject::CameraTransitionObject(GameObject* parent, const StageCa
 void CameraTransitionObject::Initialize()
 {
 	//î†å`ÇÃìñÇΩÇËîªíËçÏê¨
-	BoxCollider* collision = new BoxCollider(XMFLOAT3(ZERO,ZERO, ZERO), info_.CollisionSize);
+	BoxColliderA* collision = new BoxColliderA(XMFLOAT3(ZERO,ZERO, ZERO), info_.CollisionSize);
 	AddCollider(collision);
 }
 

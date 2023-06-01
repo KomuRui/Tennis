@@ -117,6 +117,9 @@
     <Filter Include="01Engine\Component\Transform">
       <UniqueIdentifier>{95e51f23-b985-431b-817d-38c8ef6786f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01Engine\Component\Collider">
+      <UniqueIdentifier>{57947ba3-6a4d-4211-8cc3-390feca2ef42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -165,13 +168,13 @@
     <ClCompile Include="Manager\SceneManager\SceneManager.cpp">
       <Filter>Manager\SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Collider\BoxCollider.cpp">
+    <ClCompile Include="Engine\Collider\BoxColliderA.cpp">
       <Filter>01Engine\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Collider\Collider.cpp">
       <Filter>01Engine\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Collider\SphereCollider.cpp">
+    <ClCompile Include="Engine\Collider\SphereColliderA.cpp">
       <Filter>01Engine\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engine\DirectX\BillBoard.cpp">
@@ -348,6 +351,12 @@
     <ClCompile Include="Engine\Component\Transform\Transform.cpp">
       <Filter>01Engine\Component\Transform</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Component\Collider\BoxCollider.cpp">
+      <Filter>01Engine\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\Collider\SphereCollider.cpp">
+      <Filter>01Engine\Component\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -396,13 +405,13 @@
     <ClInclude Include="Manager\SceneManager\SceneManager.h">
       <Filter>Manager\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Collider\BoxCollider.h">
+    <ClInclude Include="Engine\Collider\BoxColliderA.h">
       <Filter>01Engine\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Collider\Collider.h">
       <Filter>01Engine\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Collider\SphereCollider.h">
+    <ClInclude Include="Engine\Collider\SphereColliderA.h">
       <Filter>01Engine\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engine\DirectX\BillBoard.h">
@@ -590,6 +599,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Component\Transform\Transform.h">
       <Filter>01Engine\Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Collider\BoxCollider.h">
+      <Filter>01Engine\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Collider\SphereCollider.h">
+      <Filter>01Engine\Component\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

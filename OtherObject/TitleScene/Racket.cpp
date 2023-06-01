@@ -1,8 +1,8 @@
 #include "Racket.h"
 #include "../../Engine/ResourceManager/ModelManager.h"
 #include "../../Engine/DirectX/Direct3D.h"
-#include "../../Engine/Collider/SphereCollider.h"
-#include "../../Engine/Collider/BoxCollider.h"
+#include "../../Engine/Collider/SphereColliderA.h"
+#include "../../Engine/Collider/BoxColliderA.h"
 #include "../../Manager/EffectManager/EffectManager.h"
 #include "../../Player/PlayerBase.h"
 #include "Ball.h"
@@ -86,7 +86,7 @@ void Racket::ChildInitialize()
 	transform_->SetRotateY(RACKET_START_ROTATION_ANGLE);
 
 	//“–‚½‚è”»’è
-	BoxCollider * collision = new BoxCollider({ ZERO,ZERO,ZERO }, { COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
+	BoxColliderA * collision = new BoxColliderA({ ZERO,ZERO,ZERO }, { COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
 	AddCollider(collision);
 
 	SetShadow(true);

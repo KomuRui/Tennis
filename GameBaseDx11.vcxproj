@@ -139,9 +139,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base\NormalObject.cpp" />
-    <ClCompile Include="Engine\Collider\BoxCollider.cpp" />
+    <ClCompile Include="Engine\Collider\BoxColliderA.cpp" />
     <ClCompile Include="Engine\Collider\Collider.cpp" />
-    <ClCompile Include="Engine\Collider\SphereCollider.cpp" />
+    <ClCompile Include="Engine\Collider\SphereColliderA.cpp" />
+    <ClCompile Include="Engine\Component\Collider\BoxCollider.cpp" />
+    <ClCompile Include="Engine\Component\Collider\SphereCollider.cpp" />
     <ClCompile Include="Engine\Component\Component.cpp" />
     <ClCompile Include="Engine\Component\EasingMove.cpp" />
     <ClCompile Include="Engine\Component\Gauge.cpp" />
@@ -218,9 +220,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\NormalObject.h" />
-    <ClInclude Include="Engine\Collider\BoxCollider.h" />
+    <ClInclude Include="Engine\Collider\BoxColliderA.h" />
     <ClInclude Include="Engine\Collider\Collider.h" />
-    <ClInclude Include="Engine\Collider\SphereCollider.h" />
+    <ClInclude Include="Engine\Collider\SphereColliderA.h" />
+    <ClInclude Include="Engine\Component\Collider\BoxCollider.h" />
+    <ClInclude Include="Engine\Component\Collider\SphereCollider.h" />
     <ClInclude Include="Engine\Component\Component.h" />
     <ClInclude Include="Engine\Component\EasingMove.h" />
     <ClInclude Include="Engine\Component\Gauge.h" />

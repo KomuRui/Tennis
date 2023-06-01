@@ -1,7 +1,7 @@
 #include "Ball.h"
 #include "../../Engine/System.h"
 #include "../../Engine/ResourceManager/Time.h"
-#include "../../Engine/Collider/SphereCollider.h"
+#include "../../Engine/Collider/SphereColliderA.h"
 #include "../../OtherObject/TitleScene/Racket.h"
 #include <math.h>
 #include <cmath>
@@ -69,7 +69,7 @@ void Ball::ChildInitialize()
 	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_->position_);
 
 	//当たり判定
-	SphereCollider* collision = new SphereCollider({ ZERO,ZERO,ZERO },0.1f);
+	SphereColliderA* collision = new SphereColliderA({ ZERO,ZERO,ZERO },0.1f);
 	AddCollider(collision);
 
 	//アンビエント
