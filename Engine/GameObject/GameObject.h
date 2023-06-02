@@ -24,10 +24,10 @@ protected:
 	std::string				objectName_;
 
 	//自分のコライダー
-	Collider*               pCollider_;
+	ColliderA*               pCollider_;
 
 	//衝突判定リスト
-	std::list<Collider*>	colliderList_;	
+	std::list<ColliderA*>	colliderList_;	
 
 	//モデルや画像のパス名を保存しておく
 	std::string					pathName_;
@@ -135,10 +135,10 @@ public:
 	void KillAllChildren();
 
 	//コライダー（衝突判定）を追加する
-	void AddCollider(Collider * collider);
+	void AddCollider(ColliderA * collider);
 
 	//コライダー削除
-	void KillCollider(Collider* collider);
+	void KillCollider(ColliderA* collider);
 
 	//何かと衝突した場合に呼ばれる（オーバーライド用）
 	//引数：pTarget	衝突した相手

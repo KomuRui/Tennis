@@ -171,7 +171,7 @@
     <ClCompile Include="Engine\Collider\BoxColliderA.cpp">
       <Filter>01Engine\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Collider\Collider.cpp">
+    <ClCompile Include="Engine\Collider\ColliderA.cpp">
       <Filter>01Engine\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Collider\SphereColliderA.cpp">
@@ -357,6 +357,9 @@
     <ClCompile Include="Engine\Component\Collider\SphereCollider.cpp">
       <Filter>01Engine\Component\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Component\Collider\Collider.cpp">
+      <Filter>01Engine\Component\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -408,7 +411,7 @@
     <ClInclude Include="Engine\Collider\BoxColliderA.h">
       <Filter>01Engine\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Collider\Collider.h">
+    <ClInclude Include="Engine\Collider\ColliderA.h">
       <Filter>01Engine\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Collider\SphereColliderA.h">
@@ -604,6 +607,9 @@
       <Filter>01Engine\Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Component\Collider\SphereCollider.h">
+      <Filter>01Engine\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\Collider\Collider.h">
       <Filter>01Engine\Component\Collider</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,7 +22,7 @@ SphereColliderA::SphereColliderA(XMFLOAT3 center, float radius, bool rotateflag)
 //ÚG”»’è
 //ˆø”Ftarget	‘ŠŽè‚Ì“–‚½‚è”»’è
 //–ß’lFÚG‚µ‚Ä‚ê‚Îtrue
-bool SphereColliderA::IsHit(Collider* target)
+bool SphereColliderA::IsHit(ColliderA* target)
 {
 	if (target->type_ == COLLIDER_BOX)
 		return IsHitBoxVsCircle((BoxColliderA*)target, this);

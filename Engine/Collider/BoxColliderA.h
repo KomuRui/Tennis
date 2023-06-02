@@ -1,11 +1,11 @@
 #pragma once
-#include "Collider.h"
+#include "ColliderA.h"
 
 
 //-----------------------------------------------------------
 //箱型の当たり判定
 //-----------------------------------------------------------
-class BoxColliderA :	public Collider
+class BoxColliderA :	public ColliderA
 {
 	//Colliderクラスのprivateメンバにアクセスできるようにする
 	friend class Collider;
@@ -20,6 +20,6 @@ private:
 	//接触判定
 	//引数：target	相手の当たり判定
 	//戻値：接触してればtrue
-	bool IsHit(Collider* target) override;
+	bool IsHit(ColliderA* target) override;
 };
 

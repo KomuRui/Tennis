@@ -1,14 +1,14 @@
 #pragma once
-#include "Collider.h"
+#include "ColliderA.h"
 
 
 //-----------------------------------------------------------
 //球体の当たり判定
 //-----------------------------------------------------------
-class SphereColliderA : public Collider
+class SphereColliderA : public ColliderA
 {
 	//Colliderクラスのprivateメンバにアクセスできるようにする
-	friend class Collider;
+	friend class ColliderA;
 
 public:
 	//コンストラクタ（当たり判定の作成）
@@ -26,6 +26,6 @@ private:
 	//接触判定
 	//引数：target	相手の当たり判定
 	//戻値：接触してればtrue
-	bool IsHit(Collider* target) override;
+	bool IsHit(ColliderA* target) override;
 };
 

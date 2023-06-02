@@ -23,7 +23,7 @@ BoxColliderA::BoxColliderA(XMFLOAT3 basePos, XMFLOAT3 size, bool rotateflag)
 //ÚG”»’è
 //ˆø”Ftarget	‘ŠŽè‚Ì“–‚½‚è”»’è
 //–ß’lFÚG‚µ‚Ä‚ê‚Îtrue
-bool BoxColliderA::IsHit(Collider* target)
+bool BoxColliderA::IsHit(ColliderA* target)
 {
 	if (target->type_ == COLLIDER_BOX)
 		return IsHitBoxVsBox((BoxColliderA*)target, this);

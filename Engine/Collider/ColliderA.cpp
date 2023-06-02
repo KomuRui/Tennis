@@ -4,13 +4,13 @@
 #include "../ResourceManager/ModelManager.h"
 
 //コンストラクタ
-Collider::Collider():
+ColliderA::ColliderA():
 	pGameObject_(nullptr)
 {
 }
 
 //デストラクタ
-Collider::~Collider()
+ColliderA::~ColliderA()
 {
 }
 
@@ -18,7 +18,7 @@ Collider::~Collider()
 //引数：boxA	１つ目の箱型判定
 //引数：boxB	２つ目の箱型判定
 //戻値：接触していればtrue
-bool Collider::IsHitBoxVsBox(BoxColliderA* boxA, BoxColliderA* boxB)
+bool ColliderA::IsHitBoxVsBox(BoxColliderA* boxA, BoxColliderA* boxB)
 {
 
 	XMFLOAT3 boxPosA = Float3Add(boxA->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), boxA->center_);
@@ -41,7 +41,7 @@ bool Collider::IsHitBoxVsBox(BoxColliderA* boxA, BoxColliderA* boxB)
 //引数：box	箱型判定
 //引数：sphere	２つ目の箱型判定
 //戻値：接触していればtrue
-bool Collider::IsHitBoxVsCircle(BoxColliderA* box, SphereColliderA* sphere)
+bool ColliderA::IsHitBoxVsCircle(BoxColliderA* box, SphereColliderA* sphere)
 {
 	XMFLOAT3 circlePos = Float3Add(sphere->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), sphere->center_);
 	XMFLOAT3 boxPos = Float3Add(box->pGameObject_->GetComponent<Transform>()->GetWorldPosition(), box->center_);
@@ -81,7 +81,7 @@ bool Collider::IsHitBoxVsCircle(BoxColliderA* box, SphereColliderA* sphere)
 //引数：circleA	１つ目の球体判定
 //引数：circleB	２つ目の球体判定
 //戻値：接触していればtrue
-bool Collider::IsHitCircleVsCircle(SphereColliderA* circleA, SphereColliderA* circleB)
+bool ColliderA::IsHitCircleVsCircle(SphereColliderA* circleA, SphereColliderA* circleB)
 {
 	XMFLOAT3 centerA = circleA->center_;
 	XMFLOAT3 positionA = circleA->pGameObject_->GetComponent<Transform>()->GetWorldPosition();
@@ -101,7 +101,7 @@ bool Collider::IsHitCircleVsCircle(SphereColliderA* circleA, SphereColliderA* ci
 
 //テスト表示用の枠を描画
 //引数：position	オブジェクトの位置
-void Collider::Draw(XMFLOAT3 position, XMFLOAT3 rotate)
+void ColliderA::Draw(XMFLOAT3 position, XMFLOAT3 rotate)
 {
 	Transform transform;
 	transform.position_ = XMFLOAT3(position.x + center_.x, position.y + center_.y, position.z + center_.z);

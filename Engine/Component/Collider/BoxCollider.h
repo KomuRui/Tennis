@@ -1,11 +1,10 @@
 #pragma once
-#include "../Component.h"
-#include "../../Collider/Collider.h"
+#include "Collider.h"
 
 /// <summary>
 /// 箱型コライダー
 /// </summary>
-class BoxCollider : public Component
+class BoxCollider : public Collider
 {
 	//Colliderクラスのprivateメンバにアクセスできるようにする
 	friend class Collider;

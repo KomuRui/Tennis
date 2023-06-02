@@ -318,7 +318,7 @@ void GameObject::KillObjectSub(GameObject * obj)
 }
 
 //コライダー（衝突判定）を追加する
-void GameObject::AddCollider(Collider* collider)
+void GameObject::AddCollider(ColliderA* collider)
 {
 	pCollider_ = collider;
 	collider->SetGameObject(this);
@@ -326,7 +326,7 @@ void GameObject::AddCollider(Collider* collider)
 }
 
 //コライダー削除
-void GameObject::KillCollider(Collider* collider)
+void GameObject::KillCollider(ColliderA* collider)
 {
 	for (auto i = colliderList_.begin(); i != colliderList_.end(); i++)
 	{
