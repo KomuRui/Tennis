@@ -7,7 +7,6 @@ using namespace DirectX;
 class GameObject;
 class BoxColliderA;
 class SphereColliderA;
-class TransformA;
 
 //あたり判定のタイプ
 enum ColliderType
@@ -26,12 +25,13 @@ class Collider
 	friend class SphereColliderA;
 
 protected:
+
 	GameObject*		pGameObject_;	//この判定をつけたゲームオブジェクト
 	ColliderType	type_;			//種類
 	XMFLOAT3		center_;		//中心位置（ゲームオブジェクトの原点から見た位置）
 	XMFLOAT3		size_;			//判定サイズ（幅、高さ、奥行き）
 	int				hDebugModel_;	//デバッグ表示用のモデルのID
-	bool            rotateflag_;
+	bool            rotateflag_;    //コライダーが回転するかどうか
 
 public:
 	//コンストラクタ
