@@ -1,8 +1,6 @@
 #include "Racket.h"
 #include "../../Engine/ResourceManager/ModelManager.h"
 #include "../../Engine/DirectX/Direct3D.h"
-#include "../../Engine/Collider/SphereColliderA.h"
-#include "../../Engine/Collider/BoxColliderA.h"
 #include "../../Manager/EffectManager/EffectManager.h"
 #include "../../Player/PlayerBase.h"
 #include "Ball.h"
@@ -86,9 +84,10 @@ void Racket::ChildInitialize()
 	transform_->SetRotateY(RACKET_START_ROTATION_ANGLE);
 
 	//当たり判定
-	BoxColliderA * collision = new BoxColliderA({ ZERO,ZERO,ZERO }, { COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
-	AddCollider(collision);
-
+	box1_ = AddComponent<BoxCollider>();
+	box1_->SetPos({ ZERO,ZERO,ZERO });
+	box1_->SetSize({ COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
+	box1_->SetHitFunc<Racket>(&Racket::HitColliderFunc);
 	SetShadow(true);
 }
 
@@ -102,7 +101,7 @@ void Racket::ChildUpdate()
 	colliderPos_ = VectorToFloat3(ModelManager::GetBonePosition(hModel_, "Base") - GetParent()->GetComponent<Transform>()->GetPosition() - transform_->position_);
 	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixInverse(nullptr, XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)) *  XMMatrixRotationY(XMConvertToRadians(BASE_ADD_ANGLE_VALUE))));
 	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)));
-	SetPosCollider(colliderPos_);
+	box1_->SetPos(colliderPos_);
 }
 
 //入力に対する基準点のポイントの名前を取得
@@ -132,7 +131,7 @@ string Racket::GetInputBasePoint()
 }
 
 //当たり判定
-void Racket::OnCollision(GameObject* pTarget)
+void Racket::HitColliderFunc(GameObject* pTarget)
 {
 	//ボールに当たってないか、打つ動作をしていないのならこの先の処理はしない
 	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->pState_->IsHitMove() || ((Ball*)pTarget)->isGoToPlayerBasePoint()) return;

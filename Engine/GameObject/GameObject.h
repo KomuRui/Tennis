@@ -23,12 +23,6 @@ protected:
 	//オブジェクトの名前
 	std::string				objectName_;
 
-	//自分のコライダー
-	ColliderA*               pCollider_;
-
-	//衝突判定リスト
-	std::list<ColliderA*>	colliderList_;	
-
 	//モデルや画像のパス名を保存しておく
 	std::string					pathName_;
 
@@ -93,8 +87,6 @@ public:
 	bool GetShadow();				// 影を適用するかどうか
 	void SetTimeMethod(float time); // 時間メソッドを使用しているに変更
 	bool GetTimeMethod();		    // 時間メソッドを使用しているかどうか
-	void SetIsHit(bool flag);       // 当たっているかどうかセットする
-	bool GetIsHit();                // 当たっているかどうかゲットする
 
 	//子オブジェクトリストを取得
 	//戻値：子オブジェクトリスト
@@ -134,28 +126,8 @@ public:
 	//子オブジェクトを全て削除
 	void KillAllChildren();
 
-	//コライダー（衝突判定）を追加する
-	void AddCollider(ColliderA * collider);
-
-	//コライダー削除
-	void KillCollider(ColliderA* collider);
-
-	//何かと衝突した場合に呼ばれる（オーバーライド用）
-	//引数：pTarget	衝突した相手
-	virtual void OnCollision(GameObject* pTarget) {};
-
-	//誰とも衝突していない場合に呼ばれる（オーバーライド用）
-	virtual void OutCollision() {};
-
 	//指定した時間で呼ばれるメソッド
 	virtual void TimeMethod() {};
-
-	//衝突判定
-	//引数：pTarget	衝突してるか調べる相手
-	void Collision(GameObject* pTarget);
-
-	//テスト用の衝突判定枠を表示
-	void CollisionDraw();
 
     //引数でもらったtargetの方を向く
 	void LookObject(XMFLOAT3 target,XMVECTOR up);
@@ -174,6 +146,19 @@ public:
 				return buff;
 		}
 		return nullptr;
+	}
+
+	//オブジェクトが持っている同じコンポーネントを複数Listで取得
+	template<class T>
+	list<T*> GetComponentList()
+	{
+		list<T*> l;
+		for (auto com : ComponentList_) {
+			T* buff = dynamic_cast<T*>(com);
+			if (buff != nullptr)
+				l.push_back(buff);
+		}
+		return l;
 	}
 
 	//オブジェクトが持っているコンポーネントを削除
@@ -206,10 +191,6 @@ public:
 
 	//各アクセス関数
 	std::string GetPathName() { return pathName_; }
-	float    GetColliderRadius();
-	void SetPosCollider(XMFLOAT3 position);
-	void SetScaleCollider(XMFLOAT3 scale);
-	void SetPosScaleCollider(XMFLOAT3 scale, XMFLOAT3 position);
 	
 private:
 
@@ -229,7 +210,6 @@ private:
 		unsigned emission : 1;      //Emission表示
 		unsigned shadow : 1;        //影表示
 		unsigned timeMethod : 1;    //タイムメソッドを使用しているかどうか
-		unsigned isHit : 1;         //当たっているかどうか
 	};
 	OBJECT_STATE state_;
 

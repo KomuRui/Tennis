@@ -64,16 +64,9 @@ public:
 	virtual void ChildRelease() {};
 
 	/// <summary>
-	/// 継承先用のコライダーに当たった時に呼ばれる関数
-	/// </summary>
-	/// <param name="pTarget">当たったオブジェクトのポインタ</param>
-	virtual void OnCollision(GameObject* pTarget) override {};
-
-	/// <summary>
 	/// 継承先用の指定した時間で呼ばれるメソッド
 	/// </summary>
 	virtual void TimeMethod() override {};
-
 
 	////////////////////////////ゲッター・セッター////////////////////////////////
 

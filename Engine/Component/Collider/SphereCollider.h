@@ -13,9 +13,7 @@ class SphereCollider : public Collider
 public:
 
 	//コンストラクタ（当たり判定の作成）
-	//引数：basePos	当たり判定の中心位置（ゲームオブジェクトの原点から見た位置）
-	//引数：radius	当たり判定のサイズ（半径）
-	SphereCollider(XMFLOAT3 center, float radius, bool rotateflag = false);
+	SphereCollider();
 
 	//セット関数
 	void SetColliderPos(XMFLOAT3 pos) { center_ = pos; }

@@ -42,12 +42,6 @@ public:
 	//開放
 	void Release() override {};
 
-	//当たり判定(なにかと当たった時)
-	void OnCollision(GameObject* pTarget) override;
-
-	//当たり判定(誰とも当たっていない時)
-	void OutCollision() override;
-
 	//指定した時間で呼ばれるメソッド
 	void TimeMethod() override;
 

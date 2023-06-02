@@ -69,8 +69,11 @@ void Ball::ChildInitialize()
 	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_->position_);
 
 	//当たり判定
-	SphereColliderA* collision = new SphereColliderA({ ZERO,ZERO,ZERO },0.1f);
-	AddCollider(collision);
+	sphere_ = AddComponent<SphereCollider>();
+	sphere_->SetPos({ ZERO,ZERO,ZERO });
+	sphere_->SetSize({ 0.1f,0.1f,0.1f });
+	//SphereColliderA* collision = new SphereColliderA({ ZERO,ZERO,ZERO },0.1f);
+	//AddCollider(collision);
 
 	//アンビエント
 	ModelManager::SetAmbient(hModel_, AMBIENT_COLOR);

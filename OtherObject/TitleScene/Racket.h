@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Base/NormalObject.h"
+#include "../../Engine/Component/Collider/BoxCollider.h"
 #include <map>
 
 //球種
@@ -29,7 +30,7 @@ struct HitStrength {
 /// </summary>
 class Racket : public NormalObject
 {
-
+	BoxCollider* box1_;                     //箱型の当たり判定
 	map<Type, XMFLOAT4> lineColor_;         //球種ごとのライン色
 	map<Type, string> hitEffectFilePath_;   //球種ごとのヒットエフェクトのファイルパス
 	map<Type, string> dropEffectFilePath_;  //球種ごとの雫エフェクトのファイルパス
@@ -61,7 +62,7 @@ public:
 	string GetInputBasePoint();
 
 	//当たり判定
-	void OnCollision(GameObject* pTarget) override;
+	void HitColliderFunc(GameObject* pTarget);
 
 	//指定した時間で呼ばれるメソッド
 	void TimeMethod() override;

@@ -13,6 +13,70 @@ Collider::~Collider()
 {
 }
 
+//描画
+void Collider::Draw()
+{
+	//フレームだけ描画にする
+	Direct3D::SetShader(Direct3D::SHADER_UNLIT);
+
+	//位置格納用
+	XMFLOAT3 position = parent->GetComponent<Transform>()->GetWorldPosition();
+
+	//コライダーのトランスフォーム
+	Transform transform;
+	transform.position_ = XMFLOAT3(position.x + center_.x, position.y + center_.y, position.z + center_.z);
+	transform.scale_ = size_;
+	transform.rotate_ = parent->GetComponent<Transform>()->GetWorldRotate();
+
+	//描画
+	ModelManager::SetShederType(hDebugModel_, Direct3D::SHADER_UNLIT);
+	ModelManager::SetTransform(hDebugModel_, &transform);
+	ModelManager::Draw(hDebugModel_);
+
+	//元に戻す
+	Direct3D::SetShader(Direct3D::SHADER_3D);
+}
+
+//衝突判定
+//引数：pTarget	衝突してるか調べる相手
+void Collider::Collision(GameObject* pTarget)
+{
+	//自分同士の当たり判定はしない
+	if (pTarget == nullptr || this->parent == pTarget)
+	{
+		return;
+	}
+
+	//リストを取得
+	list<Collider*> my = parent->GetComponentList<Collider>();
+	list<Collider*> tar = pTarget->GetComponentList<Collider>();
+
+	//自分とpTargetのコリジョン情報を使って当たり判定
+	//1つのオブジェクトが複数のコリジョン情報を持ってる場合もあるので二重ループ
+	for (auto i = my.begin(); i != my.end(); i++)
+	{
+		for (auto j = tar.begin(); j != tar.end(); j++)
+		{
+			//当たったなら
+			if ((*i)->IsHit(*j))
+			{
+				//当たった
+				this->OnCollision(pTarget);
+			}
+		}
+	}
+
+	//子供がいないなら終わり
+	if (tar.empty())
+		return;
+
+	//子供も当たり判定
+	for (auto i = tar.begin(); i != tar.end(); i++)
+	{
+		Collision((*i)->parent);
+	}
+}
+
 //箱型同士の衝突判定
 //引数：boxA	１つ目の箱型判定
 //引数：boxB	２つ目の箱型判定

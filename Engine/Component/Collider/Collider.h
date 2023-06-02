@@ -19,11 +19,16 @@ enum ColliderType
 //-----------------------------------------------------------
 //あたり判定を管理するクラス
 //-----------------------------------------------------------
+template<class T>
 class Collider : public Component
 {
 	//それぞれのクラスのprivateメンバにアクセスできるようにする
 	friend class BoxCollider;
 	friend class SphereCollider;
+
+	//関数ポインタ
+ 	void (T::*OnCollision)(GameObject*); //当たった時に呼ばれる関数のポインタ
+ 	void (T::*OutCollision)(GameObject*);//当たらなくなった時に呼ばれる関数のポインタ
 
 protected:
 
@@ -34,11 +39,23 @@ protected:
 	bool            rotateflag_;    //コライダーが回転するかどうか
 
 public:
+
 	//コンストラクタ
 	Collider();
 
 	//デストラクタ
 	virtual ~Collider();
+
+	///////////////////////////オーバライドする関数////////////////////////////////
+
+	//描画
+	void Draw() override;
+
+	/////////////////////////////////接触判定関数////////////////////////////////////////
+
+	//衝突判定
+	//引数：pTarget	衝突してるか調べる相手
+	void Collision(GameObject* pTarget);
 
 	//接触判定（継承先のSphereColliderかBoxColliderでオーバーライド）
 	//引数：target	相手の当たり判定
@@ -66,6 +83,14 @@ public:
 	//テスト表示用の枠を描画
 	//引数：position	オブジェクトの位置
 	void Draw(XMFLOAT3 position, XMFLOAT3 rotate);
+
+	///////////////////////////セッター・ゲッター////////////////////////////////
+
+	//当たった時に呼ばれる関数ポインタをセット
+	void SetHitFunc(void(T::*func)(GameObject*)) { OnCollision = func; }
+
+	//当たらなくなった時に呼ばれる関数のポインタをセット
+	void SetHitOutFunc(void(T::*func)(GameObject*)) { OutCollision = func; }
 
 	//セッター
 	void SetPos(XMFLOAT3 pos) { center_ = pos; }

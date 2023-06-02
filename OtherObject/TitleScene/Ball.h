@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Base/NormalObject.h"
 #include  "../../Engine/GameObject/PolyLine.h"
+#include "../../Engine/Component/Collider/SphereCollider.h"
 #include <map>
 
 //•ú•¨ü‚ÌŒvZ
@@ -19,6 +20,7 @@ enum class BallStatus
 class Ball : public NormalObject
 {
 
+	SphereCollider* sphere_;     //‹…Œ^‚Ì“–‚½‚è”»’è
 	BallStatus ballStatus_;      //ƒ{[ƒ‹‚Ìó‘Ô
 
 	int hShadowModel_;           //‰e‚Ìƒ‚ƒfƒ‹

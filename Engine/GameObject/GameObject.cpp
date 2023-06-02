@@ -3,6 +3,7 @@
 #include "../ResourceManager/Global.h"
 #include "Camera.h"
 #include "../Component/Transform/Transform.h"
+#include "../Component/Collider/Collider.h"
 
 //コンストラクタ（親も名前もなし）
 GameObject::GameObject(void) :
@@ -19,7 +20,7 @@ GameObject::GameObject(GameObject * parent) :
 
 //コンストラクタ（標準）
 GameObject::GameObject(GameObject * parent, const std::string& name)
-	: pParent_(parent),pCollider_(nullptr),pathName_(""),
+	: pParent_(parent),pathName_(""),
 
 
 
@@ -27,20 +28,11 @@ GameObject::GameObject(GameObject * parent, const std::string& name)
 {
 	childList_.clear();
 	state_ = { 0, 1, 1, 0 };
-
-	//if(parent != nullptr)
-		//transform_.pParent_ = &parent->transform_;
-
 }
 
 //デストラクタ
 GameObject::~GameObject()
 {
-	for (auto it = colliderList_.begin(); it != colliderList_.end(); it++)
-	{
-		SAFE_DELETE(*it);
-	}
-	colliderList_.clear();
 }
 
 // 削除するかどうか
@@ -149,18 +141,6 @@ bool GameObject::GetTimeMethod()
 	return (state_.timeMethod != 0);
 }
 
-//当たっているかどうかセットする
-void GameObject::SetIsHit(bool flag)
-{
-	state_.isHit = flag;
-}
-
-//当たっているかどうかゲットする
-bool GameObject::GetIsHit()
-{
-	return state_.isHit;
-}
-
 //子オブジェクトリストを取得
 std::list<GameObject*>* GameObject::GetChildList()
 {
@@ -252,52 +232,6 @@ void GameObject::KillAllChildren(void)
 	childList_.clear();
 }
 
-//コライダーのポジションセットする
-void GameObject::SetPosCollider(XMFLOAT3 position)
-{
-	if (pCollider_ != nullptr)
-	{
-		for (auto i = colliderList_.begin(); i != colliderList_.end(); i++)
-		{
-			if ((*i) == pCollider_)
-			{
-				(*i)->SetPos(position);
-				break;
-			}
-		}
-	}
-}
-
-void GameObject::SetScaleCollider(XMFLOAT3 scale)
-{
-	if (pCollider_ != nullptr)
-	{
-		for (auto i = colliderList_.begin(); i != colliderList_.end(); i++)
-		{
-			if ((*i) == pCollider_)
-			{
-				(*i)->SetSize(scale);
-				break;
-			}
-		}
-	}
-}
-
-void GameObject::SetPosScaleCollider(XMFLOAT3 scale, XMFLOAT3 position)
-{
-	if (pCollider_ != nullptr)
-	{
-		for (auto i = colliderList_.begin(); i != colliderList_.end(); i++)
-		{
-			if ((*i) == pCollider_)
-			{
-				(*i)->SetSizePos(scale,position);
-				break;
-			}
-		}
-	}
-}
-
 //オブジェクト削除（再帰）
 void GameObject::KillObjectSub(GameObject * obj)
 {
@@ -317,83 +251,6 @@ void GameObject::KillObjectSub(GameObject * obj)
 	obj->Release();
 }
 
-//コライダー（衝突判定）を追加する
-void GameObject::AddCollider(ColliderA* collider)
-{
-	pCollider_ = collider;
-	collider->SetGameObject(this);
-	colliderList_.push_back(collider);
-}
-
-//コライダー削除
-void GameObject::KillCollider(ColliderA* collider)
-{
-	for (auto i = colliderList_.begin(); i != colliderList_.end(); i++)
-	{
-		if ((*i)->Getcenter().x == collider->Getcenter().x || (*i)->Getcenter().y == collider->Getcenter().y || (*i)->Getcenter().z == collider->Getcenter().z)
-		{
-			i = colliderList_.erase(i);
-			break;
-		}
-	}
-}
-
-//衝突判定
-void GameObject::Collision(GameObject * pTarget)
-{
-	//自分同士の当たり判定はしない
-	if (pTarget == nullptr || this == pTarget)
-	{
-		return;
-	}
-
-	//当たっていない状態にする
-	this->SetIsHit(false);
-
-	//自分とpTargetのコリジョン情報を使って当たり判定
-	//1つのオブジェクトが複数のコリジョン情報を持ってる場合もあるので二重ループ
-	for (auto i = this->colliderList_.begin(); i != this->colliderList_.end(); i++)
-	{
-		for (auto j = pTarget->colliderList_.begin(); j != pTarget->colliderList_.end(); j++)
-		{
-			//当たったなら
-			if ((*i)->IsHit(*j))
-			{
-				//当たった
-				this->OnCollision(pTarget);
-
-				//当たっている状態にする
-				this->SetIsHit(true);
-				pTarget->SetIsHit(true);
-			}
-		}
-	}
-
-	//子供がいないなら終わり
-	if (pTarget->childList_.empty())
-		return;
-
-	//子供も当たり判定
-	for (auto i = pTarget->childList_.begin(); i != pTarget->childList_.end(); i++)
-	{
-		Collision(*i);
-	}
-}
-
-
-//テスト用の衝突判定枠を表示
-void GameObject::CollisionDraw()
-{
-	Direct3D::SetShader(Direct3D::SHADER_UNLIT);
-
-	for (auto i = this->colliderList_.begin(); i != this->colliderList_.end(); i++)
-	{
-		(*i)->Draw(GetComponent<Transform>()->GetWorldPosition(), GetComponent<Transform>()->GetWorldRotate());
-	}
-
-	Direct3D::SetShader(Direct3D::SHADER_3D);
-}
-
 //RootJobを取得
 GameObject * GameObject::GetRootJob()
 {
@@ -403,24 +260,6 @@ GameObject * GameObject::GetRootJob()
 	}
 	else return GetParent()->GetRootJob();
 }
-
-//コライダーの半径取得
-float GameObject::GetColliderRadius()
-{
-	if (pCollider_ != nullptr)
-	{
-		for (auto i = colliderList_.begin(); i != colliderList_.end(); i++)
-		{
-			if ((*i) == pCollider_)
-			{
-				return (*i)->GetRadius();
-			}
-		}
-	}
-
-	return 0.0f;
-}
-
 
 void GameObject::UpdateSub()
 {
@@ -447,9 +286,19 @@ void GameObject::UpdateSub()
 	}
 
 	//Updateを許可するなら
-	if(this->state_.entered && !IsStartUpdate())
+	if (this->state_.entered && !IsStartUpdate())
+	{
+		//更新
 		Update();
 
+		//コンポーネント更新
+		for (auto it = ComponentList_.begin(); it != ComponentList_.end(); it++)
+		{
+			(*it)->Update();
+		}
+	}
+
+	//子供の更新処理
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
 		(*it)->UpdateSub();
@@ -457,6 +306,7 @@ void GameObject::UpdateSub()
 
 	for (auto it = childList_.begin(); it != childList_.end();)
 	{
+		//死んでいるのなら削除
 		if ((*it)->IsDead() == true)
 		{
 			(*it)->ReleaseSub();
@@ -465,17 +315,12 @@ void GameObject::UpdateSub()
 		}
 		else
 		{
-			//当たり判定
-			(*it)->Collision(GetParent());
+			//当たり判定コンポーネントが存在するのならば接触計算
+			if((*it)->GetComponent<Collider>())
+				(*it)->GetComponent<Collider>()->Collision(GetParent());
+			
 			it++;
 		}
-	}
-
-	//もし誰とも当たっていないのなら
-	if (!(this->GetIsHit()) && pCollider_ != nullptr)
-	{
-		//当たっていない関数を呼ぶ
-		OutCollision();
 	}
 }
 
@@ -509,19 +354,15 @@ void GameObject::DrawSub()
 	{
 		//描画
 		Draw();
-	}
 
-	//リリース時は削除
-#ifdef _DEBUG
-		//コリジョンの描画
-	if (Direct3D::isDrawCollision_)
-	{
-		CollisionDraw();
+		//コンポーネント描画
+		for (auto it = ComponentList_.begin(); it != ComponentList_.end(); it++)
+		{
+				(*it)->Draw();
+		}
 	}
-#endif
 	
 	//その子オブジェクトの描画処理
-
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
 		(*it)->DrawSub();
@@ -596,10 +437,6 @@ void GameObject::ShadowDraw()
 
 void GameObject::ReleaseSub()
 {
-	for (auto it = colliderList_.begin(); it != colliderList_.end(); it++)
-	{
-		SAFE_DELETE(*it);
-	}
 
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
