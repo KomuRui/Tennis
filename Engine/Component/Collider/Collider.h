@@ -1,6 +1,7 @@
 #pragma once
 #include <d3d11.h>
 #include <DirectXMath.h>
+#include <functional>
 #include "../Component.h"
 using namespace DirectX;
 
@@ -19,16 +20,11 @@ enum ColliderType
 //-----------------------------------------------------------
 //あたり判定を管理するクラス
 //-----------------------------------------------------------
-template<class T>
 class Collider : public Component
 {
 	//それぞれのクラスのprivateメンバにアクセスできるようにする
 	friend class BoxCollider;
 	friend class SphereCollider;
-
-	//関数ポインタ
- 	void (T::*OnCollision)(GameObject*); //当たった時に呼ばれる関数のポインタ
- 	void (T::*OutCollision)(GameObject*);//当たらなくなった時に呼ばれる関数のポインタ
 
 protected:
 
@@ -39,6 +35,9 @@ protected:
 	bool            rotateflag_;    //コライダーが回転するかどうか
 
 public:
+
+	//関数ポインタ
+	using FunctionPtr = void (GameObject::*)(GameObject*);
 
 	//コンストラクタ
 	Collider();
@@ -87,10 +86,10 @@ public:
 	///////////////////////////セッター・ゲッター////////////////////////////////
 
 	//当たった時に呼ばれる関数ポインタをセット
-	void SetHitFunc(void(T::*func)(GameObject*)) { OnCollision = func; }
+	void SetHitFunc(FunctionPtr func) { OnCollision = func; }
 
 	//当たらなくなった時に呼ばれる関数のポインタをセット
-	void SetHitOutFunc(void(T::*func)(GameObject*)) { OutCollision = func; }
+	void SetHitOutFunc(FunctionPtr func) { OutCollision = func; }
 
 	//セッター
 	void SetPos(XMFLOAT3 pos) { center_ = pos; }
@@ -106,5 +105,11 @@ public:
 
 	//半径ゲット
 	float GetRadius() { return size_.x; }
+
+private:
+
+	FunctionPtr OnCollision = nullptr;  //当たった時に呼ばれる関数のポインタ
+	FunctionPtr OutCollision = nullptr; //当たらなくなった時に呼ばれる関数のポインタ
+
 };
 

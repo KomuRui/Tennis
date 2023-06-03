@@ -61,19 +61,21 @@ void Collider::Collision(GameObject* pTarget)
 			if ((*i)->IsHit(*j))
 			{
 				//当たった
-				this->OnCollision(pTarget);
+				(*parent.*OnCollision)(pTarget);
 			}
 		}
 	}
 
 	//子供がいないなら終わり
-	if (tar.empty())
+	if (pTarget->GetChildList()->empty())
 		return;
 
 	//子供も当たり判定
-	for (auto i = tar.begin(); i != tar.end(); i++)
+	for (auto i = pTarget->GetChildList()->begin(); i != pTarget->GetChildList()->end(); i++)
 	{
-		Collision((*i)->parent);
+		//コライダーがあるのならば
+		if((*i)->GetComponent<Collider>())
+			Collision((*i));
 	}
 }
 
