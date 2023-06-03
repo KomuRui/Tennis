@@ -86,10 +86,12 @@ public:
 	///////////////////////////セッター・ゲッター////////////////////////////////
 
 	//当たった時に呼ばれる関数ポインタをセット
-	void SetHitFunc(FunctionPtr func) { OnCollision = func; }
+	template<class T>
+	void SetHitFunc(void (T::* func)(GameObject*)) { SetHitFunc(static_cast<FunctionPtr>(func)); }
 
 	//当たらなくなった時に呼ばれる関数のポインタをセット
-	void SetHitOutFunc(FunctionPtr func) { OutCollision = func; }
+	template<class T>
+	void SetHitOutFunc(void (T::* func)(GameObject*)) { SetHitOutFunc(static_cast<FunctionPtr>(func)); }
 
 	//セッター
 	void SetPos(XMFLOAT3 pos) { center_ = pos; }
@@ -110,6 +112,10 @@ private:
 
 	FunctionPtr OnCollision = nullptr;  //当たった時に呼ばれる関数のポインタ
 	FunctionPtr OutCollision = nullptr; //当たらなくなった時に呼ばれる関数のポインタ
+
+	//関数ポインタセットするとき
+	void SetHitFunc(FunctionPtr func) { OnCollision = func; }
+	void SetHitOutFunc(FunctionPtr func) { OutCollision = func; }
 
 };
 
