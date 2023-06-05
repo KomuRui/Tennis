@@ -92,7 +92,7 @@ void Racket::ChildInitialize()
 	box1_ = AddComponent<BoxCollider>();
 	box1_->SetPos({ ZERO,ZERO,ZERO });
 	box1_->SetSize({ COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
-	//box1_->SetHitFunc(&Racket::HitColliderFunc);
+	box1_->SetHitFunc(&Racket::HitColliderFunc);
 	SetShadow(true);
 }
 
