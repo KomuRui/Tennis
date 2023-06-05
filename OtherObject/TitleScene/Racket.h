@@ -47,7 +47,7 @@ public:
 	Racket(GameObject* parent);
 
 	//デストラクタ
-	~Racket() {};
+	~Racket();
 
 	//初期化
 	void ChildInitialize() override;

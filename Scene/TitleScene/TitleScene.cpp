@@ -43,7 +43,9 @@ void TitleScene::Initialize()
 
 	BasePointManager::InstantiateBasePointModel();
 
-	GameManager::SetPlayers(Players::ONE);
+	////////////////////////Playerl”İ’è/////////////////////////////////
+
+	GameManager::SetPlayers(Players::TWO);
 
 	///////////////ƒJƒƒ‰///////////////////
 

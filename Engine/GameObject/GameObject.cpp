@@ -33,6 +33,13 @@ GameObject::GameObject(GameObject * parent, const std::string& name)
 //デストラクタ
 GameObject::~GameObject()
 {
+	//コンポーネント解放
+	for (auto it = ComponentList_.begin(); it != ComponentList_.end(); it++)
+	{
+		if ((*it))
+			SAFE_DELETE(*it);
+	}
+	ComponentList_.clear();
 }
 
 // 削除するかどうか
@@ -437,7 +444,14 @@ void GameObject::ShadowDraw()
 
 void GameObject::ReleaseSub()
 {
+	//コンポーネント解放
+	for (auto it = ComponentList_.begin(); it != ComponentList_.end(); it++)
+	{
+		if((*it))
+			SAFE_DELETE(*it);
+	}
 
+	//ゲームオブジェクト解放
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
 		(*it)->ReleaseSub();

@@ -17,6 +17,7 @@ protected:
 	///////////////キャラの必要な情報///////////////////
 
 	Racket* pRacket_;                   //ラケット
+	PlayerStateManager* pState_;        // Playerの状態を表す変数
 
 	/////////////////////カメラ//////////////////////
 
@@ -25,11 +26,6 @@ protected:
 	XMVECTOR vCam_;                     //カメラの位置までのベクトル
 
 public:
-
-	/// <summary>
-	/// Playerの状態を表す変数
-	/// </summary>
-	PlayerStateManager* pState_;
 
 	/// <summary>
 	/// コンストラクタ
@@ -66,5 +62,11 @@ public:
 	/// </summary>
 	/// <returns>ラケット</returns>
 	Racket* GetRacket() { return pRacket_; }
+
+	/// <summary>
+	/// 状態を取得
+	/// </summary>
+	/// <returns>状態</returns>
+	PlayerStateManager* GetState() { return pState_; }
 };
 

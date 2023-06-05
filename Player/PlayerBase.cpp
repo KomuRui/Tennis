@@ -38,7 +38,7 @@ void PlayerBase::ChildInitialize()
     ///////////////////初期化///////////////////////
 
     //状態
-    ARGUMENT_INITIALIZE(PlayerStateManager::playerState_ ,PlayerStateManager::playerStanding_);
+    ARGUMENT_INITIALIZE(pState_->playerState_ , pState_->playerStanding_);
 
     ///////////////アニメーション設定///////////////////
 

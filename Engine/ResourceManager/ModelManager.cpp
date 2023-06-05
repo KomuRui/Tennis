@@ -262,7 +262,7 @@ namespace ModelManager
 		}
 
 		//Žg‚Á‚Ä‚È‚¯‚ê‚Îƒ‚ƒfƒ‹‰ð•ú
-		if (isExist == false )
+		if (isExist == false && _datas[handle]->pFbx)
 		{
 			SAFE_DELETE(_datas[handle]->pFbx);
 		}

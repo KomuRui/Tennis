@@ -8,9 +8,6 @@
     <Filter Include="01Engine">
       <UniqueIdentifier>{e5fccdcb-f299-4448-bdb6-01fa28039576}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01Engine\Collider">
-      <UniqueIdentifier>{7f19ecfb-5d70-4d31-a1f7-c9dd14bad324}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01Engine\DirectX">
       <UniqueIdentifier>{e56f8c9a-95a5-4ceb-b65f-5b8e572d087b}</UniqueIdentifier>
     </Filter>
@@ -167,15 +164,6 @@
     </ClCompile>
     <ClCompile Include="Manager\SceneManager\SceneManager.cpp">
       <Filter>Manager\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Collider\BoxColliderA.cpp">
-      <Filter>01Engine\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Collider\ColliderA.cpp">
-      <Filter>01Engine\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Collider\SphereColliderA.cpp">
-      <Filter>01Engine\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engine\DirectX\BillBoard.cpp">
       <Filter>01Engine\DirectX</Filter>
@@ -407,15 +395,6 @@
     </ClInclude>
     <ClInclude Include="Manager\SceneManager\SceneManager.h">
       <Filter>Manager\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\BoxColliderA.h">
-      <Filter>01Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\ColliderA.h">
-      <Filter>01Engine\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\SphereColliderA.h">
-      <Filter>01Engine\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engine\DirectX\BillBoard.h">
       <Filter>01Engine\DirectX</Filter>

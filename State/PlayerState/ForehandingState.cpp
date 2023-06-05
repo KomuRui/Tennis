@@ -34,7 +34,7 @@ void ForehandingState::Update2D(PlayerBase* player)
 void ForehandingState::Update3D(PlayerBase* player)
 {
 	//打つ動作なら
-	if (player->pState_->IsHitMove())
+	if (player->GetState()->IsHitMove())
 	{
 		//割合を求める
 		float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / FOREHAND_HIT_TIME);
@@ -47,15 +47,14 @@ void ForehandingState::Update3D(PlayerBase* player)
 		if (ratio >= 1)
 		{
 			//状態変更
-			PlayerStateManager::playerState_ = PlayerStateManager::playerStanding_;
-			PlayerStateManager::playerState_->Enter(player);
+			player->GetState()->ChangeState(player->GetState()->playerStanding_, player);
 
 			//元の角度に戻す
 			player->GetComponent<Transform>()->SetRotateY(PLAYER_END_ROTATION_ANGLE);
 			player->GetRacket()->GetComponent<Transform>()->SetRotateY(RACKET_END_ROTATION_ANGLE);
 
 			//打っていない状態にする
-			player->pState_->SetHitMove(false);
+			player->GetState()->SetHitMove(false);
 		}
 	}
 	else
@@ -71,7 +70,7 @@ void ForehandingState::Update3D(PlayerBase* player)
 		ARGUMENT_INITIALIZE(ratio,min<float>(ratio, 1.0f));
 
 		//エミッターを取得する
-		VFX::Emitter* d = VFX::GetEmitter(player->pState_->GetChargeEffectNum());
+		VFX::Emitter* d = VFX::GetEmitter(player->GetState()->GetChargeEffectNum());
 
 		//徐々に縮小するように
 		if (d != nullptr)
@@ -96,10 +95,10 @@ void ForehandingState::Update3D(PlayerBase* player)
 		}
 
 		//もし回転が最後まで終わったかつボタンを離しているかもともボタンを離していたら
-		if (ratio >= 1 && (Input::IsPadButtonUp(player->pState_->GetNowButtonCode()) || !Input::IsPadButton(player->pState_->GetNowButtonCode())))
+		if (ratio >= 1 && (Input::IsPadButtonUp(player->GetState()->GetNowButtonCode()) || !Input::IsPadButton(player->GetState()->GetNowButtonCode())))
 		{
 			//チャージエフェクト削除
-			VFX::ForcedEnd(player->pState_->GetChargeEffectNum());
+			VFX::ForcedEnd(player->GetState()->GetChargeEffectNum());
 
 			//タイムを取得
 			float time = Time::GetTimef(hTime_);
@@ -112,7 +111,7 @@ void ForehandingState::Update3D(PlayerBase* player)
 			Time::Reset(hTime_);
 
 			//打つ動作に切り替える
-			player->pState_->SetHitMove(true);
+			player->GetState()->SetHitMove(true);
 		}
 	}
 	
@@ -132,10 +131,10 @@ void ForehandingState::Enter(PlayerBase* player)
 	ARGUMENT_INITIALIZE(hTime_, Time::Add());
 
 	//エフェクトのサイズ保存
-	ARGUMENT_INITIALIZE(effectSize_, VFX::GetEmitter(player->pState_->GetChargeEffectNum())->data.size);
+	ARGUMENT_INITIALIZE(effectSize_, VFX::GetEmitter(player->GetState()->GetChargeEffectNum())->data.size);
 
 	//引く動作をするのfalseを設定しておく
-	player->pState_->SetHitMove(false);
+	player->GetState()->SetHitMove(false);
 
 	//開始角度
 	player->GetComponent<Transform>()->SetRotateY(PLAYER_END_ROTATION_ANGLE);

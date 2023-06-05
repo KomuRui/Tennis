@@ -5,12 +5,6 @@
 #include "../../OtherObject/TitleScene/Ball.h"
 #include <math.h>
 
-//各static変数の初期化
-StandingState* PlayerStateManager::playerStanding_ = new StandingState;
-ForehandingState* PlayerStateManager::playerForehanding_ = new ForehandingState;
-BackhandingState* PlayerStateManager::playerBackhanding_ = new BackhandingState;
-ServingState* PlayerStateManager::playerServing_ = new ServingState;
-PlayerState* PlayerStateManager::playerState_ = playerStanding_;
 
 ////定数
 namespace
@@ -26,6 +20,11 @@ namespace
 PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR),hTime_(Time::Add()), 
     isRestorePosture_(false), isHitMove_(false), buttonCode_(XINPUT_GAMEPAD_A), hChargeEffectName_("chargeEffect"), chargeTime_(ZERO)
 {
+    playerStanding_ = new StandingState;
+    playerForehanding_ = new ForehandingState;
+    playerBackhanding_ = new BackhandingState;
+    playerServing_ = new ServingState;
+    playerState_ = playerStanding_;
 }
 
 //更新
@@ -152,6 +151,6 @@ void PlayerStateManager::Enter(PlayerBase* player)
 //状態チェンジ用
 void PlayerStateManager::ChangeState(PlayerState* change, PlayerBase* player)
 {
-    PlayerStateManager::playerState_ = change;
-    PlayerStateManager::playerState_->Enter(player);
+    playerState_ = change;
+    playerState_->Enter(player);
 }

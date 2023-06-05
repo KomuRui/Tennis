@@ -139,9 +139,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base\NormalObject.cpp" />
-    <ClCompile Include="Engine\Collider\BoxColliderA.cpp" />
-    <ClCompile Include="Engine\Collider\ColliderA.cpp" />
-    <ClCompile Include="Engine\Collider\SphereColliderA.cpp" />
     <ClCompile Include="Engine\Component\Collider\BoxCollider.cpp" />
     <ClCompile Include="Engine\Component\Collider\Collider.cpp" />
     <ClCompile Include="Engine\Component\Collider\SphereCollider.cpp" />
@@ -221,9 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\NormalObject.h" />
-    <ClInclude Include="Engine\Collider\BoxColliderA.h" />
-    <ClInclude Include="Engine\Collider\ColliderA.h" />
-    <ClInclude Include="Engine\Collider\SphereColliderA.h" />
     <ClInclude Include="Engine\Component\Collider\BoxCollider.h" />
     <ClInclude Include="Engine\Component\Collider\Collider.h" />
     <ClInclude Include="Engine\Component\Collider\SphereCollider.h" />

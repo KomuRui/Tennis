@@ -18,8 +18,7 @@ void ServingState::Update3D(PlayerBase* player)
 	if (ModelManager::GetAnimFrame(player->GetModelNum()) == 270)
 	{
 		//状態変更
-		PlayerStateManager::playerState_ = PlayerStateManager::playerStanding_;
-		PlayerStateManager::playerState_->Enter(player);
+		player->GetState()->ChangeState(player->GetState()->playerStanding_, player);
 
 		//アニメーション
 		ModelManager::SetAnimFrame(player->GetModelNum(), 1, 60, 2.0f);

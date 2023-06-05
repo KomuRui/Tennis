@@ -31,13 +31,13 @@ private:
 public:
 
 	//状態を示す変数
-	static PlayerState* playerState_;
+	PlayerState* playerState_;
 
 	//各状態変数
-	static StandingState* playerStanding_;		 //立ってる
-	static ForehandingState* playerForehanding_; //フォアハンド
-	static BackhandingState* playerBackhanding_; //バックハンド
-	static ServingState* playerServing_;         //サーブ
+    StandingState* playerStanding_;		  //立ってる
+    ForehandingState* playerForehanding_; //フォアハンド
+    BackhandingState* playerBackhanding_; //バックハンド
+    ServingState* playerServing_;         //サーブ
 
     //コンストラクタ
 	PlayerStateManager();

@@ -1,5 +1,4 @@
 #include "CameraTransitionObject.h"
-#include "../Collider/BoxColliderA.h"
 #include "Camera.h"
 #include "../../Manager/GameManager/GameManager.h"
 

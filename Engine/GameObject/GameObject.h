@@ -3,8 +3,6 @@
 #include <list>
 #include <string>
 #include <assert.h>
-#include "../Collider/SphereColliderA.h"
-#include "../Collider/BoxColliderA.h"
 #include "../ResourceManager/Global.h"
 #include "../DirectX/Input.h"
 #include "../Component/Component.h"

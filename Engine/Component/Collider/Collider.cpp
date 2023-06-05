@@ -60,8 +60,9 @@ void Collider::Collision(GameObject* pTarget)
 			//“–‚½‚Á‚½‚È‚ç
 			if ((*i)->IsHit(*j))
 			{
-				//“–‚½‚Á‚½
-				(*parent.*OnCollision)(pTarget);
+				//ŠÖ”‚Ìî•ñ‚ª‚ ‚é‚Ì‚È‚ç“–‚½‚Á‚½ŠÖ”‚ğŒÄ‚Ô
+				//if(OnCollision)
+					//(*parent.*OnCollision)(pTarget);
 			}
 		}
 	}

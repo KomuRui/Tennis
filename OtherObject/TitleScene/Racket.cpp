@@ -28,6 +28,11 @@ Racket::Racket(GameObject* parent)
 	:NormalObject(parent, "Racket/Normal.fbx", "Racket"), type_(Type::FLAT), stroke_(Stroke::FOREHAND), colliderPos_(ZERO, ZERO, ZERO), ratio_(1.0)
 {}
 
+//デストラクタ
+Racket::~Racket()
+{
+}
+
 //初期化
 void Racket::ChildInitialize()
 {
@@ -87,7 +92,7 @@ void Racket::ChildInitialize()
 	box1_ = AddComponent<BoxCollider>();
 	box1_->SetPos({ ZERO,ZERO,ZERO });
 	box1_->SetSize({ COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
-	box1_->SetHitFunc(&Racket::HitColliderFunc);
+	//box1_->SetHitFunc(&Racket::HitColliderFunc);
 	SetShadow(true);
 }
 
@@ -134,7 +139,7 @@ string Racket::GetInputBasePoint()
 void Racket::HitColliderFunc(GameObject* pTarget)
 {
 	//ボールに当たってないか、打つ動作をしていないのならこの先の処理はしない
-	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->pState_->IsHitMove() || ((Ball*)pTarget)->isGoToPlayerBasePoint()) return;
+	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->GetState()->IsHitMove() || ((Ball*)pTarget)->isGoToPlayerBasePoint()) return;
 
 	//ヒットストップ演出(動きを止める)
 	Leave();

@@ -30,7 +30,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	{
 		//設定
 		player->GetRacket()->SetType(Type::FLAT);
-		player->pState_->SetNowButtonCode(XINPUT_GAMEPAD_A);
+		player->GetState()->SetNowButtonCode(XINPUT_GAMEPAD_A);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -39,7 +39,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	{
 		//設定
 		player->GetRacket()->SetType(Type::TOP_SPIN);
-		player->pState_->SetNowButtonCode(XINPUT_GAMEPAD_B);
+		player->GetState()->SetNowButtonCode(XINPUT_GAMEPAD_B);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -48,7 +48,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	{
 		//設定
 		player->GetRacket()->SetType(Type::SLICE);
-		player->pState_->SetNowButtonCode(XINPUT_GAMEPAD_X);
+		player->GetState()->SetNowButtonCode(XINPUT_GAMEPAD_X);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -57,7 +57,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	{
 		//設定
 		player->GetRacket()->SetType(Type::LOB);
-		player->pState_->SetNowButtonCode(XINPUT_GAMEPAD_Y);
+		player->GetState()->SetNowButtonCode(XINPUT_GAMEPAD_Y);
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
@@ -67,7 +67,7 @@ void StandingState::HandleInput(PlayerBase* player)
 		//エフェクト表示
 		XMFLOAT3 pos = player->GetComponent<Transform>()->GetPosition();
 		pos.y += 1;
-		EffectManager::Draw(player->pState_->GetChargeEffectNum(),"Effect/charge.txt",pos);
+		EffectManager::Draw(player->GetState()->GetChargeEffectNum(),"Effect/charge.txt",pos);
 
 		//ボールのポインタ
 		Ball* pBall = ((Ball*)player->FindObject("Ball"));
@@ -80,17 +80,13 @@ void StandingState::HandleInput(PlayerBase* player)
 		if (ballEndX <= playerX)
 		{
 			player->GetRacket()->SetStroke(Stroke::FOREHAND);
-
-			PlayerStateManager::playerState_ = PlayerStateManager::playerForehanding_;
-			PlayerStateManager::playerState_->Enter(player);
+			player->GetState()->ChangeState(player->GetState()->playerForehanding_, player);
 		}
 		//左側なら
 		else
 		{
 			player->GetRacket()->SetStroke(Stroke::BACKHAND);
-
-			PlayerStateManager::playerState_ = PlayerStateManager::playerBackhanding_;
-			PlayerStateManager::playerState_->Enter(player);
+			player->GetState()->ChangeState(player->GetState()->playerBackhanding_, player);
 		}
 	}
 }

@@ -43,6 +43,8 @@
 #include "Component/Model.h"
 #include "Component/Posture.h"
 #include "Component/Transform/Transform.h"
+#include "Component/Collider/BoxCollider.h"
+#include "Component/Collider/SphereCollider.h"
 
 /////////////////////////////json///////////////////////////////////
 
