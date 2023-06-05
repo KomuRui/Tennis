@@ -18,7 +18,7 @@ namespace
 
 //コンストラクタ
 PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR),hTime_(Time::Add()), 
-    isRestorePosture_(false), isHitMove_(false), buttonCode_(XINPUT_GAMEPAD_A), hChargeEffectName_("chargeEffect"), chargeTime_(ZERO)
+    isRestorePosture_(false), isHitMove_(false), buttonCode_(XINPUT_GAMEPAD_A), hChargeEffectName_("chargeEffect"), chargeTime_(ZERO), playerNum_(ZERO)
 {
     playerStanding_ = new StandingState;
     playerForehanding_ = new ForehandingState;
@@ -74,8 +74,8 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     }
 
     //Lスティックの傾きを取得
-    float PadLx = Input::GetPadStickL().x;
-    float PadLy = Input::GetPadStickL().y;
+    float PadLx = Input::GetPadStickL(playerNum_).x;
+    float PadLy = Input::GetPadStickL(playerNum_).y;
 
     //少しでも動いたのなら
     if (PadLx != ZERO || PadLy != ZERO)
@@ -128,7 +128,8 @@ void PlayerStateManager::Update3D(PlayerBase* player)
         else if(playerState_ != PlayerStateManager::playerServing_)
             player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord((front_ / 10.0f) * RUN_SPEED, matRotate))));
        
-        //player->SetRotateY(XMConvertToDegrees(atan2(-PadLx, -PadLy)));
+        //回転
+        player->GetComponent<Transform>()->SetRotateY(XMConvertToDegrees(atan2(-PadLx, -PadLy)));
     }
     //動いていないのならアニメーションを止める
     else

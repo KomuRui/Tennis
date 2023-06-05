@@ -24,9 +24,10 @@ void StandingState::HandleInput(PlayerBase* player)
 {
 	//打ったかどうか
 	bool isShot = false;
+	int Padnum = player->GetState()->GetPlayerNum();
 
 	//フラット
-	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_A))
+	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_A, Padnum))
 	{
 		//設定
 		player->GetRacket()->SetType(Type::FLAT);
@@ -35,7 +36,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	}
 
 	//トップスピン
-	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_B))
+	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_B, Padnum))
 	{
 		//設定
 		player->GetRacket()->SetType(Type::TOP_SPIN);
@@ -44,7 +45,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	}
 
 	//スライス
-	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_X))
+	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_X, Padnum))
 	{
 		//設定
 		player->GetRacket()->SetType(Type::SLICE);
@@ -53,7 +54,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	}
 
 	//ロブ
-	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_Y))
+	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_Y, Padnum))
 	{
 		//設定
 		player->GetRacket()->SetType(Type::LOB);

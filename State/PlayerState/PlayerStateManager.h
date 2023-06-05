@@ -17,16 +17,16 @@ class PlayerStateManager : public PlayerState
 {
 private:
 
-	
 	XMVECTOR front_;			//キャラの前方向のベクトル       
-	int hTime_;					//タイマーハンドル
 	string hChargeEffectName_;  //チャージエフェクト番号
 
-	bool isRestorePosture_; //元の姿勢に戻すかどうか
-	bool isHitMove_;		//打つ動きをしているか
-
-	int buttonCode_;		//打つ時のボタンコード格納用
-	float chargeTime_;      //チャージ時間             
+	bool isRestorePosture_;     //元の姿勢に戻すかどうか
+	bool isHitMove_;		    //打つ動きをしているか
+							    
+	int hTime_;				    //タイマーハンドル
+	int buttonCode_;		    //打つ時のボタンコード格納用
+	int playerNum_;             //プレイヤー番号
+	float chargeTime_;          //チャージ時間             
 
 public:
 
@@ -86,6 +86,12 @@ public:
 
 	//チャージ時間を設定
 	void SetChargeTime(float t) { chargeTime_ = t; }
+
+	//プレイヤー番号を取得
+	int GetPlayerNum() { return playerNum_; }
+
+	//プレイヤー番号を設定
+	void SetPlayerNum(int num) { playerNum_ = num; }
 };
 
 
