@@ -40,7 +40,7 @@ void ForehandingState::Update3D(PlayerBase* player)
 		float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / FOREHAND_HIT_TIME);
 
 		//各角度を求める
-		player->GetComponent<Transform>()->SetRotateY(PLAYER_START_ROTATION_ANGLE - (PLAYER_START_ROTATION_ANGLE - PLAYER_END_ROTATION_ANGLE) * ratio);
+		player->GetComponent<Transform>()->SetRotateY(startPlayerRotationAngle - (startPlayerRotationAngle - endPlayerRotationAngle) * ratio);
 		player->GetRacket()->GetComponent<Transform>()->SetRotateY(RACKET_START_ROTATION_ANGLE - (RACKET_START_ROTATION_ANGLE - RACKET_END_ROTATION_ANGLE) * ratio);
 
 		//もし回転が最後まで終わったのなら
@@ -50,7 +50,7 @@ void ForehandingState::Update3D(PlayerBase* player)
 			player->GetState()->ChangeState(player->GetState()->playerStanding_, player);
 
 			//元の角度に戻す
-			player->GetComponent<Transform>()->SetRotateY(PLAYER_END_ROTATION_ANGLE);
+			player->GetComponent<Transform>()->SetRotateY(endPlayerRotationAngle);
 			player->GetRacket()->GetComponent<Transform>()->SetRotateY(RACKET_END_ROTATION_ANGLE);
 
 			//打っていない状態にする
@@ -63,7 +63,7 @@ void ForehandingState::Update3D(PlayerBase* player)
 		float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / FOREHAND_PULL_TIME);
 
 		//各角度を求める
-		player->GetComponent<Transform>()->SetRotateY(PLAYER_END_ROTATION_ANGLE - (PLAYER_END_ROTATION_ANGLE - PLAYER_START_ROTATION_ANGLE) * ratio);
+		player->GetComponent<Transform>()->SetRotateY(endPlayerRotationAngle - (endPlayerRotationAngle - startPlayerRotationAngle) * ratio);
 		player->GetRacket()->GetComponent<Transform>()->SetRotateY(RACKET_END_ROTATION_ANGLE - (RACKET_END_ROTATION_ANGLE - RACKET_START_ROTATION_ANGLE) * ratio);
 
 		//1以上にならないように
@@ -95,7 +95,7 @@ void ForehandingState::Update3D(PlayerBase* player)
 		}
 
 		//もし回転が最後まで終わったかつボタンを離しているかもともボタンを離していたら
-		if (ratio >= 1 && (Input::IsPadButtonUp(player->GetState()->GetNowButtonCode()) || !Input::IsPadButton(player->GetState()->GetNowButtonCode())))
+		if (ratio >= 1 && (Input::IsPadButtonUp(player->GetState()->GetNowButtonCode(), player->GetState()->GetPlayerNum()) || !Input::IsPadButton(player->GetState()->GetNowButtonCode(),player->GetState()->GetPlayerNum())))
 		{
 			//チャージエフェクト削除
 			VFX::ForcedEnd(player->GetState()->GetChargeEffectNum());
@@ -136,8 +136,19 @@ void ForehandingState::Enter(PlayerBase* player)
 	//引く動作をするのfalseを設定しておく
 	player->GetState()->SetHitMove(false);
 
+	//角度設定
+	ARGUMENT_INITIALIZE(startPlayerRotationAngle, PLAYER_START_ROTATION_ANGLE);
+	ARGUMENT_INITIALIZE(endPlayerRotationAngle, PLAYER_END_ROTATION_ANGLE);
+
+	//二人目のプレイヤーなら
+	if (player->GetState()->GetPlayerNum() == 1)
+	{
+		startPlayerRotationAngle -= 180;
+		endPlayerRotationAngle -= 180;
+	}
+
 	//開始角度
-	player->GetComponent<Transform>()->SetRotateY(PLAYER_END_ROTATION_ANGLE);
+	player->GetComponent<Transform>()->SetRotateY(endPlayerRotationAngle);
 	player->GetRacket()->GetComponent<Transform>()->SetRotateY(RACKET_END_ROTATION_ANGLE);
 	ModelManager::SetAnimFlag(player->GetModelNum(), false);
 }

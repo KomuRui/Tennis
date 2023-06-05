@@ -39,6 +39,7 @@ class Racket : public NormalObject
 	Type type_;						        //球種
 	XMFLOAT3 colliderPos_;                  //コライダーのポジション
 	float ratio_;                           //倍率
+	bool flag_;
 
 public:
 

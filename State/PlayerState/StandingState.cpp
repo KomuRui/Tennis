@@ -80,14 +80,32 @@ void StandingState::HandleInput(PlayerBase* player)
 		//‰E‘¤‚È‚ç
 		if (ballEndX <= playerX)
 		{
-			player->GetRacket()->SetStroke(Stroke::FOREHAND);
-			player->GetState()->ChangeState(player->GetState()->playerForehanding_, player);
+			//“ñl–Ú‚È‚ç
+			if (player->GetState()->GetPlayerNum() == 1)
+			{
+				player->GetRacket()->SetStroke(Stroke::BACKHAND);
+				player->GetState()->ChangeState(player->GetState()->playerBackhanding_, player);
+			}
+			else
+			{
+				player->GetRacket()->SetStroke(Stroke::FOREHAND);
+				player->GetState()->ChangeState(player->GetState()->playerForehanding_, player);
+			}
 		}
 		//¶‘¤‚È‚ç
 		else
 		{
-			player->GetRacket()->SetStroke(Stroke::BACKHAND);
-			player->GetState()->ChangeState(player->GetState()->playerBackhanding_, player);
+			//“ñl–Ú‚È‚ç
+			if (player->GetState()->GetPlayerNum() == 1)
+			{
+				player->GetRacket()->SetStroke(Stroke::FOREHAND);
+				player->GetState()->ChangeState(player->GetState()->playerForehanding_, player);
+			}
+			else
+			{
+				player->GetRacket()->SetStroke(Stroke::BACKHAND);
+				player->GetState()->ChangeState(player->GetState()->playerBackhanding_, player);
+			}
 		}
 	}
 }

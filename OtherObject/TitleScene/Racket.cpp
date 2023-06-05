@@ -88,6 +88,12 @@ void Racket::ChildInitialize()
 	//開始角度を設定
 	transform_->SetRotateY(RACKET_START_ROTATION_ANGLE);
 
+	//どっちのコートに向かうか保存
+	if(((PlayerBase*)GetParent())->GetState()->GetPlayerNum() == 0)
+		flag_ = false;
+	else
+		flag_ = true;
+
 	//当たり判定
 	box1_ = AddComponent<BoxCollider>();
 	box1_->SetPos({ ZERO,ZERO,ZERO });
@@ -116,7 +122,7 @@ string Racket::GetInputBasePoint()
 	string name = "";
 
 	//Lスティックの傾きを取得
-	XMFLOAT3 stickL = Input::GetPadStickL();
+	XMFLOAT3 stickL = Input::GetPadStickL(((PlayerBase*)GetParent())->GetState()->GetPlayerNum());
 
 	if (stickL.y > 0.1f)
 		name += "Back_";
@@ -125,12 +131,24 @@ string Racket::GetInputBasePoint()
 	else
 		name += "Center_";
 
-	if (stickL.x > 0.1f)
-		name += "L";
-	else if (stickL.x < -0.1f)
-		name += "R";
+	if (((PlayerBase*)GetParent())->GetState()->GetPlayerNum() == 0)
+	{
+		if (stickL.x > 0.1f)
+			name += "L";
+		else if (stickL.x < -0.1f)
+			name += "R";
+		else
+			name += "C";
+	}
 	else
-		name += "C";
+	{
+		if (stickL.x < 0.1f)
+			name += "L";
+		else if (stickL.x > -0.1f)
+			name += "R";
+		else
+			name += "C";
+	}
 
 	return name;
 }
@@ -139,7 +157,7 @@ string Racket::GetInputBasePoint()
 void Racket::HitColliderFunc(GameObject* pTarget)
 {
 	//ボールに当たってないか、打つ動作をしていないのならこの先の処理はしない
-	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->GetState()->IsHitMove() || ((Ball*)pTarget)->isGoToPlayerBasePoint()) return;
+	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->GetState()->IsHitMove() || flag_ != ((Ball*)pTarget)->isGoToPlayerBasePoint()) return;
 
 	//ヒットストップ演出(動きを止める)
 	Leave();
@@ -161,7 +179,7 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 	((Ball*)pTarget)->SetBallDropEffectFilePath(dropEffectFilePath_[type_]);
 
 	//ボールを次のコートへ
-	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_,false, GetInputBasePoint());
+	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_, flag_, GetInputBasePoint(), false);
 
 	//エフェクト表示
 	EffectManager::Draw("HitEffect",hitEffectFilePath_[type_], ((Ball*)pTarget)->GetComponent<Transform>()->GetPosition());

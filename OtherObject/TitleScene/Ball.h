@@ -84,7 +84,7 @@ public:
 	/// <summary>
 	/// リセット(始点終点すべて再設定)
 	/// </summary>
-	void Reset(float strengthX, float strengthY,float moveTime,bool isGotoPlayer,string basePpointName);
+	void Reset(float strengthX, float strengthY,float moveTime,bool isGotoPlayer,string basePpointName,bool twoBound);
 
 	/// <summary>
 	/// 終点のポジションを取得

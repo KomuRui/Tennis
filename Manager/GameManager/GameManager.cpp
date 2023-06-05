@@ -31,6 +31,9 @@ namespace GameManager
 	//プレイヤー人数
 	Players player_;
 
+	//現在のプレイヤー登録人数
+	int nowPlayerRegistration_;
+
 	///////////////////////////////関数//////////////////////////////////
 
 	//初期化
@@ -57,6 +60,7 @@ namespace GameManager
 		ARGUMENT_INITIALIZE(pNowStage_, nullptr);
 		ARGUMENT_INITIALIZE(pSceneManager_, nullptr);
 		ARGUMENT_INITIALIZE(player_, Players::ONE);
+		ARGUMENT_INITIALIZE(nowPlayerRegistration_, ZERO);
 	}
 
 	//シーン遷移の時の初期化
@@ -124,6 +128,12 @@ namespace GameManager
 	void GameManager::SetPlayers(Players s) { player_ = s; }
 
 	//プレイヤー人数の取得
-	Players GameManager::GetPlayers() { return player_; };
+	Players GameManager::GetPlayers() { return player_; }
 
+	//プレイヤーセット
+	int  GameManager::SetPlayer() { 
+
+		//プレイヤー番号返す
+		return nowPlayerRegistration_++;
+	};
 }

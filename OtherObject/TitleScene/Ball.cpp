@@ -219,16 +219,16 @@ void Ball::BoundMove()
 			HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
 
 			//リセット
-			Reset(h.strength_.x, h.strength_.y,h.moveTime_,isGoToBasePoint_,BasePointManager::GetRandomBasePointName());
+			Reset(h.strength_.x, h.strength_.y,h.moveTime_,isGoToBasePoint_,BasePointManager::GetRandomBasePointName(),true);
 		}
 	}
 }
 
 //リセット(始点終点すべて再設定)
-void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPlayer, string basePpointName)
+void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPlayer, string basePpointName, bool twoBound)
 {
 	//向かうポジションを取得(少しランダムにずらす)
-	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePpointName, isGotoPlayer);
+	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePpointName, isGoToBasePoint_);
 	endPos.x += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
 	endPos.z += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
 
@@ -278,10 +278,7 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPl
 	ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
 
 	//逆にする
-	if(isGotoPlayer)
-		isGoToBasePoint_ = false;
-	else
-		isGoToBasePoint_ = true;
+	ARGUMENT_INITIALIZE(isGoToBasePoint_, !isGoToBasePoint_);
 }
 
 //何かのオブジェクトに当たった時に呼ばれる関数

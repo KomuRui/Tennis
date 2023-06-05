@@ -16,6 +16,7 @@ Collider::~Collider()
 //•`‰æ
 void Collider::Draw()
 {
+
 	//ƒtƒŒ[ƒ€‚¾‚¯•`‰æ‚É‚·‚é
 	Direct3D::SetShader(Direct3D::SHADER_UNLIT);
 

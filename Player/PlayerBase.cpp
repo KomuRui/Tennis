@@ -39,6 +39,7 @@ void PlayerBase::ChildInitialize()
 
     //状態
     ARGUMENT_INITIALIZE(pState_->playerState_ , pState_->playerStanding_);
+    pState_->SetPlayerNum(GameManager::SetPlayer());
 
     ///////////////アニメーション設定///////////////////
 

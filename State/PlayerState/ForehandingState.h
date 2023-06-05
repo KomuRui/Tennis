@@ -11,6 +11,9 @@ class ForehandingState : public PlayerState
 	int hTime_;		       //タイマーハンドル
 	XMFLOAT2 effectSize_;  //エフェクトのサイズ
 
+	int startPlayerRotationAngle; //プレイヤーの開始角度
+	int endPlayerRotationAngle;	  //プレイヤーの開始角度
+
 public:
 
 	//2D用更新

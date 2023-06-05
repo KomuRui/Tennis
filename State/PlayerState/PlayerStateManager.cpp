@@ -37,6 +37,8 @@ void PlayerStateManager::Update2D(PlayerBase* player)
 //3D用更新
 void PlayerStateManager::Update3D(PlayerBase* player)
 {
+    if (playerNum_ == 1)
+        hChargeEffectName_ = "chargeEffect1";
 
     //立っている状態じゃないのなら
     if (playerState_ != PlayerStateManager::playerStanding_)
@@ -76,6 +78,13 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     //Lスティックの傾きを取得
     float PadLx = Input::GetPadStickL(playerNum_).x;
     float PadLy = Input::GetPadStickL(playerNum_).y;
+
+    //2人目のプレイヤーなら反転させる
+    if (playerNum_ == 1)
+    {
+        PadLx *= -1;
+        PadLy *= -1;
+    }
 
     //少しでも動いたのなら
     if (PadLx != ZERO || PadLy != ZERO)

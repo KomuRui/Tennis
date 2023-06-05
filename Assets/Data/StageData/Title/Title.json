@@ -69,6 +69,13 @@
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "Player"
   },
+  "Player1": {
+    "FileName": "MainCharacter/Player.fbx",
+    "Position": [ 0.0, 0.0, -11.579000473022461 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "Player"
+  },
   "TennisCourt": {
     "FileName": "Stage/TennisCourt2.fbx",
     "Position": [ 0.0, 0.0, 0.0 ],
@@ -83,11 +90,11 @@
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "TennisCourtAround"
   },
-  "Water": 
-  {
+  "Water": {
     "FileName": "Stage/Water.fbx",
     "Position": [ 0.0, -0.10000000149011612, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "Water"
-  }}
+  }
+}

@@ -67,5 +67,11 @@ namespace GameManager
 	//プレイヤー人数の取得
 	Players GetPlayers();
 
+	/// <summary>
+	/// プレイヤーセット
+	/// </summary>
+	/// <returns>プレイヤー番号</returns>
+	int  SetPlayer();
+
 };
 
