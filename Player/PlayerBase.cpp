@@ -54,7 +54,13 @@ void PlayerBase::ChildInitialize()
 
     ////////////////////カメラ//////////////////////
 
-    ARGUMENT_INITIALIZE(camVec_, (transform_->position_ - Camera::GetPosition()));
+    //1人目のプレイヤーなら
+    if (pState_->GetPlayerNum() == 0)
+    {
+        ARGUMENT_INITIALIZE(camVec_, (transform_->position_ - Camera::GetPosition()));
+    }
+    else
+        ARGUMENT_INITIALIZE(camVec_, (transform_->position_ - Camera::GetPositionTwo()));
     
 }
 
@@ -107,7 +113,10 @@ void PlayerBase::CameraBehavior()
     //2人目のプレイヤーなら
     else
     {
-
+        XMFLOAT3 pos = Camera::GetPositionTwo();
+        XMFLOAT3 tar = Camera::GetTargetTwo();
+        Camera::SetPositionTwo(XMFLOAT3(pos.x, (transform_->position_.y - XMVectorGetY(camVec_)) * 1 + (sum * 0.2), (transform_->position_.z - XMVectorGetZ(camVec_)) * 1 + (-sum * 0.2)));
+        Camera::SetTargetTwo(XMFLOAT3(tar.x, tar.y, 0));
     }
 }
 
