@@ -179,53 +179,61 @@ void Ball::MoveToPurpose()
 //バウンド移動
 void Ball::BoundMove()
 {
-
-	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + XMVector3Normalize(progressVector_) * 0.2f));
-
+	//どのくらい時間がたったか取得
 	float time = Time::GetTimef(hTime_);
+
+	//進行ベクトルを足して進める
+	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + XMVector3Normalize(progressVector_) * 0.2f));
+	
+	//現在の位置を求める
 	XMFLOAT3 nowPos = transform_->position_;
 	nowPos.y = (v0_.y * sin(firstAngle_) * time) - (0.5f * GRAVITY * (time * time));
-
 	transform_->position_.y = nowPos.y;
 
 	//エフェクトのポジション更新
 	pLine_->AddPosition(transform_->position_);
 	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffectName_)->data.position, transform_->position_);
 
+	//地面に着いてないのならこの先は処理しない
+	if (transform_->position_.y > ZERO) return;
 
-	if (transform_->position_.y < ZERO)
+	//進行ベクトルを更新
+	ARGUMENT_INITIALIZE(progressVector_, XMVector3Reflect(progressVector_, UP_VECTOR));
+	
+	//進行ベクトルの角度を更新
+	XMVECTOR v = { XMVectorGetX(progressVector_),ZERO,XMVectorGetZ(progressVector_),ZERO };
+	firstAngle_ = GetDot(progressVector_, v);
+
+	//タイムリセット
+	Time::Reset(hTime_);
+
+	//Yの強度を減らす
+	v0_.y *= 0.4f;
+
+	//バウンドカウント増やす
+	boundCount_++;
+
+	//2回バウンドしたら
+	if (boundCount_ == 2)
 	{
+		//次の目的地に移動するように
+		ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
+		ARGUMENT_INITIALIZE(boundCount_,ZERO);
 
-		ARGUMENT_INITIALIZE(progressVector_, XMVector3Reflect(progressVector_, UP_VECTOR));
-		
-		XMVECTOR v = { XMVectorGetX(progressVector_),ZERO,XMVectorGetZ(progressVector_),ZERO };
-		firstAngle_ = GetDot(progressVector_, v);
 		Time::Reset(hTime_);
-		v0_.y *= 0.4f;
+		VFX::ForcedEnd(hLandEffectName_);
+		VFX::ForcedEnd(hDropEffectName_);
 
-		boundCount_++;
+		//打つ強さをランダムに取得
+		HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
 
-		if (boundCount_ == 2)
-		{
-			//次の目的地に移動するように
-			ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
-			ARGUMENT_INITIALIZE(boundCount_,ZERO);
-
-			Time::Reset(hTime_);
-			VFX::ForcedEnd(hLandEffectName_);
-			VFX::ForcedEnd(hDropEffectName_);
-
-			//打つ強さをランダムに取得
-			HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
-
-			//リセット
-			Reset(h.strength_.x, h.strength_.y,h.moveTime_,isGoToBasePoint_,BasePointManager::GetRandomBasePointName(),true);
-		}
+		//リセット
+		Reset(h.strength_.x, h.strength_.y,h.moveTime_,BasePointManager::GetRandomBasePointName());
 	}
 }
 
 //リセット(始点終点すべて再設定)
-void Ball::Reset(float strengthX, float strengthY, float moveTime, bool isGotoPlayer, string basePpointName, bool twoBound)
+void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpointName)
 {
 	//向かうポジションを取得(少しランダムにずらす)
 	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePpointName, isGoToBasePoint_);

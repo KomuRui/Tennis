@@ -179,7 +179,7 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 	((Ball*)pTarget)->SetBallDropEffectFilePath(dropEffectFilePath_[type_]);
 
 	//ボールを次のコートへ
-	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_, flag_, GetInputBasePoint(), false);
+	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_, GetInputBasePoint());
 
 	//エフェクト表示
 	EffectManager::Draw("HitEffect",hitEffectFilePath_[type_], ((Ball*)pTarget)->GetComponent<Transform>()->GetPosition());
