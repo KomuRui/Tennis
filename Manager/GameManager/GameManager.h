@@ -27,11 +27,6 @@ namespace GameManager
 	void SceneTransitionInitialize();
 
 	/// <summary>
-	/// Playerが死亡した時にLifeManagerから呼ばれる
-	/// </summary>
-	void PlayerDie();
-
-	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
@@ -40,6 +35,12 @@ namespace GameManager
 	/// 描画(コインの取得数やPlayerライフの表示)
 	/// </summary>
 	void Draw();
+
+	/// <summary>
+	/// プレイヤーを追加
+	/// </summary>
+	/// <param name="p">プレイヤーのポインタ</param>
+	void AddPlayer(PlayerBase* p);
 
 	///////////////////////////////セットゲット関数//////////////////////////////////
 
@@ -71,7 +72,14 @@ namespace GameManager
 	/// プレイヤーセット
 	/// </summary>
 	/// <returns>プレイヤー番号</returns>
-	int  SetPlayer();
+	int  SetPlayer(PlayerBase* p);
+
+	/// <summary>
+	/// 引数のプレイヤー以外のプレイヤーを取得
+	/// </summary>
+	/// <param name="p">プレイヤー</param>
+	/// <returns>プレイヤーを取得</returns>
+	PlayerBase* GetNotMyPlayer(PlayerBase* p);
 
 };
 

@@ -21,9 +21,7 @@ protected:
 
 	/////////////////////カメラ//////////////////////
 
-	XMVECTOR camVec_;                   //Playerからカメラまでの距離
-	XMMATRIX camMat_;                   //カメラの角度を変更するためのマトリクス
-	XMVECTOR vCam_;                     //カメラの位置までのベクトル
+	XMVECTOR camVec_;                   //Playerからカメラまでのベクトル
 
 public:
 

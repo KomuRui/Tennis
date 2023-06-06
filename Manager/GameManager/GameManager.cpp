@@ -1,17 +1,5 @@
 #include "GameManager.h"
-#include "../../Engine/DirectX/Sprite.h"
-#include "../../Engine/ResourceManager/Time.h"
-#include "../../Engine/Component/EasingMove.h"
-#include "../../Engine/ResourceManager/Easing.h"
-#include "../../Engine/GameObject/Light.h"
-#include "../../Engine/ResourceManager/Fade.h"
-#include "../../Engine/ResourceManager/ImageManager.h"
-#include "../TextManager/TextManager.h"
-#include "../ButtonManager/ButtonManager.h"
-#include "../ScoreManager/ScoreManager.h"
-#include "../AudioManager/PlayerAudioManager/PlayerAudioManager.h"
-#include "../AudioManager/OtherAudioManager/OtherAudioManager.h"
-#include "../BasePointManager/BasePointManager.h"
+#include "../../Engine/System.h"
 #include <cmath>
 
 //ゲームのいろいろな管理をする
@@ -34,14 +22,14 @@ namespace GameManager
 	//現在のプレイヤー登録人数
 	int nowPlayerRegistration_;
 
+	//プレイヤーのリスト保存用
+	list<PlayerBase*> playerlist_;
+
 	///////////////////////////////関数//////////////////////////////////
 
 	//初期化
 	void GameManager::Initialize()
 	{
-		//音初期化
-		OtherAudioManager::Initialize();
-		PlayerAudioManager::Initialize();
 
 		//テキストマネージャの初期化
 		TextManager::Initialize();
@@ -69,15 +57,7 @@ namespace GameManager
 		//いろいろ初期化状態にしておく
 		Light::Initialize();
 		Fade::SceneTransitionInitialize();
-		OtherAudioManager::SceneTransitionInitialize();
-		PlayerAudioManager::SceneTransitionInitialize();
 		ScoreManager::SceneTransitionInitialize();
-	}
-
-	//Playerが死亡した時にLifeManagerから呼ばれる
-	void GameManager::PlayerDie()
-	{
-
 	}
 
 	//更新
@@ -103,6 +83,8 @@ namespace GameManager
 		Fade::Draw();
 	}
 
+	//プレイヤーを追加
+	void GameManager::AddPlayer(PlayerBase* p){ playerlist_.push_back(p);}
 
 	///////////////////////////////セットゲット関数//////////////////////////////////
 	
@@ -131,9 +113,17 @@ namespace GameManager
 	Players GameManager::GetPlayers() { return player_; }
 
 	//プレイヤーセット
-	int  GameManager::SetPlayer() { 
+	int  GameManager::SetPlayer(PlayerBase* p) { playerlist_.push_back(p); return nowPlayerRegistration_++; }
 
-		//プレイヤー番号返す
-		return nowPlayerRegistration_++;
-	};
+	//引数のプレイヤー以外のプレイヤーを取得
+	PlayerBase* GetNotMyPlayer(PlayerBase* p)
+	{
+		for (auto i = playerlist_.begin(); i != playerlist_.end(); i++)
+		{
+			if ((*i) != p)
+				return (*i);
+		}
+
+		return nullptr;
+	}
 }

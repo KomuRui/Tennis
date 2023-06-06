@@ -1,6 +1,7 @@
 #include "PlayerBase.h"
 #include "../Engine/System.h"
 #include "../OtherObject/TitleScene/Racket.h"
+#include "../OtherObject/TitleScene/Ball.h"
 
 ////定数
 namespace
@@ -18,13 +19,11 @@ PlayerBase::PlayerBase(GameObject* parent, std::string modelFilePath_, std::stri
 
     ///////////////キャラの必要な情報///////////////////
 
-    //その他
+    pRacket_(nullptr),
     pState_(new PlayerStateManager),
 
     ///////////////////カメラ///////////////////////
 
-    camMat_(XMMatrixIdentity()),
-    vCam_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
     camVec_(XMVectorSet(ZERO,ZERO,ZERO,ZERO))
 
 {
@@ -39,7 +38,10 @@ void PlayerBase::ChildInitialize()
 
     //状態
     ARGUMENT_INITIALIZE(pState_->playerState_ , pState_->playerStanding_);
-    pState_->SetPlayerNum(GameManager::SetPlayer());
+    pState_->SetPlayerNum(GameManager::SetPlayer(this));
+
+    //影
+    SetShadow(true);
 
     ///////////////アニメーション設定///////////////////
 
@@ -50,8 +52,10 @@ void PlayerBase::ChildInitialize()
 
     ARGUMENT_INITIALIZE(pRacket_,Instantiate<Racket>(this));
 
+    ////////////////////カメラ//////////////////////
 
-    SetShadow(true);
+    ARGUMENT_INITIALIZE(camVec_, (transform_->position_ - Camera::GetPosition()));
+    
 }
 
 
@@ -68,5 +72,42 @@ void PlayerBase::ChildUpdate()
 //カメラの処理
 void PlayerBase::CameraBehavior()
 {
+    //Zの位置を格納する用
+    vector<float> zPos;
+
+    //ボールを取得
+    Ball* pBall = ((Ball*)FindObject("Ball"));
+    if (pBall)
+        zPos.push_back(pBall->GetComponent<Transform>()->GetPosition().z);
+
+    //自分以外のプレイヤーを取得
+    PlayerBase* pPlayer = GameManager::GetNotMyPlayer(this);
+    if (pPlayer)
+        zPos.push_back(pPlayer->GetComponent<Transform>()->GetPosition().z);
+
+    //自分自身も格納
+    zPos.push_back(transform_->position_.z);
+
+    //最小値最大値を取得
+    pair<vector<float>::iterator, vector<float>::iterator> minmax;
+    minmax = minmax_element(zPos.begin(), zPos.end());
+    float MaxZ = *minmax.second;
+    float MinZ = *minmax.first;
+
+    float sum = abs(MaxZ + MinZ);
+   
+    //1人目のプレイヤーなら
+    if (pState_->GetPlayerNum() == 0)
+    {
+        XMFLOAT3 pos = Camera::GetPosition();
+        XMFLOAT3 tar = Camera::GetTarget();
+        Camera::SetPosition(XMFLOAT3(pos.x,( transform_->position_.y - XMVectorGetY(camVec_)) * 1 + (sum * 0.2), (transform_->position_.z -  XMVectorGetZ(camVec_)) * 1 + (sum * 0.2)));
+        Camera::SetTarget(XMFLOAT3(tar.x, tar.y,0));
+    }
+    //2人目のプレイヤーなら
+    else
+    {
+
+    }
 }
 

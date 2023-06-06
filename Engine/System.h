@@ -30,6 +30,7 @@
 #include "../Manager/ButtonManager/ButtonManager.h"
 #include "../Manager/EffectManager/EffectManager.h"
 #include "../Manager/FrameWorkUpdateManager/FrameWorkUpdateManager.h"
+#include "../Manager/TextManager/TextManager.h"
 #include "../Manager/GameManager/GameManager.h"
 #include "../Manager/JsonManager/JsonManager.h"
 #include "../Manager/SceneManager/SceneManager.h"

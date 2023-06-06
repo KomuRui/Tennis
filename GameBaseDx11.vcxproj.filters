@@ -555,9 +555,6 @@
     <ClInclude Include="Manager\EffectManager\EffectManager.h">
       <Filter>Manager\EffectManager</Filter>
     </ClInclude>
-    <ClInclude Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.h">
-      <Filter>Manager\FrameWorkUpdateManager</Filter>
-    </ClInclude>
     <ClInclude Include="OtherObject\TitleScene\TennisCourtAround.h">
       <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
@@ -590,6 +587,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Component\Collider\Collider.h">
       <Filter>01Engine\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.h">
+      <Filter>Manager\FrameWorkUpdateManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

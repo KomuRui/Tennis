@@ -8,10 +8,10 @@ namespace
 {
 	static const float RATATION_SPEED = 0.5f;                  //回転速度
 	static const XMFLOAT3 CAM_POS = { 0, 10.67f, 24.17f };     //カメラの位置
-	static const XMFLOAT3 CAM_TAR = { 0, 2.27f, 8.01f };       //カメラのターゲット
+	static const XMFLOAT3 CAM_TAR = { 0, 0.27f, 6.01f };       //カメラのターゲット
 															   
 	static const XMFLOAT3 CAM_POS_2 = { 0, 10.67f, -24.17f };  //カメラの位置
-	static const XMFLOAT3 CAM_TAR_2 = { 0, 2.27f, -8.01f };    //カメラのターゲット
+	static const XMFLOAT3 CAM_TAR_2 = { 0, 0.27f, -6.01f };    //カメラのターゲット
 
 	static const XMFLOAT3 CAM_POS_TOW_WINDOW = { 0, 20, 0 };   //カメラの位置2
 	static const XMFLOAT3 CAM_TAR_TOW_WINDOW = { 0, 0, 0 };    //カメラのターゲット2
@@ -34,18 +34,6 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 
-	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
-
-	CreateStage* pCreateStage = new CreateStage;
-	pCreateStage->LoadFileCreateStage(this, "Data/StageData/Title/Title.json");
-
-	////////////////////////ツールの基準点モデルを生成/////////////////////////////////
-
-	//BasePointManager::InstantiateBasePointModel();
-
-	////////////////////////Player人数設定/////////////////////////////////
-
-	GameManager::SetPlayers(Players::TWO);
 
 	///////////////カメラ///////////////////
 
@@ -63,6 +51,19 @@ void TitleScene::Initialize()
 	Camera::TwoWindowSetPosition(CAM_POS_TOW_WINDOW);
 	Camera::TwoWindowSetTarget(CAM_TAR_TOW_WINDOW);
 	Camera::SetTwoWindowUpDirection(CAM_UP_TOW_WINDOW);
+
+	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
+
+	CreateStage* pCreateStage = new CreateStage;
+	pCreateStage->LoadFileCreateStage(this, "Data/StageData/Title/Title.json");
+
+	////////////////////////ツールの基準点モデルを生成/////////////////////////////////
+
+	//BasePointManager::InstantiateBasePointModel();
+
+	////////////////////////Player人数設定/////////////////////////////////
+
+	GameManager::SetPlayers(Players::TWO);
 }
 
 //更新の前に一度だけ呼ばれる更新
