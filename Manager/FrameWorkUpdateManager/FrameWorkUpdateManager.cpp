@@ -89,7 +89,7 @@ namespace FrameWorkUpdateManager
 		Direct3D::EndDraw();
 
 		//二つ目のウィンドウ描画
-		TwoWindowDraw(root);
+		//TwoWindowDraw(root);
 	}
 
 	/// <summary>
