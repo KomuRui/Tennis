@@ -13,6 +13,7 @@ namespace FrameWorkUpdateManager
 	//更新
 	void Update(GameObject *root)
 	{
+
 		//入力（キーボード、マウス、コントローラー）情報を更新
 		Input::Update();
 

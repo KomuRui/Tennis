@@ -40,6 +40,9 @@ void PlayerBase::ChildInitialize()
     ARGUMENT_INITIALIZE(pState_->playerState_ , pState_->playerStanding_);
     pState_->SetPlayerNum(GameManager::SetPlayer(this));
 
+    //明るさ最大に
+    ModelManager::SetBrightness(hModel_, 1.0f);
+
     //影
     SetShadow(true);
 
@@ -58,10 +61,13 @@ void PlayerBase::ChildInitialize()
     if (pState_->GetPlayerNum() == 0)
     {
         ARGUMENT_INITIALIZE(camVec_, (transform_->position_ - Camera::GetPosition()));
+        ARGUMENT_INITIALIZE(camVec2_, (Camera::GetTarget() - Camera::GetPosition()));
     }
     else
+    {
         ARGUMENT_INITIALIZE(camVec_, (transform_->position_ - Camera::GetPositionTwo()));
-    
+        ARGUMENT_INITIALIZE(camVec2_, (Camera::GetTarget() - Camera::GetPositionTwo()));
+    }
 }
 
 
@@ -78,45 +84,67 @@ void PlayerBase::ChildUpdate()
 //カメラの処理
 void PlayerBase::CameraBehavior()
 {
-    //Zの位置を格納する用
-    vector<float> zPos;
+    vector<float> zPos; //Zの位置を格納する用
+    vector<float> xPos; //Xの位置を格納する用
 
     //ボールを取得
     Ball* pBall = ((Ball*)FindObject("Ball"));
     if (pBall)
+    {
         zPos.push_back(pBall->GetComponent<Transform>()->GetPosition().z);
+        xPos.push_back(pBall->GetComponent<Transform>()->GetPosition().x);
+    }
 
     //自分以外のプレイヤーを取得
     PlayerBase* pPlayer = GameManager::GetNotMyPlayer(this);
     if (pPlayer)
+    {
         zPos.push_back(pPlayer->GetComponent<Transform>()->GetPosition().z);
+        xPos.push_back(pPlayer->GetComponent<Transform>()->GetPosition().x);
+    }
 
     //自分自身も格納
     zPos.push_back(transform_->position_.z);
+    xPos.push_back(transform_->position_.x);
 
     //最小値最大値を取得
     pair<vector<float>::iterator, vector<float>::iterator> minmax;
     minmax = minmax_element(zPos.begin(), zPos.end());
     float MaxZ = *minmax.second;
     float MinZ = *minmax.first;
-
     float sum = abs(MaxZ + MinZ);
+
+    //重心求める
+    float centerX = 0;
+    for (auto i = xPos.begin(); i != xPos.end(); i++)
+    {
+        centerX += (*i);
+    }
+    centerX /= xPos.size();
    
     //1人目のプレイヤーなら
     if (pState_->GetPlayerNum() == 0)
     {
         XMFLOAT3 pos = Camera::GetPosition();
         XMFLOAT3 tar = Camera::GetTarget();
-        Camera::SetPosition(XMFLOAT3(pos.x,( transform_->position_.y - XMVectorGetY(camVec_)) * 1 + (sum * 0.2), (transform_->position_.z -  XMVectorGetZ(camVec_)) * 1 + (sum * 0.2)));
-        Camera::SetTarget(XMFLOAT3(tar.x, tar.y,0));
+        XMFLOAT3 nextPos = { centerX, (transform_->position_.y - XMVectorGetY(camVec_)) * 1.0f + (sum * 0.25f), (MaxZ - XMVectorGetZ(camVec_)) * 1.0f + (sum * 0.25f) };
+        nextPos = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&pos), XMLoadFloat3(&nextPos), 0.1f));
+        XMFLOAT3 nextTar = VectorToFloat3((nextPos + camVec2_));
+        nextTar = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&tar), XMLoadFloat3(&nextTar), 0.1f));
+        Camera::SetPosition(nextPos);
+        Camera::SetTarget(nextTar);
     }
     //2人目のプレイヤーなら
     else
     {
         XMFLOAT3 pos = Camera::GetPositionTwo();
         XMFLOAT3 tar = Camera::GetTargetTwo();
-        Camera::SetPositionTwo(XMFLOAT3(pos.x, (transform_->position_.y - XMVectorGetY(camVec_)) * 1 + (sum * 0.2), (transform_->position_.z - XMVectorGetZ(camVec_)) * 1 + (-sum * 0.2)));
-        Camera::SetTargetTwo(XMFLOAT3(tar.x, tar.y, 0));
+        XMFLOAT3 nextPos = { centerX, (transform_->position_.y - XMVectorGetY(camVec_)) * 1.0f + (sum * 0.25f), (MinZ - XMVectorGetZ(camVec_)) * 1.0f + (sum * 0.25f) };
+        nextPos = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&pos), XMLoadFloat3(&nextPos), 0.1f));
+        XMFLOAT3 nextTar = VectorToFloat3((nextPos + camVec2_));
+        nextTar = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&tar), XMLoadFloat3(&nextTar), 0.1f));
+        Camera::SetPositionTwo(nextPos);
+        Camera::SetTargetTwo(nextTar);
     }
 }
 

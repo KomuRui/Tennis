@@ -17,6 +17,9 @@ Collider::~Collider()
 void Collider::Draw()
 {
 
+//デバッグの時だけ
+#ifdef DEBUG
+
 	//フレームだけ描画にする
 	Direct3D::SetShader(Direct3D::SHADER_UNLIT);
 
@@ -36,6 +39,9 @@ void Collider::Draw()
 
 	//元に戻す
 	Direct3D::SetShader(Direct3D::SHADER_3D);
+
+#endif
+
 }
 
 //衝突判定

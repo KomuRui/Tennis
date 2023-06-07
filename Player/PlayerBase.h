@@ -22,6 +22,7 @@ protected:
 	/////////////////////カメラ//////////////////////
 
 	XMVECTOR camVec_;                   //Playerからカメラまでのベクトル
+	XMVECTOR camVec2_;                   //Playerからカメラまでのベクトル
 
 public:
 
