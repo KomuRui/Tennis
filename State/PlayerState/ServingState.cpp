@@ -66,7 +66,7 @@ void ServingState::Update3D(PlayerBase* player)
 		ARGUMENT_INITIALIZE(ratio, min<float>(ratio, 1.0f));
 
 		//もし回転が最後まで終わったかつボタンを離しているかもともボタンを離していたら
-		if (ratio >= 1 && (Input::IsPadButtonUp(player->GetState()->GetNowButtonCode(), player->GetState()->GetPlayerNum()) || !Input::IsPadButton(player->GetState()->GetNowButtonCode(), player->GetState()->GetPlayerNum())))
+		if (ratio >= 1 && (Input::IsPadButtonDown(player->GetState()->GetNowButtonCode(), player->GetState()->GetPlayerNum())))
 		{
 			//チャージエフェクト削除
 			VFX::ForcedEnd(player->GetState()->GetChargeEffectNum());

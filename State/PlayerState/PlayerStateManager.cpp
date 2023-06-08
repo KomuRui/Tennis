@@ -95,9 +95,38 @@ void PlayerStateManager::Update3D(PlayerBase* player)
 
         return;
     }
+    
+    //移動
+    Move(player, PadLx, PadLy);
 
+    //現在の状態の更新を呼ぶ
+    playerState_->Update3D(player);
+}
+
+//入力によって状態変化する
+void PlayerStateManager::HandleInput(PlayerBase* player)
+{
+}
+
+//状態変化したとき一回だけ呼ばれる関数
+void PlayerStateManager::Enter(PlayerBase* player)
+{
+}
+
+//状態チェンジ用
+void PlayerStateManager::ChangeState(PlayerState* change, PlayerBase* player)
+{
+    playerState_ = change;
+    playerState_->Enter(player);
+}
+
+/// <summary>
+/// 移動
+/// </summary>
+void PlayerStateManager::Move(PlayerBase* player, float padLx, float padLy)
+{
     //少しでも動いたのなら
-    if (PadLx != ZERO || PadLy != ZERO)
+    if (padLx != ZERO || padLy != ZERO)
     {
         //動いたのでアニメーション
         ModelManager::SetAnimFlag(player->GetModelNum(), true);
@@ -105,7 +134,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
         //回転行列
         XMMATRIX rotateX, rotateY, rotateZ;
         rotateX = XMMatrixRotationX(XMConvertToRadians(ZERO));
-        rotateY = XMMatrixRotationY(XMConvertToRadians(XMConvertToDegrees(atan2(-PadLx, -PadLy))));
+        rotateY = XMMatrixRotationY(XMConvertToRadians(XMConvertToDegrees(atan2(-padLx, -padLy))));
         rotateZ = XMMatrixRotationZ(XMConvertToRadians(ZERO));
         XMMATRIX matRotate = rotateZ * rotateX * rotateY;
 
@@ -144,35 +173,15 @@ void PlayerStateManager::Update3D(PlayerBase* player)
             }
         }
         //サーブ状態じゃないのなら
-        else if(playerState_ != PlayerStateManager::playerServing_)
+        else if (playerState_ != PlayerStateManager::playerServing_)
             player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord((front_ / 10.0f) * RUN_SPEED, matRotate))));
-       
+
         //回転
-        player->GetComponent<Transform>()->SetRotateY(XMConvertToDegrees(atan2(-PadLx, -PadLy)));
+        player->GetComponent<Transform>()->SetRotateY(XMConvertToDegrees(atan2(-padLx, -padLy)));
     }
     //動いていないのならアニメーションを止める
     else
         ModelManager::SetAnimFlag(player->GetModelNum(), false);
-
-    //現在の状態の更新を呼ぶ
-    playerState_->Update3D(player);
-}
-
-//入力によって状態変化する
-void PlayerStateManager::HandleInput(PlayerBase* player)
-{
-}
-
-//状態変化したとき一回だけ呼ばれる関数
-void PlayerStateManager::Enter(PlayerBase* player)
-{
-}
-
-//状態チェンジ用
-void PlayerStateManager::ChangeState(PlayerState* change, PlayerBase* player)
-{
-    playerState_ = change;
-    playerState_->Enter(player);
 }
 
 /// <summary>

@@ -62,6 +62,11 @@ public:
 	/// </summary>
 	void ServeMove(PlayerBase* player,float padLx, float padLy);
 
+	/// <summary>
+	/// 移動
+	/// </summary>
+	void Move(PlayerBase* player, float padLx, float padLy);
+
 	///////////////////////////////////セッター・ゲッター///////////////////////////////////////
 
 	//元の姿勢に戻すかどうか設定
