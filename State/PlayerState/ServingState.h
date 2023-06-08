@@ -8,8 +8,8 @@ class PlayerBase;
 /// </summary>
 class ServingState : public PlayerState
 {
-
-	int hTime_;	//タイマーハンドル
+	bool isCharge_ = false; //構えてるかどうか
+	int hTime_;		        //タイマーハンドル
 
 public:
 
@@ -24,5 +24,8 @@ public:
 
 	//状態変化したとき一回だけ呼ばれる関数
 	void Enter(PlayerBase* player) override;
+
+	//チャージしているかどうか
+	bool IsCharge() { return isCharge_; }
 };
 

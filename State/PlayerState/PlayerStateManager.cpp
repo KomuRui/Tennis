@@ -189,8 +189,8 @@ void PlayerStateManager::Move(PlayerBase* player, float padLx, float padLy)
 /// </summary>
 void PlayerStateManager::ServeMove(PlayerBase* player, float padLx, float padLy)
 {
-    //少しでも動いたのなら
-    if (padLx != ZERO || padLy != ZERO)
+    //少しでも動いてるかつ構えていなければ
+    if ((padLx != ZERO || padLy != ZERO) && !playerServing_->IsCharge())
     {
         //アニメーションはしない
         ModelManager::SetAnimFlag(player->GetModelNum(), false);

@@ -49,6 +49,9 @@ void ServingState::Update3D(PlayerBase* player)
 			player->GetComponent<Transform>()->SetRotate(PLAYER_END_ROTATION_ANGLE);
 			player->GetRacket()->GetComponent<Transform>()->SetRotate(RACKET_END_ROTATION_ANGLE);
 
+			//構えていないに設定
+			ARGUMENT_INITIALIZE(isCharge_, false);
+
 			//打っていない状態にする
 			player->GetState()->SetHitMove(false);
 		}
@@ -100,6 +103,9 @@ void ServingState::Enter(PlayerBase* player)
 {
 	//タイマー追加
 	ARGUMENT_INITIALIZE(hTime_, Time::Add());
+
+	//構えていないに設定
+	ARGUMENT_INITIALIZE(isCharge_, true);
 
 	//引く動作をするのfalseを設定しておく
 	player->GetState()->SetHitMove(false);
