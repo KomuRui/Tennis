@@ -93,9 +93,6 @@
     <Filter Include="OtherObject\TitleScene">
       <UniqueIdentifier>{871c65ea-67a9-4bf6-8f9f-480fc396bc28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Manager\ScoreManager">
-      <UniqueIdentifier>{94699723-f653-4626-a1cf-030afd0165b3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OtherObject\ToolObj">
       <UniqueIdentifier>{4ce2d9a2-3dbe-4ac7-a615-4ce660cc34ae}</UniqueIdentifier>
     </Filter>
@@ -294,9 +291,6 @@
     <ClCompile Include="OtherObject\TitleScene\Racket.cpp">
       <Filter>OtherObject\TitleScene</Filter>
     </ClCompile>
-    <ClCompile Include="Manager\ScoreManager\ScoreManager.cpp">
-      <Filter>Manager\ScoreManager</Filter>
-    </ClCompile>
     <ClCompile Include="OtherObject\ToolObj\BasePointModel.cpp">
       <Filter>OtherObject\ToolObj</Filter>
     </ClCompile>
@@ -347,6 +341,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Component\Collider\Collider.cpp">
       <Filter>01Engine\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\Referee.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\Score.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -534,9 +534,6 @@
     <ClInclude Include="OtherObject\TitleScene\Racket.h">
       <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="Manager\ScoreManager\ScoreManager.h">
-      <Filter>Manager\ScoreManager</Filter>
-    </ClInclude>
     <ClInclude Include="OtherObject\ToolObj\BasePointModel.h">
       <Filter>OtherObject\ToolObj</Filter>
     </ClInclude>
@@ -590,6 +587,12 @@
     </ClInclude>
     <ClInclude Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.h">
       <Filter>Manager\FrameWorkUpdateManager</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\Referee.h">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\Score.h">
+      <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

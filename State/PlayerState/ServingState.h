@@ -8,6 +8,9 @@ class PlayerBase;
 /// </summary>
 class ServingState : public PlayerState
 {
+
+	int hTime_;	//タイマーハンドル
+
 public:
 
 	//2D用更新

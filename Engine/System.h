@@ -34,7 +34,6 @@
 #include "../Manager/GameManager/GameManager.h"
 #include "../Manager/JsonManager/JsonManager.h"
 #include "../Manager/SceneManager/SceneManager.h"
-#include "../Manager/ScoreManager/ScoreManager.h"
 #include "../Manager/EffectManager/OtherEffectManager/OtherEffectManager.h"
 
 /////////////////////////////Component///////////////////////////////////

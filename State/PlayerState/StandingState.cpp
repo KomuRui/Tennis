@@ -107,6 +107,7 @@ void StandingState::HandleInput(PlayerBase* player)
 				player->GetState()->ChangeState(player->GetState()->playerBackhanding_, player);
 			}
 		}
+		player->GetState()->ChangeState(player->GetState()->playerServing_, player);
 	}
 }
 

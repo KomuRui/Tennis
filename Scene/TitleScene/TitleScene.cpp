@@ -7,11 +7,11 @@
 namespace
 {
 	static const float RATATION_SPEED = 0.5f;                  //回転速度
-	static const XMFLOAT3 CAM_POS = { 0, 10.67f, 24.17f };     //カメラの位置
-	static const XMFLOAT3 CAM_TAR = { 0, -2.27f, 0 };           //カメラのターゲット
+	static const XMFLOAT3 CAM_POS = { -2, 3.67f, 20.17f };     //カメラの位置
+	static const XMFLOAT3 CAM_TAR = { 0, -2.27f, 0 };          //カメラのターゲット
 															   
 	static const XMFLOAT3 CAM_POS_2 = { 0, 10.67f, -24.17f };  //カメラの位置
-	static const XMFLOAT3 CAM_TAR_2 = { 0, -2.27f, 0 };          //カメラのターゲット
+	static const XMFLOAT3 CAM_TAR_2 = { 0, -2.27f, 0 };        //カメラのターゲット
 
 	static const XMFLOAT3 CAM_POS_TOW_WINDOW = { 0, 20, 0 };   //カメラの位置2
 	static const XMFLOAT3 CAM_TAR_TOW_WINDOW = { 0, 0, 0 };    //カメラのターゲット2
@@ -63,7 +63,7 @@ void TitleScene::Initialize()
 
 	////////////////////////Player人数設定/////////////////////////////////
 
-	GameManager::SetPlayers(Players::TWO);
+	GameManager::SetPlayers(Players::ONE);
 }
 
 //更新の前に一度だけ呼ばれる更新

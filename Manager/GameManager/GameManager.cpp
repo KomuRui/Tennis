@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "../../Engine/System.h"
+#include "../../OtherObject/TitleScene/Referee.h"
 #include <cmath>
 
 //ゲームのいろいろな管理をする
@@ -15,6 +16,9 @@ namespace GameManager
 
 	//シーンマネージャーのポインタ格納用
 	SceneManager* pSceneManager_;
+
+	//審判
+	Referee* referee_;
 
 	//プレイヤー人数
 	Players player_;
@@ -34,9 +38,6 @@ namespace GameManager
 		//テキストマネージャの初期化
 		TextManager::Initialize();
 
-		//スコアマネージャーの初期化
-		ScoreManager::Initialize();
-
 		//基準点のマネージャーを初期化
 		BasePointManager::Initialize();
 
@@ -48,6 +49,7 @@ namespace GameManager
 		ARGUMENT_INITIALIZE(pNowStage_, nullptr);
 		ARGUMENT_INITIALIZE(pSceneManager_, nullptr);
 		ARGUMENT_INITIALIZE(player_, Players::ONE);
+		ARGUMENT_INITIALIZE(referee_, new Referee());
 		ARGUMENT_INITIALIZE(nowPlayerRegistration_, ZERO);
 	}
 
@@ -57,7 +59,6 @@ namespace GameManager
 		//いろいろ初期化状態にしておく
 		Light::Initialize();
 		Fade::SceneTransitionInitialize();
-		ScoreManager::SceneTransitionInitialize();
 	}
 
 	//更新
@@ -70,14 +71,14 @@ namespace GameManager
 		BasePointManager::Update();
 	}
 
-	//描画(コインの取得数やPlayerライフの表示)
+	//描画
 	void GameManager::Draw()
 	{
+		//スコアとか表示
+		referee_->Draw();
+
 		//Uiなどを表示
 		ImageManager::UiDraw();
-
-		//スコアマネージャーの描画
-		ScoreManager::Draw();
 
 		//フェード用の描画
 		Fade::Draw();

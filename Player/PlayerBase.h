@@ -48,6 +48,11 @@ public:
 	/// </summary>
 	void CameraBehavior();
 
+	/// <summary>
+	/// サーブレシーブ時のカメラの処理
+	/// </summary>
+	void ServeReceiveCameraBehavior();
+
 	/////////////////////セットゲット関数//////////////////////
 
 	/// <summary>

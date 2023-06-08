@@ -148,3 +148,8 @@ void PlayerBase::CameraBehavior()
     }
 }
 
+//サーブレシーブ時のカメラの処理
+void PlayerBase::ServeReceiveCameraBehavior()
+{
+
+}
