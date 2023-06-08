@@ -14,8 +14,8 @@ namespace
 	static const XMFLOAT3 PLAYER_END_ROTATION_ANGLE = { 0,230,0 };         //プレイヤーの終了角度
 	static const XMFLOAT3 RACKET_END_ROTATION_ANGLE = { -75,-265,-240 };   //ラケットの終了角度
 
-	static const float SERVE_PULL_TIME = 0.2f;       //フォアハンドの引く時間
-	static const float SERVE_HIT_TIME = 0.2f;        //フォアハンドの打つ時間
+	static const float SERVE_PULL_TIME = 0.4f;       //サーブの引く時間
+	static const float SERVE_HIT_TIME = 0.2f;        //サーブの打つ時間
 }
 
 
@@ -37,7 +37,7 @@ void ServingState::Update3D(PlayerBase* player)
 
 		//各角度を求める
 		player->GetComponent<Transform>()->SetRotate(VectorToFloat3(PLAYER_CHARGE_ROTATION_ANGLE - (PLAYER_CHARGE_ROTATION_ANGLE - PLAYER_END_ROTATION_ANGLE) * ratio));
-		player->GetRacket()->GetComponent<Transform>()->SetRotate(VectorToFloat3(RACKET_CHARGE_ROTATION_ANGLE - (RACKET_CHARGE_ROTATION_ANGLE - RACKET_END_ROTATION_ANGLE) * ratio));
+		player->GetRacket()->GetComponent<Transform>()->SetRotate(VectorToFloat3(XMVectorLerp(XMLoadFloat3(&RACKET_CHARGE_ROTATION_ANGLE), XMLoadFloat3(&RACKET_END_ROTATION_ANGLE), ratio)));
 
 		//もし回転が最後まで終わったのなら
 		if (ratio >= 1)
@@ -60,7 +60,7 @@ void ServingState::Update3D(PlayerBase* player)
 
 		//各角度を求める
 		player->GetComponent<Transform>()->SetRotate(VectorToFloat3(PLAYER_CHARGE_ROTATION_ANGLE - (PLAYER_CHARGE_ROTATION_ANGLE - PLAYER_START_ROTATION_ANGLE) * ratio));
-		player->GetRacket()->GetComponent<Transform>()->SetRotate(VectorToFloat3(XMVectorLerp(XMLoadFloat3(&RACKET_START_ROTATION_ANGLE), XMLoadFloat3(&PLAYER_CHARGE_ROTATION_ANGLE), ratio)));
+		player->GetRacket()->GetComponent<Transform>()->SetRotate(VectorToFloat3(XMVectorLerp(XMLoadFloat3(&RACKET_START_ROTATION_ANGLE), XMLoadFloat3(&RACKET_CHARGE_ROTATION_ANGLE), ratio)));
 
 		//1以上にならないように
 		ARGUMENT_INITIALIZE(ratio, min<float>(ratio, 1.0f));

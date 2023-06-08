@@ -3,6 +3,7 @@
 #include "../../Player/PlayerBase.h"
 #include "../../OtherObject/TitleScene/Racket.h"
 #include "../../OtherObject/TitleScene/Ball.h"
+#include "../../OtherObject/TitleScene/Referee.h"
 #include <math.h>
 
 
@@ -18,7 +19,7 @@ namespace
 
 //コンストラクタ
 PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR),hTime_(Time::Add()), 
-    isRestorePosture_(false), isHitMove_(false), buttonCode_(XINPUT_GAMEPAD_A), hChargeEffectName_("chargeEffect"), chargeTime_(ZERO), playerNum_(ZERO)
+    isRestorePosture_(false), isHitMove_(false),buttonCode_(XINPUT_GAMEPAD_A), hChargeEffectName_("chargeEffect"), chargeTime_(ZERO), playerNum_(ZERO)
 {
     playerStanding_ = new StandingState;
     playerForehanding_ = new ForehandingState;
@@ -37,15 +38,10 @@ void PlayerStateManager::Update2D(PlayerBase* player)
 //3D用更新
 void PlayerStateManager::Update3D(PlayerBase* player)
 {
-    if (playerNum_ == 1)
-        hChargeEffectName_ = "chargeEffect1";
 
     //立っている状態じゃないのなら
-    if (playerState_ != PlayerStateManager::playerStanding_)
+    if (playerState_ != playerStanding_)
     {
-        //現在の状態の更新を呼ぶ
-        playerState_->Update3D(player);
-
         //タイマー初期化
         Time::Reset(hTime_);
         Time::Lock(hTime_);
@@ -84,6 +80,20 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     {
         PadLx *= -1;
         PadLy *= -1;
+    }
+
+    //サーブ状態かつサーバーなら
+    if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE &&
+       (GameManager::GetReferee()->IsPlayer1Server() == playerNum_ == 0 ||
+        GameManager::GetReferee()->IsPlayer2Server() == playerNum_ == 1))
+    {
+        //サーブの時の移動処理
+        ServeMove(player, PadLx, PadLy);
+
+        //現在の状態の更新を呼ぶ
+        playerState_->Update3D(player);
+
+        return;
     }
 
     //少しでも動いたのなら
@@ -163,4 +173,30 @@ void PlayerStateManager::ChangeState(PlayerState* change, PlayerBase* player)
 {
     playerState_ = change;
     playerState_->Enter(player);
+}
+
+/// <summary>
+/// サーブの時の移動
+/// </summary>
+void PlayerStateManager::ServeMove(PlayerBase* player, float padLx, float padLy)
+{
+    //少しでも動いたのなら
+    if (padLx != ZERO || padLy != ZERO)
+    {
+        //アニメーションはしない
+        ModelManager::SetAnimFlag(player->GetModelNum(), false);
+
+        //回転行列
+        XMMATRIX rotateX, rotateY, rotateZ;
+        rotateX = XMMatrixRotationX(XMConvertToRadians(ZERO));
+        rotateY = XMMatrixRotationY(XMConvertToRadians(XMConvertToDegrees(atan2(-padLx,0))));
+        rotateZ = XMMatrixRotationZ(XMConvertToRadians(ZERO));
+        XMMATRIX matRotate = rotateZ * rotateX * rotateY;
+
+        //移動
+        XMFLOAT3 moveValue = VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * 0.5f, matRotate));
+        ARGUMENT_INITIALIZE(moveValue.z, ZERO);
+        player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), moveValue));
+        player->GetComponent<Transform>()->SetPositionX(Clamp<float>(player->GetComponent<Transform>()->GetPosition().x, 0, -4));
+    }
 }

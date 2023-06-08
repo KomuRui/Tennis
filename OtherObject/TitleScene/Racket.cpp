@@ -8,7 +8,7 @@
 //定数
 namespace
 {		
-	static const int RACKET_START_ROTATION_ANGLE = -185; //ラケットの開始角度
+	static const XMFLOAT3 RACKET_START_ROTATION_ANGLE = { 0,-185,0 };  //ラケットの開始角度
 
 	////////////////コライダー///////////////////
 
@@ -36,6 +36,9 @@ Racket::~Racket()
 //初期化
 void Racket::ChildInitialize()
 {
+	//角度修正
+	ARGUMENT_INITIALIZE(transform_->rotate_, RACKET_START_ROTATION_ANGLE);
+
 	//明るさ最大値に設定
 	ModelManager::SetBrightness(hModel_, 1.0f);
 	
@@ -84,9 +87,6 @@ void Racket::ChildInitialize()
 
 	//Mayaで原点を0,0,0に設定した分戻す
 	ARGUMENT_INITIALIZE(transform_->position_, XMFLOAT3(0.643f,0.835f,0.011f));
-		
-	//開始角度を設定
-	transform_->SetRotateY(RACKET_START_ROTATION_ANGLE);
 
 	//どっちのコートに向かうか保存
 	if(((PlayerBase*)GetParent())->GetState()->GetPlayerNum() == 0)

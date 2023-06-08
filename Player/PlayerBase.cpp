@@ -2,12 +2,14 @@
 #include "../Engine/System.h"
 #include "../OtherObject/TitleScene/Racket.h"
 #include "../OtherObject/TitleScene/Ball.h"
+#include "../OtherObject/TitleScene/Referee.h"
 
 ////定数
 namespace
 {
     ///////////////キャラの必要な情報///////////////////
 
+    static const XMFLOAT3 PLAYER_START_ROTATION_ANGLE = { 0,240,0 };   //プレイヤーの開始角度
     static const float PLAYER_ANIM_SPEED = 2.0f;   //アニメーションの再生速度
     static const int ANIM_START_FRAME = 1;         //アニメーションの開始フレーム
     static const int ANIM_END_FRAME = 60;		   //アニメーションの終了フレーム
@@ -24,7 +26,8 @@ PlayerBase::PlayerBase(GameObject* parent, std::string modelFilePath_, std::stri
 
     ///////////////////カメラ///////////////////////
 
-    camVec_(XMVectorSet(ZERO,ZERO,ZERO,ZERO))
+    camVec_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
+    camVec2_(XMVectorSet(ZERO,ZERO,ZERO,ZERO))
 
 {
 }
@@ -39,6 +42,10 @@ void PlayerBase::ChildInitialize()
     //状態
     ARGUMENT_INITIALIZE(pState_->playerState_ , pState_->playerStanding_);
     pState_->SetPlayerNum(GameManager::SetPlayer(this));
+
+    //角度修正
+    if (pState_->GetPlayerNum() == 0 && GameManager::GetReferee()->IsPlayer1Server() || pState_->GetPlayerNum() == 1 && GameManager::GetReferee()->IsPlayer2Server())
+        ARGUMENT_INITIALIZE(transform_->rotate_, PLAYER_START_ROTATION_ANGLE);
 
     //明るさ最大に
     ModelManager::SetBrightness(hModel_, 1.0f);
@@ -77,8 +84,11 @@ void PlayerBase::ChildUpdate()
     //更新
     pState_->Update3D(this);
 
-    //カメラの挙動
-    CameraBehavior();
+    //カメラの挙動(サーブレシーブの時とラリー中の時のカメラを分ける)
+    if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE)
+        ServeReceiveCameraBehavior();
+    else
+        CameraBehavior();
 }
 
 //カメラの処理
@@ -151,5 +161,19 @@ void PlayerBase::CameraBehavior()
 //サーブレシーブ時のカメラの処理
 void PlayerBase::ServeReceiveCameraBehavior()
 {
-
+    //1人目のプレイヤーなら
+    if (pState_->GetPlayerNum() == 0)
+    {
+        XMFLOAT3 pos = Camera::GetPosition();
+        XMFLOAT3 nextPos = { (transform_->position_.x - XMVectorGetX(camVec_)), (transform_->position_.y - XMVectorGetY(camVec_)), (transform_->position_.z - XMVectorGetZ(camVec_)) };
+        nextPos = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&pos), XMLoadFloat3(&nextPos), 0.05f));
+        Camera::SetPosition(nextPos);
+    }
+    else
+    {
+        XMFLOAT3 pos = Camera::GetPositionTwo();
+        XMFLOAT3 nextPos = { (transform_->position_.x - XMVectorGetX(camVec_)), (transform_->position_.y - XMVectorGetY(camVec_)), (transform_->position_.z - XMVectorGetZ(camVec_)) };
+        nextPos = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&pos), XMLoadFloat3(&nextPos), 0.05f));
+        Camera::SetPositionTwo(nextPos);
+    }
 }

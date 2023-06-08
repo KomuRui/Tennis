@@ -57,6 +57,13 @@ public:
 	//状態チェンジ用
 	void ChangeState(PlayerState* change, PlayerBase* player);
 
+	/// <summary>
+	/// サーブの時の移動
+	/// </summary>
+	void ServeMove(PlayerBase* player,float padLx, float padLy);
+
+	///////////////////////////////////セッター・ゲッター///////////////////////////////////////
+
 	//元の姿勢に戻すかどうか設定
 	void SetRestorePosture(bool flag) { isRestorePosture_ = flag; }
 
@@ -91,7 +98,11 @@ public:
 	int GetPlayerNum() { return playerNum_; }
 
 	//プレイヤー番号を設定
-	void SetPlayerNum(int num) { playerNum_ = num; }
+	void SetPlayerNum(int num) { 
+
+		playerNum_ = num;
+		if (playerNum_ == 1) hChargeEffectName_ = "chargeEffect1";
+	}
 };
 
 

@@ -4,6 +4,7 @@
 #include "../../Player/PlayerBase.h"
 #include "../../OtherObject/TitleScene/Racket.h"
 #include "../../OtherObject/TitleScene/Ball.h"
+#include "../../OtherObject/TitleScene/Referee.h"
 
 //更新
 void StandingState::Update2D(PlayerBase* player)
@@ -62,6 +63,15 @@ void StandingState::HandleInput(PlayerBase* player)
 		ARGUMENT_INITIALIZE(isShot, true);
 	}
 
+	//打つボタンを押してかつサーブレシーブ中かつサーバーなら
+	if (isShot && GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE &&
+	   (GameManager::GetReferee()->IsPlayer1Server() == player->GetState()->GetPlayerNum() == 0 ||
+        GameManager::GetReferee()->IsPlayer2Server() == player->GetState()->GetPlayerNum() == 1))
+	{
+		player->GetState()->ChangeState(player->GetState()->playerServing_, player);
+		return;
+	}
+
 	//打ったのなら
 	if (isShot)
 	{
@@ -107,7 +117,7 @@ void StandingState::HandleInput(PlayerBase* player)
 				player->GetState()->ChangeState(player->GetState()->playerBackhanding_, player);
 			}
 		}
-		player->GetState()->ChangeState(player->GetState()->playerServing_, player);
+
 	}
 }
 

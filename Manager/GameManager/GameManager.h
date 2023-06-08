@@ -3,6 +3,7 @@
 #include "../../Player/PlayerBase.h"
 #include "../../Manager/SceneManager/SceneManager.h"
 
+
 //画面総数
 enum class Players
 {
@@ -10,6 +11,8 @@ enum class Players
 	TWO, //二人プレイ
 	MAX
 };
+
+class Referee;
 
 //ゲームのいろいろな管理をする
 namespace GameManager
@@ -73,6 +76,12 @@ namespace GameManager
 	/// </summary>
 	/// <returns>プレイヤー番号</returns>
 	int  SetPlayer(PlayerBase* p);
+
+	/// <summary>
+	/// 審判取得
+	/// </summary>
+	/// <returns>審判</returns>
+	Referee* GetReferee();
 
 	/// <summary>
 	/// 引数のプレイヤー以外のプレイヤーを取得

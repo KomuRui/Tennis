@@ -116,6 +116,9 @@ namespace GameManager
 	//プレイヤーセット
 	int  GameManager::SetPlayer(PlayerBase* p) { playerlist_.push_back(p); return nowPlayerRegistration_++; }
 
+	//審判取得
+	Referee* GameManager::GetReferee() { return referee_; }
+
 	//引数のプレイヤー以外のプレイヤーを取得
 	PlayerBase* GetNotMyPlayer(PlayerBase* p)
 	{
