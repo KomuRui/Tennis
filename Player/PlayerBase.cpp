@@ -95,7 +95,7 @@ void PlayerBase::CameraBehavior()
     vector<float> xPos; //X‚ÌˆÊ’u‚ðŠi”[‚·‚é—p
 
     //ƒ{[ƒ‹‚ðŽæ“¾
-    Ball* pBall = ((Ball*)FindObject("Ball"));
+    Ball* pBall = GameManager::GetpBall();
     if (pBall)
     {
         zPos.push_back(pBall->GetComponent<Transform>()->GetPosition().z);

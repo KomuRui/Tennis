@@ -14,6 +14,9 @@ namespace GameManager
 	//現在の使用されているステージのポインタ格納用
 	Stage* pNowStage_;
 
+	//現在の使用されているボールのポインタ格納用
+	Ball* pNowBall_;
+
 	//シーンマネージャーのポインタ格納用
 	SceneManager* pSceneManager_;
 
@@ -47,6 +50,7 @@ namespace GameManager
 		//各変数初期化
 		ARGUMENT_INITIALIZE(pNowPlayer_, nullptr);
 		ARGUMENT_INITIALIZE(pNowStage_, nullptr);
+		ARGUMENT_INITIALIZE(pNowBall_, nullptr);
 		ARGUMENT_INITIALIZE(pSceneManager_, nullptr);
 		ARGUMENT_INITIALIZE(player_, Players::ONE);
 		ARGUMENT_INITIALIZE(referee_, new Referee());
@@ -106,6 +110,12 @@ namespace GameManager
 
 	//シーンマネージャーのポインタゲット
 	SceneManager* GameManager::GetpSceneManager() { return pSceneManager_; }
+
+	//ボールのポインタセット
+	void GameManager::SetpBall(Ball* ball) { pNowBall_ = ball; }
+
+	//ボールのポインタゲット
+	Ball* GameManager::GetpBall() { return pNowBall_; }
 
 	//プレイヤー人数の設定
 	void GameManager::SetPlayers(Players s) { player_ = s; }

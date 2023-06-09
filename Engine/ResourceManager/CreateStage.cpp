@@ -80,7 +80,7 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	}
 	if (inName == "Ball")
 	{
-		InstantiateNormal<Ball>(parent, ModelPathName, inName, t);
+		GameManager::SetpBall(InstantiateNormal<Ball>(parent, ModelPathName, inName, t));
 	}
 
 	/////////////////////Camera////////////////////////

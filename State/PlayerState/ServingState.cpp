@@ -53,6 +53,9 @@ void ServingState::Update3D(PlayerBase* player)
 			//\‚¦‚Ä‚¢‚È‚¢‚ÉÝ’è
 			ARGUMENT_INITIALIZE(isCharge_, false);
 
+			//Œ³‚ÌŽp¨‚É–ß‚·‚æ‚¤‚É
+			player->GetState()->SetRestorePosture(true);
+
 			//‘Å‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
 			player->GetState()->SetHitMove(false);
 		}

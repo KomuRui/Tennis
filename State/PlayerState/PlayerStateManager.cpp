@@ -10,11 +10,11 @@
 ////定数
 namespace
 {
-    static const int RACKET_END_ROTATION_ANGLE = -185;   //ラケットの終了角度
-    static const float RUN_SPEED = 1.5f;                 //走っているときのキャラのスピード
-    static const float PLAYER_WALK_ANIM_SPEED = 1.0f;    //アニメーションの再生速度
-    static const float ANIM_RUN_SPEED = 2.0f;            //アニメーションの再生速度(走ってるとき)
-    static const float POSSTURE_RESTORE_TIME = 5.0f;     //元の姿勢に戻す時間
+    static const XMFLOAT3 RACKET_END_ROTATION_ANGLE = { 0,-185,0 }; //ラケットの終了角度
+    static const float RUN_SPEED = 1.5f;                            //走っているときのキャラのスピード
+    static const float PLAYER_WALK_ANIM_SPEED = 1.0f;               //アニメーションの再生速度
+    static const float ANIM_RUN_SPEED = 2.0f;                       //アニメーションの再生速度(走ってるとき)
+    static const float POSSTURE_RESTORE_TIME = 5.0f;                //元の姿勢に戻す時間
 }
 
 //コンストラクタ
@@ -57,8 +57,8 @@ void PlayerStateManager::Update3D(PlayerBase* player)
         float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / POSSTURE_RESTORE_TIME);
 
         //各角度を求める
-        player->GetRacket()->GetComponent<Transform>()->SetRotateY(player->GetRacket()->GetComponent<Transform>()->GetRotate().y - (player->GetRacket()->GetComponent<Transform>()->GetRotate().y - RACKET_END_ROTATION_ANGLE) * ratio);
-
+        player->GetRacket()->GetComponent<Transform>()->SetRotate(VectorToFloat3(XMVectorLerp(XMLoadFloat3(new XMFLOAT3(player->GetRacket()->GetComponent<Transform>()->GetRotate())), XMLoadFloat3(&RACKET_END_ROTATION_ANGLE), ratio)));
+        
         //もし回転が最後まで終わったのなら
         if (ratio >= 1)
         {

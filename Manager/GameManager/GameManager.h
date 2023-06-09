@@ -2,6 +2,7 @@
 #include "../../Stage.h"
 #include "../../Player/PlayerBase.h"
 #include "../../Manager/SceneManager/SceneManager.h"
+#include "../../OtherObject/TitleScene/Ball.h"
 
 
 //画面総数
@@ -64,6 +65,12 @@ namespace GameManager
 
 	//シーンマネージャーのポインタゲット
 	SceneManager* GetpSceneManager();
+
+	//ボールのポインタセット
+	void SetpBall(Ball* ball);
+
+	//ボールのポインタゲット
+	Ball* GetpBall();
 
 	//プレイヤー人数の設定
 	void SetPlayers(Players s);
