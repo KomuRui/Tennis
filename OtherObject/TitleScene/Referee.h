@@ -17,6 +17,9 @@ class Referee
 	Score* score_;	       //スコア
 	GameStatus status_;    //試合状態
 
+	PlayerBase* server_;   //サーバー
+	PlayerBase* receiver_; //レシーバー
+
 	bool isPlayer1Server_; //Player1がサーバーかどうか
 
 public:
@@ -61,5 +64,29 @@ public:
 	/// </summary>
 	/// <returns>trueならサーバー</returns>
 	bool IsPlayer2Server() { return !isPlayer1Server_; }
+
+	/// <summary>
+	/// サーバーのプレイヤーを取得
+	/// </summary>
+	/// <returns>サーバーのプレイヤー</returns>
+	PlayerBase* GetServer() { return server_; }
+
+	/// <summary>
+	/// レシーバーのプレイヤーを取得
+	/// </summary>
+	/// <returns>レシーバーのプレイヤー</returns>
+	PlayerBase* GetReceiver() { return receiver_; }
+
+	/// <summary>
+	/// サーバーをセット
+	/// </summary>
+	/// <param name="p">プレイヤー</param>
+	void SetServer(PlayerBase* p) { server_ = p; }
+	
+	/// <summary>
+	/// レシーバーをセット
+	/// </summary>
+	/// <param name="p">プレイヤー</param>
+	void SetReceiver(PlayerBase* p) { receiver_ = p; }
 };
 

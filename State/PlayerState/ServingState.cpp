@@ -15,7 +15,7 @@ namespace
 	static const XMFLOAT3 PLAYER_END_ROTATION_ANGLE = { 0,230,0 };         //プレイヤーの終了角度
 	static const XMFLOAT3 RACKET_END_ROTATION_ANGLE = { -75,-265,-240 };   //ラケットの終了角度
 
-	static const float SERVE_PULL_TIME = 0.4f;       //サーブの引く時間
+	static const float SERVE_PULL_TIME = 0.2f;       //サーブの引く時間
 	static const float SERVE_HIT_TIME = 0.2f;        //サーブの打つ時間
 }
 
@@ -52,9 +52,6 @@ void ServingState::Update3D(PlayerBase* player)
 
 			//構えていないに設定
 			ARGUMENT_INITIALIZE(isCharge_, false);
-
-			//元の姿勢に戻すように
-			player->GetState()->SetRestorePosture(true);
 
 			//打っていない状態にする
 			player->GetState()->SetHitMove(false);
@@ -109,6 +106,9 @@ void ServingState::Enter(PlayerBase* player)
 {
 	//タイマー追加
 	ARGUMENT_INITIALIZE(hTime_, Time::Add());
+
+	//元の姿勢に戻すように
+	player->GetState()->SetRestorePosture(true);
 
 	//構えていないに設定
 	ARGUMENT_INITIALIZE(isCharge_, true);

@@ -189,11 +189,17 @@ void PlayerStateManager::Move(PlayerBase* player, float padLx, float padLy)
 /// </summary>
 void PlayerStateManager::ServeMove(PlayerBase* player, float padLx, float padLy)
 {
+    //構えていないのなら
+    if (!playerServing_->IsCharge())
+    {
+        //ボール位置を修正する
+        XMFLOAT3 ballPos = ModelManager::GetBonePosition(player->GetModelNum(), "Left");
+        GameManager::GetpBall()->GetComponent<Transform>()->SetPosition(ballPos);
+    }
+
     //少しでも動いてるかつ構えていなければ
     if ((padLx != ZERO || padLy != ZERO) && !playerServing_->IsCharge())
     {
-        
-
         //アニメーションはしない
         ModelManager::SetAnimFlag(player->GetModelNum(), false);
 

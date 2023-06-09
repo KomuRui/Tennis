@@ -51,9 +51,10 @@ void PlayerBase::ChildInitialize()
     ARGUMENT_INITIALIZE(pState_->playerState_ , pState_->playerStanding_);
     pState_->SetPlayerNum(GameManager::SetPlayer(this));
 
-    //角度修正
+    //サーバーだけ角度修正
     if (pState_->GetPlayerNum() == 0 && GameManager::GetReferee()->IsPlayer1Server() || pState_->GetPlayerNum() == 1 && GameManager::GetReferee()->IsPlayer2Server())
         ARGUMENT_INITIALIZE(transform_->rotate_, PLAYER_START_ROTATION_ANGLE);
+
 
     //明るさ最大に
     ModelManager::SetBrightness(hModel_, 1.0f);

@@ -68,6 +68,7 @@ void StandingState::HandleInput(PlayerBase* player)
 	   (GameManager::GetReferee()->IsPlayer1Server() == player->GetState()->GetPlayerNum() == 0 ||
         GameManager::GetReferee()->IsPlayer2Server() == player->GetState()->GetPlayerNum() == 1))
 	{
+		GameManager::GetpBall()->SetTossUp(true);
 		player->GetState()->ChangeState(player->GetState()->playerServing_, player);
 		return;
 	}
@@ -81,7 +82,7 @@ void StandingState::HandleInput(PlayerBase* player)
 		EffectManager::Draw(player->GetState()->GetChargeEffectNum(),"Effect/charge.txt",pos);
 
 		//ボールのポインタ
-		Ball* pBall = ((Ball*)player->FindObject("Ball"));
+		Ball* pBall = GameManager::GetpBall();
 
 		//各ポジションを記憶
 		float ballEndX = pBall->GetSpecifyPosZBallPosition(player->GetComponent<Transform>()->GetPosition().z).x;

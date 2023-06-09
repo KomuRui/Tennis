@@ -16,41 +16,77 @@ namespace
 	static const float MAX_POS_Z = 11.9f;           //最大Z値
 	static const float MIN_POS_X = -4.34f;          //最小X値
 	static const float MIN_POS_Z = -11.9f;          //最小Z値
+	static const XMVECTOR TOSS_UP_VALUE = { ZERO,0.4f,ZERO,ZERO };    //トスアップの時の値
 
 	static const XMFLOAT4 AMBIENT_COLOR = { 1.0f, 1.0f, ZERO, ZERO }; //アンビエント色
 }
 
 //コンストラクタ
 Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
-	:NormalObject(parent, modelPath, name), ratio_(ZERO), strength_(ZERO,ZERO), endPointDirection_(XMVectorSet(ZERO, ZERO, ZERO, ZERO)),
-	startPoint_(ZERO, ZERO, ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO,ZERO), pLine_(nullptr),
-	hLandEffectName_("LandEffect"), hDropEffectName_("DropEffect"), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO), dropEffectFilePath_("Effect/SliceDrop.txt")
+	:NormalObject(parent, modelPath, name)
 {
+	hShadowModel_ = ZERO;
+	ballInfo_.ratio_ = ZERO;
+	ballInfo_.hTime_ = ZERO;
+	ballInfo_.boundCount_ = ZERO;
+	ballInfo_.hTime_ = ZERO;
+	ballInfo_.moveTime_ = 1.0f;
+	ballInfo_.strength_ = { ZERO,ZERO };
+	ballInfo_.v0_ = { ZERO,ZERO };
+	ballInfo_.endPointDirection_ = XMVectorSet(ZERO, ZERO, ZERO, ZERO);
+	ballInfo_.tossUpVector_ = TOSS_UP_VALUE;
+	ballInfo_.startPoint_ = { ZERO, ZERO, ZERO };
+	ballInfo_.endPoint_ = { ZERO, ZERO, ZERO };
+	ballInfo_.pLine_ = nullptr;
+	ballInfo_.isGoToBasePoint_ = true;
+	ballInfo_.isTossUp_ = false;
+	ballInfo_.hLandEffectName_ = "LandEffect";
+	ballInfo_.hDropEffectName_ = "DropEffect";
+	ballInfo_.dropEffectFilePath_ = "Effect/SliceDrop.txt";
+	ballInfo_.ballStatus_ = BallStatus::PLAYER_HAV_BALL;
 }
 
 Ball::Ball(GameObject* parent)
-	:NormalObject(parent, "Ball/Ball.fbx", "Ball"), ratio_(ZERO), strength_(ZERO, ZERO), endPointDirection_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
-	startPoint_(ZERO,ZERO,ZERO), endPoint_(ZERO, ZERO, ZERO), hTime_(ZERO), moveTime_(1.0f), v0_(ZERO, ZERO), pLine_(nullptr),
-	hLandEffectName_("LandEffect"), hDropEffectName_("DropEffect"), isGoToBasePoint_(true), ballStatus_(BallStatus::PURPOSE_MOVE), boundCount_(ZERO), hShadowModel_(ZERO), dropEffectFilePath_("Effect/SliceDrop.txt")
-{}
+	:NormalObject(parent, "Ball/Ball.fbx", "Ball")
+{
+	hShadowModel_ = ZERO;
+	ballInfo_.ratio_ = ZERO;
+	ballInfo_.hTime_ = ZERO;
+	ballInfo_.boundCount_ = ZERO;
+	ballInfo_.hTime_ = ZERO;
+	ballInfo_.moveTime_ = 1.0f;
+	ballInfo_.strength_ = { ZERO,ZERO };
+	ballInfo_.v0_ = { ZERO,ZERO };
+	ballInfo_.endPointDirection_ = XMVectorSet(ZERO, ZERO, ZERO, ZERO);
+	ballInfo_.tossUpVector_ = TOSS_UP_VALUE;
+	ballInfo_.startPoint_ = { ZERO, ZERO, ZERO };
+	ballInfo_.endPoint_ = { ZERO, ZERO, ZERO };
+	ballInfo_.pLine_ = nullptr;
+	ballInfo_.isGoToBasePoint_ = true;
+	ballInfo_.isTossUp_ = false;
+	ballInfo_.hLandEffectName_ = "LandEffect";
+	ballInfo_.hDropEffectName_ = "DropEffect";
+	ballInfo_.dropEffectFilePath_ = "Effect/SliceDrop.txt";
+	ballInfo_.ballStatus_ = BallStatus::PLAYER_HAV_BALL;
+}
 
 //初期化
 void Ball::ChildInitialize()
 {
 	//各初期化
-	ARGUMENT_INITIALIZE(transform_->position_, BasePointManager::GetRandomBasePoint(true));
-	ARGUMENT_INITIALIZE(startPoint_, transform_->position_);
-	ARGUMENT_INITIALIZE(endPoint_,BasePointManager::GetRandomBasePoint(false));
-	ARGUMENT_INITIALIZE(endPointDirection_,endPoint_ - startPoint_);
-	ARGUMENT_INITIALIZE(strength_.x, Random(1, 5));
-	ARGUMENT_INITIALIZE(strength_.y, Random(2, 5));
-	ARGUMENT_INITIALIZE(moveTime_, 0.7f);
-	ARGUMENT_INITIALIZE(hTime_, Time::Add());
-	ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-	ARGUMENT_INITIALIZE(pLine_, new PolyLine);
-	pLine_->Load("Image/Effect/circle_Wh.png");
-	pLine_->AddPosition(transform_->position_);
+	//ARGUMENT_INITIALIZE(transform_->position_, BasePointManager::GetRandomBasePoint(true));
+	//ARGUMENT_INITIALIZE(startPoint_, transform_->position_);
+	//ARGUMENT_INITIALIZE(endPoint_,BasePointManager::GetRandomBasePoint(false));
+	//ARGUMENT_INITIALIZE(endPointDirection_,endPoint_ - startPoint_);
+	//ARGUMENT_INITIALIZE(strength_.x, Random(1, 5));
+	//ARGUMENT_INITIALIZE(strength_.y, Random(2, 5));
+	//ARGUMENT_INITIALIZE(moveTime_, 0.7f);
+	//ARGUMENT_INITIALIZE(hTime_, Time::Add());
+	//ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
+	//ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
+	ARGUMENT_INITIALIZE(ballInfo_.pLine_, new PolyLine);
+	ballInfo_.pLine_->Load("Image/Effect/circle_Wh.png");
+	ballInfo_.pLine_->AddPosition(transform_->position_);
 
 	//影のモデルロード
 	ARGUMENT_INITIALIZE(hShadowModel_, ModelManager::Load("Ball/BallShadow.fbx"));
@@ -60,12 +96,12 @@ void Ball::ChildInitialize()
 	SetShadow(false);
 
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
-	XMFLOAT3 pos = endPoint_;
-	ARGUMENT_INITIALIZE(pos.y, LANDING_EFFECT_POS_Y);
-	OtherEffectManager::LandingEffect(hLandEffectName_,pos, moveTime_);
+	//XMFLOAT3 pos = endPoint_;
+	//ARGUMENT_INITIALIZE(pos.y, LANDING_EFFECT_POS_Y);
+	//OtherEffectManager::LandingEffect(hLandEffectName_,pos, moveTime_);
 
 	//雫みたいなエフェクト表示
-	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_->position_);
+	//EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_->position_);
 
 	//当たり判定
 	sphere_ = AddComponent<SphereCollider>();
@@ -76,14 +112,14 @@ void Ball::ChildInitialize()
 	ModelManager::SetAmbient(hModel_, AMBIENT_COLOR);
 
 	//タイムスタート
-	Time::UnLock(hTime_);
+	Time::UnLock(ballInfo_.hTime_);
 }
 
 //更新
 void Ball::ChildUpdate()
 {
 	//状態ごとに分ける
-	switch (ballStatus_)
+	switch (ballInfo_.ballStatus_)
 	{
 
 	//目的地まで移動
@@ -96,9 +132,9 @@ void Ball::ChildUpdate()
 		BoundMove();
 		break;
 
-	//サーブ移動
-	case BallStatus::SERVE_MOVE:
-		ServeMove();
+	//プレイヤーがボールを持っている状態
+	case BallStatus::PLAYER_HAV_BALL:
+		PlayerHavingBall();
 		break;
 
 	//停止
@@ -123,34 +159,34 @@ void Ball::ChildDraw()
 	ModelManager::Draw(hShadowModel_);
 
 	//ポリライン描画
-	pLine_->Draw();
+	ballInfo_.pLine_->Draw();
 }
 
 //目的地まで移動
 void Ball::MoveToPurpose()
 {
 	//どのくらいの割合時間がたったか求める(0～1)
-	ARGUMENT_INITIALIZE(ratio_, (Time::GetTimef(hTime_) / moveTime_));
+	ARGUMENT_INITIALIZE(ballInfo_.ratio_, (Time::GetTimef(ballInfo_.hTime_) / ballInfo_.moveTime_));
 
 	//0～1の範囲におさめる
-	ARGUMENT_INITIALIZE(ratio_, std::min<float>(ratio_, MAX_RATIO));
+	ARGUMENT_INITIALIZE(ballInfo_.ratio_, std::min<float>(ballInfo_.ratio_, MAX_RATIO));
 
 	//現在の位置
-	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * ratio_));
-	nowPos.y = ((v0_.y * sin(XMConvertToRadians(ANGLE)) * ratio_) - (0.5f * GRAVITY * ratio_ * ratio_)) * strength_.y;
-	nowPos.y += startPoint_.y * (MAX_RATIO - ratio_);
+	XMFLOAT3 nowPos = VectorToFloat3(ballInfo_.startPoint_ + (ballInfo_.endPointDirection_ * ballInfo_.ratio_));
+	nowPos.y = ((ballInfo_.v0_.y * sin(XMConvertToRadians(ANGLE)) * ballInfo_.ratio_) - (0.5f * GRAVITY * ballInfo_.ratio_ * ballInfo_.ratio_)) * ballInfo_.strength_.y;
+	nowPos.y += ballInfo_.startPoint_.y * (MAX_RATIO - ballInfo_.ratio_);
 
 	//X方向の強さが0以外のなら
-	if (strength_.x != ZERO)
+	if (ballInfo_.strength_.x != ZERO)
 	{
-		nowPos.x = ((v0_.x * sin(XMConvertToRadians(ANGLE)) * ratio_) - (0.5f * GRAVITY * ratio_ * ratio_)) + nowPos.x * (MAX_RATIO - ratio_);
+		nowPos.x = ((ballInfo_.v0_.x * sin(XMConvertToRadians(ANGLE)) * ballInfo_.ratio_) - (0.5f * GRAVITY * ballInfo_.ratio_ * ballInfo_.ratio_)) + nowPos.x * (MAX_RATIO - ballInfo_.ratio_);
 		
 		//負なら
-		if(signbit(strength_.x))
-			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * ratio_)) * strength_.x * 2);
+		if(signbit(ballInfo_.strength_.x))
+			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * ballInfo_.ratio_)) * ballInfo_.strength_.x * 2);
 		//正なら
 		else 
-			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * ratio_)) * strength_.x / 2);
+			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * ballInfo_.ratio_)) * ballInfo_.strength_.x / 2);
 	}
 
 	//移動前のポジション保存
@@ -158,31 +194,31 @@ void Ball::MoveToPurpose()
 
 	//求めたポジション設定
 	ARGUMENT_INITIALIZE(transform_->position_, nowPos);
-	pLine_->AddPosition(transform_->position_);
+	ballInfo_.pLine_->AddPosition(transform_->position_);
 
 	//エフェクトのポジション更新
-	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffectName_)->data.position,transform_->position_);
+	ARGUMENT_INITIALIZE(VFX::GetEmitter(ballInfo_.hDropEffectName_)->data.position,transform_->position_);
 
 	//進行ベクトルを求める
-	ARGUMENT_INITIALIZE(progressVector_, transform_->position_ - beforePos);
+	ARGUMENT_INITIALIZE(ballInfo_.progressVector_, transform_->position_ - beforePos);
 
 	//もし目標地点までの移動が終わったのなら
-	if (ratio_ >= MAX_RATIO)
+	if (ballInfo_.ratio_ >= MAX_RATIO)
 	{
 		//反射ベクトルを求めて進行ベクトルとする
-		ARGUMENT_INITIALIZE(progressVector_, XMVector3Reflect(progressVector_, UP_VECTOR));
+		ARGUMENT_INITIALIZE(ballInfo_.progressVector_, XMVector3Reflect(ballInfo_.progressVector_, UP_VECTOR));
 		
 		//バウンド状態に
-		ARGUMENT_INITIALIZE(ballStatus_, BallStatus::BOUND_MOVE);
+		ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::BOUND_MOVE);
 		
 		//タイマーリセット
-		Time::Reset(hTime_);
+		Time::Reset(ballInfo_.hTime_);
 
 		//正反射ベクトルの角度を求めたいので正反射ベクトルのYを無視したベクトルを作る
-		XMVECTOR v = { XMVectorGetX(progressVector_),ZERO,XMVectorGetZ(progressVector_),ZERO };
+		XMVECTOR v = { XMVectorGetX(ballInfo_.progressVector_),ZERO,XMVectorGetZ(ballInfo_.progressVector_),ZERO };
 
 		//正反射ベクトルの角度で放物線を描くと低い弾道になるので、定数分角度を増やす
-		ARGUMENT_INITIALIZE(firstAngle_,GetDot(progressVector_, v) + XMConvertToRadians(ADD_ANGLE_VALUE));
+		ARGUMENT_INITIALIZE(ballInfo_.firstAngle_,GetDot(ballInfo_.progressVector_, v) + XMConvertToRadians(ADD_ANGLE_VALUE));
 	}
 }
 
@@ -190,49 +226,49 @@ void Ball::MoveToPurpose()
 void Ball::BoundMove()
 {
 	//どのくらい時間がたったか取得
-	float time = Time::GetTimef(hTime_);
+	float time = Time::GetTimef(ballInfo_.hTime_);
 
 	//進行ベクトルを足して進める
-	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + XMVector3Normalize(progressVector_) * 0.2f));
+	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + XMVector3Normalize(ballInfo_.progressVector_) * 0.2f));
 	
 	//現在の位置を求める
 	XMFLOAT3 nowPos = transform_->position_;
-	nowPos.y = (v0_.y * sin(firstAngle_) * time) - (0.5f * GRAVITY * (time * time));
+	nowPos.y = (ballInfo_.v0_.y * sin(ballInfo_.firstAngle_) * time) - (0.5f * GRAVITY * (time * time));
 	transform_->position_.y = nowPos.y;
 
 	//エフェクトのポジション更新
-	pLine_->AddPosition(transform_->position_);
-	ARGUMENT_INITIALIZE(VFX::GetEmitter(hDropEffectName_)->data.position, transform_->position_);
+	ballInfo_.pLine_->AddPosition(transform_->position_);
+	ARGUMENT_INITIALIZE(VFX::GetEmitter(ballInfo_.hDropEffectName_)->data.position, transform_->position_);
 
 	//地面に着いてないのならこの先は処理しない
 	if (transform_->position_.y > ZERO) return;
 
 	//進行ベクトルを更新
-	ARGUMENT_INITIALIZE(progressVector_, XMVector3Reflect(progressVector_, UP_VECTOR));
+	ARGUMENT_INITIALIZE(ballInfo_.progressVector_, XMVector3Reflect(ballInfo_.progressVector_, UP_VECTOR));
 	
 	//進行ベクトルの角度を更新
-	XMVECTOR v = { XMVectorGetX(progressVector_),ZERO,XMVectorGetZ(progressVector_),ZERO };
-	firstAngle_ = GetDot(progressVector_, v);
+	XMVECTOR v = { XMVectorGetX(ballInfo_.progressVector_),ZERO,XMVectorGetZ(ballInfo_.progressVector_),ZERO };
+	ballInfo_.firstAngle_ = GetDot(ballInfo_.progressVector_, v);
 
 	//タイムリセット
-	Time::Reset(hTime_);
+	Time::Reset(ballInfo_.hTime_);
 
 	//Yの強度を減らす
-	v0_.y *= 0.4f;
+	ballInfo_.v0_.y *= 0.4f;
 
 	//バウンドカウント増やす
-	boundCount_++;
+	ballInfo_.boundCount_++;
 
 	//2回バウンドしたら
-	if (boundCount_ == 2)
+	if (ballInfo_.boundCount_ == 2)
 	{
 		//次の目的地に移動するように
-		ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
-		ARGUMENT_INITIALIZE(boundCount_,ZERO);
+		ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::PURPOSE_MOVE);
+		ARGUMENT_INITIALIZE(ballInfo_.boundCount_,ZERO);
 
-		Time::Reset(hTime_);
-		VFX::ForcedEnd(hLandEffectName_);
-		VFX::ForcedEnd(hDropEffectName_);
+		Time::Reset(ballInfo_.hTime_);
+		VFX::ForcedEnd(ballInfo_.hLandEffectName_);
+		VFX::ForcedEnd(ballInfo_.hDropEffectName_);
 
 		//打つ強さをランダムに取得
 		HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
@@ -242,24 +278,32 @@ void Ball::BoundMove()
 	}
 }
 
-//サーブの移動
-void Ball::ServeMove()
+//プレイヤーがボールを持っている状態の時に呼ぶ関数
+void Ball::PlayerHavingBall()
 {
+	//もしトスアップしたのなら
+	if (ballInfo_.isTossUp_)
+	{
+		//ボールを上げる
+		ARGUMENT_INITIALIZE(transform_->position_,VectorToFloat3(transform_->position_ + ballInfo_.tossUpVector_));
+		ballInfo_.tossUpVector_ -= XMVectorSet(ZERO, 0.03f, ZERO, ZERO);
 
-}
-
-
-//停止状態の時に呼ぶ関数
-void Ball::Stop()
-{
-
+		//もし地面より下になったのなら
+		if (transform_->GetPosition().y <= ZERO)
+		{
+			//トスアップのベクトルの値を元に戻す
+			ARGUMENT_INITIALIZE(ballInfo_.tossUpVector_, TOSS_UP_VALUE);
+			ARGUMENT_INITIALIZE(ballInfo_.isTossUp_, false);
+			transform_->SetPositionY(ZERO);
+		}
+	}
 }
 
 //リセット(始点終点すべて再設定)
 void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpointName)
 {
 	//向かうポジションを取得(少しランダムにずらす)
-	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePpointName, isGoToBasePoint_);
+	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePpointName, ballInfo_.isGoToBasePoint_);
 	endPos.x += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
 	endPos.z += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
 
@@ -268,22 +312,22 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 	ARGUMENT_INITIALIZE(endPos.z, Clamp<float>(endPos.z, MAX_POS_Z, MIN_POS_Z));
 
 	//各情報再設定
-	ARGUMENT_INITIALIZE(startPoint_, transform_->position_);
-	ARGUMENT_INITIALIZE(endPoint_, endPos);
-	ARGUMENT_INITIALIZE(endPointDirection_, endPoint_ - startPoint_);
-	ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-	ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-	ARGUMENT_INITIALIZE(moveTime_, moveTime)
-	ARGUMENT_INITIALIZE(strength_.y, strengthY);
-	ARGUMENT_INITIALIZE(strength_.x, strengthX);
-	Time::Reset(hTime_);
+	ARGUMENT_INITIALIZE(ballInfo_.startPoint_, transform_->position_);
+	ARGUMENT_INITIALIZE(ballInfo_.endPoint_, endPos);
+	ARGUMENT_INITIALIZE(ballInfo_.endPointDirection_, ballInfo_.endPoint_ - ballInfo_.startPoint_);
+	ARGUMENT_INITIALIZE(ballInfo_.v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
+	ARGUMENT_INITIALIZE(ballInfo_.v0_.x, (ballInfo_.endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
+	ARGUMENT_INITIALIZE(ballInfo_.moveTime_, moveTime)
+	ARGUMENT_INITIALIZE(ballInfo_.strength_.y, strengthY);
+	ARGUMENT_INITIALIZE(ballInfo_.strength_.x, strengthX);
+	Time::Reset(ballInfo_.hTime_);
 
 	//ネットをしていたらボールの軌道を修正する
 	//ネットのZ位置を通過するときの秒数を求める
-	float t = abs(startPoint_.z / abs(XMVectorGetZ(endPointDirection_)));
+	float t = abs(ballInfo_.startPoint_.z / abs(XMVectorGetZ(ballInfo_.endPointDirection_)));
 
 	//ネットのZ位置を通過するときのY位置を求める
-	float y = (v0_.y * sin(XMConvertToRadians(ANGLE)) * t) - (0.5f * GRAVITY * pow(t, 2));
+	float y = (ballInfo_.v0_.y * sin(XMConvertToRadians(ANGLE)) * t) - (0.5f * GRAVITY * pow(t, 2));
 
 	//もしYの位置がネットの位置より低いなら
 	if (y <= 1.2f)
@@ -292,24 +336,24 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 		float differential = 1.2f - y;
 
 		//差分 + 定数分Yの強さを増やす
-		strength_.y += differential * 2.0f;
+		ballInfo_.strength_.y += differential * 2.0f;
 	}
 
 	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
-	XMFLOAT3 pos = endPoint_;
+	XMFLOAT3 pos = ballInfo_.endPoint_;
 	ARGUMENT_INITIALIZE(pos.y, LANDING_EFFECT_POS_Y);
-	VFX::ForcedEnd(hLandEffectName_);
-    OtherEffectManager::LandingEffect(hLandEffectName_,pos, moveTime_);
+	VFX::ForcedEnd(ballInfo_.hLandEffectName_);
+    OtherEffectManager::LandingEffect(ballInfo_.hLandEffectName_,pos, ballInfo_.moveTime_);
 
 	//雫みたいなエフェクト表示
-	VFX::ForcedEnd(hDropEffectName_);
-	EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_->position_);
+	VFX::ForcedEnd(ballInfo_.hDropEffectName_);
+	EffectManager::Draw(ballInfo_.hDropEffectName_, ballInfo_.dropEffectFilePath_, transform_->position_);
 
 	//次の目的地に移動するように
-	ARGUMENT_INITIALIZE(ballStatus_, BallStatus::PURPOSE_MOVE);
+	ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::PURPOSE_MOVE);
 
 	//逆にする
-	ARGUMENT_INITIALIZE(isGoToBasePoint_, !isGoToBasePoint_);
+	ARGUMENT_INITIALIZE(ballInfo_.isGoToBasePoint_, !ballInfo_.isGoToBasePoint_);
 }
 
 //何かのオブジェクトに当たった時に呼ばれる関数
@@ -322,21 +366,21 @@ void Ball::TimeMethod()
 XMFLOAT3  Ball::GetSpecifyPosZBallPosition(float zPos)
 {
 	//ネットのZ位置を通過するときの秒数を求める
-	float t = (zPos - startPoint_.z) / XMVectorGetZ(endPointDirection_);
+	float t = (zPos - ballInfo_.startPoint_.z) / XMVectorGetZ(ballInfo_.endPointDirection_);
 
-	XMFLOAT3 nowPos = VectorToFloat3(startPoint_ + (endPointDirection_ * t));
+	XMFLOAT3 nowPos = VectorToFloat3(ballInfo_.startPoint_ + (ballInfo_.endPointDirection_ * t));
 
 	//X方向の強さが0以外のなら
-	if (strength_.x != ZERO)
+	if (ballInfo_.strength_.x != ZERO)
 	{
-		nowPos.x = ((v0_.x * sin(XMConvertToRadians(ANGLE)) * t) - (0.5f * GRAVITY * t * t)) + nowPos.x * (MAX_RATIO - t);
+		nowPos.x = ((ballInfo_.v0_.x * sin(XMConvertToRadians(ANGLE)) * t) - (0.5f * GRAVITY * t * t)) + nowPos.x * (MAX_RATIO - t);
 
 		//負なら
-		if (signbit(strength_.x))
-			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * t)) * strength_.x * 2);
+		if (signbit(ballInfo_.strength_.x))
+			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * t)) * ballInfo_.strength_.x * 2);
 		//正なら
 		else
-			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * t)) * strength_.x / 2);
+			nowPos.x += (sin(XMConvertToRadians(PI_DEGREES * t)) * ballInfo_.strength_.x / 2);
 	}
 
 	return nowPos;
