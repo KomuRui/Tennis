@@ -12,6 +12,8 @@ enum class BallStatus
 {
 	PURPOSE_MOVE, //目的地まで移動
 	BOUND_MOVE,   //バウンド移動
+	SERVE_MOVE,   //サーブ移動
+	STOP          //停止
 };
 
 /// <summary>
@@ -80,6 +82,16 @@ public:
 	/// バウンド移動
 	/// </summary>
 	void BoundMove();
+
+	/// <summary>
+	/// サーブの移動
+	/// </summary>
+	void ServeMove();
+
+	/// <summary>
+	/// 停止状態の時に呼ぶ関数
+	/// </summary>
+	void Stop();
 
 	/// <summary>
 	/// リセット(始点終点すべて再設定)

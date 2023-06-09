@@ -146,7 +146,7 @@ void PlayerStateManager::Move(PlayerBase* player, float padLx, float padLy)
             ModelManager::SetAnimFlag(player->GetModelNum(), false);
 
             //ボールのポインタ
-            Ball* pBall = ((Ball*)player->FindObject("Ball"));
+            Ball* pBall = GameManager::GetpBall();
 
             //各ポジションを記憶用
             float ballEndX = ZERO;
@@ -192,6 +192,8 @@ void PlayerStateManager::ServeMove(PlayerBase* player, float padLx, float padLy)
     //少しでも動いてるかつ構えていなければ
     if ((padLx != ZERO || padLy != ZERO) && !playerServing_->IsCharge())
     {
+        
+
         //アニメーションはしない
         ModelManager::SetAnimFlag(player->GetModelNum(), false);
 

@@ -96,6 +96,16 @@ void Ball::ChildUpdate()
 		BoundMove();
 		break;
 
+	//サーブ移動
+	case BallStatus::SERVE_MOVE:
+		ServeMove();
+		break;
+
+	//停止
+	case BallStatus::STOP:
+		Stop();
+		break;
+
 	default:
 		break;
 	}
@@ -230,6 +240,19 @@ void Ball::BoundMove()
 		//リセット
 		Reset(h.strength_.x, h.strength_.y,h.moveTime_,BasePointManager::GetRandomBasePointName());
 	}
+}
+
+//サーブの移動
+void Ball::ServeMove()
+{
+
+}
+
+
+//停止状態の時に呼ぶ関数
+void Ball::Stop()
+{
+
 }
 
 //リセット(始点終点すべて再設定)
