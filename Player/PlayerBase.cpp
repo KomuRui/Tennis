@@ -13,6 +13,14 @@ namespace
     static const float PLAYER_ANIM_SPEED = 2.0f;   //アニメーションの再生速度
     static const int ANIM_START_FRAME = 1;         //アニメーションの開始フレーム
     static const int ANIM_END_FRAME = 60;		   //アニメーションの終了フレーム
+
+    ///////////////////カメラ///////////////////////
+
+    static const XMFLOAT3 CAM_POS_SERVE_RECEIVE = { -2, 3.67f, 20.17f };     //サーブレシーブ時のカメラの位置
+    static const XMFLOAT3 CAM_TAR_SERVE_RECEIVE = { 0, -2.27f, 0 };          //サーブレシーブ時のカメラの焦点
+
+    static const XMFLOAT3 CAM_POS_NORMAL = { 0, 10.67f, 24.17f };   //通常時のカメラの位置
+    static const XMFLOAT3 CAM_TAR_NORMAL = { 0, -2.27f, 0 };        //通常時のカメラの焦点
 }
 
 //コンストラクタ
@@ -53,6 +61,9 @@ void PlayerBase::ChildInitialize()
     //影
     SetShadow(true);
 
+    //初期位置設定
+    ARGUMENT_INITIALIZE(initialPosition_, transform_->position_);
+
     ///////////////アニメーション設定///////////////////
 
     //アニメーション
@@ -61,20 +72,6 @@ void PlayerBase::ChildInitialize()
     ///////////////ラケット生成///////////////////
 
     ARGUMENT_INITIALIZE(pRacket_,Instantiate<Racket>(this));
-
-    ////////////////////カメラ//////////////////////
-
-    //1人目のプレイヤーなら
-    if (pState_->GetPlayerNum() == 0)
-    {
-        ARGUMENT_INITIALIZE(camVec_, (transform_->position_ - Camera::GetPosition()));
-        ARGUMENT_INITIALIZE(camVec2_, (Camera::GetTarget() - Camera::GetPosition()));
-    }
-    else
-    {
-        ARGUMENT_INITIALIZE(camVec_, (transform_->position_ - Camera::GetPositionTwo()));
-        ARGUMENT_INITIALIZE(camVec2_, (Camera::GetTarget() - Camera::GetPositionTwo()));
-    }
 }
 
 
@@ -135,6 +132,10 @@ void PlayerBase::CameraBehavior()
     //1人目のプレイヤーなら
     if (pState_->GetPlayerNum() == 0)
     {
+        //カメラのベクトル変換
+        ARGUMENT_INITIALIZE(camVec_, (initialPosition_ - CAM_POS_NORMAL));
+        ARGUMENT_INITIALIZE(camVec2_, (CAM_TAR_NORMAL - CAM_POS_NORMAL));
+
         XMFLOAT3 pos = Camera::GetPosition();
         XMFLOAT3 tar = Camera::GetTarget();
         XMFLOAT3 nextPos = { centerX, (transform_->position_.y - XMVectorGetY(camVec_)) * 1.0f + (sum * 0.25f), (MaxZ - XMVectorGetZ(camVec_)) * 1.0f + (sum * 0.25f) };
@@ -147,6 +148,10 @@ void PlayerBase::CameraBehavior()
     //2人目のプレイヤーなら
     else
     {
+        //カメラのベクトル変換(2人目はカメラが逆なのでX,Zを逆にする)
+        ARGUMENT_INITIALIZE(camVec_, (initialPosition_ - XMFLOAT3(-CAM_POS_NORMAL.x, CAM_POS_NORMAL.y, -CAM_POS_NORMAL.z)));
+        ARGUMENT_INITIALIZE(camVec2_, (XMFLOAT3(-CAM_TAR_NORMAL.x, CAM_TAR_NORMAL.y, -CAM_TAR_NORMAL.z) - XMFLOAT3(-CAM_POS_NORMAL.x, CAM_POS_NORMAL.y, -CAM_POS_NORMAL.z)));
+
         XMFLOAT3 pos = Camera::GetPositionTwo();
         XMFLOAT3 tar = Camera::GetTargetTwo();
         XMFLOAT3 nextPos = { centerX, (transform_->position_.y - XMVectorGetY(camVec_)) * 1.0f + (sum * 0.25f), (MinZ - XMVectorGetZ(camVec_)) * 1.0f + (sum * 0.25f) };
@@ -164,6 +169,9 @@ void PlayerBase::ServeReceiveCameraBehavior()
     //1人目のプレイヤーなら
     if (pState_->GetPlayerNum() == 0)
     {
+        //カメラのベクトル変換(2人目はカメラが逆なのでX,Zを逆にする)
+        ARGUMENT_INITIALIZE(camVec_, (initialPosition_ - XMFLOAT3(CAM_POS_SERVE_RECEIVE.x, CAM_POS_SERVE_RECEIVE.y, CAM_POS_SERVE_RECEIVE.z)));
+      
         XMFLOAT3 pos = Camera::GetPosition();
         XMFLOAT3 nextPos = { (transform_->position_.x - XMVectorGetX(camVec_)), (transform_->position_.y - XMVectorGetY(camVec_)), (transform_->position_.z - XMVectorGetZ(camVec_)) };
         nextPos = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&pos), XMLoadFloat3(&nextPos), 0.05f));
@@ -171,6 +179,9 @@ void PlayerBase::ServeReceiveCameraBehavior()
     }
     else
     {
+        //カメラのベクトル変換(2人目はカメラが逆なのでX,Zを逆にする)
+        ARGUMENT_INITIALIZE(camVec_, (initialPosition_ - XMFLOAT3(-CAM_POS_SERVE_RECEIVE.x, CAM_POS_SERVE_RECEIVE.y, -CAM_POS_SERVE_RECEIVE.z)));
+
         XMFLOAT3 pos = Camera::GetPositionTwo();
         XMFLOAT3 nextPos = { (transform_->position_.x - XMVectorGetX(camVec_)), (transform_->position_.y - XMVectorGetY(camVec_)), (transform_->position_.z - XMVectorGetZ(camVec_)) };
         nextPos = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&pos), XMLoadFloat3(&nextPos), 0.05f));

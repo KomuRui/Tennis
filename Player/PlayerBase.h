@@ -17,7 +17,8 @@ protected:
 	///////////////キャラの必要な情報///////////////////
 
 	Racket* pRacket_;                   //ラケット
-	PlayerStateManager* pState_;        // Playerの状態を表す変数
+	PlayerStateManager* pState_;        //Playerの状態を表す変数
+	XMFLOAT3 initialPosition_;          //Playerの初期位置 
 
 	/////////////////////カメラ//////////////////////
 

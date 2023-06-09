@@ -3,6 +3,7 @@
 #include "PlayerStateManager.h"
 #include "../../Player/PlayerBase.h"
 #include "../../OtherObject/TitleScene/Racket.h"
+#include "../../OtherObject/TitleScene/Referee.h"
 
 //’è”
 namespace
@@ -86,6 +87,8 @@ void ServingState::Update3D(PlayerBase* player)
 
 			//‘Å‚Â“®ì‚ÉØ‚è‘Ö‚¦‚é
 			player->GetState()->SetHitMove(true);
+
+			GameManager::GetReferee()->SetGameStatus(GameStatus::NOW_RALLY);
 		}
 	}
 
