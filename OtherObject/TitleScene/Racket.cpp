@@ -108,11 +108,21 @@ void Racket::ChildUpdate()
 	//ラケットの端のポジションを求める
 	XMFLOAT3 edgePos = VectorToFloat3(ModelManager::GetBonePosition(hModel_, "Edge") - GetParent()->GetComponent<Transform>()->GetPosition() - transform_->position_);
 	
+	//回転行列
+	XMFLOAT3 rotate = GetComponent<Transform>()->GetWorldRotate();
+	XMMATRIX rotateX, rotateY, rotateZ;
+	rotateX = XMMatrixRotationX(XMConvertToRadians(rotate.x));
+	rotateY = XMMatrixRotationY(XMConvertToRadians(rotate.y));
+	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotate.z));
+	XMMATRIX matRotate_ = rotateZ * rotateX * rotateY;
+
 	//コライダーのポジション求めて新しく設定(骨のポジションおかしいので力ずくで回転)
 	colliderPos_ = VectorToFloat3(ModelManager::GetBonePosition(hModel_, "Base") - GetParent()->GetComponent<Transform>()->GetPosition() - transform_->position_);
-	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixInverse(nullptr, XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)) *  XMMatrixRotationY(XMConvertToRadians(BASE_ADD_ANGLE_VALUE))));
-	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)));
+	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), XMMatrixInverse(nullptr, matRotate_ *  XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)) *  XMMatrixRotationY(XMConvertToRadians(BASE_ADD_ANGLE_VALUE))));
+	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), matRotate_ * XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)));
 	box1_->SetPos(colliderPos_);
+
+	//transform_->rotate_.z += 1.5f;
 }
 
 //入力に対する基準点のポイントの名前を取得

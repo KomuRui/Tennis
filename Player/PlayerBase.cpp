@@ -9,7 +9,7 @@ namespace
 {
     ///////////////キャラの必要な情報///////////////////
 
-    static const XMFLOAT3 PLAYER_START_ROTATION_ANGLE = { 0,240,0 };   //プレイヤーの開始角度
+    static const XMFLOAT3 PLAYER_SERVE_ROTATION_ANGLE = { 0,240,0 };   //プレイヤーの開始角度
     static const float PLAYER_ANIM_SPEED = 2.0f;   //アニメーションの再生速度
     static const int ANIM_START_FRAME = 1;         //アニメーションの開始フレーム
     static const int ANIM_END_FRAME = 60;		   //アニメーションの終了フレーム
@@ -52,8 +52,8 @@ void PlayerBase::ChildInitialize()
     pState_->SetPlayerNum(GameManager::SetPlayer(this));
 
     //サーバーだけ角度修正
-    if (pState_->GetPlayerNum() == 0 && GameManager::GetReferee()->IsPlayer1Server() || pState_->GetPlayerNum() == 1 && GameManager::GetReferee()->IsPlayer2Server())
-        ARGUMENT_INITIALIZE(transform_->rotate_, PLAYER_START_ROTATION_ANGLE);
+    if (GameManager::GetReferee()->GetServer() == this)
+        ARGUMENT_INITIALIZE(transform_->rotate_, PLAYER_SERVE_ROTATION_ANGLE);
 
 
     //明るさ最大に

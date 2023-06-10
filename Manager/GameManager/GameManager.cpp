@@ -124,7 +124,24 @@ namespace GameManager
 	Players GameManager::GetPlayers() { return player_; }
 
 	//プレイヤーセット
-	int  GameManager::SetPlayer(PlayerBase* p) { playerlist_.push_back(p); return nowPlayerRegistration_++; }
+	int  GameManager::SetPlayer(PlayerBase* p) { 
+
+		//登録
+		playerlist_.push_back(p); 
+
+		//1人目ならサーバーにしておく
+		if (playerlist_.size() == 1)
+		{
+			referee_->SetServer(p);
+		}
+		//他はレシーバーに設定
+		else
+		{
+			referee_->SetReceiver(p);
+		}
+
+		return nowPlayerRegistration_++; 
+	}
 
 	//審判取得
 	Referee* GameManager::GetReferee() { return referee_; }

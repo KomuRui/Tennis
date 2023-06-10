@@ -25,6 +25,18 @@ public:
 	//ó‘Ô•Ï‰»‚µ‚½‚Æ‚«ˆê‰ñ‚¾‚¯ŒÄ‚Î‚ê‚éŠÖ”
 	void Enter(PlayerBase* player) override;
 
+	/// <summary>
+	/// ‘Å‚Â‚Ì“®‚«
+	/// </summary>
+	/// <param name="player"></param>
+	void HitMove(PlayerBase* player);
+
+	/// <summary>
+	/// ˆø‚­‚Ì“®‚«
+	/// </summary>
+	/// <param name="player"></param>
+	void PullMove(PlayerBase* player);
+
 	//ƒ`ƒƒ[ƒW‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	bool IsCharge() { return isCharge_; }
 };

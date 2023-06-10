@@ -136,6 +136,12 @@ public:
 	bool isGoToPlayerBasePoint() { return ballInfo_.isGoToBasePoint_; }
 
 	/// <summary>
+	/// トスアップ中かどうか取得
+	/// </summary>
+	/// <returns>trueならトスアップ中</returns>
+	bool isTossUp() { return ballInfo_.isTossUp_; }
+
+	/// <summary>
 	/// ボールの状態を取得
 	/// </summary>
 	/// <returns>ボールの状態</returns>
