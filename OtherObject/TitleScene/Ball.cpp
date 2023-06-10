@@ -16,7 +16,7 @@ namespace
 	static const float MAX_POS_Z = 11.9f;           //最大Z値
 	static const float MIN_POS_X = -4.34f;          //最小X値
 	static const float MIN_POS_Z = -11.9f;          //最小Z値
-	static const XMVECTOR TOSS_UP_VALUE = { ZERO,0.4f,ZERO,ZERO };    //トスアップの時の値
+	static const XMVECTOR TOSS_UP_VALUE = { ZERO,0.2f,ZERO,ZERO };    //トスアップの時の値
 
 	static const XMFLOAT4 AMBIENT_COLOR = { 1.0f, 1.0f, ZERO, ZERO }; //アンビエント色
 }
@@ -286,7 +286,7 @@ void Ball::PlayerHavingBall()
 	{
 		//ボールを上げる
 		ARGUMENT_INITIALIZE(transform_->position_,VectorToFloat3(transform_->position_ + ballInfo_.tossUpVector_));
-		ballInfo_.tossUpVector_ -= XMVectorSet(ZERO, 0.03f, ZERO, ZERO);
+		ballInfo_.tossUpVector_ -= XMVectorSet(ZERO, 0.0065f, ZERO, ZERO);
 
 		//もし地面より下になったのなら
 		if (transform_->GetPosition().y <= ZERO)
