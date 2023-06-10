@@ -365,7 +365,7 @@ void GameObject::DrawSub()
 		//コンポーネント描画
 		for (auto it = ComponentList_.begin(); it != ComponentList_.end(); it++)
 		{
-				(*it)->Draw();
+			(*it)->Draw();
 		}
 	}
 	

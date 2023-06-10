@@ -38,7 +38,7 @@ Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
 	ballInfo_.startPoint_ = { ZERO, ZERO, ZERO };
 	ballInfo_.endPoint_ = { ZERO, ZERO, ZERO };
 	ballInfo_.pLine_ = nullptr;
-	ballInfo_.isGoToBasePoint_ = true;
+	ballInfo_.isGoToBasePoint_ = false;
 	ballInfo_.isTossUp_ = false;
 	ballInfo_.hLandEffectName_ = "LandEffect";
 	ballInfo_.hDropEffectName_ = "DropEffect";
@@ -62,7 +62,7 @@ Ball::Ball(GameObject* parent)
 	ballInfo_.startPoint_ = { ZERO, ZERO, ZERO };
 	ballInfo_.endPoint_ = { ZERO, ZERO, ZERO };
 	ballInfo_.pLine_ = nullptr;
-	ballInfo_.isGoToBasePoint_ = true;
+	ballInfo_.isGoToBasePoint_ = false;
 	ballInfo_.isTossUp_ = false;
 	ballInfo_.hLandEffectName_ = "LandEffect";
 	ballInfo_.hDropEffectName_ = "DropEffect";
@@ -145,6 +145,8 @@ void Ball::ChildUpdate()
 	default:
 		break;
 	}
+
+	ImGuiSet::DebugLog("a", 0);
 
 	//影のポジション更新
 	ARGUMENT_INITIALIZE(tShadow_.position_, transform_->position_);

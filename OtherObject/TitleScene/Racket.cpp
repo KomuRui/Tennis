@@ -122,7 +122,6 @@ void Racket::ChildUpdate()
 	colliderPos_ = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&colliderPos_), matRotate_ * XMMatrixTranslation(edgePos.x, ZERO, edgePos.z)));
 	box1_->SetPos(colliderPos_);
 
-	//transform_->rotate_.z += 1.5f;
 }
 
 //入力に対する基準点のポイントの名前を取得
