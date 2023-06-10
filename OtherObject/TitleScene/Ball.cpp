@@ -146,8 +146,6 @@ void Ball::ChildUpdate()
 		break;
 	}
 
-	ImGuiSet::DebugLog("a", 0);
-
 	//影のポジション更新
 	ARGUMENT_INITIALIZE(tShadow_.position_, transform_->position_);
 	ARGUMENT_INITIALIZE(tShadow_.position_.y, 0.01f);
