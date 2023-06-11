@@ -2,6 +2,7 @@
 #include "../../Engine/System.h"
 #include "../../Engine/ResourceManager/Time.h"
 #include "../../OtherObject/TitleScene/Racket.h"
+#include "../../OtherObject/TitleScene/Referee.h"
 #include <math.h>
 #include <cmath>
 
@@ -306,12 +307,17 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 {
 	//向かうポジションを取得(少しランダムにずらす)
 	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePpointName, ballInfo_.isGoToBasePoint_);
-	endPos.x += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
-	endPos.z += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
 
-	//クランプする
-	ARGUMENT_INITIALIZE(endPos.x, Clamp<float>(endPos.x, MAX_POS_X, MIN_POS_X));
-	ARGUMENT_INITIALIZE(endPos.z, Clamp<float>(endPos.z, MAX_POS_Z, MIN_POS_Z));
+	//ラリー中の時だけ
+	if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_RALLY)
+	{
+		endPos.x += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
+		endPos.z += ((rand() % 31 + 1) / 10) * (rand() % 3 - 1);
+
+		//クランプする
+		ARGUMENT_INITIALIZE(endPos.x, Clamp<float>(endPos.x, MAX_POS_X, MIN_POS_X));
+		ARGUMENT_INITIALIZE(endPos.z, Clamp<float>(endPos.z, MAX_POS_Z, MIN_POS_Z));
+	}
 
 	//各情報再設定
 	ARGUMENT_INITIALIZE(ballInfo_.startPoint_, transform_->position_);

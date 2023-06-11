@@ -78,11 +78,11 @@ namespace GameManager
 	//描画
 	void GameManager::Draw()
 	{
-		//スコアとか表示
-		referee_->Draw();
-
 		//Uiなどを表示
 		ImageManager::UiDraw();
+
+		//スコアとか表示
+		referee_->Draw();
 
 		//フェード用の描画
 		Fade::Draw();

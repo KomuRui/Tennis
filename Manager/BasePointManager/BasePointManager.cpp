@@ -6,6 +6,7 @@
 #include "../../OtherObject/ToolObj/BasePointModel.h"
 #include "../../Engine/ResourceManager/ModelManager.h"
 #include "../../Engine/GameObject/Camera.h"
+#include "../../OtherObject/TitleScene/Referee.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -52,6 +53,8 @@ namespace
 	//各アンビエント
 	static const XMFLOAT4 RALLY_AMBIENT_COLOR_PLAYER1 = XMFLOAT4(1.0f, ZERO, ZERO, 1.0f);
 	static const XMFLOAT4 RALLY_AMBIENT_COLOR_PLAYER2 = XMFLOAT4(1.0f, 1.0f, ZERO, 1.0f);
+	static const XMFLOAT4 SERVE_AMBIENT_COLOR_PLAYER1 = XMFLOAT4(ZERO, 1.0f, ZERO, 1.0f);
+	static const XMFLOAT4 SERVE_AMBIENT_COLOR_PLAYER2 = XMFLOAT4(ZERO, ZERO, 1.0f, 1.0f);
 
 	//基準点を動かすときの倍率
 	static const float MOVE_RATIO = 0.020f;
@@ -63,8 +66,10 @@ namespace BasePointManager
 	///////////////////////////////変数//////////////////////////////////
 
 	//各基準点の位置
+	map<string, XMFLOAT3> rallyBasePointPlayer1Court;
+    map<string, XMFLOAT3> rallyBasePointPlayer2Court;
 	map<string, XMFLOAT3> serveBasePointPlayer1Court;
-    map<string, XMFLOAT3> serveBasePointPlayer2Court;
+	map<string, XMFLOAT3> serveBasePointPlayer2Court;
 
 	//選択されている基準点のオブジェクト
 	BasePointModel* isSelectBasePointModel;
@@ -80,18 +85,35 @@ namespace BasePointManager
 		ARGUMENT_INITIALIZE(isMove, false);
 
 		// JSONファイルの読み込み
-		ifstream ifs_p(RALLY_PLAYER1_JSON_PATH);
-		ifstream ifs_e(RALLY_PLAYER2_JSON_PATH);
-		json j_p;
-		json j_e;
-		ifs_p >> j_p;	
-		ifs_e >> j_e;
+
+		//ラリー
+		ifstream ifs_p1(RALLY_PLAYER1_JSON_PATH);
+		ifstream ifs_p2(RALLY_PLAYER2_JSON_PATH);
+		json j_p1;
+		json j_p2;
+		ifs_p1 >> j_p1;	
+		ifs_p2 >> j_p2;
 
 		//基準点分回す
 		for (string name : RALLY_BASE_POINT)
 		{
-			serveBasePointPlayer1Court[name] = XMFLOAT3(j_p[name]["X"], j_p[name]["Y"], j_p[name]["Z"]);
-			serveBasePointPlayer2Court[name] = XMFLOAT3(j_e[name]["X"], j_e[name]["Y"], j_e[name]["Z"]);
+			rallyBasePointPlayer1Court[name] = XMFLOAT3(j_p1[name]["X"], j_p1[name]["Y"], j_p1[name]["Z"]);
+			rallyBasePointPlayer2Court[name] = XMFLOAT3(j_p2[name]["X"], j_p2[name]["Y"], j_p2[name]["Z"]);
+		}
+
+		//サーブ
+		ifstream ifs_Sp1(SERVE_PLAYER1_JSON_PATH);
+		ifstream ifs_Sp2(SERVE_PLAYER2_JSON_PATH);
+		json j_Sp1;
+		json j_Sp2;
+		ifs_Sp1 >> j_Sp1;
+		ifs_Sp2 >> j_Sp2;
+
+		//基準点分回す
+		for (string name : SERVE_BASE_POINT)
+		{
+			serveBasePointPlayer1Court[name] = XMFLOAT3(j_Sp1[name]["X"], j_Sp1[name]["Y"], j_Sp1[name]["Z"]);
+			serveBasePointPlayer2Court[name] = XMFLOAT3(j_Sp2[name]["X"], j_Sp2[name]["Y"], j_Sp2[name]["Z"]);
 		}
 
 	}
@@ -99,10 +121,31 @@ namespace BasePointManager
 	//基準点モデルを生成
 	void BasePointManager::InstantiateBasePointModel()
 	{
+		//ラリー中の基準点
 		for (string name : RALLY_BASE_POINT)
 		{
 			BasePointModel*p = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
 			BasePointModel*e = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
+
+			p->GetComponent<Transform>()->SetPosition(rallyBasePointPlayer1Court[name]);
+			e->GetComponent<Transform>()->SetPosition(rallyBasePointPlayer2Court[name]);
+
+			p->SetBasePointName(name);
+			e->SetBasePointName(name);
+
+			p->SetPlayer1CourtType(true);
+			e->SetPlayer1CourtType(false);
+
+			ModelManager::SetAmbient(p->GetModelNum(), RALLY_AMBIENT_COLOR_PLAYER1);
+			ModelManager::SetAmbient(e->GetModelNum(), RALLY_AMBIENT_COLOR_PLAYER2);
+
+		}
+
+		//サーブ中の基準点
+		for (string name : SERVE_BASE_POINT)
+		{
+			BasePointModel* p = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
+			BasePointModel* e = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
 
 			p->GetComponent<Transform>()->SetPosition(serveBasePointPlayer1Court[name]);
 			e->GetComponent<Transform>()->SetPosition(serveBasePointPlayer2Court[name]);
@@ -110,11 +153,14 @@ namespace BasePointManager
 			p->SetBasePointName(name);
 			e->SetBasePointName(name);
 
-			p->SetPlayerType(true);
-			e->SetPlayerType(false);
+			p->SetPlayer1CourtType(true);
+			e->SetPlayer1CourtType(false);
 
-			ModelManager::SetAmbient(p->GetModelNum(), RALLY_AMBIENT_COLOR_PLAYER1);
-			ModelManager::SetAmbient(e->GetModelNum(), RALLY_AMBIENT_COLOR_PLAYER2);
+			p->SetServeReceiveBasePoint(true);
+			e->SetServeReceiveBasePoint(true);
+
+			ModelManager::SetAmbient(p->GetModelNum(), SERVE_AMBIENT_COLOR_PLAYER1);
+			ModelManager::SetAmbient(e->GetModelNum(), SERVE_AMBIENT_COLOR_PLAYER2);
 
 		}
 	}
@@ -149,10 +195,10 @@ namespace BasePointManager
 			if (isSelectBasePointModel == nullptr) return;
 
 			//プレイヤータイプかどうか
-			if (isSelectBasePointModel->isPlayerType())
-				serveBasePointPlayer1Court[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
+			if (isSelectBasePointModel->isPlaye1CourtType())
+				rallyBasePointPlayer1Court[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
 			else								       
-				serveBasePointPlayer2Court[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
+				rallyBasePointPlayer2Court[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
 
 		}
 
@@ -180,13 +226,13 @@ namespace BasePointManager
 		//基準点分回す
 		for (string name : RALLY_BASE_POINT)
 		{
-			j_p[name]["X"] = serveBasePointPlayer1Court[name].x;
-			j_p[name]["Y"] = serveBasePointPlayer1Court[name].y;
-			j_p[name]["Z"] = serveBasePointPlayer1Court[name].z;
+			j_p[name]["X"] = rallyBasePointPlayer1Court[name].x;
+			j_p[name]["Y"] = rallyBasePointPlayer1Court[name].y;
+			j_p[name]["Z"] = rallyBasePointPlayer1Court[name].z;
 
-			j_e[name]["X"] = serveBasePointPlayer2Court[name].x;
-			j_e[name]["Y"] = serveBasePointPlayer2Court[name].y;
-			j_e[name]["Z"] = serveBasePointPlayer2Court[name].z;
+			j_e[name]["X"] = rallyBasePointPlayer2Court[name].x;
+			j_e[name]["Y"] = rallyBasePointPlayer2Court[name].y;
+			j_e[name]["Z"] = rallyBasePointPlayer2Court[name].z;
 		}
 		
 		//JSONファイルの書き込み
@@ -200,11 +246,24 @@ namespace BasePointManager
 	//基準点を取得
 	XMFLOAT3 BasePointManager::GetBasePoint(string name, bool isPlayer)
 	{
-		//プレイヤーの基準点取得なら
-		if (isPlayer)
-			return serveBasePointPlayer1Court[name];
+		//ラリー中なら
+		if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_RALLY)
+		{
+			//プレイヤーの基準点取得なら
+			if (isPlayer)
+				return rallyBasePointPlayer1Court[name];
+			else
+				return rallyBasePointPlayer2Court[name];
+		}
+		//サーブ中なら
 		else
-			return serveBasePointPlayer2Court[name];
+		{
+			//プレイヤーの基準点取得なら
+			if (isPlayer)
+				return serveBasePointPlayer1Court[name];
+			else
+				return serveBasePointPlayer2Court[name];
+		}
 	}
 
 	//基準点をランダムに取得
@@ -212,9 +271,9 @@ namespace BasePointManager
 	{
 		//プレイヤーの基準点取得なら
 		if (isPlayer)
-			return serveBasePointPlayer1Court[RALLY_BASE_POINT[Random(0,2)]];
+			return rallyBasePointPlayer1Court[RALLY_BASE_POINT[Random(0,2)]];
 		else
-			return serveBasePointPlayer2Court[RALLY_BASE_POINT[Random(0,2)]];
+			return rallyBasePointPlayer2Court[RALLY_BASE_POINT[Random(0,2)]];
 	}
 
 	//入力に対する基準点の名前を取得
@@ -226,20 +285,34 @@ namespace BasePointManager
 		//Lスティックの傾きを取得
 		XMFLOAT3 stickL = Input::GetPadStickL(p->GetState()->GetPlayerNum());
 
-		//奥行
-		if (stickL.y > 0.1f)
-			name += "Back_";
-		else if (stickL.y < -0.1f)
-			name += "Front_";
-		else
-			name += "Center_";
+		//ラリー中なら
+		if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_RALLY)
+		{
+			//奥行
+			if (stickL.y > 0.1f)
+				name += "Back_";
+			else if (stickL.y < -0.1f)
+				name += "Front_";
+			else
+				name += "Center_";
 
-	    if (stickL.x < 0.1f)
-			name += "L";
-		else if (stickL.x > -0.1f)
-			name += "R";
+			if (stickL.x < 0.1f && stickL.x > -0.1f)
+				name += "C";
+			else if (stickL.x < 0.1f)
+				name += "L";
+			else
+				name += "R";
+		}
+		//サーブレシーブ中なら
 		else
-			name += "C";
+		{
+			if (stickL.x < 0.1f && stickL.x > -0.1f)
+				name += "Left_C";
+			else if (stickL.x < 0.1f)
+				name += "Left_L";
+			else
+				name += "Left_R";
+		}
 
 		return name;
 	}

@@ -9,8 +9,11 @@ class BasePointModel : public NormalObject
 	//基準点の名前
 	string basePointName_;
 
-	//プレイヤータイプかどうか
-	bool isPlayerType_;
+	//プレイヤー1のコートかどうか
+	bool isPlayer1CourtType_;
+
+	//サーブレシーブの基準点かどうか
+	bool isServeReceiveBasePoint_;
 
 public:
 
@@ -34,16 +37,28 @@ public:
 	void SetBasePointName(string name) { basePointName_ = name; }
 
 	/// <summary>
-	/// プレイヤータイプかどうかセット
+	/// プレイヤー1のコートかどうかセット
 	/// </summary>
-	/// <param name="flag">trueならプレイヤータイプにセット</param>
-	void SetPlayerType(bool flag) { isPlayerType_ = flag; }
+	/// <param name="flag">trueならプレイヤー1のコートにセット</param>
+	void SetPlayer1CourtType(bool flag) { isPlayer1CourtType_ = flag; }
 
 	/// <summary>
-	/// プレイヤータイプかどうか取得
+	/// プレイヤー1のコートかどうか取得
 	/// </summary>
 	/// <returns>trueならプレイヤータイプ</returns>
-	bool isPlayerType() { return isPlayerType_; }
+	bool isPlaye1CourtType() { return isPlayer1CourtType_; }
+
+	/// <summary>
+	/// サーブレシーブ時の基準点かどうかセット
+	/// </summary>
+	/// <param name="flag">trueならサーブレシーブ時の基準点にセット</param>
+	void SetServeReceiveBasePoint(bool flag) { isServeReceiveBasePoint_ = flag; }
+
+	/// <summary>
+	/// サーブレシーブ時の基準点かどうか取得
+	/// </summary>
+	/// <returns>trueならサーブレシーブ時の基準点</returns>
+	bool isServeReceiveBasePoint() { return isServeReceiveBasePoint_; }
 
 	/// <summary>
 	/// 基準点の名前を取得

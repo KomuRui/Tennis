@@ -1,10 +1,12 @@
 #include "Racket.h"
 #include "../../Engine/ResourceManager/ModelManager.h"
+#include "../../Manager/GameManager/GameManager.h"
 #include "../../Engine/DirectX/Direct3D.h"
 #include "../../Manager/EffectManager/EffectManager.h"
 #include "../../Manager/BasePointManager/BasePointManager.h"
 #include "../../Player/PlayerBase.h"
 #include "Ball.h"
+#include "Referee.h"
 
 //定数
 namespace
@@ -146,12 +148,22 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 	if (stroke_ == Stroke::BACKHAND)
 		hitStrength_[type_].strength_.x *= -1;
 
+	//最終的な移動時間を求める
+	float moveTime = hitStrength_[type_].moveTime_ * ratio_;
+
+	//サーブレシーブ時の時だけ移動時間を半分にする
+	if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE)
+	{
+		hitStrength_[type_].strength_.y *= 0.5f;
+		moveTime *= 0.5f;
+	}
+
 	//ボールの軌跡色を指定
 	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);
 	((Ball*)pTarget)->SetBallDropEffectFilePath(dropEffectFilePath_[type_]);
 
 	//ボールを次のコートへ
-	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_, BasePointManager::GetInputBasePoint((PlayerBase*)GetParent()));
+	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, moveTime, BasePointManager::GetInputBasePoint((PlayerBase*)GetParent()));
 
 	//エフェクト表示
 	EffectManager::Draw("HitEffect",hitEffectFilePath_[type_], ((Ball*)pTarget)->GetComponent<Transform>()->GetPosition());
