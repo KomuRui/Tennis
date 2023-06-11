@@ -6,6 +6,7 @@
 #include "../../UI/ImageBase.h"
 #include "../DirectX/Fbx.h"
 #include "GameObjectInfoGui.h"
+#include "../GameObject/Signboard.h"
 #include <fstream>
 #include <vector>
 #include <windows.h>
@@ -34,7 +35,7 @@ namespace ImGuiSet
 
     //各看板の必要な変数
     int sigeboardStatus_[MAX_OBJECT_SIZE] = {};
-    //Signboard* pNewSigeboard_[MAX_OBJECT_SIZE];
+    Signboard* pNewSigeboard_[MAX_OBJECT_SIZE];
     XMFLOAT3 sigeboardPos_[MAX_OBJECT_SIZE];
     XMFLOAT3 sigeboardRotate_[MAX_OBJECT_SIZE];
     XMFLOAT3 sigeboardScale_[MAX_OBJECT_SIZE];
@@ -520,176 +521,164 @@ namespace ImGuiSet
     //看板作成
     void ImGuiSet::CreateSigeboard()
     {
-        ////Playerのポジションを保存しておく
-        //XMFLOAT3 basicPos = GameManager::GetpPlayer()->GetPosition();
-        //XMFLOAT3 basicRotate = GameManager::GetpPlayer()->GetRotate();
-        //XMFLOAT3 basicScale = GameManager::GetpPlayer()->GetScale();
+        //Create3Dを押した分ウィンドウを作る　
+        for (int i = 0; i < createSigeboard_.second; i++)
+        {
+            if (sigeboardStatus_[i] == 1 || sigeboardStatus_[i] == 0)
+            {
+                //iをFBXの後ろにたす
+                char name[16];
+                sprintf_s(name, "FBX %d", i);
 
-        ////Create3Dを押した分ウィンドウを作る　
-        //for (int i = 0; i < createSigeboard_.second; i++)
-        //{
-        //    if (sigeboardStatus_[i] == 1 || sigeboardStatus_[i] == 0)
-        //    {
-        //        //iをFBXの後ろにたす
-        //        char name[16];
-        //        sprintf_s(name, "FBX %d", i);
+                //window作る
+                ImGui::Begin(name);
 
-        //        //window作る
-        //        ImGui::Begin(name);
+                //ファイルネーム入力欄
+                static char Stext1[MAX_OBJECT_SIZE][50] = {};
 
-        //        //ファイルネーム入力欄
-        //        static char Stext1[MAX_OBJECT_SIZE][50] = {};
+                //入力された文字をtext1に格納
+                ImGui::InputText("FBX filename", Stext1[i], sizeof(Stext1[i]));
 
-        //        //入力された文字をtext1に格納
-        //        ImGui::InputText("FBX filename", Stext1[i], sizeof(Stext1[i]));
+                //ロードボタン
+                if (ImGui::Button("Load"))
+                {
+                    //もしまだ一回もロードしてなかったら
+                    if (sigeboardStatus_[i] == 0)
+                    {
 
-        //        //ロードボタン
-        //        if (ImGui::Button("Load"))
-        //        {
-        //            //もしまだ一回もロードしてなかったら
-        //            if (sigeboardStatus_[i] == 0)
-        //            {
+                        //ロードしたオブジェクトに必要なトランスフォームを用意
+                        Transform t;
 
-        //                //ロードしたオブジェクトに必要なトランスフォームを用意
-        //                Transform t;
+                        pNewSigeboard_[i] = new Signboard(GameManager::GetpSceneManager(), Stext1[i], "");
+                        if (GameManager::GetpSceneManager()->GetParent() != nullptr)
+                        {
+                            GameManager::GetpSceneManager()->PushBackChild(pNewSigeboard_[i]);
+                        }
+                        pNewSigeboard_[i]->Initialize();
 
-        //                sigeboardPos_[i] = basicPos;
-        //                sigeboardRotate_[i] = basicRotate;
-        //                sigeboardScale_[i] = basicScale;
+                        //statusプラス
+                        sigeboardStatus_[i]++;
 
-        //                pNewSigeboard_[i] = new Signboard(GameManager::GetpSceneManager(), Stext1[i], "");
-        //                if (GameManager::GetpSceneManager()->GetParent() != nullptr)
-        //                {
-        //                    GameManager::GetpSceneManager()->PushBackChild(pNewSigeboard_[i]);
-        //                }
-        //                pNewSigeboard_[i]->Initialize();
+                    }
+                }
 
-        //                //statusプラス
-        //                sigeboardStatus_[i]++;
+                //一回ロードしていたら
+                if (sigeboardStatus_[i] == 1)
+                {
 
-        //            }
-        //        }
+                    //Positionの木
+                    if (ImGui::TreeNode("position")) {
 
-        //        //一回ロードしていたら
-        //        if (sigeboardStatus_[i] == 1)
-        //        {
+                        //Positionセット
+                        ImGui::SliderFloat("x", &sigeboardPos_[i].x, -200.0f, 200.0f);
+                        ImGui::SliderFloat("y", &sigeboardPos_[i].y, -200.0f, 200.0f);
+                        ImGui::SliderFloat("z", &sigeboardPos_[i].z, -200.0f, 200.0f);
 
-        //            //Positionの木
-        //            if (ImGui::TreeNode("position")) {
+                        if (ImGui::TreeNode("InputPosition")) {
 
-        //                //Positionセット
-        //                ImGui::SliderFloat("x", &sigeboardPos_[i].x, -200.0f, 200.0f);
-        //                ImGui::SliderFloat("y", &sigeboardPos_[i].y, -200.0f, 200.0f);
-        //                ImGui::SliderFloat("z", &sigeboardPos_[i].z, -200.0f, 200.0f);
+                            ImGui::Text("x");
+                            ImGui::InputFloat("x", &sigeboardPos_[i].x, -20.0f, 20.0f);
+                            ImGui::Text("y");
+                            ImGui::InputFloat("y", &sigeboardPos_[i].y, -20.0f, 20.0f);
+                            ImGui::Text("z");
+                            ImGui::InputFloat("z", &sigeboardPos_[i].z, -20.0f, 20.0f);
 
-        //                if (ImGui::TreeNode("InputPosition")) {
+                            ImGui::TreePop();
+                        }
 
-        //                    ImGui::Text("x");
-        //                    ImGui::InputFloat("x", &sigeboardPos_[i].x, -20.0f, 20.0f);
-        //                    ImGui::Text("y");
-        //                    ImGui::InputFloat("y", &sigeboardPos_[i].y, -20.0f, 20.0f);
-        //                    ImGui::Text("z");
-        //                    ImGui::InputFloat("z", &sigeboardPos_[i].z, -20.0f, 20.0f);
+                        ImGui::TreePop();
+                    }
 
-        //                    ImGui::TreePop();
-        //                }
+                    //Scaleの木
+                    if (ImGui::TreeNode("scale")) {
 
-        //                ImGui::TreePop();
-        //            }
+                        //Scaleセット
+                        ImGui::SliderFloat("x", &sigeboardScale_[i].x, -20.0f, 20.0f);
+                        ImGui::SliderFloat("y", &sigeboardScale_[i].y, -20.0f, 20.0f);
+                        ImGui::SliderFloat("z", &sigeboardScale_[i].z, -20.0f, 20.0f);
 
-        //            //Scaleの木
-        //            if (ImGui::TreeNode("scale")) {
+                        if (ImGui::TreeNode("InputScale")) {
 
-        //                //Scaleセット
-        //                ImGui::SliderFloat("x", &sigeboardScale_[i].x, -20.0f, 20.0f);
-        //                ImGui::SliderFloat("y", &sigeboardScale_[i].y, -20.0f, 20.0f);
-        //                ImGui::SliderFloat("z", &sigeboardScale_[i].z, -20.0f, 20.0f);
+                            ImGui::Text("x");
+                            ImGui::InputFloat("x", &sigeboardScale_[i].x, -20.0f, 20.0f);
+                            ImGui::Text("y");
+                            ImGui::InputFloat("y", &sigeboardScale_[i].y, -20.0f, 20.0f);
+                            ImGui::Text("z");
+                            ImGui::InputFloat("z", &sigeboardScale_[i].z, -20.0f, 20.0f);
 
-        //                if (ImGui::TreeNode("InputScale")) {
+                            ImGui::TreePop();
+                        }
 
-        //                    ImGui::Text("x");
-        //                    ImGui::InputFloat("x", &sigeboardScale_[i].x, -20.0f, 20.0f);
-        //                    ImGui::Text("y");
-        //                    ImGui::InputFloat("y", &sigeboardScale_[i].y, -20.0f, 20.0f);
-        //                    ImGui::Text("z");
-        //                    ImGui::InputFloat("z", &sigeboardScale_[i].z, -20.0f, 20.0f);
+                        ImGui::TreePop();
+                    }
 
-        //                    ImGui::TreePop();
-        //                }
+                    //rotateの木
+                    if (ImGui::TreeNode("rotate")) {
 
-        //                ImGui::TreePop();
-        //            }
+                        //Rotateセット
+                        ImGui::SliderFloat("x", &sigeboardRotate_[i].x, 0.0f, 360.0f);
+                        ImGui::SliderFloat("y", &sigeboardRotate_[i].y, 0.0f, 360.0f);
+                        ImGui::SliderFloat("z", &sigeboardRotate_[i].z, 0.0f, 360.0f);
 
-        //            //rotateの木
-        //            if (ImGui::TreeNode("rotate")) {
+                        if (ImGui::TreeNode("rotate")) {
 
-        //                //Rotateセット
-        //                ImGui::SliderFloat("x", &sigeboardRotate_[i].x, 0.0f, 360.0f);
-        //                ImGui::SliderFloat("y", &sigeboardRotate_[i].y, 0.0f, 360.0f);
-        //                ImGui::SliderFloat("z", &sigeboardRotate_[i].z, 0.0f, 360.0f);
+                            ImGui::Text("x");
+                            ImGui::InputFloat("x", &sigeboardRotate_[i].x, -20.0f, 20.0f);
+                            ImGui::Text("y");
+                            ImGui::InputFloat("y", &sigeboardRotate_[i].y, -20.0f, 20.0f);
+                            ImGui::Text("z");
+                            ImGui::InputFloat("z", &sigeboardRotate_[i].z, -20.0f, 20.0f);
 
-        //                if (ImGui::TreeNode("rotate")) {
+                            ImGui::TreePop();
+                        }
 
-        //                    ImGui::Text("x");
-        //                    ImGui::InputFloat("x", &sigeboardRotate_[i].x, -20.0f, 20.0f);
-        //                    ImGui::Text("y");
-        //                    ImGui::InputFloat("y", &sigeboardRotate_[i].y, -20.0f, 20.0f);
-        //                    ImGui::Text("z");
-        //                    ImGui::InputFloat("z", &sigeboardRotate_[i].z, -20.0f, 20.0f);
+                        ImGui::TreePop();
+                    }
 
-        //                    ImGui::TreePop();
-        //                }
+                    if (ImGui::TreeNode("StageSave")) {
 
-        //                ImGui::TreePop();
-        //            }
+                        //ファイルネーム入力欄
+                        static char Stext2[MAX_OBJECT_SIZE][50] = {};
 
-        //            if (ImGui::TreeNode("StageSave")) {
+                        //入力された文字をtext1に格納
+                        ImGui::InputText("ObjName", Stext2[i], sizeof(Stext2[i]));
 
-        //                //ファイルネーム入力欄
-        //                static char Stext2[MAX_OBJECT_SIZE][50] = {};
+                        if (ImGui::Button("Save"))
+                        {
 
-        //                //入力された文字をtext1に格納
-        //                ImGui::InputText("ObjName", Stext2[i], sizeof(Stext2[i]));
+                            const char* fileName = stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()];
+                            std::ofstream ofs;
+                            ofs.open(fileName, std::ios::app);
 
-        //                if (ImGui::Button("Save"))
-        //                {
-        //                    basicPos = { sigeboardPos_[i] };
-        //                    basicRotate = { sigeboardRotate_[i] };
-        //                    basicScale = { sigeboardScale_[i] };
+                            ofs << std::endl;
 
-        //                    const char* fileName = stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()];
-        //                    std::ofstream ofs;
-        //                    ofs.open(fileName, std::ios::app);
+                            ofs << Stext1[i] << "," << Stext2[i] << "," << sigeboardPos_[i].x << "," << sigeboardPos_[i].y << "," << sigeboardPos_[i].z << ","
+                                << sigeboardRotate_[i].x << "," << sigeboardRotate_[i].y << "," << sigeboardRotate_[i].z << ","
+                                << sigeboardScale_[i].x << "," << sigeboardScale_[i].y << "," << sigeboardScale_[i].z;
 
-        //                    ofs << std::endl;
+                            ofs.close();
+                        }
+                        ImGui::TreePop();
+                    }
 
-        //                    ofs << Stext1[i] << "," << Stext2[i] << "," << sigeboardPos_[i].x << "," << sigeboardPos_[i].y << "," << sigeboardPos_[i].z << ","
-        //                        << sigeboardRotate_[i].x << "," << sigeboardRotate_[i].y << "," << sigeboardRotate_[i].z << ","
-        //                        << sigeboardScale_[i].x << "," << sigeboardScale_[i].y << "," << sigeboardScale_[i].z;
+                    //ウィンドウ削除
+                    if (ImGui::Button("close"))
+                    {
+                        sigeboardStatus_[i]++;
+                    }
+                }
 
-        //                    ofs.close();
-        //                }
-        //                ImGui::TreePop();
-        //            }
+                ImGui::End();
+            }
 
-        //            //ウィンドウ削除
-        //            if (ImGui::Button("close"))
-        //            {
-        //                sigeboardStatus_[i]++;
-        //            }
-        //        }
-
-        //        ImGui::End();
-        //    }
-
-        //    //描画される
-        //    if (sigeboardStatus_[i] >= 1)
-        //    {
-        //        pNewSigeboard_[i]->SetPosition(sigeboardPos_[i]);
-        //        pNewSigeboard_[i]->SetRotate(sigeboardRotate_[i]);
-        //        pNewSigeboard_[i]->SetScale(sigeboardScale_[i]);
-        //    }
-        //}
+            //描画される
+            if (sigeboardStatus_[i] >= 1)
+            {
+                pNewSigeboard_[i]->GetComponent<Transform>()->SetPosition(objectPos_[i]);
+                pNewSigeboard_[i]->GetComponent<Transform>()->SetRotate(objectRotate_[i]);
+                pNewSigeboard_[i]->GetComponent<Transform>()->SetScale(objectScale_[i]);
+            }
+        }
     }
 
     //カメラの遷移作成(コライダーに当たったらカメラのポジション変える機能)

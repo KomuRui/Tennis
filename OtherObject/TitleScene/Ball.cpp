@@ -282,8 +282,6 @@ void Ball::BoundMove()
 //プレイヤーがボールを持っている状態の時に呼ぶ関数
 void Ball::PlayerHavingBall()
 {
-	ImGuiSet::DebugLog("tossup", VectorToFloat3(ballInfo_.tossUpVector_));
-	ImGuiSet::DebugLog("flag", ballInfo_.isTossUp_);
 	//もしトスアップしたのなら
 	if (ballInfo_.isTossUp_)
 	{
@@ -332,14 +330,16 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 
 	//ネットをしていたらボールの軌道を修正する
 	//ネットのZ位置を通過するときの秒数を求める
-	float t = abs(ballInfo_.startPoint_.z / abs(XMVectorGetZ(ballInfo_.endPointDirection_)));
+	float t = -ballInfo_.startPoint_.z / XMVectorGetZ(ballInfo_.endPointDirection_);
 
 	//ネットのZ位置を通過するときのY位置を求める
-	float y = (ballInfo_.v0_.y * sin(XMConvertToRadians(ANGLE)) * t) - (0.5f * GRAVITY * pow(t, 2));
+	float y = ((ballInfo_.v0_.y * sin(XMConvertToRadians(ANGLE)) * t) - (0.5f * GRAVITY * t * t)) * ballInfo_.strength_.y;
+	y += ballInfo_.startPoint_.y * (MAX_RATIO - t);
 
 	//もしYの位置がネットの位置より低いなら
 	if (y <= 1.2f)
 	{
+		ImGuiSet::DebugLog("s", y);
 		//差分を求める
 		float differential = 1.2f - y;
 

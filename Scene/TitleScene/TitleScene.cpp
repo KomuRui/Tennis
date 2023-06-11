@@ -2,6 +2,7 @@
 #include "../../Engine/System.h"
 #include "../../Player/PlayerBase.h"
 #include "../../OtherObject/TitleScene/Ball.h"
+#include "../../Engine/GameObject/Signboard.h"
 
 //定数
 namespace
@@ -64,6 +65,7 @@ void TitleScene::Initialize()
 	////////////////////////Player人数設定/////////////////////////////////
 
 	GameManager::SetPlayers(Players::TWO);
+
 }
 
 //更新の前に一度だけ呼ばれる更新

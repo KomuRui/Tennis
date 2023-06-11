@@ -161,6 +161,7 @@
     <ClCompile Include="Engine\GameObject\Light.cpp" />
     <ClCompile Include="Engine\GameObject\PolyLine.cpp" />
     <ClCompile Include="Engine\GameObject\RootObject.cpp" />
+    <ClCompile Include="Engine\GameObject\Signboard.cpp" />
     <ClCompile Include="Engine\GUI\CreateObjGui.cpp" />
     <ClCompile Include="Engine\GUI\GameObjectInfoGui.cpp" />
     <ClCompile Include="Engine\GUI\ImGuiSet.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="Engine\GameObject\Light.h" />
     <ClInclude Include="Engine\GameObject\PolyLine.h" />
     <ClInclude Include="Engine\GameObject\RootObject.h" />
+    <ClInclude Include="Engine\GameObject\Signboard.h" />
     <ClInclude Include="Engine\GUI\CreateObjGui.h" />
     <ClInclude Include="Engine\GUI\GameObjectInfoGui.h" />
     <ClInclude Include="Engine\GUI\ImGuiSet.h" />

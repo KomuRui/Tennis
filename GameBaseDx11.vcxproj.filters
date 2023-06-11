@@ -348,6 +348,9 @@
     <ClCompile Include="OtherObject\TitleScene\Score.cpp">
       <Filter>OtherObject\TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\GameObject\Signboard.cpp">
+      <Filter>01Engine\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -593,6 +596,9 @@
     </ClInclude>
     <ClInclude Include="OtherObject\TitleScene\Score.h">
       <Filter>OtherObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObject\Signboard.h">
+      <Filter>01Engine\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
