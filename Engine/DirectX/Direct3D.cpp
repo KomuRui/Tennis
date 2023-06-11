@@ -161,11 +161,11 @@ namespace Direct3D
 	{
 		XMFLOAT4X4 clip;
 		ZeroMemory(&clip, sizeof(XMFLOAT4X4));
-		clip._11 = (v.Width / 1920) / 2.0f;
-		clip._22 = -((v.Height / 1080) / 2.0f);
+		clip._11 = (v.Width / screenWidth_) / 2.0f;
+		clip._22 = -((v.Height / screenHeight_) / 2.0f);
 		clip._33 = 1;
-		clip._41 = ((v.Width / 1920) / 2.0f) + (v.TopLeftX / 1920);
-		clip._42 = ((v.Height / 1080) / 2.0f) + (v.TopLeftY / 1080);
+		clip._41 = ((v.Width / screenWidth_) / 2.0f) + (v.TopLeftX / screenWidth_);
+		clip._42 = ((v.Height / screenHeight_) / 2.0f) + (v.TopLeftY / screenHeight_);
 		clip._44 = 1;
 
 		clipToUV_ = XMLoadFloat4x4(&clip);

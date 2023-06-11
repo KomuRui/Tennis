@@ -29,7 +29,6 @@ const char* WIN_CLASS_NAME = "テニスゲーム";	//ウィンドウクラス名
 HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow,const char* winName);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-
 // エントリーポイント
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
