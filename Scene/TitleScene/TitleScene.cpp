@@ -59,7 +59,7 @@ void TitleScene::Initialize()
 
 	////////////////////////ツールの基準点モデルを生成/////////////////////////////////
 
-	//BasePointManager::InstantiateBasePointModel();
+	BasePointManager::InstantiateBasePointModel();
 
 	////////////////////////Player人数設定/////////////////////////////////
 

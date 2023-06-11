@@ -13,8 +13,8 @@ using namespace std;
 //定数
 namespace
 {
-	//各基準点の名前
-	static const string BASE_POINT[] = {
+	//ラリー中の各基準点の名前
+	static const string RALLY_BASE_POINT[] = {
 		"Back_R",
 		"Back_C",
 		"Back_L",
@@ -26,6 +26,16 @@ namespace
 		"Front_L",
 	};
 
+	//サーブ中の各基準点の名前
+	static const string SERVE_BASE_POINT[] = {
+		"Right_R",
+		"Right_C",
+		"Right_L",
+		"Left_R",
+		"Left_C",
+		"Left_L",
+	};
+
 	//各軸
 	static const string AXIS[] = {
 		"X",
@@ -34,12 +44,14 @@ namespace
 	};
 
 	//各jsonファイルのパス
-	static const string PLAYER_JSON_PATH = "Tool/BasePoint/BasePointPlayerCourt.json";
-	static const string ENEMY_JSON_PATH = "Tool/BasePoint/BasePointEnemyCourt.json";
+	static const string RALLY_PLAYER1_JSON_PATH = "Tool/BasePoint/RallyBasePointPlayer1Court.json";
+	static const string RALLY_PLAYER2_JSON_PATH = "Tool/BasePoint/RallyBasePointPlayer2Court.json";
+	static const string SERVE_PLAYER1_JSON_PATH = "Tool/BasePoint/BasePointPlayerCourt.json";
+	static const string SERVE_PLAYER2_JSON_PATH = "Tool/BasePoint/BasePointEnemyCourt.json";
 
 	//各アンビエント
-	static const XMFLOAT4 AMBIENT_COLOR_PLAYER = XMFLOAT4(1.0f, ZERO, ZERO, 1.0f);
-	static const XMFLOAT4 AMBIENT_COLOR_ENEMY = XMFLOAT4(1.0f, 1.0f, ZERO, 1.0f);
+	static const XMFLOAT4 RALLY_AMBIENT_COLOR_PLAYER1 = XMFLOAT4(1.0f, ZERO, ZERO, 1.0f);
+	static const XMFLOAT4 RALLY_AMBIENT_COLOR_PLAYER2 = XMFLOAT4(1.0f, 1.0f, ZERO, 1.0f);
 
 	//基準点を動かすときの倍率
 	static const float MOVE_RATIO = 0.020f;
@@ -68,15 +80,15 @@ namespace BasePointManager
 		ARGUMENT_INITIALIZE(isMove, false);
 
 		// JSONファイルの読み込み
-		ifstream ifs_p(PLAYER_JSON_PATH);
-		ifstream ifs_e(ENEMY_JSON_PATH);
+		ifstream ifs_p(RALLY_PLAYER1_JSON_PATH);
+		ifstream ifs_e(RALLY_PLAYER2_JSON_PATH);
 		json j_p;
 		json j_e;
 		ifs_p >> j_p;	
 		ifs_e >> j_e;
 
 		//基準点分回す
-		for (string name : BASE_POINT)
+		for (string name : RALLY_BASE_POINT)
 		{
 			basePointPlayerCourt[name] = XMFLOAT3(j_p[name]["X"], j_p[name]["Y"], j_p[name]["Z"]);
 			basePointEnemyCourt[name] = XMFLOAT3(j_e[name]["X"], j_e[name]["Y"], j_e[name]["Z"]);
@@ -87,7 +99,7 @@ namespace BasePointManager
 	//基準点モデルを生成
 	void BasePointManager::InstantiateBasePointModel()
 	{
-		for (string name : BASE_POINT)
+		for (string name : RALLY_BASE_POINT)
 		{
 			BasePointModel*p = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
 			BasePointModel*e = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
@@ -101,8 +113,8 @@ namespace BasePointManager
 			p->SetPlayerType(true);
 			e->SetPlayerType(false);
 
-			ModelManager::SetAmbient(p->GetModelNum(), AMBIENT_COLOR_PLAYER);
-			ModelManager::SetAmbient(e->GetModelNum(), AMBIENT_COLOR_ENEMY);
+			ModelManager::SetAmbient(p->GetModelNum(), RALLY_AMBIENT_COLOR_PLAYER1);
+			ModelManager::SetAmbient(e->GetModelNum(), RALLY_AMBIENT_COLOR_PLAYER2);
 
 		}
 	}
@@ -166,7 +178,7 @@ namespace BasePointManager
 		json j_e;
 		
 		//基準点分回す
-		for (string name : BASE_POINT)
+		for (string name : RALLY_BASE_POINT)
 		{
 			j_p[name]["X"] = basePointPlayerCourt[name].x;
 			j_p[name]["Y"] = basePointPlayerCourt[name].y;
@@ -178,10 +190,10 @@ namespace BasePointManager
 		}
 		
 		//JSONファイルの書き込み
-		ofstream ofs_p(PLAYER_JSON_PATH);
+		ofstream ofs_p(RALLY_PLAYER1_JSON_PATH);
 		ofs_p << j_p;
 
-		ofstream ofs_e(ENEMY_JSON_PATH);
+		ofstream ofs_e(RALLY_PLAYER2_JSON_PATH);
 		ofs_e << j_e;
 	}
 
@@ -200,11 +212,11 @@ namespace BasePointManager
 	{
 		//プレイヤーの基準点取得なら
 		if (isPlayer)
-			return basePointPlayerCourt[BASE_POINT[Random(0,2)]];
+			return basePointPlayerCourt[RALLY_BASE_POINT[Random(0,2)]];
 		else
-			return basePointEnemyCourt[BASE_POINT[Random(0,2)]];
+			return basePointEnemyCourt[RALLY_BASE_POINT[Random(0,2)]];
 	}
 
 	//基準点の名前をランダムに取得
-	string GetRandomBasePointName() { return BASE_POINT[Random(0, 8)]; }
+	string GetRandomBasePointName() { return RALLY_BASE_POINT[Random(0, 8)]; }
 }
