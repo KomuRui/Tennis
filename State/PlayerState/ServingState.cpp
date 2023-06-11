@@ -74,22 +74,46 @@ void ServingState::HitMove(PlayerBase* player)
 	player->GetComponent<Transform>()->SetRotate(VectorToFloat3(PLAYER_CHARGE_ROTATION_ANGLE - (PLAYER_CHARGE_ROTATION_ANGLE - PLAYER_END_ROTATION_ANGLE) * ratio));
 	player->GetRacket()->GetComponent<Transform>()->SetRotate(VectorToFloat3(XMVectorLerp(XMLoadFloat3(&RACKET_CHARGE_ROTATION_ANGLE), XMLoadFloat3(&RACKET_END_ROTATION_ANGLE), ratio)));
 
-	//もし回転が最後まで終わったのなら
-	if (ratio >= 1)
+	//もし最後まで終わっていないのならこの先は処理しない
+	if (ratio < 1) return;
+
+	//もしボールを打てていないのなら元の状態に戻す
+	if (GameManager::GetpBall()->GetBallStatus() == BallStatus::PLAYER_HAV_BALL)
 	{
 		//状態変更
 		player->GetState()->ChangeState(player->GetState()->playerStanding_, player);
 
-		//元の角度に戻す
-		player->GetComponent<Transform>()->SetRotate(PLAYER_END_ROTATION_ANGLE);
-		player->GetRacket()->GetComponent<Transform>()->SetRotate(RACKET_END_ROTATION_ANGLE);
-
 		//構えていないに設定
 		ARGUMENT_INITIALIZE(isCharge_, false);
 
+		//サーブレシーブに戻す
+		GameManager::GetReferee()->SetGameStatus(GameStatus::NOW_SERVE_RECEIVE);
+
 		//打っていない状態にする
 		player->GetState()->SetHitMove(false);
+
+		//ボールリセット
+		GameManager::GetpBall()->ResetBallTossUpVec();
+
+		return;
 	}
+
+	//状態変更
+	player->GetState()->ChangeState(player->GetState()->playerStanding_, player);
+
+	//元の角度に戻す
+	player->GetComponent<Transform>()->SetRotate(PLAYER_END_ROTATION_ANGLE);
+	player->GetRacket()->GetComponent<Transform>()->SetRotate(RACKET_END_ROTATION_ANGLE);
+
+	//構えていないに設定
+	ARGUMENT_INITIALIZE(isCharge_, false);
+
+	//打っていない状態にする
+	player->GetState()->SetHitMove(false);
+
+	//ラリーモードにする
+	GameManager::GetReferee()->SetGameStatus(GameStatus::NOW_RALLY);
+
 }
 
 //引く時の動き
@@ -135,8 +159,5 @@ void ServingState::PullMove(PlayerBase* player)
 
 		//打つ動作に切り替える
 		player->GetState()->SetHitMove(true);
-
-		//ラリーモードにする
-		GameManager::GetReferee()->SetGameStatus(GameStatus::NOW_RALLY);
 	}
 }

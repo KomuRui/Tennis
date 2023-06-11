@@ -108,6 +108,11 @@ public:
 	void Reset(float strengthX, float strengthY,float moveTime,string basePpointName);
 
 	/// <summary>
+	/// ボールトスアップするときのベクトルをリセット
+	/// </summary>
+	void ResetBallTossUpVec();
+
+	/// <summary>
 	/// 終点のポジションを取得
 	/// </summary>
 	/// <returns>終点のポジション</returns>

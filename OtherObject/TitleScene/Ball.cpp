@@ -281,6 +281,8 @@ void Ball::BoundMove()
 //プレイヤーがボールを持っている状態の時に呼ぶ関数
 void Ball::PlayerHavingBall()
 {
+	ImGuiSet::DebugLog("tossup", VectorToFloat3(ballInfo_.tossUpVector_));
+	ImGuiSet::DebugLog("flag", ballInfo_.isTossUp_);
 	//もしトスアップしたのなら
 	if (ballInfo_.isTossUp_)
 	{
@@ -354,6 +356,13 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 
 	//逆にする
 	ARGUMENT_INITIALIZE(ballInfo_.isGoToBasePoint_, !ballInfo_.isGoToBasePoint_);
+}
+
+//ボールトスアップするときのベクトルをリセット
+void Ball::ResetBallTossUpVec() 
+{
+	GameManager::GetpBall()->SetTossUp(false);
+	ARGUMENT_INITIALIZE(ballInfo_.tossUpVector_, TOSS_UP_VALUE);
 }
 
 //何かのオブジェクトに当たった時に呼ばれる関数
