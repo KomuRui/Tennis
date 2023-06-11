@@ -74,17 +74,8 @@ Ball::Ball(GameObject* parent)
 //初期化
 void Ball::ChildInitialize()
 {
+
 	//各初期化
-	//ARGUMENT_INITIALIZE(transform_->position_, BasePointManager::GetRandomBasePoint(true));
-	//ARGUMENT_INITIALIZE(startPoint_, transform_->position_);
-	//ARGUMENT_INITIALIZE(endPoint_,BasePointManager::GetRandomBasePoint(false));
-	//ARGUMENT_INITIALIZE(endPointDirection_,endPoint_ - startPoint_);
-	//ARGUMENT_INITIALIZE(strength_.x, Random(1, 5));
-	//ARGUMENT_INITIALIZE(strength_.y, Random(2, 5));
-	//ARGUMENT_INITIALIZE(moveTime_, 0.7f);
-	//ARGUMENT_INITIALIZE(hTime_, Time::Add());
-	//ARGUMENT_INITIALIZE(v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-	//ARGUMENT_INITIALIZE(v0_.x, (endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(ballInfo_.pLine_, new PolyLine);
 	ballInfo_.pLine_->Load("Image/Effect/circle_Wh.png");
 	ballInfo_.pLine_->AddPosition(transform_->position_);
@@ -95,14 +86,6 @@ void Ball::ChildInitialize()
 	ARGUMENT_INITIALIZE(tShadow_.position_, transform_->position_);
 	ARGUMENT_INITIALIZE(tShadow_.position_.y, 0.2f);
 	SetShadow(false);
-
-	//着地エフェクト表示(同じ高さに表示すると被ってしまうので、少し上げる)
-	//XMFLOAT3 pos = endPoint_;
-	//ARGUMENT_INITIALIZE(pos.y, LANDING_EFFECT_POS_Y);
-	//OtherEffectManager::LandingEffect(hLandEffectName_,pos, moveTime_);
-
-	//雫みたいなエフェクト表示
-	//EffectManager::Draw(hDropEffectName_,dropEffectFilePath_, transform_->position_);
 
 	//当たり判定
 	sphere_ = AddComponent<SphereCollider>();
