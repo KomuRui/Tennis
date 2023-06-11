@@ -2,6 +2,7 @@
 #include "../../Engine/ResourceManager/ModelManager.h"
 #include "../../Engine/DirectX/Direct3D.h"
 #include "../../Manager/EffectManager/EffectManager.h"
+#include "../../Manager/BasePointManager/BasePointManager.h"
 #include "../../Player/PlayerBase.h"
 #include "Ball.h"
 
@@ -124,44 +125,6 @@ void Racket::ChildUpdate()
 
 }
 
-//入力に対する基準点のポイントの名前を取得
-string Racket::GetInputBasePoint()
-{
-	//最終的に返す文字列
-	string name = "";
-
-	//Lスティックの傾きを取得
-	XMFLOAT3 stickL = Input::GetPadStickL(((PlayerBase*)GetParent())->GetState()->GetPlayerNum());
-
-	if (stickL.y > 0.1f)
-		name += "Back_";
-	else if (stickL.y < -0.1f)
-		name += "Front_";
-	else
-		name += "Center_";
-
-	if (((PlayerBase*)GetParent())->GetState()->GetPlayerNum() == 0)
-	{
-		if (stickL.x > 0.1f)
-			name += "L";
-		else if (stickL.x < -0.1f)
-			name += "R";
-		else
-			name += "C";
-	}
-	else
-	{
-		if (stickL.x < 0.1f)
-			name += "L";
-		else if (stickL.x > -0.1f)
-			name += "R";
-		else
-			name += "C";
-	}
-
-	return name;
-}
-
 //当たり判定
 void Racket::HitColliderFunc(GameObject* pTarget)
 {
@@ -188,7 +151,7 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 	((Ball*)pTarget)->SetBallDropEffectFilePath(dropEffectFilePath_[type_]);
 
 	//ボールを次のコートへ
-	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_, GetInputBasePoint());
+	((Ball*)pTarget)->Reset(hitStrength_[type_].strength_.x, hitStrength_[type_].strength_.y, hitStrength_[type_].moveTime_ * ratio_, BasePointManager::GetInputBasePoint((PlayerBase*)GetParent()));
 
 	//エフェクト表示
 	EffectManager::Draw("HitEffect",hitEffectFilePath_[type_], ((Ball*)pTarget)->GetComponent<Transform>()->GetPosition());

@@ -63,8 +63,8 @@ namespace BasePointManager
 	///////////////////////////////変数//////////////////////////////////
 
 	//各基準点の位置
-	map<string, XMFLOAT3> basePointPlayerCourt;
-    map<string, XMFLOAT3> basePointEnemyCourt;
+	map<string, XMFLOAT3> serveBasePointPlayer1Court;
+    map<string, XMFLOAT3> serveBasePointPlayer2Court;
 
 	//選択されている基準点のオブジェクト
 	BasePointModel* isSelectBasePointModel;
@@ -90,8 +90,8 @@ namespace BasePointManager
 		//基準点分回す
 		for (string name : RALLY_BASE_POINT)
 		{
-			basePointPlayerCourt[name] = XMFLOAT3(j_p[name]["X"], j_p[name]["Y"], j_p[name]["Z"]);
-			basePointEnemyCourt[name] = XMFLOAT3(j_e[name]["X"], j_e[name]["Y"], j_e[name]["Z"]);
+			serveBasePointPlayer1Court[name] = XMFLOAT3(j_p[name]["X"], j_p[name]["Y"], j_p[name]["Z"]);
+			serveBasePointPlayer2Court[name] = XMFLOAT3(j_e[name]["X"], j_e[name]["Y"], j_e[name]["Z"]);
 		}
 
 	}
@@ -104,8 +104,8 @@ namespace BasePointManager
 			BasePointModel*p = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
 			BasePointModel*e = Instantiate<BasePointModel>(GameManager::GetpSceneManager());
 
-			p->GetComponent<Transform>()->SetPosition(basePointPlayerCourt[name]);
-			e->GetComponent<Transform>()->SetPosition(basePointEnemyCourt[name]);
+			p->GetComponent<Transform>()->SetPosition(serveBasePointPlayer1Court[name]);
+			e->GetComponent<Transform>()->SetPosition(serveBasePointPlayer2Court[name]);
 
 			p->SetBasePointName(name);
 			e->SetBasePointName(name);
@@ -150,9 +150,9 @@ namespace BasePointManager
 
 			//プレイヤータイプかどうか
 			if (isSelectBasePointModel->isPlayerType())
-				basePointPlayerCourt[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
+				serveBasePointPlayer1Court[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
 			else								       
-				basePointEnemyCourt[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
+				serveBasePointPlayer2Court[isSelectBasePointModel->GetBasePointName()] = isSelectBasePointModel->GetComponent<Transform>()->GetPosition();
 
 		}
 
@@ -180,13 +180,13 @@ namespace BasePointManager
 		//基準点分回す
 		for (string name : RALLY_BASE_POINT)
 		{
-			j_p[name]["X"] = basePointPlayerCourt[name].x;
-			j_p[name]["Y"] = basePointPlayerCourt[name].y;
-			j_p[name]["Z"] = basePointPlayerCourt[name].z;
+			j_p[name]["X"] = serveBasePointPlayer1Court[name].x;
+			j_p[name]["Y"] = serveBasePointPlayer1Court[name].y;
+			j_p[name]["Z"] = serveBasePointPlayer1Court[name].z;
 
-			j_e[name]["X"] = basePointEnemyCourt[name].x;
-			j_e[name]["Y"] = basePointEnemyCourt[name].y;
-			j_e[name]["Z"] = basePointEnemyCourt[name].z;
+			j_e[name]["X"] = serveBasePointPlayer2Court[name].x;
+			j_e[name]["Y"] = serveBasePointPlayer2Court[name].y;
+			j_e[name]["Z"] = serveBasePointPlayer2Court[name].z;
 		}
 		
 		//JSONファイルの書き込み
@@ -202,9 +202,9 @@ namespace BasePointManager
 	{
 		//プレイヤーの基準点取得なら
 		if (isPlayer)
-			return basePointPlayerCourt[name];
+			return serveBasePointPlayer1Court[name];
 		else
-			return basePointEnemyCourt[name];
+			return serveBasePointPlayer2Court[name];
 	}
 
 	//基準点をランダムに取得
@@ -212,9 +212,49 @@ namespace BasePointManager
 	{
 		//プレイヤーの基準点取得なら
 		if (isPlayer)
-			return basePointPlayerCourt[RALLY_BASE_POINT[Random(0,2)]];
+			return serveBasePointPlayer1Court[RALLY_BASE_POINT[Random(0,2)]];
 		else
-			return basePointEnemyCourt[RALLY_BASE_POINT[Random(0,2)]];
+			return serveBasePointPlayer2Court[RALLY_BASE_POINT[Random(0,2)]];
+	}
+
+	//入力に対する基準点の名前を取得
+	string GetInputBasePoint(PlayerBase* p)
+	{
+		//最終的に返す文字列
+		string name = "";
+
+		//Lスティックの傾きを取得
+		XMFLOAT3 stickL = Input::GetPadStickL(p->GetState()->GetPlayerNum());
+
+		//奥行
+		if (stickL.y > 0.1f)
+			name += "Back_";
+		else if (stickL.y < -0.1f)
+			name += "Front_";
+		else
+			name += "Center_";
+
+		//コートごとに分ける
+		if (p->GetState()->GetPlayerNum() == 0)
+		{
+			if (stickL.x > 0.1f)
+				name += "L";
+			else if (stickL.x < -0.1f)
+				name += "R";
+			else
+				name += "C";
+		}
+		else
+		{
+			if (stickL.x < 0.1f)
+				name += "L";
+			else if (stickL.x > -0.1f)
+				name += "R";
+			else
+				name += "C";
+		}
+
+		return name;
 	}
 
 	//基準点の名前をランダムに取得

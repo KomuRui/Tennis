@@ -56,12 +56,6 @@ public:
 	//更新
 	void ChildUpdate() override;
 
-	/// <summary>
-	/// 入力に対する基準点のポイントの名前を取得
-	/// </summary>
-	/// <returns></returns>
-	string GetInputBasePoint();
-
 	//当たり判定
 	void HitColliderFunc(GameObject* pTarget);
 

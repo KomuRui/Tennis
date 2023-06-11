@@ -1,6 +1,8 @@
 #pragma once
 #include "../../OtherObject/TitleScene/TennisCourt.h"
 
+class PlayerBase;
+
 //テニスボールが飛んでいく基準点を管理している名前空間
 namespace BasePointManager
 {
@@ -38,6 +40,12 @@ namespace BasePointManager
 	/// <param name="isPlayer">Playerの基準点かどうか</param>
 	/// <returns>基準点</returns>
 	XMFLOAT3 GetRandomBasePoint(bool isPlayer);
+
+	/// <summary>
+	/// 入力に対する基準点の名前を取得
+	/// </summary>
+	/// <returns>基準点の名前</returns>
+	string GetInputBasePoint(PlayerBase* p);
 
 	/// <summary>
 	/// 基準点の名前をランダムに取得
