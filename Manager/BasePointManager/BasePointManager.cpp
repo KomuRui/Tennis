@@ -46,8 +46,8 @@ namespace
 	//各jsonファイルのパス
 	static const string RALLY_PLAYER1_JSON_PATH = "Tool/BasePoint/RallyBasePointPlayer1Court.json";
 	static const string RALLY_PLAYER2_JSON_PATH = "Tool/BasePoint/RallyBasePointPlayer2Court.json";
-	static const string SERVE_PLAYER1_JSON_PATH = "Tool/BasePoint/BasePointPlayerCourt.json";
-	static const string SERVE_PLAYER2_JSON_PATH = "Tool/BasePoint/BasePointEnemyCourt.json";
+	static const string SERVE_PLAYER1_JSON_PATH = "Tool/BasePoint/ServeBasePointPlayer1Court.json";
+	static const string SERVE_PLAYER2_JSON_PATH = "Tool/BasePoint/ServeBasePointPlayer2Court.json";
 
 	//各アンビエント
 	static const XMFLOAT4 RALLY_AMBIENT_COLOR_PLAYER1 = XMFLOAT4(1.0f, ZERO, ZERO, 1.0f);
@@ -234,25 +234,12 @@ namespace BasePointManager
 		else
 			name += "Center_";
 
-		//コートごとに分ける
-		if (p->GetState()->GetPlayerNum() == 0)
-		{
-			if (stickL.x > 0.1f)
-				name += "L";
-			else if (stickL.x < -0.1f)
-				name += "R";
-			else
-				name += "C";
-		}
+	    if (stickL.x < 0.1f)
+			name += "L";
+		else if (stickL.x > -0.1f)
+			name += "R";
 		else
-		{
-			if (stickL.x < 0.1f)
-				name += "L";
-			else if (stickL.x > -0.1f)
-				name += "R";
-			else
-				name += "C";
-		}
+			name += "C";
 
 		return name;
 	}
