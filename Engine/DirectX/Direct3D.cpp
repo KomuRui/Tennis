@@ -309,9 +309,9 @@ namespace Direct3D
 		vpRightMini.TopLeftY = 100;								  //上
 
 		//最初の画面はミニ状態にしておく
-		vp = vpMini;
-		vpRight = vpRightMini;
-		vpLeft = vpLeftMini;
+		vp = vpFull;
+		vpRight = vpRightFull;
+		vpLeft = vpLeftFull;
 
 		//各パターンのシェーダーセット準備
 		InitShaderBundle();
