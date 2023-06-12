@@ -137,7 +137,7 @@ void CreateStage::LoadFileCreateStage(GameObject* parent, std::string filename)
 		t.parent = nullptr;
 
 	//ƒtƒ@ƒCƒ‹“Ç‚Ýž‚Ý
-	ifstream ifs("Data/StageData/Title/Title.json");
+	ifstream ifs(filename);
 	json json_object;
 	ifs >> json_object;
 

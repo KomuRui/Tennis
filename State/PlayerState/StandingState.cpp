@@ -65,8 +65,7 @@ void StandingState::HandleInput(PlayerBase* player)
 
 	//打つボタンを押してかつサーブレシーブ中かつサーバーなら
 	if (isShot && GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE &&
-	   (GameManager::GetReferee()->IsPlayer1Server() == player->GetState()->GetPlayerNum() == 0 ||
-        GameManager::GetReferee()->IsPlayer2Server() == player->GetState()->GetPlayerNum() == 1))
+		(GameManager::GetReferee()->IsServer(player)))
 	{
 		GameManager::GetpBall()->SetTossUp(true);
 		player->GetState()->ChangeState(player->GetState()->playerServing_, player);

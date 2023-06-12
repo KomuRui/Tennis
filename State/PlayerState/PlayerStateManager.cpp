@@ -84,8 +84,7 @@ void PlayerStateManager::Update3D(PlayerBase* player)
 
     //サーブ状態かつサーバーなら
     if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE &&
-       (GameManager::GetReferee()->IsPlayer1Server() == playerNum_ == 0 ||
-        GameManager::GetReferee()->IsPlayer2Server() == playerNum_ == 1))
+       (GameManager::GetReferee()->IsServer(player)))
     {
         //サーブの時の移動処理
         ServeMove(player, PadLx, PadLy);

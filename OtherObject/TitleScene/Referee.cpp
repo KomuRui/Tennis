@@ -2,7 +2,7 @@
 
 //コンストラクタ
 Referee::Referee()
-	:score_(new Score()), status_(GameStatus::NOW_SERVE_RECEIVE), isPlayer1Server_(true)
+	:score_(new Score()), status_(GameStatus::NOW_SERVE_RECEIVE)
 {
 }
 

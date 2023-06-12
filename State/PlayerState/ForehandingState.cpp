@@ -105,7 +105,7 @@ void ForehandingState::Update3D(PlayerBase* player)
 			ARGUMENT_INITIALIZE(time, min<float>(time, 1.5f));
 
 			//打つ時の倍率を設定
-			player->GetRacket()->SetRatio(1 - (time / 3));
+			player->GetRacket()->SetRatio(1.0f - (time / 2.0f));
 
 			//タイマーリセット
 			Time::Reset(hTime_);

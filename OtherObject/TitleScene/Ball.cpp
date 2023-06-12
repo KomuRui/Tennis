@@ -182,6 +182,7 @@ void Ball::MoveToPurpose()
 
 	//エフェクトのポジション更新
 	ARGUMENT_INITIALIZE(VFX::GetEmitter(ballInfo_.hDropEffectName_)->data.position,transform_->position_);
+	ARGUMENT_INITIALIZE(VFX::GetEmitter("BallCharge")->data.position, transform_->position_);
 
 	//進行ベクトルを求める
 	ARGUMENT_INITIALIZE(ballInfo_.progressVector_, transform_->position_ - beforePos);
@@ -223,6 +224,7 @@ void Ball::BoundMove()
 	//エフェクトのポジション更新
 	ballInfo_.pLine_->AddPosition(transform_->position_);
 	ARGUMENT_INITIALIZE(VFX::GetEmitter(ballInfo_.hDropEffectName_)->data.position, transform_->position_);
+	ARGUMENT_INITIALIZE(VFX::GetEmitter("BallCharge")->data.position, transform_->position_);
 
 	//地面に着いてないのならこの先は処理しない
 	if (transform_->position_.y > ZERO) return;
@@ -253,6 +255,7 @@ void Ball::BoundMove()
 		Time::Reset(ballInfo_.hTime_);
 		VFX::ForcedEnd(ballInfo_.hLandEffectName_);
 		VFX::ForcedEnd(ballInfo_.hDropEffectName_);
+		VFX::ForcedEnd("BallCharge");
 
 		//打つ強さをランダムに取得
 		HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
@@ -339,6 +342,9 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 	//雫みたいなエフェクト表示
 	VFX::ForcedEnd(ballInfo_.hDropEffectName_);
 	EffectManager::Draw(ballInfo_.hDropEffectName_, ballInfo_.dropEffectFilePath_, transform_->position_);
+
+	VFX::ForcedEnd("BallCharge");
+	EffectManager::Draw("BallCharge", "Effect/charge.txt", transform_->position_);
 
 	//次の目的地に移動するように
 	ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::PURPOSE_MOVE);

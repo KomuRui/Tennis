@@ -20,8 +20,6 @@ class Referee
 	PlayerBase* server_;   //サーバー
 	PlayerBase* receiver_; //レシーバー
 
-	bool isPlayer1Server_; //Player1がサーバーかどうか
-
 public:
 
 	//コンストラクタ
@@ -48,22 +46,10 @@ public:
 	void SetGameStatus(GameStatus s) { status_ = s; }
 
 	/// <summary>
-	/// プレイヤー1がサーバーかどうか設定
-	/// </summary>
-	/// <param name="flag"></param>
-	void SetPlayer1Server(bool flag) { isPlayer1Server_ = flag; }
-
-	/// <summary>
-	/// プレイヤー1がサーバーかどうか
+	/// プレイヤーがサーバーかどうか
 	/// </summary>
 	/// <returns>trueならサーバー</returns>
-	bool IsPlayer1Server() { return isPlayer1Server_; }
-
-	/// <summary>
-	/// プレイヤー2がサーバーかどうか
-	/// </summary>
-	/// <returns>trueならサーバー</returns>
-	bool IsPlayer2Server() { return !isPlayer1Server_; }
+	bool IsServer(PlayerBase* p) { return (server_ == p); }
 
 	/// <summary>
 	/// サーバーのプレイヤーを取得

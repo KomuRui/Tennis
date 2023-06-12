@@ -84,8 +84,8 @@ namespace FrameWorkUpdateManager
 		}
 		
 		//ゲーム画面のサイズごとの各GUI描画
-		//Direct3D::GetGameFull() ? ImGuiSet::GameScreenFullDraw()
-		//						: ImGuiSet::GameScreenNotFullDraw();
+		Direct3D::GetGameFull() ? ImGuiSet::GameScreenFullDraw()
+								: ImGuiSet::GameScreenNotFullDraw();
 		//描画終了
 		Direct3D::EndDraw();
 

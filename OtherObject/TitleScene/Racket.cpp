@@ -103,6 +103,8 @@ void Racket::ChildInitialize()
 	box1_->SetPos({ ZERO,ZERO,ZERO });
 	box1_->SetSize({ COLLIDER_SIZE_X,COLLIDER_SIZE_Y,COLLIDER_SIZE_Z });
 	box1_->SetHitFunc(&Racket::HitColliderFunc);
+
+	//影
 	SetShadow(true);
 }
 
@@ -145,12 +147,24 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 	//保存しておく
 	float s = hitStrength_[type_].strength_.x;
 
+	//移動時間
+	float moveTime = hitStrength_[type_].moveTime_;
+
+	//スライスなら
+	if (Type::SLICE == type_)
+	{
+		hitStrength_[type_].strength_.x *= 1 + ((1 - ratio_) * 2.0f);
+	}
+	else
+	{
+		//最終的な移動時間を求める
+		moveTime *= ratio_;
+	}
+
 	//バックハンドならXの強さを逆にする
 	if (stroke_ == Stroke::BACKHAND)
 		hitStrength_[type_].strength_.x *= -1;
 
-	//最終的な移動時間を求める
-	float moveTime = hitStrength_[type_].moveTime_ * ratio_;
 
 	//サーブレシーブ時の時だけ移動時間を半分にする
 	if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE)
