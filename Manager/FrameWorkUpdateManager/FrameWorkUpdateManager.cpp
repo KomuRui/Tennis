@@ -130,7 +130,12 @@ namespace FrameWorkUpdateManager
 
 		//エフェクトエディタモードじゃないのなら
 		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+		{
 			root->DrawSub();
+
+			//透明・半透明描画
+			root->TransparentDrawSub();
+		}
 
 		//エフェクトの描画
 		VFX::Draw();
@@ -138,9 +143,6 @@ namespace FrameWorkUpdateManager
 		//エフェクトエディタモードじゃないのなら
 		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
 		{
-			//透明・半透明描画
-			root->TransparentDrawSub();
-
 			//様々な描画処理をする
 			GameManager::Draw();
 		}
@@ -167,17 +169,15 @@ namespace FrameWorkUpdateManager
 
 		//エフェクトエディタモードじゃないのなら
 		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+		{
 			root->DrawSub();
 
-		//エフェクトの描画
-		VFX::Draw();
-
-		//エフェクトエディタモードじゃないのなら
-		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
-		{
 			//透明・半透明描画
 			root->TransparentDrawSub();
 		}
+
+		//エフェクトの描画
+		VFX::Draw();
 
 		/////////////右
 
@@ -196,17 +196,15 @@ namespace FrameWorkUpdateManager
 
 		//エフェクトエディタモードじゃないのなら
 		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+		{
 			root->DrawSub();
 
-		//エフェクトの描画
-		VFX::Draw();
-
-		//エフェクトエディタモードじゃないのなら
-		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
-		{
 			//透明・半透明描画
 			root->TransparentDrawSub();
 		}
+
+		//エフェクトの描画
+		VFX::Draw();
 
 		Camera::SetPosition(pos);
 		Camera::SetTarget(tar);
