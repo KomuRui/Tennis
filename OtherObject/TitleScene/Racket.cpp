@@ -139,11 +139,25 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 
 	//ƒqƒbƒgƒXƒgƒbƒv‰‰o(“®‚«‚ðŽ~‚ß‚é)
 	Leave();
-	pTarget->Leave();
+	((Ball*)pTarget)->Leave();
 
-	//Player‚à“G‚à0.1•bŒã‚É“®‚«o‚·
-	SetTimeMethod(0.1f);
-	pTarget->SetTimeMethod(0.1f);
+	//Š„‡‚ªÅ’á’l‚È‚ç
+	if (ratio_ == RATIO_MIN_VALUE)
+	{
+		((Ball*)pTarget)->SetUsePowerEffect(true);
+
+		//Player‚à“G‚à1.0•bŒã‚É“®‚«o‚·
+		SetTimeMethod(1.0f);
+		((Ball*)pTarget)->SetTimeMethod(1.0f);
+	}
+	else
+	{
+		((Ball*)pTarget)->SetUsePowerEffect(false);
+
+		//Player‚à“G‚à0.1•bŒã‚É“®‚«o‚·
+		SetTimeMethod(0.1f);
+		((Ball*)pTarget)->SetTimeMethod(0.1f);
+	}
 
 	//•Û‘¶‚µ‚Ä‚¨‚­
 	float s = hitStrength_[type_].strength_.x;
@@ -173,12 +187,6 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 		hitStrength_[type_].strength_.y *= 0.5f;
 		moveTime *= 0.5f;
 	}
-
-	//Š„‡‚ªÅ’á’l‚È‚ç
-	if (ratio_ == RATIO_MIN_VALUE)
-		((Ball*)pTarget)->SetUsePowerEffect(true);
-	else
-		((Ball*)pTarget)->SetUsePowerEffect(false);
 
 	//ƒ{[ƒ‹‚Ì‹OÕF‚ðŽw’è
 	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);

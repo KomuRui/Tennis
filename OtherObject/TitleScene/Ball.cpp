@@ -220,6 +220,9 @@ void Ball::MoveToPurpose()
 
 		//正反射ベクトルの角度で放物線を描くと低い弾道になるので、定数分角度を増やす
 		ARGUMENT_INITIALIZE(ballInfo_.firstAngle_,GetDot(ballInfo_.progressVector_, v) + XMConvertToRadians(ADD_ANGLE_VALUE));
+
+		//着地エフェクト削除
+		VFX::ForcedEnd(ballInfo_.hLandEffectName_);
 	}
 }
 
@@ -358,7 +361,7 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 	XMFLOAT3 pos = ballInfo_.endPoint_;
 	ARGUMENT_INITIALIZE(pos.y, LANDING_EFFECT_POS_Y);
 	VFX::ForcedEnd(ballInfo_.hLandEffectName_);
-    OtherEffectManager::LandingEffect(ballInfo_.hLandEffectName_,pos, ballInfo_.moveTime_);
+    OtherEffectManager::LandingEffect(ballInfo_.hLandEffectName_,pos, 1000);
 
 	//雫みたいなエフェクト表示
 	VFX::ForcedEnd(ballInfo_.hDropEffectName_);
@@ -391,6 +394,7 @@ void Ball::ResetBallTossUpVec()
 void Ball::TimeMethod()
 {
 	Enter();
+	Time::Reset(ballInfo_.hTime_);
 }
 
 //指定したZ位置を通過するときのボールの位置を取得
