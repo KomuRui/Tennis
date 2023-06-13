@@ -1,6 +1,13 @@
 #pragma once
 #include "../../Base/NormalObject.h"
 
+//テニスコートの名前
+enum class TennisCourtName
+{
+	Z_PLUS_COURT, //Z方向プラスのコート
+	Z_MINUS_COURT //Z方向マイナスのコート
+};
+
 /// <summary>
 /// テニスコートモデル
 /// </summary>

@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Base/NormalObject.h"
 #include "../../Engine/Component/Collider/BoxCollider.h"
+#include "TennisCourt.h"
 #include <map>
 
 //球種
@@ -39,7 +40,7 @@ class Racket : public NormalObject
 	Type type_;						        //球種
 	XMFLOAT3 colliderPos_;                  //コライダーのポジション
 	float ratio_;                           //倍率
-	bool flag_;
+	TennisCourtName goTennisCourtName_;     //どのテニスコートに向かって打つか
 
 public:
 

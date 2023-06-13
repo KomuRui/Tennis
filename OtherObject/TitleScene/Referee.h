@@ -9,6 +9,12 @@ enum class GameStatus
 	NOW_SERVE_RECEIVE  //サーブレシーブ
 };
 
+//各サイド
+enum class Side {
+	DEUCE_SIDE,        //デュースサイド
+	AD_SIDE            //アドサイド
+};
+
 /// <summary>
 /// 審判
 /// </summary>
@@ -16,6 +22,7 @@ class Referee
 {
 	Score* score_;	       //スコア
 	GameStatus status_;    //試合状態
+	Side side_;            //サイド状況
 
 	PlayerBase* server_;   //サーバー
 	PlayerBase* receiver_; //レシーバー
@@ -32,6 +39,33 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
+
+	/// <summary>
+	/// どちらかがポイント取得時
+	/// </summary>
+	void GetPoint();
+
+	/// <summary>
+	/// どちらかがゲーム取得時
+	/// </summary>
+	void GetGame();
+
+	/// <summary>
+	/// 試合終了時
+	/// </summary>
+	void GameMatch();
+
+	/// <summary>
+	/// サイドチェンジ
+	/// </summary>
+	void ChangeSide();
+
+	/// <summary>
+	/// サイドリセット
+	/// </summary>
+	void SideReset() { side_ = Side::DEUCE_SIDE; }
+
+	/////////////////////////////ゲッター・セッター////////////////////////////////////
 
 	/// <summary>
 	/// 試合状態を取得
@@ -74,5 +108,11 @@ public:
 	/// </summary>
 	/// <param name="p">プレイヤー</param>
 	void SetReceiver(PlayerBase* p) { receiver_ = p; }
+
+	/// <summary>
+	/// サイドを取得
+	/// </summary>
+	/// <returns>サイド</returns>
+	Side GetSide() { return side_; }
 };
 

@@ -2,6 +2,7 @@
 #include "../../Base/NormalObject.h"
 #include  "../../Engine/GameObject/PolyLine.h"
 #include "../../Engine/Component/Collider/SphereCollider.h"
+#include "../TitleScene/TennisCourt.h"
 #include <map>
 
 //放物線の計算
@@ -19,33 +20,33 @@ enum class BallStatus
 //ボール情報
 struct BallInfo
 {
-	BallStatus ballStatus_;      //ボールの状態
+	BallStatus ballStatus_;             //ボールの状態
+	TennisCourtName goTennisCourtName_; //どのテニスコートに向かうか
 
-	int hTime_;                  //タイマーハンドル
-	int boundCount_;             //バウンドの回数
-	float ratio_;			     //割合(始点から終点のどこの割合にいるか)
-	float moveTime_;			 //始点から終点まで動く時間
-	float firstAngle_;           //放物線の最初の角度
-	bool isGoToBasePoint_;       //プレイヤーの基準点に向かうか
-	bool isTossUp_;              //トスアップをしたかどうか
-	bool isUsePowerEffect_;      //威力エフェクトを使用するか
-
-	string hLandEffectName_;     //着地エフェクトハンドル
-	string hDropEffectName_;     //雫エフェクトハンドル
-	string dropEffectFilePath_;  //雫エフェクトのファイルパス
-	string hPowerEffectName_;    //威力エフェクトハンドル
-	string PowerEffectFilePath_; //威力エフェクトのファイルパス
-
-	XMVECTOR endPointDirection_; //終点までのベクトル
-	XMVECTOR progressVector_;    //進行ベクトル
-	XMVECTOR tossUpVector_;      //トスアップする時のベクトル
-	XMFLOAT2 strength_;          //強さ(XとY方向の)
-	XMFLOAT2 v0_;		         //初速度(XとY方向の)
-	XMFLOAT2 powerEffectSize_;	 //威力エフェクトのサイズ
-	XMFLOAT3 startPoint_;        //ボールの始点
-	XMFLOAT3 endPoint_;          //ボールの終点
-
-	PolyLine* pLine_;            //ボールの軌跡描画用
+	int hTime_;                     //タイマーハンドル
+	int boundCount_;                //バウンドの回数
+	float ratio_;			        //割合(始点から終点のどこの割合にいるか)
+	float moveTime_;			    //始点から終点まで動く時間
+	float firstAngle_;              //放物線の最初の角度
+	bool isTossUp_;                 //トスアップをしたかどうか
+	bool isUsePowerEffect_;         //威力エフェクトを使用するか
+								    
+	string hLandEffectName_;        //着地エフェクトハンドル
+	string hDropEffectName_;        //雫エフェクトハンドル
+	string dropEffectFilePath_;     //雫エフェクトのファイルパス
+	string hPowerEffectName_;       //威力エフェクトハンドル
+	string PowerEffectFilePath_;    //威力エフェクトのファイルパス
+								    
+	XMVECTOR endPointDirection_;    //終点までのベクトル
+	XMVECTOR progressVector_;       //進行ベクトル
+	XMVECTOR tossUpVector_;         //トスアップする時のベクトル
+	XMFLOAT2 strength_;             //強さ(XとY方向の)
+	XMFLOAT2 v0_;		            //初速度(XとY方向の)
+	XMFLOAT2 powerEffectSize_;	    //威力エフェクトのサイズ
+	XMFLOAT3 startPoint_;           //ボールの始点
+	XMFLOAT3 endPoint_;             //ボールの終点
+								    
+	PolyLine* pLine_;               //ボールの軌跡描画用
 };
 
 /// <summary>
@@ -109,12 +110,19 @@ public:
 	/// <summary>
 	/// リセット(始点終点すべて再設定)
 	/// </summary>
-	void Reset(float strengthX, float strengthY,float moveTime,string basePpointName);
+	void Reset(float strengthX, float strengthY,float moveTime,string basePointName);
 
 	/// <summary>
 	/// ボールトスアップするときのベクトルをリセット
 	/// </summary>
 	void ResetBallTossUpVec();
+
+	/// <summary>
+	/// 向かうコート先を変更
+	/// </summary>
+	void ChangeGoTennisCourt();
+
+	////////////////////////////////////ゲッター・セッター/////////////////////////////////////////
 
 	/// <summary>
 	/// 終点のポジションを取得
@@ -146,11 +154,6 @@ public:
 	void SetUsePowerEffect(bool flag) { ballInfo_.isUsePowerEffect_ = flag; }
 
 	/// <summary>
-	/// プレイヤーの基準点に向かっているか
-	/// </summary>
-	bool isGoToPlayerBasePoint() { return ballInfo_.isGoToBasePoint_; }
-
-	/// <summary>
 	/// トスアップ中かどうか取得
 	/// </summary>
 	/// <returns>trueならトスアップ中</returns>
@@ -167,5 +170,11 @@ public:
 	/// </summary>
 	/// <returns>ボールの状態</returns>
 	XMFLOAT3 GetSpecifyPosZBallPosition(float zPos);
+
+	/// <summary>
+	/// どのテニスコートに向かっているか取得
+	/// </summary>
+	/// <returns>向かっているテニスコートの名前</returns>
+	TennisCourtName GetGoTennisCourtName() { return ballInfo_.goTennisCourtName_; }
 };
 

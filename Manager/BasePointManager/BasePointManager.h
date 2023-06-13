@@ -30,16 +30,16 @@ namespace BasePointManager
 	/// 基準点を取得
 	/// </summary>
 	/// <param name="name">基準点の名前</param>
-	/// <param name="isPlayer">Playerの基準点かどうか</param>
+	/// <param name="TennisCourtName">基準点を取得したいコートの名前</param>
 	/// <returns>基準点</returns>
-	XMFLOAT3 GetBasePoint(string name,bool isPlayer);
+	XMFLOAT3 GetBasePoint(string name, TennisCourtName isPlayer);
 
 	/// <summary>
 	/// 基準点をランダムに取得
 	/// </summary>
-	/// <param name="isPlayer">Playerの基準点かどうか</param>
+	/// <param name="TennisCourtName">基準点を取得したいコートの名前</param>
 	/// <returns>基準点</returns>
-	XMFLOAT3 GetRandomBasePoint(bool isPlayer);
+	XMFLOAT3 GetRandomBasePoint(TennisCourtName n);
 
 	/// <summary>
 	/// 入力に対する基準点の名前を取得

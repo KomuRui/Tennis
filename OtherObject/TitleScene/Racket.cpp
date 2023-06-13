@@ -94,10 +94,10 @@ void Racket::ChildInitialize()
 	ARGUMENT_INITIALIZE(transform_->position_, XMFLOAT3(0.643f,0.835f,0.011f));
 
 	//どっちのコートに向かうか保存
-	if(((PlayerBase*)GetParent())->GetState()->GetPlayerNum() == 0)
-		flag_ = false;
+	if (((PlayerBase*)GetParent())->GetTennisCourtName() == TennisCourtName::Z_PLUS_COURT)
+		goTennisCourtName_ = TennisCourtName::Z_MINUS_COURT;
 	else
-		flag_ = true;
+		goTennisCourtName_ = TennisCourtName::Z_PLUS_COURT;
 
 	//当たり判定
 	box1_ = AddComponent<BoxCollider>();
@@ -135,7 +135,7 @@ void Racket::ChildUpdate()
 void Racket::HitColliderFunc(GameObject* pTarget)
 {
 	//ボールに当たってないか、打つ動作をしていないのならこの先の処理はしない
-	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->GetState()->IsHitMove() || flag_ != ((Ball*)pTarget)->isGoToPlayerBasePoint()) return;
+	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->GetState()->IsHitMove() || goTennisCourtName_ != ((Ball*)pTarget)->GetGoTennisCourtName()) return;
 
 	//ヒットストップ演出(動きを止める)
 	Leave();

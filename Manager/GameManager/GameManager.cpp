@@ -132,11 +132,13 @@ namespace GameManager
 		//1人目ならサーバーにしておく
 		if (playerlist_.size() == 1)
 		{
+			p->SetTennisCourtName(TennisCourtName::Z_PLUS_COURT);
 			referee_->SetServer(p);
 		}
 		//他はレシーバーに設定
 		else
 		{
+			p->SetTennisCourtName(TennisCourtName::Z_MINUS_COURT);
 			referee_->SetReceiver(p);
 		}
 

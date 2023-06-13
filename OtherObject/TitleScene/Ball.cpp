@@ -39,7 +39,6 @@ Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
 	ballInfo_.startPoint_ = { ZERO, ZERO, ZERO };
 	ballInfo_.endPoint_ = { ZERO, ZERO, ZERO };
 	ballInfo_.pLine_ = nullptr;
-	ballInfo_.isGoToBasePoint_ = false;
 	ballInfo_.isTossUp_ = false;
 	ballInfo_.isUsePowerEffect_ = false;
 	ballInfo_.hLandEffectName_ = "LandEffect";
@@ -48,6 +47,7 @@ Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
 	ballInfo_.hPowerEffectName_ = "PowerEffect";
 	ballInfo_.PowerEffectFilePath_ = "Effect/Power.txt";
 	ballInfo_.ballStatus_ = BallStatus::PLAYER_HAV_BALL;
+	ballInfo_.goTennisCourtName_ = TennisCourtName::Z_MINUS_COURT;
 }
 
 Ball::Ball(GameObject* parent)
@@ -66,7 +66,6 @@ Ball::Ball(GameObject* parent)
 	ballInfo_.startPoint_ = { ZERO, ZERO, ZERO };
 	ballInfo_.endPoint_ = { ZERO, ZERO, ZERO };
 	ballInfo_.pLine_ = nullptr;
-	ballInfo_.isGoToBasePoint_ = false;
 	ballInfo_.isTossUp_ = false;
 	ballInfo_.isUsePowerEffect_ = false;
 	ballInfo_.hLandEffectName_ = "LandEffect";
@@ -75,6 +74,7 @@ Ball::Ball(GameObject* parent)
 	ballInfo_.hPowerEffectName_ = "PowerEffect";
 	ballInfo_.PowerEffectFilePath_ = "Effect/Power.txt";
 	ballInfo_.ballStatus_ = BallStatus::PLAYER_HAV_BALL;
+	ballInfo_.goTennisCourtName_ = TennisCourtName::Z_MINUS_COURT;
 }
 
 //初期化
@@ -312,10 +312,10 @@ void Ball::PlayerHavingBall()
 }
 
 //リセット(始点終点すべて再設定)
-void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpointName)
+void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePointName)
 {
 	//向かうポジションを取得(少しランダムにずらす)
-	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePpointName, ballInfo_.isGoToBasePoint_);
+	XMFLOAT3 endPos = BasePointManager::GetBasePoint(basePointName, ballInfo_.goTennisCourtName_);
 
 	//ラリー中の時だけ
 	if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_RALLY)
@@ -367,10 +367,11 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 	VFX::ForcedEnd(ballInfo_.hDropEffectName_);
 	EffectManager::Draw(ballInfo_.hDropEffectName_, ballInfo_.dropEffectFilePath_, transform_->position_);
 
+	VFX::ForcedEnd(ballInfo_.hPowerEffectName_);
+
 	//威力をあらわすエフェクト
 	if (ballInfo_.isUsePowerEffect_)
 	{
-		VFX::ForcedEnd(ballInfo_.hPowerEffectName_);
 		EffectManager::Draw(ballInfo_.hPowerEffectName_, ballInfo_.PowerEffectFilePath_, transform_->position_);
 		ballInfo_.powerEffectSize_ = XMFLOAT2(8.0f, 8.0f);
 		VFX::GetEmitter(ballInfo_.hPowerEffectName_)->data.size = ballInfo_.powerEffectSize_;
@@ -379,8 +380,8 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 	//次の目的地に移動するように
 	ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::PURPOSE_MOVE);
 
-	//逆にする
-	ARGUMENT_INITIALIZE(ballInfo_.isGoToBasePoint_, !ballInfo_.isGoToBasePoint_);
+	//向かうコートを逆にする
+	ChangeGoTennisCourt();
 }
 
 //ボールトスアップするときのベクトルをリセット
@@ -388,6 +389,25 @@ void Ball::ResetBallTossUpVec()
 {
 	GameManager::GetpBall()->SetTossUp(false);
 	ARGUMENT_INITIALIZE(ballInfo_.tossUpVector_, TOSS_UP_VALUE);
+}
+
+/// <summary>
+/// 向かうコート先を変更
+/// </summary>
+void Ball::ChangeGoTennisCourt()
+{
+	//向かうコートを逆にする
+	switch (ballInfo_.goTennisCourtName_)
+	{
+	case TennisCourtName::Z_MINUS_COURT:
+		ARGUMENT_INITIALIZE(ballInfo_.goTennisCourtName_, TennisCourtName::Z_PLUS_COURT);
+		break;
+	case TennisCourtName::Z_PLUS_COURT:
+		ARGUMENT_INITIALIZE(ballInfo_.goTennisCourtName_, TennisCourtName::Z_MINUS_COURT);
+		break;
+	default:
+		break;
+	}
 }
 
 //何かのオブジェクトに当たった時に呼ばれる関数

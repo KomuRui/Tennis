@@ -4,6 +4,7 @@
 #include "../State/PlayerState/PlayerStateManager.h"
 #include "../Engine/ResourceManager/ModelManager.h"
 #include "../Engine/Component/Transform/Transform.h"
+#include "../OtherObject/TitleScene/TennisCourt.h"
 
 class Racket;
 
@@ -18,6 +19,7 @@ protected:
 
 	Racket* pRacket_;                   //ラケット
 	PlayerStateManager* pState_;        //Playerの状態を表す変数
+	TennisCourtName nowMyCourtName_;    //自身がいるコートの名前
 	XMFLOAT3 initialPosition_;          //Playerの初期位置 
 
 	/////////////////////カメラ//////////////////////
@@ -55,6 +57,18 @@ public:
 	void ServeReceiveCameraBehavior();
 
 	/////////////////////セットゲット関数//////////////////////
+
+	/// <summary>
+	/// 自身がいるテニスコートの名前を設定
+	/// </summary>
+	/// <param name="n">テニスコートの名前</param>
+	void SetTennisCourtName(TennisCourtName n) { nowMyCourtName_ = n; }
+
+	/// <summary>
+	/// 自身がいるテニスコートの名前を取得
+	/// </summary>
+	/// <returns>自身がいるテニスコートの名前</returns>
+	TennisCourtName GetTennisCourtName() { return nowMyCourtName_; }
 
 	/// <summary>
 	/// モデル番号取得

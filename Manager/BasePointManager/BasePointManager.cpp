@@ -244,13 +244,13 @@ namespace BasePointManager
 	}
 
 	//基準点を取得
-	XMFLOAT3 BasePointManager::GetBasePoint(string name, bool isPlayer)
+	XMFLOAT3 BasePointManager::GetBasePoint(string name, TennisCourtName n)
 	{
 		//ラリー中なら
 		if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_RALLY)
 		{
-			//プレイヤーの基準点取得なら
-			if (isPlayer)
+			//プラス方向のコートの基準点取得なら
+			if (n == TennisCourtName::Z_PLUS_COURT)
 				return rallyBasePointPlayer1Court[name];
 			else
 				return rallyBasePointPlayer2Court[name];
@@ -258,8 +258,8 @@ namespace BasePointManager
 		//サーブ中なら
 		else
 		{
-			//プレイヤーの基準点取得なら
-			if (isPlayer)
+			//マイナス方向のコートの基準点取得なら
+			if (n == TennisCourtName::Z_PLUS_COURT)
 				return serveBasePointPlayer1Court[name];
 			else
 				return serveBasePointPlayer2Court[name];
@@ -267,10 +267,10 @@ namespace BasePointManager
 	}
 
 	//基準点をランダムに取得
-	XMFLOAT3 GetRandomBasePoint(bool isPlayer)
+	XMFLOAT3 GetRandomBasePoint(TennisCourtName n)
 	{
-		//プレイヤーの基準点取得なら
-		if (isPlayer)
+		//マイナス方向のコートの基準点取得なら
+		if (n == TennisCourtName::Z_PLUS_COURT)
 			return rallyBasePointPlayer1Court[RALLY_BASE_POINT[Random(0,2)]];
 		else
 			return rallyBasePointPlayer2Court[RALLY_BASE_POINT[Random(0,2)]];
