@@ -28,16 +28,20 @@ struct BallInfo
 	float firstAngle_;           //放物線の最初の角度
 	bool isGoToBasePoint_;       //プレイヤーの基準点に向かうか
 	bool isTossUp_;              //トスアップをしたかどうか
+	bool isUsePowerEffect_;      //威力エフェクトを使用するか
 
 	string hLandEffectName_;     //着地エフェクトハンドル
 	string hDropEffectName_;     //雫エフェクトハンドル
 	string dropEffectFilePath_;  //雫エフェクトのファイルパス
+	string hPowerEffectName_;    //威力エフェクトハンドル
+	string PowerEffectFilePath_; //威力エフェクトのファイルパス
 
 	XMVECTOR endPointDirection_; //終点までのベクトル
 	XMVECTOR progressVector_;    //進行ベクトル
 	XMVECTOR tossUpVector_;      //トスアップする時のベクトル
 	XMFLOAT2 strength_;          //強さ(XとY方向の)
 	XMFLOAT2 v0_;		         //初速度(XとY方向の)
+	XMFLOAT2 powerEffectSize_;	 //威力エフェクトのサイズ
 	XMFLOAT3 startPoint_;        //ボールの始点
 	XMFLOAT3 endPoint_;          //ボールの終点
 
@@ -134,6 +138,12 @@ public:
 	/// </summary>
 	/// <param name="flag">trueならしている</param>
 	void SetTossUp(bool flag) { ballInfo_.isTossUp_ = flag; }
+
+	/// <summary>
+	/// 威力エフェクトを使用するかどうか設定
+	/// </summary>
+	/// <param name="flag">trueなら使用する</param>
+	void SetUsePowerEffect(bool flag) { ballInfo_.isUsePowerEffect_ = flag; }
 
 	/// <summary>
 	/// プレイヤーの基準点に向かっているか

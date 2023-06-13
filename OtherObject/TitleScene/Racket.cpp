@@ -13,6 +13,7 @@
 namespace
 {		
 	static const XMFLOAT3 RACKET_START_ROTATION_ANGLE = { 0,-185,0 };  //ラケットの開始角度
+	static const float RATIO_MIN_VALUE = 0.25f;                        //割合の最小値
 
 	////////////////コライダー///////////////////
 
@@ -172,6 +173,12 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 		hitStrength_[type_].strength_.y *= 0.5f;
 		moveTime *= 0.5f;
 	}
+
+	//割合が最低値なら
+	if (ratio_ == RATIO_MIN_VALUE)
+		((Ball*)pTarget)->SetUsePowerEffect(true);
+	else
+		((Ball*)pTarget)->SetUsePowerEffect(false);
 
 	//ボールの軌跡色を指定
 	((Ball*)pTarget)->SetBallLineColor(lineColor_[type_]);

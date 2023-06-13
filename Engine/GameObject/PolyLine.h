@@ -64,5 +64,7 @@ public:
 	/// </summary>
 	/// <param name="width">ƒZƒbƒg‚µ‚½‚¢’·‚³</param>
 	void SetWidth(float width) { width_ = width; }
+
+	XMFLOAT4 GetColor() { return color_; }
 };
 

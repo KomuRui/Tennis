@@ -41,9 +41,12 @@ Ball::Ball(GameObject* parent, std::string modelPath, std::string name)
 	ballInfo_.pLine_ = nullptr;
 	ballInfo_.isGoToBasePoint_ = false;
 	ballInfo_.isTossUp_ = false;
+	ballInfo_.isUsePowerEffect_ = false;
 	ballInfo_.hLandEffectName_ = "LandEffect";
 	ballInfo_.hDropEffectName_ = "DropEffect";
 	ballInfo_.dropEffectFilePath_ = "Effect/SliceDrop.txt";
+	ballInfo_.hPowerEffectName_ = "PowerEffect";
+	ballInfo_.PowerEffectFilePath_ = "Effect/Power.txt";
 	ballInfo_.ballStatus_ = BallStatus::PLAYER_HAV_BALL;
 }
 
@@ -65,9 +68,12 @@ Ball::Ball(GameObject* parent)
 	ballInfo_.pLine_ = nullptr;
 	ballInfo_.isGoToBasePoint_ = false;
 	ballInfo_.isTossUp_ = false;
+	ballInfo_.isUsePowerEffect_ = false;
 	ballInfo_.hLandEffectName_ = "LandEffect";
 	ballInfo_.hDropEffectName_ = "DropEffect";
 	ballInfo_.dropEffectFilePath_ = "Effect/SliceDrop.txt";
+	ballInfo_.hPowerEffectName_ = "PowerEffect";
+	ballInfo_.PowerEffectFilePath_ = "Effect/Power.txt";
 	ballInfo_.ballStatus_ = BallStatus::PLAYER_HAV_BALL;
 }
 
@@ -182,10 +188,20 @@ void Ball::MoveToPurpose()
 
 	//エフェクトのポジション更新
 	ARGUMENT_INITIALIZE(VFX::GetEmitter(ballInfo_.hDropEffectName_)->data.position,transform_->position_);
-	ARGUMENT_INITIALIZE(VFX::GetEmitter("BallCharge")->data.position, transform_->position_);
 
 	//進行ベクトルを求める
 	ARGUMENT_INITIALIZE(ballInfo_.progressVector_, transform_->position_ - beforePos);
+
+	//威力をあらわすエフェクト
+	if (ballInfo_.isUsePowerEffect_)
+	{
+		ballInfo_.powerEffectSize_.x -= 0.2f;
+		ballInfo_.powerEffectSize_.y -= 0.2f;
+		ballInfo_.powerEffectSize_.x = max<float>(1.0f, ballInfo_.powerEffectSize_.x);
+		ballInfo_.powerEffectSize_.y = max<float>(1.0f, ballInfo_.powerEffectSize_.y);
+		VFX::GetEmitter(ballInfo_.hPowerEffectName_)->data.size = ballInfo_.powerEffectSize_;
+		ARGUMENT_INITIALIZE(VFX::GetEmitter(ballInfo_.hPowerEffectName_)->data.position, transform_->position_);
+	}
 
 	//もし目標地点までの移動が終わったのなら
 	if (ballInfo_.ratio_ >= MAX_RATIO)
@@ -224,7 +240,10 @@ void Ball::BoundMove()
 	//エフェクトのポジション更新
 	ballInfo_.pLine_->AddPosition(transform_->position_);
 	ARGUMENT_INITIALIZE(VFX::GetEmitter(ballInfo_.hDropEffectName_)->data.position, transform_->position_);
-	ARGUMENT_INITIALIZE(VFX::GetEmitter("BallCharge")->data.position, transform_->position_);
+
+	//威力をあらわすエフェクト
+	if (ballInfo_.isUsePowerEffect_)
+		ARGUMENT_INITIALIZE(VFX::GetEmitter(ballInfo_.hPowerEffectName_)->data.position, transform_->position_);
 
 	//地面に着いてないのならこの先は処理しない
 	if (transform_->position_.y > ZERO) return;
@@ -255,10 +274,13 @@ void Ball::BoundMove()
 		Time::Reset(ballInfo_.hTime_);
 		VFX::ForcedEnd(ballInfo_.hLandEffectName_);
 		VFX::ForcedEnd(ballInfo_.hDropEffectName_);
-		VFX::ForcedEnd("BallCharge");
+		VFX::ForcedEnd(ballInfo_.hPowerEffectName_);
 
 		//打つ強さをランダムに取得
 		HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
+
+		//威力エフェクト使用しないに設定
+		ARGUMENT_INITIALIZE(ballInfo_.isUsePowerEffect_, false);
 
 		//リセット
 		Reset(h.strength_.x, h.strength_.y,h.moveTime_,BasePointManager::GetRandomBasePointName());
@@ -342,9 +364,14 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 	VFX::ForcedEnd(ballInfo_.hDropEffectName_);
 	EffectManager::Draw(ballInfo_.hDropEffectName_, ballInfo_.dropEffectFilePath_, transform_->position_);
 
-	VFX::ForcedEnd("BallCharge");
-	EffectManager::Draw("BallCharge", "Effect/BallEffect.txt", transform_->position_);
-	EffectManager::SetSize("Effect/BallEffect.txt", XMFLOAT2(2.5f, 2.5f));
+	//威力をあらわすエフェクト
+	if (ballInfo_.isUsePowerEffect_)
+	{
+		VFX::ForcedEnd(ballInfo_.hPowerEffectName_);
+		EffectManager::Draw(ballInfo_.hPowerEffectName_, ballInfo_.PowerEffectFilePath_, transform_->position_);
+		ballInfo_.powerEffectSize_ = XMFLOAT2(8.0f, 8.0f);
+		VFX::GetEmitter(ballInfo_.hPowerEffectName_)->data.size = ballInfo_.powerEffectSize_;
+	}
 
 	//次の目的地に移動するように
 	ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::PURPOSE_MOVE);
