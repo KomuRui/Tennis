@@ -103,4 +103,11 @@ namespace EffectManager
 
     //エミッターデータを取得
     EmitterData GetEmitterData(string fileNamePath) { return effectTable_[fileNamePath]; }
+
+    /// <summary>
+    /// エフェクトのサイズ変更
+    /// </summary>
+    /// <param name="fileNamePath">エフェクト情報が保管しているファイルネームパス</param>
+    /// <param name="size">サイズ</param>
+    void SetSize(string fileNamePath, XMFLOAT2 size) { effectTable_[fileNamePath].size = size; }
 }

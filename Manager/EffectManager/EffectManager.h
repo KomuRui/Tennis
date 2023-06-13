@@ -27,5 +27,12 @@ namespace EffectManager
 	/// <param name="fileNamePath">エフェクト情報が保管しているファイルネームパス</param>
 	/// <returns>エミッターデータ</returns>
 	EmitterData GetEmitterData(string fileNamePath);
+
+	/// <summary>
+	/// エフェクトのサイズ変更
+	/// </summary>
+	/// <param name="fileNamePath">エフェクト情報が保管しているファイルネームパス</param>
+	/// <param name="size">サイズ</param>
+	void SetSize(string fileNamePath, XMFLOAT2 size);
 }
 

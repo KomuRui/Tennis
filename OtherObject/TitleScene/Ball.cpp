@@ -325,7 +325,6 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 	//もしYの位置がネットの位置より低いなら
 	if (y <= 1.2f)
 	{
-		ImGuiSet::DebugLog("s", y);
 		//差分を求める
 		float differential = 1.2f - y;
 
@@ -344,7 +343,8 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePpo
 	EffectManager::Draw(ballInfo_.hDropEffectName_, ballInfo_.dropEffectFilePath_, transform_->position_);
 
 	VFX::ForcedEnd("BallCharge");
-	EffectManager::Draw("BallCharge", "Effect/charge.txt", transform_->position_);
+	EffectManager::Draw("BallCharge", "Effect/BallEffect.txt", transform_->position_);
+	EffectManager::SetSize("Effect/BallEffect.txt", XMFLOAT2(2.5f, 2.5f));
 
 	//次の目的地に移動するように
 	ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::PURPOSE_MOVE);
