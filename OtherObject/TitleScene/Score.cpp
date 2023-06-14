@@ -1,5 +1,7 @@
 #include "Score.h"
 #include "../../Engine/DirectX/Input.h"
+#include "../../Manager/GameManager/GameManager.h"
+#include "Referee.h"
 
 //定数
 namespace
@@ -13,26 +15,23 @@ namespace
 //コンストラクタ
 Score::Score()
 {
-	ARGUMENT_INITIALIZE(player1Score_, ZERO);
-	ARGUMENT_INITIALIZE(player2Score_, ZERO);
-
 	//スコア表の初期化
-	table[0] = LOVE;
-	table[1] = FIFTEEN;
-	table[2] = THIRTY;
-	table[3] = FORTY;
+	ARGUMENT_INITIALIZE(scoreTable_[TennisCourtName::Z_MINUS_COURT], ZERO);
+	ARGUMENT_INITIALIZE(scoreTable_[TennisCourtName::Z_PLUS_COURT], ZERO);
+	ARGUMENT_INITIALIZE(table[0],LOVE);
+	ARGUMENT_INITIALIZE(table[1],FIFTEEN);
+	ARGUMENT_INITIALIZE(table[2],THIRTY);
+	ARGUMENT_INITIALIZE(table[3],FORTY);
 
 	//テキストの初期化
-	ARGUMENT_INITIALIZE(pPlayerScoreText_, new Text);
-	ARGUMENT_INITIALIZE(pEnemyScoreText_, new Text);
+	ARGUMENT_INITIALIZE(scoreText_[TennisCourtName::Z_MINUS_COURT].first, new Text);
+	ARGUMENT_INITIALIZE(scoreText_[TennisCourtName::Z_PLUS_COURT].first, new Text);
 	ARGUMENT_INITIALIZE(pHyphenText_, new Text);
-	pPlayerScoreText_->Initialize("Text/NumberFont.png", 128, 256, 10);
-	pEnemyScoreText_->Initialize("Text/NumberFont.png", 128, 256, 10);
+	scoreText_[TennisCourtName::Z_MINUS_COURT].first->Initialize("Text/NumberFont.png", 128, 256, 10);
+	scoreText_[TennisCourtName::Z_PLUS_COURT].first->Initialize("Text/NumberFont.png", 128, 256, 10);
 	pHyphenText_->Initialize();
-	ARGUMENT_INITIALIZE(playerTextPosition_.x, 760);
-	ARGUMENT_INITIALIZE(playerTextPosition_.y, 70);
-	ARGUMENT_INITIALIZE(enemyTextPosition_.x, 1160);
-	ARGUMENT_INITIALIZE(enemyTextPosition_.y, 70);
+	ARGUMENT_INITIALIZE(scoreText_[TennisCourtName::Z_PLUS_COURT].second, XMFLOAT2(760,70));
+	ARGUMENT_INITIALIZE(scoreText_[TennisCourtName::Z_MINUS_COURT].second, XMFLOAT2(1160,70));
 	ARGUMENT_INITIALIZE(hyphenTextPosition_.x, 965);
 	ARGUMENT_INITIALIZE(hyphenTextPosition_.y, 75);
 }
@@ -40,19 +39,37 @@ Score::Score()
 //描画
 void Score::Draw()
 {
-	if (Input::IsKeyDown(DIK_A))
-		AddPlayer1Score();
-	if (Input::IsKeyDown(DIK_D))
-		AddPlayer2Score();
-
 	//テキスト
-	pPlayerScoreText_->NumberDraw((int)playerTextPosition_.x, (int)playerTextPosition_.y, table[player1Score_], 1, 0.05f);
+	scoreText_[TennisCourtName::Z_PLUS_COURT].first->NumberDraw((int)scoreText_[TennisCourtName::Z_PLUS_COURT].second.x, (int)scoreText_[TennisCourtName::Z_PLUS_COURT].second.y, table[scoreTable_[TennisCourtName::Z_PLUS_COURT]], 1, 0.05f);
 
-	//もし敵のスコアが0なら
-	if (player2Score_ == ZERO)
-		pEnemyScoreText_->NumberDraw((int)enemyTextPosition_.x, (int)enemyTextPosition_.y, table[player2Score_], 1, 0.05f);
+	//もし右側表示のスコアが0なら
+	if (scoreTable_[TennisCourtName::Z_MINUS_COURT] == ZERO)
+		scoreText_[TennisCourtName::Z_MINUS_COURT].first->NumberDraw((int)scoreText_[TennisCourtName::Z_MINUS_COURT].second.x, (int)scoreText_[TennisCourtName::Z_MINUS_COURT].second.y, table[scoreTable_[TennisCourtName::Z_MINUS_COURT]], 1, 0.05f);
 	else
-		pEnemyScoreText_->NumberDraw((int)enemyTextPosition_.x - 80, (int)enemyTextPosition_.y, table[player2Score_], 1, 0.05f);
+		scoreText_[TennisCourtName::Z_MINUS_COURT].first->NumberDraw((int)scoreText_[TennisCourtName::Z_MINUS_COURT].second.x - 80, (int)scoreText_[TennisCourtName::Z_MINUS_COURT].second.y, table[scoreTable_[TennisCourtName::Z_MINUS_COURT]], 1, 0.05f);
 
 	pHyphenText_->Draw((int)hyphenTextPosition_.x, (int)hyphenTextPosition_.y, L"-", 1, 0.05f);
+}
+
+//スコア加算
+void Score::AddScore(TennisCourtName n)
+{
+	//どちらかがゲームを取得したのなら
+	if (table.size() <= scoreTable_[n] + 1)
+	{
+		//スコア初期状態にしておく
+		ARGUMENT_INITIALIZE(scoreTable_[TennisCourtName::Z_MINUS_COURT], ZERO);
+		ARGUMENT_INITIALIZE(scoreTable_[TennisCourtName::Z_PLUS_COURT], ZERO);
+
+		//ゲーム取得関数を呼ぶ
+		GameManager::GetReferee()->GetGame();
+
+		return;
+	}
+
+	//スコア加算
+	scoreTable_[n]++; 
+
+	//ポイント取得関数を呼ぶ
+	GameManager::GetReferee()->GetPoint();
 }

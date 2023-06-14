@@ -329,8 +329,9 @@ namespace BasePointManager
 		//Lスティックの傾きを取得
 		XMFLOAT3 stickL = Input::GetPadStickL(p->GetState()->GetPlayerNum());
 
-		//デュースサイドなら
-		if (GameManager::GetReferee()->GetSide() == Side::DEUCE_SIDE)
+		//デュースサイドかつプレイヤーがなら
+		if ((GameManager::GetReferee()->GetSide() == Side::DEUCE_SIDE && p->GetTennisCourtName() == TennisCourtName::Z_PLUS_COURT) ||
+			(GameManager::GetReferee()->GetSide() == Side::AD_SIDE && p->GetTennisCourtName() == TennisCourtName::Z_MINUS_COURT))
 		{
 			if (stickL.x < 0.1f && stickL.x > -0.1f)
 				name += "Left_C";

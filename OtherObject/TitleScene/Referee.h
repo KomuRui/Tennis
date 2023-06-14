@@ -53,6 +53,12 @@ public:
 	void Draw();
 
 	/// <summary>
+	/// ポイント終了時
+	/// </summary>
+	/// <param name="n">点数を失うテニスコートの名前</param>
+	void EndPoint(TennisCourtName n);
+
+	/// <summary>
 	/// どちらかがポイント取得時
 	/// </summary>
 	void GetPoint();

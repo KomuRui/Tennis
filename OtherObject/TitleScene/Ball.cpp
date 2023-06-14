@@ -269,7 +269,10 @@ void Ball::BoundMove()
 	//2回バウンドしたら
 	if (ballInfo_.boundCount_ == 2)
 	{
-		//次の目的地に移動するように
+		//ポイント終了関数を呼ぶ
+		GameManager::GetReferee()->EndPoint(ballInfo_.goTennisCourtName_);
+
+		//プレイヤーがボールを持つ状態に設定
 		ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::PLAYER_HAV_BALL);
 		ARGUMENT_INITIALIZE(ballInfo_.boundCount_,ZERO);
 
@@ -288,8 +291,6 @@ void Ball::BoundMove()
 		//トスアップのベクトルの値を元に戻す
 		ARGUMENT_INITIALIZE(ballInfo_.tossUpVector_, TOSS_UP_VALUE);
 		ARGUMENT_INITIALIZE(ballInfo_.isTossUp_, false);
-
-		GameManager::GetReferee()->GetPoint();
 
 		//打つ強さをランダムに取得
 		//HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();

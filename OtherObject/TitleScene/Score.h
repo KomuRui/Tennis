@@ -2,19 +2,15 @@
 #include "../../Engine/ResourceManager/Global.h"
 #include "../../Engine/DirectX/Sprite.h"
 #include "../../Engine/ResourceManager/Text.h"
+#include "TennisCourt.h"
 #include <map>
 
 //テニスのスコア
 class Score
 {
-	int player1Score_;  //プレイヤー1のスコア
-	int player2Score_;  //プレイヤー1のスコア
-
-	Text* pPlayerScoreText_;	   //プレイヤースコア表示する用
-	XMFLOAT2 playerTextPosition_;  //テキストのポジション
-
-	Text* pEnemyScoreText_;	       //エネミースコア表示する用
-	XMFLOAT2 enemyTextPosition_;   //テキストのポジション
+	
+	map<TennisCourtName, int> scoreTable_;					//スコア表
+	map<TennisCourtName, pair<Text*, XMFLOAT2>> scoreText_; //スコアのテキスト表示用
 
 	Text* pHyphenText_;            //ハイフン表示する用
 	XMFLOAT2 hyphenTextPosition_;  //テキストのポジション
@@ -32,14 +28,9 @@ public:
 	void Draw();
 
 	/// <summary>
-	/// プレイヤー1スコア加算
+	/// スコア加算
 	/// </summary>
-	void AddPlayer1Score() { player1Score_++; }
-
-	/// <summary>
-	/// プレイヤー2スコア加算
-	/// </summary>
-	void AddPlayer2Score() { player2Score_++; }
+	void AddScore(TennisCourtName n);
 
 };
 

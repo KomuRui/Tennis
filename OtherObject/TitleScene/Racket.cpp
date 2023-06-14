@@ -137,6 +137,9 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 	//ボールに当たってないか、打つ動作をしていないのならこの先の処理はしない
 	if (pTarget->GetObjectName() != "Ball" || !((PlayerBase*)GetParent())->GetState()->IsHitMove() || goTennisCourtName_ != ((Ball*)pTarget)->GetGoTennisCourtName()) return;
 
+	//プレイヤーがボールを持っているかつラリー中ならこの先処理しない
+	if (((Ball*)pTarget)->GetBallStatus() == BallStatus::PLAYER_HAV_BALL && GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_RALLY) return;
+
 	//ヒットストップ演出(動きを止める)
 	Leave();
 	((Ball*)pTarget)->Leave();

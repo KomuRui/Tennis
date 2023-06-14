@@ -16,12 +16,12 @@ Referee::Referee()
 	//サーバー
 	serverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::DEUCE_SIDE}] = { { -1.0f,ZERO,11.58f },{ ZERO,240,ZERO} };
 	serverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::AD_SIDE}] = { { 1.0f,ZERO,11.58f },{ ZERO,300,ZERO } };
-	serverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::DEUCE_SIDE}] = { { 1.0f, ZERO, -11.58f },{ ZERO,300,ZERO } };
-	serverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::AD_SIDE}] = { { -1.0f, ZERO, -11.58f }, { ZERO,240,ZERO } };
+	serverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::DEUCE_SIDE}] = { { 1.0f, ZERO, -11.58f },{ ZERO,60,ZERO } };
+	serverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::AD_SIDE}] = { { -1.0f, ZERO, -11.58f }, { ZERO,120,ZERO } };
 
 	//レシーバー
-	receiverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::DEUCE_SIDE}] = {{ -4.0f,ZERO,11.58f },{ ZERO,ZERO,ZERO } };
-	receiverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::AD_SIDE}] = { { 4.0f,ZERO,11.58f },{ ZERO,ZERO,ZERO } };
+	receiverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::DEUCE_SIDE}] = {{ -4.0f,ZERO,11.58f },{ ZERO,180,ZERO } };
+	receiverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::AD_SIDE}] = { { 4.0f,ZERO,11.58f },{ ZERO,180,ZERO } };
 	receiverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::DEUCE_SIDE}] = { { 4.0f, ZERO, -11.58f },{ ZERO,ZERO,ZERO } };
 	receiverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::AD_SIDE}] = { { -4.0f, ZERO, -11.58f },{ ZERO,ZERO,ZERO } };
 }
@@ -46,6 +46,13 @@ void Referee::Draw()
 	score_->Draw();
 }
 
+//ポイント終了時
+void Referee::EndPoint(TennisCourtName n)
+{
+	//ポイント加算
+	score_->AddScore(n);
+}
+
 //どちらかがポイント取得時に呼ばれる
 void Referee::GetPoint()
 {
@@ -64,6 +71,15 @@ void Referee::GetGame()
 {
 	//初期サイドに設定
 	SideReset();
+
+	//サーバーとレシーバーを入れ替える
+	swap(server_, receiver_);
+
+	//初期化
+	Initialize();
+
+	//試合状態をサーブレシーブ状態にする
+	ARGUMENT_INITIALIZE(status_, GameStatus::NOW_SERVE_RECEIVE);
 }
 
 //試合終了時に呼ばれる
