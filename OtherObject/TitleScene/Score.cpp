@@ -30,25 +30,25 @@ Score::Score()
 	scoreText_[TennisCourtName::Z_MINUS_COURT].first->Initialize("Text/NumberFont.png", 128, 256, 10);
 	scoreText_[TennisCourtName::Z_PLUS_COURT].first->Initialize("Text/NumberFont.png", 128, 256, 10);
 	pHyphenText_->Initialize();
-	ARGUMENT_INITIALIZE(scoreText_[TennisCourtName::Z_PLUS_COURT].second, XMFLOAT2(760,70));
-	ARGUMENT_INITIALIZE(scoreText_[TennisCourtName::Z_MINUS_COURT].second, XMFLOAT2(1160,70));
-	ARGUMENT_INITIALIZE(hyphenTextPosition_.x, 965);
-	ARGUMENT_INITIALIZE(hyphenTextPosition_.y, 75);
+	ARGUMENT_INITIALIZE(scoreText_[TennisCourtName::Z_PLUS_COURT].second, XMFLOAT2(-0.2f,0.87f));
+	ARGUMENT_INITIALIZE(scoreText_[TennisCourtName::Z_MINUS_COURT].second, XMFLOAT2(0.2f, 0.87f));
+	ARGUMENT_INITIALIZE(hyphenTextPosition_.x, ZERO);
+	ARGUMENT_INITIALIZE(hyphenTextPosition_.y, 0.85f);
 }
 
 //描画
 void Score::Draw()
 {
 	//テキスト
-	scoreText_[TennisCourtName::Z_PLUS_COURT].first->NumberDraw((int)scoreText_[TennisCourtName::Z_PLUS_COURT].second.x, (int)scoreText_[TennisCourtName::Z_PLUS_COURT].second.y, table[scoreTable_[TennisCourtName::Z_PLUS_COURT]], 1, 0.05f);
+	scoreText_[TennisCourtName::Z_PLUS_COURT].first->NumberDraw(scoreText_[TennisCourtName::Z_PLUS_COURT].second.x,scoreText_[TennisCourtName::Z_PLUS_COURT].second.y, table[scoreTable_[TennisCourtName::Z_PLUS_COURT]], 1, 0.05f);
 
 	//もし右側表示のスコアが0なら
 	if (scoreTable_[TennisCourtName::Z_MINUS_COURT] == ZERO)
-		scoreText_[TennisCourtName::Z_MINUS_COURT].first->NumberDraw((int)scoreText_[TennisCourtName::Z_MINUS_COURT].second.x, (int)scoreText_[TennisCourtName::Z_MINUS_COURT].second.y, table[scoreTable_[TennisCourtName::Z_MINUS_COURT]], 1, 0.05f);
+		scoreText_[TennisCourtName::Z_MINUS_COURT].first->NumberDraw(scoreText_[TennisCourtName::Z_MINUS_COURT].second.x, scoreText_[TennisCourtName::Z_MINUS_COURT].second.y, table[scoreTable_[TennisCourtName::Z_MINUS_COURT]], 1, 0.05f);
 	else
-		scoreText_[TennisCourtName::Z_MINUS_COURT].first->NumberDraw((int)scoreText_[TennisCourtName::Z_MINUS_COURT].second.x - 80, (int)scoreText_[TennisCourtName::Z_MINUS_COURT].second.y, table[scoreTable_[TennisCourtName::Z_MINUS_COURT]], 1, 0.05f);
+		scoreText_[TennisCourtName::Z_MINUS_COURT].first->NumberDraw(scoreText_[TennisCourtName::Z_MINUS_COURT].second.x - 80, scoreText_[TennisCourtName::Z_MINUS_COURT].second.y, table[scoreTable_[TennisCourtName::Z_MINUS_COURT]], 1, 0.05f);
 
-	pHyphenText_->Draw((int)hyphenTextPosition_.x, (int)hyphenTextPosition_.y, L"-", 1, 0.05f);
+	pHyphenText_->Draw(hyphenTextPosition_.x, hyphenTextPosition_.y, L"-", 1, 0.05f);
 }
 
 //スコア加算

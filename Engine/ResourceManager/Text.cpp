@@ -42,20 +42,10 @@ HRESULT Text::Initialize(const char* fileName, const unsigned int charWidth, con
 
 
 //描画（文字列:数字）
-void Text::NumberDraw(int x, int y, const char* str, float ratio, float textInterval)
+void Text::NumberDraw(float x, float y, const char* str, float ratio, float textInterval)
 {
 	//表示位置（左上）を計算
-	//Spriteクラスは中心が(0,0)、右上が(1,1)という座標だが、ここの引数は左上を(0,0)、ドット単位で指定している
-	float px, py;
-
-	//引数は左上原点だが、スプライトは画面中央が原点なので、画面サイズの半分ずらす
-	px = (float)(x - Direct3D::screenWidth_ / 2);
-	py = (float)(-y + Direct3D::screenHeight_ / 2);	//Y軸は+-反転
-
-	//スプライトはPositionを1ずらすと画面サイズの半分ずれるので、ピクセル単位に変換
-	px /= (float)(Direct3D::screenWidth_ / 2.0f);
-	py /= (float)(Direct3D::screenHeight_ / 2.0f);
-
+	float px = x, py = y;
 
 	//１文字ずつ表示する
 	for (int i = 0; str[i] != '\0'; i++)	//文字列の末尾まで来たら終わり
@@ -207,19 +197,11 @@ bool Text::SlowlyDraw(int x, int y, const wchar_t* str, float ratio, float textI
 }
 
 //描画（文字列）を表示する
-void Text::Draw(int x, int y, const wchar_t* str, float ratio, float textInterval)
+void Text::Draw(float x, float y, const wchar_t* str, float ratio, float textInterval)
 {
 	//表示位置（左上）を計算
 	//Spriteクラスは中心が(0,0)、右上が(1,1)という座標だが、ここの引数は左上を(0,0)、ドット単位で指定している
-	float px, py;
-
-	//引数は左上原点だが、スプライトは画面中央が原点なので、画面サイズの半分ずらす
-	px = (float)(x - Direct3D::screenWidth_ / 2);
-	py = (float)(-y + Direct3D::screenHeight_ / 2);	//Y軸は+-反転
-
-	//スプライトはPositionを1ずらすと画面サイズの半分ずれるので、ピクセル単位に変換
-	px /= (float)(Direct3D::screenWidth_ / 2.0f);
-	py /= (float)(Direct3D::screenHeight_ / 2.0f);
+	float px = x, py = y;
 
 	//１文字ずつ表示する
 	for (int i = 0; str[i] != '\0'; i++)	//文字列の末尾まで来たら終わり
@@ -273,7 +255,7 @@ void Text::Draw(int x, int y, const wchar_t* str, float ratio, float textInterva
 }
 
 //描画（整数値）
-void Text::NumberDraw(int x, int y, int value, float ratio, float textInterval)
+void Text::NumberDraw(float x, float y, int value, float ratio, float textInterval)
 {
 	//文字列に変換
 	char str[256];
