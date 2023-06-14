@@ -8,11 +8,8 @@
 //定数
 namespace
 {
-	static const XMFLOAT3 PLAYER_START_ROTATION_ANGLE = { 0,240,0 };       //プレイヤーの開始角度
 	static const XMFLOAT3 RACKET_START_ROTATION_ANGLE = { 0,-185,0 };	   //ラケットの開始角度
-	static const XMFLOAT3 PLAYER_CHARGE_ROTATION_ANGLE = { 0,240,0 };      //プレイヤーの溜める角度
 	static const XMFLOAT3 RACKET_CHARGE_ROTATION_ANGLE = { 60,-265,-240 }; //ラケットの溜める角度
-	static const XMFLOAT3 PLAYER_END_ROTATION_ANGLE = { 0,230,0 };         //プレイヤーの終了角度
 	static const XMFLOAT3 RACKET_END_ROTATION_ANGLE = { -75,-265,-240 };   //ラケットの終了角度
 
 	static const float SERVE_PULL_TIME = 0.2f;       //サーブの引く時間
@@ -59,7 +56,6 @@ void ServingState::Enter(PlayerBase* player)
 	player->GetState()->SetHitMove(false);
 
 	//開始角度
-	player->GetComponent<Transform>()->SetRotate(PLAYER_START_ROTATION_ANGLE);
 	player->GetRacket()->GetComponent<Transform>()->SetRotate(RACKET_START_ROTATION_ANGLE);
 	ModelManager::SetAnimFlag(player->GetModelNum(), false);
 }
@@ -71,7 +67,6 @@ void ServingState::HitMove(PlayerBase* player)
 	float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / SERVE_HIT_TIME);
 
 	//各角度を求める
-	player->GetComponent<Transform>()->SetRotate(VectorToFloat3(PLAYER_CHARGE_ROTATION_ANGLE - (PLAYER_CHARGE_ROTATION_ANGLE - PLAYER_END_ROTATION_ANGLE) * ratio));
 	player->GetRacket()->GetComponent<Transform>()->SetRotate(VectorToFloat3(XMVectorLerp(XMLoadFloat3(&RACKET_CHARGE_ROTATION_ANGLE), XMLoadFloat3(&RACKET_END_ROTATION_ANGLE), ratio)));
 
 	//もし最後まで終わっていないのならこの先は処理しない
@@ -102,7 +97,6 @@ void ServingState::HitMove(PlayerBase* player)
 	player->GetState()->ChangeState(player->GetState()->playerStanding_, player);
 
 	//元の角度に戻す
-	player->GetComponent<Transform>()->SetRotate(PLAYER_END_ROTATION_ANGLE);
 	player->GetRacket()->GetComponent<Transform>()->SetRotate(RACKET_END_ROTATION_ANGLE);
 
 	//構えていないに設定
@@ -123,7 +117,6 @@ void ServingState::PullMove(PlayerBase* player)
 	float ratio = Easing::OutQuart(Time::GetTimef(hTime_) / SERVE_PULL_TIME);
 
 	//各角度を求める
-	player->GetComponent<Transform>()->SetRotate(VectorToFloat3(PLAYER_CHARGE_ROTATION_ANGLE - (PLAYER_CHARGE_ROTATION_ANGLE - PLAYER_START_ROTATION_ANGLE) * ratio));
 	player->GetRacket()->GetComponent<Transform>()->SetRotate(VectorToFloat3(XMVectorLerp(XMLoadFloat3(&RACKET_START_ROTATION_ANGLE), XMLoadFloat3(&RACKET_CHARGE_ROTATION_ANGLE), ratio)));
 
 	//1以上にならないように

@@ -167,25 +167,24 @@ void PlayerBase::CameraBehavior()
 //サーブレシーブ時のカメラの処理
 void PlayerBase::ServeReceiveCameraBehavior()
 {
-    //1人目のプレイヤーなら
-    if (pState_->GetPlayerNum() == 0)
+    //サーバーなら
+    if (GameManager::GetReferee()->GetServer() == this)
     {
-        //カメラのベクトル変換(2人目はカメラが逆なのでX,Zを逆にする)
-        ARGUMENT_INITIALIZE(camVec_, (initialPosition_ - XMFLOAT3(CAM_POS_SERVE_RECEIVE.x, CAM_POS_SERVE_RECEIVE.y, CAM_POS_SERVE_RECEIVE.z)));
-      
+        ARGUMENT_INITIALIZE(camVec_, (initialPosition_ - XMFLOAT3(transform_->position_.x / 2, CAM_POS_SERVE_RECEIVE.y, CAM_POS_SERVE_RECEIVE.z)));
         XMFLOAT3 pos = Camera::GetPosition();
         XMFLOAT3 nextPos = { (transform_->position_.x - XMVectorGetX(camVec_)), (transform_->position_.y - XMVectorGetY(camVec_)), (transform_->position_.z - XMVectorGetZ(camVec_)) };
         nextPos = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&pos), XMLoadFloat3(&nextPos), 0.05f));
         Camera::SetPosition(nextPos);
+        Camera::SetTarget(GameManager::GetReferee()->GetReceiverPosition());
     }
+    //レシーバーなら
     else
     {
-        //カメラのベクトル変換(2人目はカメラが逆なのでX,Zを逆にする)
-        ARGUMENT_INITIALIZE(camVec_, (initialPosition_ - XMFLOAT3(-CAM_POS_SERVE_RECEIVE.x, CAM_POS_SERVE_RECEIVE.y, -CAM_POS_SERVE_RECEIVE.z)));
-
+        ARGUMENT_INITIALIZE(camVec_, (initialPosition_ - XMFLOAT3(transform_->position_.x / 2, CAM_POS_SERVE_RECEIVE.y, -CAM_POS_SERVE_RECEIVE.z)));
         XMFLOAT3 pos = Camera::GetPositionTwo();
         XMFLOAT3 nextPos = { (transform_->position_.x - XMVectorGetX(camVec_)), (transform_->position_.y - XMVectorGetY(camVec_)), (transform_->position_.z - XMVectorGetZ(camVec_)) };
         nextPos = VectorToFloat3(XMVectorLerp(XMLoadFloat3(&pos), XMLoadFloat3(&nextPos), 0.05f));
         Camera::SetPositionTwo(nextPos);
+        Camera::SetTargetTwo(GameManager::GetReferee()->GetServerPosition());
     }
 }

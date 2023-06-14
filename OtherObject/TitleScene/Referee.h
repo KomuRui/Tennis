@@ -30,8 +30,9 @@ class Referee
 	//サーバーの動ける範囲
 	map<pair<TennisCourtName, Side>, pair<float, float>> serverMoveRange_;
 
-	//レシーバーの初期位置
-	map<pair<TennisCourtName, Side>, float> receiverInitialPosition_;
+	//サーバー・レシーバーの初期位置
+	map<pair<TennisCourtName, Side>, pair<XMFLOAT3,XMFLOAT3>> serverInitialPosition_;
+	map<pair<TennisCourtName, Side>, pair<XMFLOAT3,XMFLOAT3>> receiverInitialPosition_;
 
 public:
 
@@ -131,5 +132,17 @@ public:
 	/// </summary>
 	/// <returns>X軸での動ける最小値と最大値</returns>
 	pair<float, float> GetServerMoveRange() { return serverMoveRange_[{server_->GetTennisCourtName(), side_}]; }
+
+	/// <summary>
+	/// レシーバーのポジションを取得
+	/// </summary>
+	/// <returns>レシーバーのポジション</returns>
+	XMFLOAT3 GetReceiverPosition() { return receiverInitialPosition_[{receiver_->GetTennisCourtName(), side_}].first; }
+
+	/// <summary>
+	/// サーバーのポジションを取得
+	/// </summary>
+	/// <returns>サーバーのポジション</returns>
+	XMFLOAT3 GetServerPosition() { return serverInitialPosition_[{server_->GetTennisCourtName(), side_}].first; }
 };
 

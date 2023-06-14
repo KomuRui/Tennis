@@ -124,4 +124,6 @@ void StandingState::HandleInput(PlayerBase* player)
 //状態変化したとき一回だけ呼ばれる関数
 void StandingState::Enter(PlayerBase* player)
 {
+	//チャージエフェクト削除
+	VFX::ForcedEnd(player->GetState()->GetChargeEffectNum());
 }

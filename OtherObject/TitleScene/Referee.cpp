@@ -7,23 +7,33 @@ Referee::Referee()
 
 	//サーバーの動ける範囲を設定
 	serverMoveRange_[{TennisCourtName::Z_PLUS_COURT, Side::DEUCE_SIDE}] = { -4.0f,0.0f };
-	serverMoveRange_[{TennisCourtName::Z_PLUS_COURT,Side::AD_SIDE}] = { 0.0f,4.0f };
-	serverMoveRange_[{TennisCourtName::Z_MINUS_COURT,Side::DEUCE_SIDE}] = { 0.0f,4.0f };
-	serverMoveRange_[{TennisCourtName::Z_MINUS_COURT,Side::AD_SIDE}] = { -4.0f,0.0f };
+	serverMoveRange_[{TennisCourtName::Z_PLUS_COURT, Side::AD_SIDE}] = { 0.0f,4.0f };
+	serverMoveRange_[{TennisCourtName::Z_MINUS_COURT, Side::DEUCE_SIDE}] = { 0.0f,4.0f };
+	serverMoveRange_[{TennisCourtName::Z_MINUS_COURT, Side::AD_SIDE}] = { -4.0f,0.0f };
 
-	//レシーバーの初期位置を設定
-	receiverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::DEUCE_SIDE}] = -4.0f;
-	receiverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::AD_SIDE}] = 4.0f;
-	receiverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::DEUCE_SIDE}] = 4.0f;
-	receiverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::AD_SIDE}] = -4.0f;
+	//////サーバー・レシーバーの初期位置
+
+	//サーバー
+	serverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::DEUCE_SIDE}] = { { -1.0f,ZERO,11.58f },{ ZERO,240,ZERO} };
+	serverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::AD_SIDE}] = { { 1.0f,ZERO,11.58f },{ ZERO,300,ZERO } };
+	serverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::DEUCE_SIDE}] = { { 1.0f, ZERO, -11.58f },{ ZERO,300,ZERO } };
+	serverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::AD_SIDE}] = { { -1.0f, ZERO, -11.58f }, { ZERO,240,ZERO } };
+
+	//レシーバー
+	receiverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::DEUCE_SIDE}] = {{ -4.0f,ZERO,11.58f },{ ZERO,ZERO,ZERO } };
+	receiverInitialPosition_[{TennisCourtName::Z_PLUS_COURT, Side::AD_SIDE}] = { { 4.0f,ZERO,11.58f },{ ZERO,ZERO,ZERO } };
+	receiverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::DEUCE_SIDE}] = { { 4.0f, ZERO, -11.58f },{ ZERO,ZERO,ZERO } };
+	receiverInitialPosition_[{TennisCourtName::Z_MINUS_COURT, Side::AD_SIDE}] = { { -4.0f, ZERO, -11.58f },{ ZERO,ZERO,ZERO } };
 }
 
 //初期化
 void Referee::Initialize()
 {
-	//位置初期化
-	server_->GetComponent<Transform>()->SetPositionX(ZERO);
-	receiver_->GetComponent<Transform>()->SetPositionX(receiverInitialPosition_[{receiver_->GetTennisCourtName(), side_}]);
+	//位置・回転初期化
+	server_->GetComponent<Transform>()->SetPosition(serverInitialPosition_[{server_->GetTennisCourtName(), side_}].first);
+	server_->GetComponent<Transform>()->SetRotate(serverInitialPosition_[{server_->GetTennisCourtName(), side_}].second);
+	receiver_->GetComponent<Transform>()->SetPosition(receiverInitialPosition_[{receiver_->GetTennisCourtName(), side_}].first);
+	receiver_->GetComponent<Transform>()->SetRotate(receiverInitialPosition_[{receiver_->GetTennisCourtName(), side_}].second);
 
 	//サーバー・レシーバーを初期状態にしておく
 	server_->GetState()->ChangeState(server_->GetState()->playerStanding_, server_);
