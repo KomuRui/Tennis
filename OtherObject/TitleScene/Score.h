@@ -2,18 +2,25 @@
 #include "../../Engine/ResourceManager/Global.h"
 #include "../../Engine/DirectX/Sprite.h"
 #include "../../Engine/ResourceManager/Text.h"
+#include "../../Engine/Component/EasingMove.h"
 #include "TennisCourt.h"
 #include <map>
 
 //テニスのスコア
 class Score
 {
-	
 	map<TennisCourtName, int> scoreTable_;					//スコア表
-	map<TennisCourtName, pair<Text*, XMFLOAT2>> scoreText_; //スコアのテキスト表示用
+	map<TennisCourtName, pair<Text*, XMFLOAT3>> scoreText_; //スコアのテキスト表示用
 
 	Text* pHyphenText_;            //ハイフン表示する用
-	XMFLOAT2 hyphenTextPosition_;  //テキストのポジション
+	XMFLOAT3 hyphenTextPosition_;  //テキストのポジション
+
+	XMFLOAT3 scale_;               //拡大率
+
+	EasingMove zPlusCourtEasingPos_;     //位置イージング用
+	EasingMove zMinusCourtEasingPos_;    //位置イージング用
+	EasingMove hyphenEasingPos_;         //位置イージング用
+	EasingMove scaleEasing_;             //拡大率イージング用
 
 	std::map<int, int> table;      //スコア表(キー:カウント数0,1,2,3 バリュー:表示するスコア数)
 

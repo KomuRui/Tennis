@@ -17,6 +17,8 @@ class EasingMove
 
 	float (*easingFunc)(float); //使うイージングの関数
 
+	bool isSet_;                //設定しているかどうか
+
 public:
 
 	//コンストラクタ
