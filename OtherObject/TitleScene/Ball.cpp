@@ -80,7 +80,6 @@ Ball::Ball(GameObject* parent)
 //初期化
 void Ball::ChildInitialize()
 {
-
 	//各初期化
 	ARGUMENT_INITIALIZE(ballInfo_.pLine_, new PolyLine);
 	ballInfo_.pLine_->Load("Image/Effect/circle_Wh.png");
@@ -271,22 +270,32 @@ void Ball::BoundMove()
 	if (ballInfo_.boundCount_ == 2)
 	{
 		//次の目的地に移動するように
-		ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::PURPOSE_MOVE);
+		ARGUMENT_INITIALIZE(ballInfo_.ballStatus_, BallStatus::PLAYER_HAV_BALL);
 		ARGUMENT_INITIALIZE(ballInfo_.boundCount_,ZERO);
 
 		Time::Reset(ballInfo_.hTime_);
 		VFX::ForcedEnd(ballInfo_.hLandEffectName_);
 		VFX::ForcedEnd(ballInfo_.hDropEffectName_);
 		VFX::ForcedEnd(ballInfo_.hPowerEffectName_);
-
-		//打つ強さをランダムに取得
-		HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
+		ballInfo_.pLine_->Reset();
 
 		//威力エフェクト使用しないに設定
 		ARGUMENT_INITIALIZE(ballInfo_.isUsePowerEffect_, false);
 
+		//向かうテニスコート設定
+		ARGUMENT_INITIALIZE(ballInfo_.goTennisCourtName_, GameManager::GetReferee()->GetReceiver()->GetTennisCourtName());
+
+		//トスアップのベクトルの値を元に戻す
+		ARGUMENT_INITIALIZE(ballInfo_.tossUpVector_, TOSS_UP_VALUE);
+		ARGUMENT_INITIALIZE(ballInfo_.isTossUp_, false);
+
+		GameManager::GetReferee()->GetPoint();
+
+		//打つ強さをランダムに取得
+		//HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
+
 		//リセット
-		Reset(h.strength_.x, h.strength_.y,h.moveTime_,BasePointManager::GetRandomBasePointName());
+		//Reset(h.strength_.x, h.strength_.y,h.moveTime_,BasePointManager::GetRandomBasePointName());
 	}
 }
 

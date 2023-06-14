@@ -48,6 +48,18 @@ namespace BasePointManager
 	string GetInputBasePoint(PlayerBase* p);
 
 	/// <summary>
+	/// 入力に対する基準点の名前を取得(ラリー中)
+	/// </summary>
+	/// <returns>基準点の名前</returns>
+	string GetRallyInputBasePoint(PlayerBase* p);
+
+	/// <summary>
+	/// 入力に対する基準点の名前を取得(サーブレシーブ中)
+	/// </summary>
+	/// <returns>基準点の名前</returns>
+	string GetServeReceiveInputBasePoint(PlayerBase* p);
+
+	/// <summary>
 	/// 基準点の名前をランダムに取得
 	/// </summary>
 	/// <returns>基準点の名前</returns>

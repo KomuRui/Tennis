@@ -209,10 +209,13 @@ void PlayerStateManager::ServeMove(PlayerBase* player, float padLx, float padLy)
         rotateZ = XMMatrixRotationZ(XMConvertToRadians(ZERO));
         XMMATRIX matRotate = rotateZ * rotateX * rotateY;
 
+        //“®‚¯‚é”ÍˆÍ‚ðŽæ“¾
+        pair<float, float> moveRange = GameManager::GetReferee()->GetServerMoveRange();
+
         //ˆÚ“®
         XMFLOAT3 moveValue = VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * 0.5f, matRotate));
         ARGUMENT_INITIALIZE(moveValue.z, ZERO);
         player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), moveValue));
-        player->GetComponent<Transform>()->SetPositionX(Clamp<float>(player->GetComponent<Transform>()->GetPosition().x, 0, -4));
+        player->GetComponent<Transform>()->SetPositionX(Clamp<float>(player->GetComponent<Transform>()->GetPosition().x, moveRange.second, moveRange.first));
     }
 }

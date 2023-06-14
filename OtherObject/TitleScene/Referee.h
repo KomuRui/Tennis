@@ -27,6 +27,12 @@ class Referee
 	PlayerBase* server_;   //サーバー
 	PlayerBase* receiver_; //レシーバー
 
+	//サーバーの動ける範囲
+	map<pair<TennisCourtName, Side>, pair<float, float>> serverMoveRange_;
+
+	//レシーバーの初期位置
+	map<pair<TennisCourtName, Side>, float> receiverInitialPosition_;
+
 public:
 
 	//コンストラクタ
@@ -34,6 +40,11 @@ public:
 	
 	//デストラクタ
 	~Referee() {};
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize();
 
 	/// <summary>
 	/// 描画
@@ -114,5 +125,11 @@ public:
 	/// </summary>
 	/// <returns>サイド</returns>
 	Side GetSide() { return side_; }
+
+	/// <summary>
+	/// サーバーの動ける範囲を取得
+	/// </summary>
+	/// <returns>X軸での動ける最小値と最大値</returns>
+	pair<float, float> GetServerMoveRange() { return serverMoveRange_[{server_->GetTennisCourtName(), side_}]; }
 };
 

@@ -3,6 +3,7 @@
 #include "../../Player/PlayerBase.h"
 #include "../../OtherObject/TitleScene/Ball.h"
 #include "../../Engine/GameObject/Signboard.h"
+#include "../../OtherObject/TitleScene/Referee.h"
 
 //’è”
 namespace
@@ -34,8 +35,6 @@ TitleScene::~TitleScene()
 //‰Šú‰»
 void TitleScene::Initialize()
 {
-
-
 	///////////////ƒJƒƒ‰///////////////////
 
 	//ˆê‚Â–Ú‚ÌƒJƒƒ‰
@@ -65,6 +64,10 @@ void TitleScene::Initialize()
 	////////////////////////Playerl”Ý’è/////////////////////////////////
 
 	GameManager::SetPlayers(Players::TWO);
+
+	////////////////////////R”»‰Šú‰»/////////////////////////////////
+
+	GameManager::GetReferee()->Initialize();
 
 }
 

@@ -113,9 +113,11 @@ HRESULT PolyLine::Load(std::string fileName)
 
 void PolyLine::Draw()
 {
+	//空ならこの先処理しない
+	if (positions_.empty())return;
+
 	//頂点バッファをクリア（今から作るから）
 	SAFE_RELEASE(pVertexBuffer_);
-
 
 	//現在のカメラの位置をベクトルとして取得
 	XMFLOAT3 camPos = Camera::GetPosition();
@@ -220,6 +222,13 @@ void PolyLine::Draw()
 	Direct3D::pContext_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	Direct3D::SetBlendMode(Direct3D::BLEND_DEFAULT);
+}
+
+//初期状態に設定
+void PolyLine::Reset()
+{
+	SAFE_RELEASE(pVertexBuffer_);
+	positions_.clear();
 }
 
 void PolyLine::Release()

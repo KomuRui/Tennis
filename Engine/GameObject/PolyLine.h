@@ -42,11 +42,18 @@ public:
 	//描画
 	void Draw();
 
-	//徐々に透明になるように設定
-	void SetMoveAlphaFlag() { moveAlpha_ = true; }
-
 	//解放
 	void Release();
+
+	/// <summary>
+	/// 初期状態に設定
+	/// </summary>
+	void Reset();
+
+	//////////////////////////////////セッター・ゲッター///////////////////////////////////////
+
+	//徐々に透明になるように設定
+	void SetMoveAlphaFlag() { moveAlpha_ = true; }
 
 	/// <summary>
 	/// 色セット
@@ -65,6 +72,10 @@ public:
 	/// <param name="width">セットしたい長さ</param>
 	void SetWidth(float width) { width_ = width; }
 
+	/// <summary>
+	/// 色取得
+	/// </summary>
+	/// <returns>色</returns>
 	XMFLOAT4 GetColor() { return color_; }
 };
 

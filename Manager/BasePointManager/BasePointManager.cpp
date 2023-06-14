@@ -279,32 +279,58 @@ namespace BasePointManager
 	//入力に対する基準点の名前を取得
 	string GetInputBasePoint(PlayerBase* p)
 	{
+		//ラリー中なら
+		if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_RALLY)
+			return GetRallyInputBasePoint(p);
+		//サーブレシーブ中なら
+		else
+			return GetServeReceiveInputBasePoint(p);
+	}
+
+	/// <summary>
+	/// 入力に対する基準点の名前を取得(ラリー中)
+	/// </summary>
+	/// <returns>基準点の名前</returns>
+	string GetRallyInputBasePoint(PlayerBase* p)
+	{
 		//最終的に返す文字列
 		string name = "";
 
 		//Lスティックの傾きを取得
 		XMFLOAT3 stickL = Input::GetPadStickL(p->GetState()->GetPlayerNum());
 
-		//ラリー中なら
-		if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_RALLY)
-		{
-			//奥行
-			if (stickL.y > 0.1f)
-				name += "Back_";
-			else if (stickL.y < -0.1f)
-				name += "Front_";
-			else
-				name += "Center_";
-
-			if (stickL.x < 0.1f && stickL.x > -0.1f)
-				name += "C";
-			else if (stickL.x < 0.1f)
-				name += "L";
-			else
-				name += "R";
-		}
-		//サーブレシーブ中なら
+		//奥行
+		if (stickL.y > 0.1f)
+			name += "Back_";
+		else if (stickL.y < -0.1f)
+			name += "Front_";
 		else
+			name += "Center_";
+
+		if (stickL.x < 0.1f && stickL.x > -0.1f)
+			name += "C";
+		else if (stickL.x < 0.1f)
+			name += "L";
+		else
+			name += "R";
+
+		return name;
+	}
+
+	/// <summary>
+	/// 入力に対する基準点の名前を取得(サーブレシーブ中)
+	/// </summary>
+	/// <returns>基準点の名前</returns>
+	string GetServeReceiveInputBasePoint(PlayerBase* p)
+	{
+		//最終的に返す文字列
+		string name = "";
+
+		//Lスティックの傾きを取得
+		XMFLOAT3 stickL = Input::GetPadStickL(p->GetState()->GetPlayerNum());
+
+		//デュースサイドなら
+		if (GameManager::GetReferee()->GetSide() == Side::DEUCE_SIDE)
 		{
 			if (stickL.x < 0.1f && stickL.x > -0.1f)
 				name += "Left_C";
@@ -312,6 +338,15 @@ namespace BasePointManager
 				name += "Left_L";
 			else
 				name += "Left_R";
+		}
+		else
+		{
+			if (stickL.x < 0.1f && stickL.x > -0.1f)
+				name += "Right_C";
+			else if (stickL.x < 0.1f)
+				name += "Right_L";
+			else
+				name += "Right_R";
 		}
 
 		return name;
