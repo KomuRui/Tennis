@@ -351,6 +351,9 @@
     <ClCompile Include="Engine\GameObject\Signboard.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="OtherObject\TitleScene\Sky.cpp">
+      <Filter>OtherObject\TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -599,6 +602,9 @@
     </ClInclude>
     <ClInclude Include="Engine\GameObject\Signboard.h">
       <Filter>01Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\TitleScene\Sky.h">
+      <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

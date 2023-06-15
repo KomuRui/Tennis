@@ -6,24 +6,35 @@
 #include "TennisCourt.h"
 #include <map>
 
+//テキスト情報
+struct Textinfo
+{
+	XMFLOAT3 pos;
+	XMFLOAT2 scale;
+};
+
 //テニスのスコア
 class Score
 {
 	map<TennisCourtName, int> scoreTable_;					//スコア表
-	map<TennisCourtName, pair<Text*, XMFLOAT3>> scoreText_; //スコアのテキスト表示用
+	map<TennisCourtName, pair<Text*, Textinfo>> scoreText_; //スコアのテキスト表示用
 
-	Text* pHyphenText_;            //ハイフン表示する用
-	XMFLOAT3 hyphenTextPosition_;  //テキストのポジション
+	TennisCourtName pointGetTennisCourtName_;               //ポイント取得しテニスコートの名前
 
-	XMFLOAT3 scale_;               //拡大率
+	Text* pHyphenText_;					 //ハイフン表示する用
+	Textinfo hyphenTextInfo_;			 //テキストのポジション
 
-	EasingMove zPlusCourtEasingPos_;     //位置イージング用
-	EasingMove zMinusCourtEasingPos_;    //位置イージング用
-	EasingMove hyphenEasingPos_;         //位置イージング用
-	EasingMove scaleEasing_;             //拡大率イージング用
+	XMFLOAT3 allScale_;                  //すべての拡大率
+	XMFLOAT3 pointGetScale_;             //ポイント取得した方の拡大率
+
+	std::unique_ptr<EasingMove> zPlusCourtEasingPos_ = std::make_unique<EasingMove>();     //位置イージング用
+	std::unique_ptr<EasingMove> zMinusCourtEasingPos_ = std::make_unique<EasingMove>();    //位置イージング用
+	std::unique_ptr<EasingMove> hyphenEasingPos_ = std::make_unique<EasingMove>();         //位置イージング用
+	std::unique_ptr<EasingMove> allScaleEasing_ = std::make_unique<EasingMove>();          //すべての拡大率イージング用
+	std::unique_ptr<EasingMove> pointGetScaleEasing_ = std::make_unique<EasingMove>();     //すべての拡大率イージング用
 
 	std::map<int, int> table;      //スコア表(キー:カウント数0,1,2,3 バリュー:表示するスコア数)
-
+	
 public:
 
 	//コンストラクタ
@@ -38,6 +49,16 @@ public:
 	/// スコア加算
 	/// </summary>
 	void AddScore(TennisCourtName n);
+
+	/// <summary>
+	/// 位置を戻す動き
+	/// </summary>
+	void ReturnMovePos();
+
+	/// <summary>
+	/// イージングでスコア変更
+	/// </summary>
+	void ChangeScoreEasing();
 
 };
 

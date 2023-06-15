@@ -201,6 +201,7 @@
     <ClCompile Include="OtherObject\TitleScene\Racket.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Referee.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Score.cpp" />
+    <ClCompile Include="OtherObject\TitleScene\Sky.cpp" />
     <ClCompile Include="OtherObject\TitleScene\TennisCourt.cpp" />
     <ClCompile Include="OtherObject\TitleScene\TennisCourtAround.cpp" />
     <ClCompile Include="OtherObject\TitleScene\Water.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="OtherObject\TitleScene\Racket.h" />
     <ClInclude Include="OtherObject\TitleScene\Referee.h" />
     <ClInclude Include="OtherObject\TitleScene\Score.h" />
+    <ClInclude Include="OtherObject\TitleScene\Sky.h" />
     <ClInclude Include="OtherObject\TitleScene\TennisCourt.h" />
     <ClInclude Include="OtherObject\TitleScene\TennisCourtAround.h" />
     <ClInclude Include="OtherObject\TitleScene\Water.h" />

@@ -7,6 +7,8 @@
 class EasingMove
 {
 	int timerhNum_;             //タイマーのハンドル番号
+	int endEasingCount_;        //イージング何回終わった
+	int beforeEndEasingCount_;  //イージング何回終わったbefore
 
 	float moveTime_;            //移動時間
 	float nowTime_;             //現在の時間
@@ -42,5 +44,16 @@ public:
 	/// <param name="moveTime">移動にかかる時間</param>
 	/// <param name="Func">使うイージング関数</param>
 	void Reset(XMFLOAT3* targetPos, XMFLOAT3 beforePos, XMFLOAT3 afterPos, float moveTime, float (*func)(float));
+
+	/// <summary>
+	/// イージング何回終わった取得
+	/// </summary>
+	/// <returns>イージング終わった回数</returns>
+	int GetEndEasingCount() { return endEasingCount_; }
+
+	/// <summary>
+	/// イージングの終わった回数をリセット
+	/// </summary>
+	void ResetEndEasingCount() { endEasingCount_ = 0; }
 };
 

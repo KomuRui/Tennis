@@ -14,6 +14,7 @@
 #include "../../OtherObject/TitleScene/Water.h"
 #include "../../OtherObject/TitleScene/Ball.h"
 #include "../../OtherObject/TitleScene/Referee.h"
+#include "../../OtherObject/TitleScene/Sky.h"
 #include "../../Player/PlayerBase.h"
 #include "../Component/Transform/Transform.h"
 #include "../../Engine/nlohmann/json.hpp"
@@ -81,6 +82,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "Ball")
 	{
 		GameManager::SetpBall(InstantiateNormal<Ball>(parent, ModelPathName, inName, t));
+	}
+	if (inName == "Sky")
+	{
+		InstantiateNormal<Sky>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////Camera////////////////////////

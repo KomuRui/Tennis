@@ -42,7 +42,7 @@ HRESULT Text::Initialize(const char* fileName, const unsigned int charWidth, con
 
 
 //描画（文字列:数字）
-void Text::NumberDraw(float x, float y, const char* str, float ratio, float textInterval)
+void Text::NumberDraw(float x, float y, const char* str, XMFLOAT2 ratio, float textInterval)
 {
 	//表示位置（左上）を計算
 	float px = x, py = y;
@@ -63,8 +63,8 @@ void Text::NumberDraw(float x, float y, const char* str, float ratio, float text
 		transform.position_.y = py;
 
 		//大きさ
-		transform.scale_.x *= ratio;
-		transform.scale_.y *= ratio;
+		transform.scale_.x = ratio.x;
+		transform.scale_.y = ratio.y;
 
 		ImageManager::SetTransform(hPict_, &transform);
 
@@ -197,7 +197,7 @@ bool Text::SlowlyDraw(int x, int y, const wchar_t* str, float ratio, float textI
 }
 
 //描画（文字列）を表示する
-void Text::Draw(float x, float y, const wchar_t* str, float ratio, float textInterval)
+void Text::Draw(float x, float y, const wchar_t* str, XMFLOAT2 ratio, float textInterval)
 {
 	//表示位置（左上）を計算
 	//Spriteクラスは中心が(0,0)、右上が(1,1)という座標だが、ここの引数は左上を(0,0)、ドット単位で指定している
@@ -237,8 +237,8 @@ void Text::Draw(float x, float y, const wchar_t* str, float ratio, float textInt
 			transform.position_.y = py;
 
 			//大きさ
-			transform.scale_.x *= ratio;
-			transform.scale_.y *= ratio;
+			transform.scale_.x = ratio.x;
+			transform.scale_.y = ratio.y;
 
 			ImageManager::SetTransform(hPict_, &transform);
 
@@ -255,7 +255,7 @@ void Text::Draw(float x, float y, const wchar_t* str, float ratio, float textInt
 }
 
 //描画（整数値）
-void Text::NumberDraw(float x, float y, int value, float ratio, float textInterval)
+void Text::NumberDraw(float x, float y, int value, XMFLOAT2 ratio, float textInterval)
 {
 	//文字列に変換
 	char str[256];

@@ -96,6 +96,13 @@
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "Water"
+  },
+  "Sky": {
+    "FileName": "Stage/Sky.fbx",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "Sky"
   }
 
 }
