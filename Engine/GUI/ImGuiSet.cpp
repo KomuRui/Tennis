@@ -216,6 +216,12 @@ namespace ImGuiSet
         //ファイル設定
         File();
 
+        //flagがtrueなら関数を呼び出す
+        if (createImage_.first)
+        {
+            CreateImage();
+        }
+
         //エフェクトエディタモードなら
         if (screenMode_ == static_cast<int>(Mode::EFFECT_EDIT))
             EffectEditGui();
@@ -478,16 +484,16 @@ namespace ImGuiSet
                             //もしすでにオブジェクトが存在するのならば
                             while (json_object.contains(name))
                             {
-                                ARGUMENT_INITIALIZE(name, ObjectName[i] + num);
+                                ARGUMENT_INITIALIZE(name, ObjectName[i] + std::to_string(num));
                                 num++;
                             }
 
                             //保存したい値を設定
-                            json_object[ObjectName[i]]["FileName"] = text1[i];
-                            json_object[ObjectName[i]]["TypeName"] = ObjectName;
-                            json_object[ObjectName[i]]["Position"] = { objectPos_[i].x,objectPos_[i].y,objectPos_[i].z };
-                            json_object[ObjectName[i]]["Rotate"] = { objectRotate_[i].x,objectRotate_[i].y,objectRotate_[i].z };
-                            json_object[ObjectName[i]]["Scale"] = { objectScale_[i].x,objectScale_[i].y,objectScale_[i].z };
+                            json_object[name]["FileName"] = text1[i];
+                            json_object[name]["TypeName"] = ObjectName[i];
+                            json_object[name]["Position"] = { objectPos_[i].x,objectPos_[i].y,objectPos_[i].z };
+                            json_object[name]["Rotate"] = { objectRotate_[i].x,objectRotate_[i].y,objectRotate_[i].z };
+                            json_object[name]["Scale"] = { objectScale_[i].x,objectScale_[i].y,objectScale_[i].z };
 
                             //書き込み
                             std::ofstream output_file(stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()]);
@@ -1023,25 +1029,46 @@ namespace ImGuiSet
                     if (ImGui::TreeNode("StageSave")) {
 
                         //ファイルネーム入力欄
-                        static char text2[MAX_OBJECT_SIZE][50] = {};
+                        static char ObjectName[MAX_OBJECT_SIZE][50] = {};
 
                         //入力された文字をtext1に格納
-                        ImGui::InputText("ObjName", text2[i], sizeof(text2[i]));
+                        ImGui::InputText("ObjName", ObjectName[i], sizeof(ObjectName[i]));
 
                         if (ImGui::Button("Save"))
                         {
 
-                            const char* fileName = stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()];
-                            std::ofstream ofs;
-                            ofs.open(fileName, std::ios::app);
+                            //書き込み用
+                            json json_object;
 
-                            ofs << std::endl;
+                            //既存のデータを読み込む
+                            std::ifstream input_file(stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()]);
+                            input_file >> json_object;
+                            input_file.close();
 
-                            ofs << text1[i] << "," << text2[i] << "," << imagePos_[i].x << "," << imagePos_[i].y << "," << imagePos_[i].z << ","
-                                << imageRotate_[i].x << "," << imageRotate_[i].y << "," << imageRotate_[i].z << ","
-                                << imageScale_[i].x << "," << imageScale_[i].y << "," << imageScale_[i].z;
+                            //名前を覚えておく
+                            string name = ObjectName[i];
 
-                            ofs.close();
+                            //名前が同じ時に加算する番号
+                            int num = 1;
+
+                            //もしすでにオブジェクトが存在するのならば
+                            while (json_object.contains(name))
+                            {
+                                ARGUMENT_INITIALIZE(name, ObjectName[i] + std::to_string(num));
+                                num++;
+                            }
+
+                            //保存したい値を設定
+                            json_object[name]["FileName"] = text1[i];
+                            json_object[name]["TypeName"] = ObjectName[i];
+                            json_object[name]["Position"] = { imagePos_[i].x,imagePos_[i].y,imagePos_[i].z };
+                            json_object[name]["Rotate"] = { imageRotate_[i].x,imageRotate_[i].y,imageRotate_[i].z };
+                            json_object[name]["Scale"] = { imageScale_[i].x,imageScale_[i].y,imageScale_[i].z };
+
+                            //書き込み
+                            std::ofstream output_file(stageInfoFilePath_[GameManager::GetpSceneManager()->GetSceneId()]);
+                            output_file << json_object;
+                            output_file.close();
                         }
                         ImGui::TreePop();
                     }
@@ -1389,8 +1416,8 @@ namespace ImGuiSet
     {
         //モデル表示
         Transform t;
-        pBaseFbx->Draw(&t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), ZERO, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, Direct3D::SHADER_UNLIT);
-        pStickFbx->Draw(&t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), 1.0f, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, Direct3D::SHADER_3D);
+        pBaseFbx->Draw(&t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), ZERO, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, false, Direct3D::SHADER_UNLIT);
+        pStickFbx->Draw(&t, ZERO, 1, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), XMFLOAT4(ZERO, ZERO, ZERO, ZERO), 1.0f, ZERO, XMFLOAT4(ZERO, ZERO, ZERO, ZERO), false, false, Direct3D::SHADER_3D);
 
         //window作る
         ImGui::Begin("Effect", NULL, ImGuiWindowFlags_NoMove);
@@ -1959,8 +1986,8 @@ namespace ImGuiSet
                     Export();
                 }
                 if (ImGui::MenuItem("Image")) {
-                    Direct3D::SetTimeScale(true);
-                    Export();
+                    createImage_.first = true;
+                    createImage_.second++;
                 }
                 if (ImGui::MenuItem("Button")) {
                     Direct3D::SetTimeScale(true);

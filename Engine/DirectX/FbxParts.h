@@ -49,6 +49,7 @@ class FbxParts
 		XMFLOAT4 outLineColor;               //アウトラインの色
 		FLOAT	 shininess;					 //ハイライトの強さ（MayaのCosinePower）
 		BOOL	 isTexture;					 //テクスチャの有無 
+		BOOL	 isShadowApply;              //自分自身に影を適用するか
 		FLOAT    isDiffuse;					 //透明にするかどうか
 		FLOAT    isBrightness;				 //明るさ
 		FLOAT    scroll;                     //uvスクロールの値
@@ -109,6 +110,9 @@ class FbxParts
 
 	//アウトラインを使うか
 	bool isUseOutLine;
+
+	//自分自身に影を適用する
+	bool isMyShadowApply;
 
 	//【頂点バッファ】
 	//各頂点の情報（位置とか色とか）を格納するところ
@@ -189,6 +193,8 @@ public:
 	void SetUVScroll(float scroll) { this->scrolls = scroll; }
 
 	void SetUseOutLine(bool flag) { this->isUseOutLine = flag; }
+
+	void SetMyShadowApply(bool flag) { this->isMyShadowApply = flag; }
 
 	//レイキャスト（レイを飛ばして当たり判定）
 	//引数：data	必要なものをまとめたデータ

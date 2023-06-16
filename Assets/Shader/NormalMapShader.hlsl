@@ -30,6 +30,7 @@ cbuffer global
 	float4		g_outLineColor;		  //アウトラインの色
 	float		g_shuniness;		  // ハイライトの強さ（テカリ具合）
 	bool		g_isTexture;		  // テクスチャ貼ってあるかどうか
+	bool        g_isShadowApply;      // 自分自身に影を適用するか
 	float 		g_isDiffuse;		  // 透明にするか
 	float       g_isBrightness;       // 明るさ
 	float       g_scroll;             // スクロール値

@@ -10,15 +10,13 @@ Sky::Sky(GameObject* parent, std::string modelPath, std::string name)
 //初期化
 void Sky::ChildInitialize()
 {
-	ModelManager::SetShederType(hModel_, Direct3D::SHADER_NORMALMAP);
+	ModelManager::SetMyShadowApply(hModel_,false);
+	ModelManager::SetBrightness(hModel_, 1.0f);
 	SetShadow(false);
 }
 
 //更新
 void Sky::ChildUpdate()
 {
-	//UVスクロール
-	scroll += 0.003f;
-	ModelManager::SetUvScroll(hModel_, scroll);
 }
 

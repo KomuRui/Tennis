@@ -101,7 +101,7 @@ namespace ModelManager
 
 		if (_datas[handle]->pFbx)
 		{
-			_datas[handle]->pFbx->Draw(&_datas[handle]->transform, (int)_datas[handle]->nowFrame, _datas[handle]->alpha, _datas[handle]->ambient,_datas[handle]->speculer, _datas[handle]->brightness,_datas[handle]->uvScroll, _datas[handle]->outLineColor, _datas[handle]->isOutLineDraw, _datas[handle]->shaderType);
+			_datas[handle]->pFbx->Draw(&_datas[handle]->transform, (int)_datas[handle]->nowFrame, _datas[handle]->alpha, _datas[handle]->ambient,_datas[handle]->speculer, _datas[handle]->brightness,_datas[handle]->uvScroll, _datas[handle]->outLineColor, _datas[handle]->isOutLineDraw, _datas[handle]->isMyShadowApply,_datas[handle]->shaderType);
 		}
 	}
 
@@ -186,6 +186,17 @@ namespace ModelManager
 		}
 
 		_datas[handle]->isOutLineDraw = flag;
+	}
+
+	//©•ª©g‚É‰e‚ğ“K—p‚·‚é‚©
+	void SetMyShadowApply(int handle, bool flag)
+	{
+		if (handle < 0 || handle >= _datas.size() || _datas[handle] == nullptr)
+		{
+			return;
+		}
+
+		_datas[handle]->isMyShadowApply = flag;
 	}
 
 	void SetBasePointObj(int handle, BasePointModel* basePoint)

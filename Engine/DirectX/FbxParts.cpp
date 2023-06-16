@@ -563,6 +563,7 @@ void FbxParts::Draw(Transform* transform)
 
 		cb.shininess = pMaterial_[i].shininess;
 		cb.isTexture = pMaterial_[i].pTexture != nullptr;
+		cb.isShadowApply = isMyShadowApply;
 		cb.isDiffuse = diffuse;
 		cb.isAmbient = ambient;
 		cb.isBrightness = brightness;

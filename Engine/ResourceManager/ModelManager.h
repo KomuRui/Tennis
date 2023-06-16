@@ -72,6 +72,9 @@ namespace ModelManager
 		//アニメーションをループ再生するか
 		bool isAnimLoop;
 
+		//自分自身に影を適用するか
+		bool isMyShadowApply;
+
 		//アニメーションのフレーム
 		float nowFrame, animSpeed;
 		int startFrame, endFrame;
@@ -79,7 +82,7 @@ namespace ModelManager
 
 		//初期化
 		ModelData() : fileName(""),modelName(""), pObject(nullptr),pFbx(nullptr), isRay(false), nowFrame(ZERO), startFrame((int)ZERO), endFrame((int)ZERO), animSpeed(ZERO), shaderType(Direct3D::SHADER_3D), outLineColor(ZERO, ZERO, ZERO, 1.0f),
-			alpha(1), ambient(ZERO, ZERO, ZERO, ZERO), isAnim(false), speculer(ZERO, ZERO, ZERO, ZERO), brightness(ZERO), pBasePoint(nullptr), pObstacle(nullptr), uvScroll(ZERO), isOutLineDraw(false), isAnimLoop(true)
+			alpha(1), ambient(ZERO, ZERO, ZERO, ZERO), isAnim(false), speculer(ZERO, ZERO, ZERO, ZERO), brightness(ZERO), pBasePoint(nullptr), pObstacle(nullptr), uvScroll(ZERO), isOutLineDraw(false), isAnimLoop(true), isMyShadowApply(true)
 		{
 		}
 
@@ -163,6 +166,13 @@ namespace ModelManager
 	/// <param name="handle">モデルの番号</param>
 	/// <param name="flag">trueなら描画する</param>
 	void SetOutLineDrawFlag(int handle, bool flag);
+
+	/// <summary>
+    /// 自分自身に影を適用するか
+    /// </summary>
+    /// <param name="handle">モデルの番号</param>
+    /// <param name="flag">trueなら影を適用</param>
+	void SetMyShadowApply(int handle, bool flag);
 
 	/// <summary>
 	/// ブロックオブジェのポインタをセット

@@ -26,9 +26,10 @@ cbuffer global
 	float4      g_LightPosition[15];  // ライトの個数分の位置
 	float4      g_LightIntensity[15]; // ライトの個数分の強さ
 	float4      g_isAmbient;          // アンビエントの力の大きさ 
-	float4		g_outLineColor;		  //アウトラインの色
+	float4		g_outLineColor;		  // アウトラインの色
 	float		g_shuniness;		  // ハイライトの強さ（テカリ具合）
 	bool		g_isTexture;		  // テクスチャ貼ってあるかどうか
+	bool        g_isShadowApply;      // 自分自身に影を適用するか
 	float 		g_isDiffuse;		  // 透明にするか
 	float       g_isBrightness;       // 明るさ
 };
@@ -138,20 +139,27 @@ float4 PS(VS_OUT inData) : SV_Target
 	float4 color = diffuse * shade + diffuse * ambient + speculer;
 	color += g_isAmbient;
 
-	//影の処理 
-	inData.LightTexCoord /= inData.LightTexCoord.w;
-	float TexValue = g_texDepth.Sample(g_sampler, inData.LightTexCoord).r;
-
-	float LightLength = inData.LighViewPos.z / inData.LighViewPos.w;
-	if (TexValue + 0.003 >= LightLength) //ライトビューでの長さが短い（ライトビューでは遮蔽物がある） 
+	//自分自身に影を適用するなら
+	if (g_isShadowApply)
 	{
-		color *= 0.6; //影（明るさを 60%） 
+		//影の処理 
+		inData.LightTexCoord /= inData.LightTexCoord.w;
+		float TexValue = g_texDepth.Sample(g_sampler, inData.LightTexCoord).r;
+
+		float LightLength = inData.LighViewPos.z / inData.LighViewPos.w;
+		if (TexValue + 0.003 >= LightLength) //ライトビューでの長さが短い（ライトビューでは遮蔽物がある） 
+		{
+			color *= 0.6; //影（明るさを 60%） 
+		}
+		else
+		{
+			color *= 2.0f;
+		}
 	}
 	else
 	{
 		color *= 2.0f;
 	}
-
 
 	//もしアルファ値がすこしでも透明でなければ
 	if (diffuse.a == 1)
