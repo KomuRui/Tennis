@@ -222,6 +222,13 @@ namespace ImGuiSet
             CreateImage();
         }
 
+        //flagがtrueなら関数を呼び出す
+        if (create3D_.first)
+        {
+            Create3D();
+        }
+
+
         //エフェクトエディタモードなら
         if (screenMode_ == static_cast<int>(Mode::EFFECT_EDIT))
             EffectEditGui();
@@ -1962,8 +1969,8 @@ namespace ImGuiSet
             {
 
                 if (ImGui::MenuItem("SelfMade3D")) {
-                    Direct3D::SetTimeScale(true);
-                    Import();
+                    create3D_.first = true;
+                    create3D_.second++;
                 }
                 if (ImGui::MenuItem("Cube")) {
                     Direct3D::SetTimeScale(true);

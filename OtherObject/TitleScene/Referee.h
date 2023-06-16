@@ -23,6 +23,7 @@ class Referee
 	Score* score_;	       //スコア
 	GameStatus status_;    //試合状態
 	Side side_;            //サイド状況
+	int numGameFirstToGet_;//何ゲーム先取か
 
 	PlayerBase* server_;   //サーバー
 	PlayerBase* receiver_; //レシーバー
@@ -150,5 +151,11 @@ public:
 	/// </summary>
 	/// <returns>サーバーのポジション</returns>
 	XMFLOAT3 GetServerPosition() { return serverInitialPosition_[{server_->GetTennisCourtName(), side_}].first; }
+
+	/// <summary>
+	/// 何ゲーム先取か取得
+	/// </summary>
+	/// <returns>何ゲーム先取か</returns>
+	int GetnumGameFirstToGet() { return numGameFirstToGet_; }
 };
 

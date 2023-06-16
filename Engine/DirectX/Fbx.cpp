@@ -38,7 +38,6 @@ HRESULT Fbx::Load(std::string fileName)
 	// アニメーションのタイムモードの取得
 	_frameRate = pFbxScene_->GetGlobalSettings().GetTimeMode();
 
-
 	//現在のカレントディレクトリを覚えておく
 	char defaultCurrentDir[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, defaultCurrentDir);
@@ -48,13 +47,18 @@ HRESULT Fbx::Load(std::string fileName)
 	_splitpath_s(fileName.c_str(), nullptr, 0, dir, MAX_PATH, nullptr, 0, nullptr, 0);
 	SetCurrentDirectory(dir);
 
-
+	FbxGeometryConverter geometryConverter(pFbxManager_);
+	if (!geometryConverter.Triangulate(pFbxScene_, true))
+	{
+		return false;
+	}
 
 	//ルートノードを取得して
 	FbxNode* rootNode = pFbxScene_->GetRootNode();
 
 	//そいつの子供の数を調べて
 	int childCount = rootNode->GetChildCount();
+
 
 	//1個ずつチェック
 	for (int i = 0; childCount > i; i++)
