@@ -1,9 +1,10 @@
 //───────────────────────────────────────
  // テクスチャ＆サンプラーデータのグローバル変数定義
 //───────────────────────────────────────
-Texture2D		g_texture: register(t0);	//テクスチャー
-SamplerState	g_sampler : register(s0);	//サンプラー
-Texture2D		g_texDepth : register(t2);  //深度テクスチャー
+Texture2D		g_texture: register(t0);	        //テクスチャー
+SamplerState	g_sampler : register(s0);	        //サンプラー
+SamplerState	g_texDepthSampler : register(s1);	//サンプラー
+Texture2D		g_texDepth : register(t2);          //深度テクスチャー
 
 //───────────────────────────────────────
  // コンスタントバッファ
@@ -144,7 +145,7 @@ float4 PS(VS_OUT inData) : SV_Target
 	{
 		//影の処理 
 		inData.LightTexCoord /= inData.LightTexCoord.w;
-		float TexValue = g_texDepth.Sample(g_sampler, inData.LightTexCoord).r;
+		float TexValue = g_texDepth.Sample(g_texDepthSampler, inData.LightTexCoord).r;
 
 		float LightLength = inData.LighViewPos.z / inData.LighViewPos.w;
 		if (TexValue + 0.003 >= LightLength) //ライトビューでの長さが短い（ライトビューでは遮蔽物がある） 

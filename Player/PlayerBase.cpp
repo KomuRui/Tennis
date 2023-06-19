@@ -57,10 +57,10 @@ void PlayerBase::ChildInitialize()
 
 
     //–¾‚é‚³Å‘å‚É
-    ModelManager::SetBrightness(hModel_, 1.0f);
+    //ModelManager::SetBrightness(hModel_, 1.0f);
 
-    //‰e
-    SetShadow(true);
+    //Ž©g‚É‰e‚ð•`‰æ‚µ‚È‚¢‚æ‚¤‚É
+    ModelManager::SetMyShadowApply(hModel_, false);
 
     //‰ŠúˆÊ’uÝ’è
     ARGUMENT_INITIALIZE(initialPosition_, transform_->position_);

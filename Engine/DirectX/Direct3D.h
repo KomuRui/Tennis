@@ -31,6 +31,7 @@ namespace Direct3D
 	extern XMMATRIX lightView_;
 	extern XMMATRIX clipToUV_;
 	extern ID3D11ShaderResourceView* pDepthSRV_;
+	extern ID3D11SamplerState* pDepthSampler_;
 	extern bool isShadowDraw;
 
 	//■シェーダー関連で必要なセット

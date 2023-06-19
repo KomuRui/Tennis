@@ -589,8 +589,11 @@ void FbxParts::Draw(Transform* transform)
 			Direct3D::pContext_->PSSetShaderResources(1, 1, &pSRV);
 		}
 
-		ID3D11ShaderResourceView* pSRV = Direct3D::pDepthSRV_;
-		Direct3D::pContext_->PSSetShaderResources(2, 1, &pSRV);
+		ID3D11SamplerState* pDepthSampler = Direct3D::pDepthSampler_;
+		Direct3D::pContext_->PSSetSamplers(1, 1, &pDepthSampler);
+
+		ID3D11ShaderResourceView* pDepthSRV = Direct3D::pDepthSRV_;
+		Direct3D::pContext_->PSSetShaderResources(2, 1, &pDepthSRV);
 
 		Direct3D::pContext_->Unmap(pConstantBuffer_, 0);									// GPUからのリソースアクセスを再開
 

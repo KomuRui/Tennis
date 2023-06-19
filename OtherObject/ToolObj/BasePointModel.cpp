@@ -17,6 +17,9 @@ void BasePointModel::ChildInitialize()
 	//Šî€“_‚Æ‚µ‚Ä’Ç‰Á
 	ModelManager::SetBasePointObj(hModel_,this);
 
+	//‰e
+	SetShadow(false);
+
 	//ƒŒƒC‚Ì”»’è‚ÉŠÜ‚Ü‚ê‚é‚æ‚¤‚Éİ’è
 	ModelManager::SetRayFlag(hModel_, true);
 }

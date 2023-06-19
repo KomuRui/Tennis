@@ -47,6 +47,7 @@ namespace Direct3D
 	XMMATRIX lightView_;
 	XMMATRIX clipToUV_;
 	ID3D11ShaderResourceView* pDepthSRV_ = nullptr;
+	ID3D11SamplerState* pDepthSampler_ = nullptr;
 
 	bool		isDrawCollision_ = true;	//コリジョンを表示するか
 	bool		_isLighting = false;		//ライティングするか
@@ -93,7 +94,6 @@ namespace Direct3D
 
 	//二つ目のウィンドウ用
 	D3D11_VIEWPORT vpFull2;
-
 
 	HWND hWnd_;
 	HWND hWnd2_;
@@ -427,6 +427,14 @@ namespace Direct3D
 		srv.Texture2D.MipLevels = 1;
 		Direct3D::pDevice_->CreateShaderResourceView(pDepthTexture, &srv, &pDepthSRV_);
 
+		// テクスチャー用サンプラー作成
+		D3D11_SAMPLER_DESC  SamDesc;
+		ZeroMemory(&SamDesc, sizeof(D3D11_SAMPLER_DESC));
+		SamDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		SamDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+		SamDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+		SamDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+		Direct3D::pDevice_->CreateSamplerState(&SamDesc, &pDepthSampler_);
 
 		//カメラから見たある点が、ライトから見た時どの位置になるかを求めるために必要な行列
 		XMFLOAT4X4 clip;
