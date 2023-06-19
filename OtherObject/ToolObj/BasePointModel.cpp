@@ -27,7 +27,7 @@ void BasePointModel::ChildInitialize()
 //“ñ‚Â–Ú‚ÌƒEƒBƒ“ƒhƒE‚Ì•`‰æ
 void BasePointModel::TwoWindowDraw()
 {
-	if (isServeReceiveBasePoint_)
+	if (!isServeReceiveBasePoint_)
 	{
 		//•`‰æ
 		ModelManager::SetTransform(hModel_, transform_);
@@ -38,10 +38,10 @@ void BasePointModel::TwoWindowDraw()
 //•`‰æ
 void BasePointModel::Draw()
 {
-	if (isServeReceiveBasePoint_)
+	if (!isServeReceiveBasePoint_)
 	{
 		//•`‰æ
-		ModelManager::SetTransform(hModel_, transform_);
-		ModelManager::Draw(hModel_);
+		//ModelManager::SetTransform(hModel_, transform_);
+		//ModelManager::Draw(hModel_);
 	}
 }

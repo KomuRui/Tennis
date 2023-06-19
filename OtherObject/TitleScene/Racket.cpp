@@ -45,7 +45,9 @@ void Racket::ChildInitialize()
 	ARGUMENT_INITIALIZE(transform_->rotate_, RACKET_START_ROTATION_ANGLE);
 
 	//明るさ最大値に設定
-	ModelManager::SetBrightness(hModel_, 1.0f);
+	//ModelManager::SetBrightness(hModel_, 1.0f);
+
+	ModelManager::SetMyShadowApply(hModel_, false);
 	
 	//球種ごとのボールの色を設定
 	ARGUMENT_INITIALIZE(lineColor_[Type::FLAT], XMFLOAT4(1, 0.5f, 1, 1));
