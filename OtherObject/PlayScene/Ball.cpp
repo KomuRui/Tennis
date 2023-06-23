@@ -1,8 +1,8 @@
 #include "Ball.h"
 #include "../../Engine/System.h"
 #include "../../Engine/ResourceManager/Time.h"
-#include "../../OtherObject/TitleScene/Racket.h"
-#include "../../OtherObject/TitleScene/Referee.h"
+#include "../../OtherObject/PlayScene/Racket.h"
+#include "../../OtherObject/PlayScene/Referee.h"
 #include <math.h>
 #include <cmath>
 

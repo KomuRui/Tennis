@@ -24,9 +24,6 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{e80c0e4a-fc29-4d0c-9d94-60778d53ed8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\TitleScene">
-      <UniqueIdentifier>{25e5cecf-180a-4361-a8db-a2e9b5e47da2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="State">
       <UniqueIdentifier>{db03e537-9588-4bd2-934a-bdc36a3688fd}</UniqueIdentifier>
     </Filter>
@@ -90,9 +87,6 @@
     <Filter Include="OtherObject">
       <UniqueIdentifier>{0d243d09-38eb-456d-9efa-9db5261e5e90}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OtherObject\TitleScene">
-      <UniqueIdentifier>{871c65ea-67a9-4bf6-8f9f-480fc396bc28}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OtherObject\ToolObj">
       <UniqueIdentifier>{4ce2d9a2-3dbe-4ac7-a615-4ce660cc34ae}</UniqueIdentifier>
     </Filter>
@@ -114,12 +108,18 @@
     <Filter Include="01Engine\Component\Collider">
       <UniqueIdentifier>{57947ba3-6a4d-4211-8cc3-390feca2ef42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\PlayScene">
+      <UniqueIdentifier>{25e5cecf-180a-4361-a8db-a2e9b5e47da2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OtherObject\PlayScene">
+      <UniqueIdentifier>{871c65ea-67a9-4bf6-8f9f-480fc396bc28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\TitleScene">
+      <UniqueIdentifier>{aede9ee6-2d9d-4cd3-973b-d2320e554890}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
-      <Filter>Scene\TitleScene</Filter>
-    </ClCompile>
     <ClCompile Include="State\PlayerState\PlayerStateManager.cpp">
       <Filter>State\PlayerState</Filter>
     </ClCompile>
@@ -270,15 +270,6 @@
     <ClCompile Include="Base\NormalObject.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\Net.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\TennisCourt.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\Water.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClCompile>
     <ClCompile Include="State\PlayerState\ForehandingState.cpp">
       <Filter>State\PlayerState</Filter>
     </ClCompile>
@@ -288,29 +279,17 @@
     <ClCompile Include="State\PlayerState\ServingState.cpp">
       <Filter>State\PlayerState</Filter>
     </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\Racket.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClCompile>
     <ClCompile Include="OtherObject\ToolObj\BasePointModel.cpp">
       <Filter>OtherObject\ToolObj</Filter>
     </ClCompile>
     <ClCompile Include="Manager\BasePointManager\BasePointManager.cpp">
       <Filter>Manager\BasePointManager</Filter>
     </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\Ball.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\NetAround.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClCompile>
     <ClCompile Include="Manager\EffectManager\EffectManager.cpp">
       <Filter>Manager\EffectManager</Filter>
     </ClCompile>
     <ClCompile Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.cpp">
       <Filter>Manager\FrameWorkUpdateManager</Filter>
-    </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\TennisCourtAround.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Main.cpp">
       <Filter>01Engine</Filter>
@@ -342,24 +321,54 @@
     <ClCompile Include="Engine\Component\Collider\Collider.cpp">
       <Filter>01Engine\Component\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\Referee.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\Score.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\GameObject\Signboard.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="OtherObject\TitleScene\Sky.cpp">
-      <Filter>OtherObject\TitleScene</Filter>
+    <ClCompile Include="OtherObject\PlayScene\Ball.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\PlayScene\Net.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\PlayScene\NetAround.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\PlayScene\Racket.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\PlayScene\Referee.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\PlayScene\Score.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\PlayScene\Sky.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\PlayScene\TennisCourt.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\PlayScene\TennisCourtAround.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherObject\PlayScene\Water.cpp">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PlayScene\PlayScene.cpp">
+      <Filter>Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
+      <Filter>Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component\HermiteSplineMove.cpp">
+      <Filter>01Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GUI\CreateHermiteSplinePath.cpp">
+      <Filter>01Engine\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
-    <ClInclude Include="Scene\TitleScene\TitleScene.h">
-      <Filter>Scene\TitleScene</Filter>
-    </ClInclude>
     <ClInclude Include="State\PlayerState\PlayerStateManager.h">
       <Filter>State\PlayerState</Filter>
     </ClInclude>
@@ -519,15 +528,6 @@
     <ClInclude Include="Base\NormalObject.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\Net.h">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\TennisCourt.h">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\Water.h">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClInclude>
     <ClInclude Include="State\PlayerState\ForehandingState.h">
       <Filter>State\PlayerState</Filter>
     </ClInclude>
@@ -536,9 +536,6 @@
     </ClInclude>
     <ClInclude Include="State\PlayerState\ServingState.h">
       <Filter>State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\Racket.h">
-      <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="OtherObject\ToolObj\BasePointModel.h">
       <Filter>OtherObject\ToolObj</Filter>
@@ -549,17 +546,8 @@
     <ClInclude Include="Engine\nlohmann\json.hpp">
       <Filter>01Engine\nlohmann</Filter>
     </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\Ball.h">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\NetAround.h">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClInclude>
     <ClInclude Include="Manager\EffectManager\EffectManager.h">
       <Filter>Manager\EffectManager</Filter>
-    </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\TennisCourtAround.h">
-      <Filter>OtherObject\TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="Manager\JsonManager\JsonManager.h">
       <Filter>Manager\JsonManager</Filter>
@@ -594,17 +582,50 @@
     <ClInclude Include="Manager\FrameWorkUpdateManager\FrameWorkUpdateManager.h">
       <Filter>Manager\FrameWorkUpdateManager</Filter>
     </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\Referee.h">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\Score.h">
-      <Filter>OtherObject\TitleScene</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\GameObject\Signboard.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="OtherObject\TitleScene\Sky.h">
-      <Filter>OtherObject\TitleScene</Filter>
+    <ClInclude Include="OtherObject\PlayScene\Ball.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\PlayScene\Net.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\PlayScene\NetAround.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\PlayScene\Racket.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\PlayScene\Referee.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\PlayScene\Score.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\PlayScene\Sky.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\PlayScene\TennisCourt.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\PlayScene\TennisCourtAround.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="OtherObject\PlayScene\Water.h">
+      <Filter>OtherObject\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene\PlayScene.h">
+      <Filter>Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TitleScene\TitleScene.h">
+      <Filter>Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component\HermiteSplineMove.h">
+      <Filter>01Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GUI\CreateHermiteSplinePath.h">
+      <Filter>01Engine\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

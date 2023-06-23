@@ -6,6 +6,7 @@
 #include "../../UI/ImageBase.h"
 #include "../DirectX/Fbx.h"
 #include "GameObjectInfoGui.h"
+#include "CreateHermiteSplinePath.h"
 #include "../GameObject/Signboard.h"
 #include <fstream>
 #include <vector>
@@ -147,6 +148,7 @@ namespace ImGuiSet
     //0->Off 1->On
     int toolStatus_;
 
+   
     //初期化
     void ImGuiSet::Initialize()
     {
@@ -166,13 +168,14 @@ namespace ImGuiSet
         ARGUMENT_INITIALIZE(toolStatus_,ZERO);
         ARGUMENT_INITIALIZE(isGameScreenFull_, false);
         ARGUMENT_INITIALIZE(info_,"");
-
+        
         //エフェクトエディタの時に表示するモデル
         pBaseFbx->Load("EffectEditModel/BaseModel.fbx");
         pStickFbx->Load("EffectEditModel/StickModel.fbx");
 
         //各シーンのステージ情報が入ってるファイルのパス設定
         stageInfoFilePath_[SCENE_ID_TITLE] = "Data/StageData/Title/Title.json";
+        stageInfoFilePath_[SCENE_ID_PLAY] = "Data/StageData/Play/Play.json";
 
         //画像
         HRESULT hr = tex1_->Load("Image/GUI/MainCharIcon_Normal.png");
@@ -215,6 +218,9 @@ namespace ImGuiSet
 
         //ファイル設定
         File();
+
+        //もしエルミートスプラインパスを作成しようとしているのなら
+        if (CreateHermiteSplinePath::isWindowDraw()) CreateHermiteSplinePath::WindowDraw();
 
         //flagがtrueなら関数を呼び出す
         if (createImage_.first)
@@ -2008,6 +2014,10 @@ namespace ImGuiSet
             //コンポーネント
             if (ImGui::BeginMenu("Component"))
             {
+                //エルミートスプラインのパス
+                if (ImGui::MenuItem("HermiteSplinePath")) {
+                    CreateHermiteSplinePath::SetWindowDraw(true);
+                }
                 ImGui::EndMenu();
             }
 
@@ -2021,6 +2031,7 @@ namespace ImGuiSet
             if (ImGui::BeginMenu("SceneChange"))
             {
                 if(ImGui::MenuItem("Title")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_TITLE); }
+                if(ImGui::MenuItem("Play")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_PLAY); }
                 ImGui::EndMenu();
             }
            

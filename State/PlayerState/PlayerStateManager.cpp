@@ -1,9 +1,9 @@
 #include "PlayerStateManager.h"
 #include "../../Engine/System.h"
 #include "../../Player/PlayerBase.h"
-#include "../../OtherObject/TitleScene/Racket.h"
-#include "../../OtherObject/TitleScene/Ball.h"
-#include "../../OtherObject/TitleScene/Referee.h"
+#include "../../OtherObject/PlayScene/Racket.h"
+#include "../../OtherObject/PlayScene/Ball.h"
+#include "../../OtherObject/PlayScene/Referee.h"
 #include <math.h>
 
 

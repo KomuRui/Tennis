@@ -6,7 +6,7 @@
 #include "../../OtherObject/ToolObj/BasePointModel.h"
 #include "../../Engine/ResourceManager/ModelManager.h"
 #include "../../Engine/GameObject/Camera.h"
-#include "../../OtherObject/TitleScene/Referee.h"
+#include "../../OtherObject/PlayScene/Referee.h"
 
 using json = nlohmann::json;
 using namespace std;

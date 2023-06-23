@@ -1,5 +1,5 @@
 #pragma once
-#include "../../OtherObject/TitleScene/TennisCourt.h"
+#include "../../OtherObject/PlayScene/TennisCourt.h"
 
 class PlayerBase;
 

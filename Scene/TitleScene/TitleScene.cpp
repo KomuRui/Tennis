@@ -1,25 +1,15 @@
 #include "TitleScene.h"
 #include "../../Engine/System.h"
-#include "../../Player/PlayerBase.h"
-#include "../../OtherObject/TitleScene/Ball.h"
-#include "../../Engine/GameObject/Signboard.h"
-#include "../../OtherObject/TitleScene/Referee.h"
 
 //定数
 namespace
 {
 	static const float RATATION_SPEED = 0.5f;                  //回転速度
-	static const XMFLOAT3 CAM_POS = { -2, 3.67f, 20.17f };     //カメラの位置
-	static const XMFLOAT3 CAM_TAR = { 0, -2.27f, 0 };          //カメラのターゲット
-															   
-	static const XMFLOAT3 CAM_POS_2 = { 2, 3.67f, -20.17f };   //カメラの位置
-	static const XMFLOAT3 CAM_TAR_2 = { 0, -2.27f, 0 };        //カメラのターゲット
-
-	static const XMFLOAT3 CAM_POS_TOW_WINDOW = { 0, 20, 0 };   //カメラの位置2
-	static const XMFLOAT3 CAM_TAR_TOW_WINDOW = { 0, 0, 0 };    //カメラのターゲット2
-	static const XMVECTOR CAM_UP_TOW_WINDOW = { -1, 0, 0, 0 }; //カメラの上方向
+	static const XMFLOAT3 CAM_POS = { 0, 20, 25 };		       //カメラの位置
+	static const XMFLOAT3 CAM_TAR = { ZERO,ZERO,ZERO };        //カメラのターゲット
 	static const int FIELD_ANGLE = 45;						   //カメラの画角
 }
+
 
 //コンストラクタ
 TitleScene::TitleScene(GameObject* parent)
@@ -41,52 +31,37 @@ void TitleScene::Initialize()
 	Camera::SetPosition(CAM_POS);
 	Camera::SetTarget(CAM_TAR);
 	Camera::SetFieldAngle(FIELD_ANGLE);
-	Camera::FrameCameraInitialize();
-
-	//二つ目のカメラ
-	Camera::SetPositionTwo(CAM_POS_2);
-	Camera::SetTargetTwo(CAM_TAR_2);
-
-	//二つ目のウィンドウのカメラ
-	Camera::TwoWindowSetPosition(CAM_POS_TOW_WINDOW);
-	Camera::TwoWindowSetTarget(CAM_TAR_TOW_WINDOW);
-	Camera::SetTwoWindowUpDirection(CAM_UP_TOW_WINDOW);
 
 	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
 
 	CreateStage* pCreateStage = new CreateStage;
 	pCreateStage->LoadFileCreateStage(this, "Data/StageData/Title/Title.json");
 
-	////////////////////////ツールの基準点モデルを生成/////////////////////////////////
+	hermiteMoveCamPos_->AddPath(CAM_POS,XMFLOAT3(15,0,15));
+	hermiteMoveCamPos_->AddPath(XMFLOAT3(5,20,30));
+	hermiteMoveCamPos_->AddPath(XMFLOAT3(-25,20,25));
+	hermiteMoveCamPos_->AddPath(XMFLOAT3(28,20,40));
+	hermiteMoveCamPos_->AddPath(XMFLOAT3(-3,20,10));
+	hermiteMoveCamPos_->AddPath(XMFLOAT3(15,20,40));
+	hermiteMoveCamPos_->Start();
 
-	BasePointManager::InstantiateBasePointModel();
-
-	////////////////////////Player人数設定/////////////////////////////////
-
-	GameManager::SetPlayers(Players::TWO);
-
-	////////////////////////審判初期化/////////////////////////////////
-
-	GameManager::GetReferee()->Initialize();
-
-}
-
-//更新の前に一度だけ呼ばれる更新
-void TitleScene::StartUpdate()
-{
+	hermiteMoveCamTar_->AddPath(CAM_TAR, XMFLOAT3(15, 0, 15));
+	hermiteMoveCamTar_->AddPath(XMFLOAT3(15, 0, -5));
+	hermiteMoveCamTar_->AddPath(XMFLOAT3(5, 0, -15));
+	hermiteMoveCamTar_->AddPath(XMFLOAT3(-18, 0, 9));
+	hermiteMoveCamTar_->AddPath(XMFLOAT3(20, 0, 10));
+	hermiteMoveCamTar_->AddPath(XMFLOAT3(1, 0, -10));
+	hermiteMoveCamTar_->Start();
 }
 
 //更新
 void TitleScene::Update()
 {
+	//Camera::SetPosition(hermiteMoveCamPos_->Updata());
+	//Camera::SetTarget(hermiteMoveCamTar_->Updata());
 }
 
 //描画
 void TitleScene::Draw()
-{
-}
-
-//開放
-void TitleScene::Release()
 {
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Engine/GameObject/GameObject.h"
+#include "../../Engine/Component/HermiteSplineMove.h"
 
 /// <summary>
 /// タイトルシーン
@@ -7,10 +8,13 @@
 class TitleScene : public GameObject
 {
 
+	//エルミートスプラインを使ってカメラを動かす
+	std::unique_ptr<HermiteSplineMove> hermiteMoveCamPos_ = std::make_unique<HermiteSplineMove>(); 
+	std::unique_ptr<HermiteSplineMove> hermiteMoveCamTar_ = std::make_unique<HermiteSplineMove>(); 
+
 public:
 
 	//コンストラクタ
-	//引数：parent  親オブジェクト（SceneManager）
 	TitleScene(GameObject* parent);
 
 	//デストラクタ
@@ -19,17 +23,13 @@ public:
 	//初期化
 	void Initialize() override;
 
-	//更新の前に一度だけ呼ばれる関数
-	void StartUpdate() override;
-
 	//更新
 	void Update() override;
 
 	//描画
 	void Draw() override;
 
-	//開放
-	void Release() override;
+
 
 };
 

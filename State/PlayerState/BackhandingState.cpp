@@ -2,7 +2,7 @@
 #include "../../Engine/System.h"
 #include "PlayerStateManager.h"
 #include "../../Player/PlayerBase.h"
-#include "../../OtherObject/TitleScene/Racket.h"
+#include "../../OtherObject/PlayScene/Racket.h"
 
 //’è”
 namespace

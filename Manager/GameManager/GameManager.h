@@ -2,7 +2,7 @@
 #include "../../Stage.h"
 #include "../../Player/PlayerBase.h"
 #include "../../Manager/SceneManager/SceneManager.h"
-#include "../../OtherObject/TitleScene/Ball.h"
+#include "../../OtherObject/PlayScene/Ball.h"
 
 
 //âÊñ ëçêî

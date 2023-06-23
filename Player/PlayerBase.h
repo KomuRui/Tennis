@@ -4,7 +4,7 @@
 #include "../State/PlayerState/PlayerStateManager.h"
 #include "../Engine/ResourceManager/ModelManager.h"
 #include "../Engine/Component/Transform/Transform.h"
-#include "../OtherObject/TitleScene/TennisCourt.h"
+#include "../OtherObject/PlayScene/TennisCourt.h"
 
 class Racket;
 

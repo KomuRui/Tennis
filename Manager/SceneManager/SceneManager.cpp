@@ -5,6 +5,7 @@
 #include "../../Engine/GameObject/Light.h"
 #include "../../Engine/ResourceManager/Time.h"
 #include "../../Engine/ResourceManager/Fade.h"
+#include "../../Scene/PlayScene/PlayScene.h"
 #include "../../Scene/TitleScene/TitleScene.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../../Manager/EffectManager/PlayerEffectManager/PlayerEffectManager.h"
@@ -69,7 +70,8 @@ void SceneManager::SceneUpdate()
 	//次のシーンを作成
 	switch (nextSceneID_)
 	{
-	case SCENE_ID_TITLE:				 Instantiate<TitleScene>(this); break;
+	case SCENE_ID_PLAY:				 Instantiate<PlayScene>(this); break;
+	case SCENE_ID_TITLE:			 Instantiate<TitleScene>(this); break;
 	}
 
 	//カレントシーンを更新

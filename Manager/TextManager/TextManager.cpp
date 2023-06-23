@@ -13,7 +13,7 @@ namespace
 
 	//シーンのIDとファイルパスネームの設定
 	static const FNAME_LIST FNAME[] = {
-		{ SCENE_ID_TITLE, "Tutorial/MobTalk1" },
+		{ SCENE_ID_PLAY, "Tutorial/MobTalk1" },
 	};
 
 	//ファイルパスに共通して必要なもの

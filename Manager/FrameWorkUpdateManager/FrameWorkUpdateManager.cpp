@@ -227,7 +227,6 @@ namespace FrameWorkUpdateManager
 		Camera::SetPosition(XMFLOAT3(-25, 20, -25));
 		Camera::SetTarget(XMFLOAT3(0, 0, 0));
 		Camera::SetUpDirection(XMVectorSet(0,0,1,0));
-		Camera::FrameCameraInitialize();
 		Camera::UpdateTwo();
 		Direct3D::lightView_ = Camera::GetViewMatrix();
 
@@ -253,8 +252,7 @@ namespace FrameWorkUpdateManager
 		Camera::SetPosition(pos);
 		Camera::SetTarget(tar);
 		Camera::SetUpDirection(up);
-		Camera::FrameCameraInitialize();
-		Camera::UpdateTwo();
+		Camera::Update();
 
 		//âeï`âÊèIóπ
 		ARGUMENT_INITIALIZE(Direct3D::isShadowDraw, false);

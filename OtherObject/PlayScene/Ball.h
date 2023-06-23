@@ -2,7 +2,7 @@
 #include "../../Base/NormalObject.h"
 #include  "../../Engine/GameObject/PolyLine.h"
 #include "../../Engine/Component/Collider/SphereCollider.h"
-#include "../TitleScene/TennisCourt.h"
+#include "../PlayScene/TennisCourt.h"
 #include <map>
 
 //•ú•¨ü‚ÌŒvZ

@@ -1,6 +1,6 @@
 #include "GameManager.h"
 #include "../../Engine/System.h"
-#include "../../OtherObject/TitleScene/Referee.h"
+#include "../../OtherObject/PlayScene/Referee.h"
 #include <cmath>
 
 //ƒQ[ƒ€‚Ì‚¢‚ë‚¢‚ë‚ÈŠÇ—‚ğ‚·‚é
