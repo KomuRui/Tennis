@@ -67,10 +67,12 @@ namespace Camera
 	//位置を取得
 	XMFLOAT3 GetPosition();
 	XMFLOAT3 GetPositionTwo();
+	XMFLOAT3 GetPositionF();
 
 	//焦点を取得
 	XMFLOAT3 GetTarget();
 	XMFLOAT3 GetTargetTwo();
+	XMFLOAT3 GetTargetF();
 
 	//上ベクトルを取得
 	XMVECTOR GetUp();

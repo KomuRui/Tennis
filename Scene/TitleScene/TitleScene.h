@@ -8,9 +8,11 @@
 class TitleScene : public GameObject
 {
 
-	//エルミートスプラインを使ってカメラを動かす
-	std::unique_ptr<HermiteSplineMove> hermiteMoveCamPos_ = std::make_unique<HermiteSplineMove>(); 
-	std::unique_ptr<HermiteSplineMove> hermiteMoveCamTar_ = std::make_unique<HermiteSplineMove>(); 
+	//エルミートスプラインを使ってカメラを動かす(連続して動きを変更したいのでvectorにしておく)
+	vector<pair<std::unique_ptr<HermiteSplineMove>, std::unique_ptr<HermiteSplineMove>>> hermiteMoveTable_;
+
+	//現在見ている番号
+	int nowLookNum_;
 
 public:
 
@@ -29,7 +31,8 @@ public:
 	//描画
 	void Draw() override;
 
-
+	//データセット
+	void SetData(string posFileName,string tarFileName);
 
 };
 

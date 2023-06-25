@@ -8,6 +8,7 @@
 #include "GameObject/Light.h"
 #include "GameObject/PolyLine.h"
 #include "GameObject/RootObject.h"
+#include <fstream>
 
 ///////////////////////////////ResourceManager///////////////////////////////
 

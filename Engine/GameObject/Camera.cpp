@@ -364,6 +364,7 @@ void Camera::KeepGameSceneFieldAngle(int angle) { _keep_field_angle = angle; }
 //焦点を取得
 XMFLOAT3 Camera::GetTarget() { return _target; }
 XMFLOAT3 Camera::GetTargetTwo() { return _targetTwo; }
+XMFLOAT3 Camera::GetTargetF() { return _fTarget; }
 
 //上ベクトルを取得
 XMVECTOR Camera::GetUp() { return _UpDirection; }
@@ -387,6 +388,7 @@ void Camera::SetCameraVibration(float strength,float attenuation)
 //位置を取得
 XMFLOAT3 Camera::GetPosition() { return _position; }
 XMFLOAT3 Camera::GetPositionTwo() { return _positionTwo; }
+XMFLOAT3 Camera::GetPositionF() { return _fPosition; }
 
 //ビュー行列を取得
 XMMATRIX Camera::GetViewMatrix() { return _view; }

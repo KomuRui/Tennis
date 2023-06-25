@@ -9,7 +9,7 @@ namespace
 
 //コンストラクタ
 HermiteSplineMove::HermiteSplineMove()
-	:isMove_(false), nowLookValue_(ZERO), timerhNum_(-1), moveTime_(2.0f), nowTime_(ZERO)
+	:isMove_(false), nowLookValue_(ZERO), timerhNum_(-1), moveTime_(2.0f), nowTime_(ZERO), isFinish_(false)
 {
 	//タイマー作成
 	ARGUMENT_INITIALIZE(timerhNum_, Time::Add());
@@ -28,7 +28,7 @@ XMFLOAT3 HermiteSplineMove::Updata()
 	if (!isMove_ || pathData_.size() < MIN_DATA_VALUE) return XMFLOAT3(ZERO,ZERO,ZERO);
 
 	XMVECTOR pos0 = XMLoadFloat3(&pathData_.at(nowLookValue_).first);
-	XMVECTOR tan0 = XMLoadFloat3(&pathData_.at(nowLookValue_).second);
+	XMVECTOR tan0 = XMLoadFloat3(new XMFLOAT3((pathData_.at(nowLookValue_ + 1).first.x - pathData_.at(nowLookValue_).first.x), (pathData_.at(nowLookValue_ + 1).first.y - pathData_.at(nowLookValue_).first.y), (pathData_.at(nowLookValue_ + 1).first.z - pathData_.at(nowLookValue_).first.z)));
 	XMVECTOR pos1 = XMLoadFloat3(&pathData_.at(nowLookValue_ + 1).first);
 	XMVECTOR tan1 = { ZERO,ZERO,ZERO,ZERO };
 
@@ -36,9 +36,9 @@ XMFLOAT3 HermiteSplineMove::Updata()
 	if (nowLookValue_ + 1 != pathData_.size() - 1)
 	{
 		XMFLOAT3 tan = { ZERO,ZERO,ZERO };
-		tan.x = (pathData_.at(nowLookValue_).first.x - pathData_.at(nowLookValue_ + 2).first.x) + pathData_.at(nowLookValue_).second.x;
-		tan.y = (pathData_.at(nowLookValue_).first.y - pathData_.at(nowLookValue_ + 2).first.y) + pathData_.at(nowLookValue_).second.y;
-		tan.z = (pathData_.at(nowLookValue_).first.z - pathData_.at(nowLookValue_ + 2).first.z) + pathData_.at(nowLookValue_).second.z;
+		tan.x = (pathData_.at(nowLookValue_ + 2).first.x - pathData_.at(nowLookValue_ + 1).first.x);
+		tan.y = (pathData_.at(nowLookValue_ + 2).first.y - pathData_.at(nowLookValue_ + 1).first.y);
+		tan.z = (pathData_.at(nowLookValue_ + 2).first.z - pathData_.at(nowLookValue_ + 1).first.z);
 		pathData_.at(nowLookValue_ + 1).second = tan;
 		tan1 = XMLoadFloat3(&tan);
 	}
@@ -54,7 +54,10 @@ XMFLOAT3 HermiteSplineMove::Updata()
 	{
 		//最後なら最初に戻す
 		if (nowLookValue_ + 1 >= pathData_.size() - 1)
-			nowLookValue_ = ZERO;
+		{
+			ARGUMENT_INITIALIZE(nowLookValue_,ZERO);
+			ARGUMENT_INITIALIZE(isFinish_, true);
+		}
 		else
 			nowLookValue_++;
 
@@ -62,4 +65,14 @@ XMFLOAT3 HermiteSplineMove::Updata()
 	}
 
 	return VectorToFloat3(XMVectorHermite(pos0, tan0, pos1, tan1, nowTime_));
+}
+
+//最初から開始
+void HermiteSplineMove::ReStart()
+{
+	ARGUMENT_INITIALIZE(nowLookValue_, ZERO);
+	ARGUMENT_INITIALIZE(nowTime_, ZERO);
+	ARGUMENT_INITIALIZE(isFinish_,false);
+	ARGUMENT_INITIALIZE(isMove_,true);
+	Time::Reset(timerhNum_);
 }

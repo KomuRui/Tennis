@@ -13,7 +13,7 @@ namespace
 
 //コンストラクタ
 TitleScene::TitleScene(GameObject* parent)
-	: GameObject(parent, "TitleScene")
+	: GameObject(parent, "TitleScene"), nowLookNum_(ZERO)
 {
 }
 
@@ -37,31 +37,73 @@ void TitleScene::Initialize()
 	CreateStage* pCreateStage = new CreateStage;
 	pCreateStage->LoadFileCreateStage(this, "Data/StageData/Title/Title.json");
 
-	hermiteMoveCamPos_->AddPath(CAM_POS,XMFLOAT3(15,0,15));
-	hermiteMoveCamPos_->AddPath(XMFLOAT3(5,20,30));
-	hermiteMoveCamPos_->AddPath(XMFLOAT3(-25,20,25));
-	hermiteMoveCamPos_->AddPath(XMFLOAT3(28,20,40));
-	hermiteMoveCamPos_->AddPath(XMFLOAT3(-3,20,10));
-	hermiteMoveCamPos_->AddPath(XMFLOAT3(15,20,40));
-	hermiteMoveCamPos_->Start();
+	/////////////////ファイル読み込んでパスごとの位置取得///////////////////
 
-	hermiteMoveCamTar_->AddPath(CAM_TAR, XMFLOAT3(15, 0, 15));
-	hermiteMoveCamTar_->AddPath(XMFLOAT3(15, 0, -5));
-	hermiteMoveCamTar_->AddPath(XMFLOAT3(5, 0, -15));
-	hermiteMoveCamTar_->AddPath(XMFLOAT3(-18, 0, 9));
-	hermiteMoveCamTar_->AddPath(XMFLOAT3(20, 0, 10));
-	hermiteMoveCamTar_->AddPath(XMFLOAT3(1, 0, -10));
-	hermiteMoveCamTar_->Start();
+	SetData("Data/PathData/TitleCamera/CamPos1.json", "Data/PathData/TitleCamera/CamTar1.json");
+	SetData("Data/PathData/TitleCamera/CamPos2.json", "Data/PathData/TitleCamera/CamTar2.json");
+	SetData("Data/PathData/TitleCamera/CamPos3.json", "Data/PathData/TitleCamera/CamTar3.json");
+	
+	//開始
+	hermiteMoveTable_[nowLookNum_].first->Start();
+	hermiteMoveTable_[nowLookNum_].second->Start();
+
 }
 
 //更新
 void TitleScene::Update()
 {
-	//Camera::SetPosition(hermiteMoveCamPos_->Updata());
-	//Camera::SetTarget(hermiteMoveCamTar_->Updata());
+
+	//カメラ設定
+	Camera::SetPosition(hermiteMoveTable_[nowLookNum_].first->Updata());
+	Camera::SetTarget(hermiteMoveTable_[nowLookNum_].second->Updata());
+
+	//動きが終わったのなら
+	if (hermiteMoveTable_[nowLookNum_].first->IsFinish())
+	{
+		nowLookNum_++;
+
+		//サイズオーバーしていたなら
+		if(hermiteMoveTable_.size() == nowLookNum_)
+			ARGUMENT_INITIALIZE(nowLookNum_,ZERO);
+
+		//開始
+		hermiteMoveTable_[nowLookNum_].first->ReStart();
+		hermiteMoveTable_[nowLookNum_].second->ReStart();
+	}
+
+	
 }
 
 //描画
 void TitleScene::Draw()
 {
+}
+
+//データセット
+void TitleScene::SetData(string posFileName, string tarFileName)
+{
+	//新しく追加
+	hermiteMoveTable_.push_back({ std::make_unique<HermiteSplineMove>(), std::make_unique<HermiteSplineMove>() });
+
+	//読み込み
+	ifstream ifsPos(posFileName);
+	json json_object_Pos;
+	ifsPos >> json_object_Pos;
+
+	//各値取得
+	for (auto it = json_object_Pos.begin(); it != json_object_Pos.end(); it++) {
+
+		hermiteMoveTable_[hermiteMoveTable_.size() - 1].first->AddPath(XMFLOAT3(json_object_Pos[it.key()]["Position"][0], json_object_Pos[it.key()]["Position"][1], json_object_Pos[it.key()]["Position"][2]), XMFLOAT3(50, ZERO, ZERO));
+	}
+
+	//読み込み
+	ifstream ifsTar(tarFileName);
+	json json_object_Tar;
+	ifsTar >> json_object_Tar;
+
+	//各値取得
+	for (auto it = json_object_Tar.begin(); it != json_object_Tar.end(); it++) {
+
+		hermiteMoveTable_[hermiteMoveTable_.size() - 1].second->AddPath(XMFLOAT3(json_object_Tar[it.key()]["Position"][0], json_object_Tar[it.key()]["Position"][1], json_object_Tar[it.key()]["Position"][2]), XMFLOAT3(ZERO, ZERO, ZERO));
+	}
 }
