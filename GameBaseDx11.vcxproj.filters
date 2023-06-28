@@ -117,6 +117,9 @@
     <Filter Include="Scene\TitleScene">
       <UniqueIdentifier>{aede9ee6-2d9d-4cd3-973b-d2320e554890}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\Title">
+      <UniqueIdentifier>{d5b39d95-319c-4497-a8d1-07974e7ded95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -365,6 +368,9 @@
     </ClCompile>
     <ClCompile Include="Engine\GUI\CreateHermiteSplinePath.cpp">
       <Filter>01Engine\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Title\StartImage.cpp">
+      <Filter>UI\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -626,6 +632,9 @@
     </ClInclude>
     <ClInclude Include="Engine\GUI\CreateHermiteSplinePath.h">
       <Filter>01Engine\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Title\StartImage.h">
+      <Filter>UI\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

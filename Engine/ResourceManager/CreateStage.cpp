@@ -3,6 +3,7 @@
 #include "../GameObject/CameraTransitionObject.h"
 #include "../../UI/ImageBase.h"
 #include "../../UI/ScalingImage.h"
+#include "../../UI/Title/StartImage.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
@@ -55,6 +56,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "ScalingImage")
 	{
 		InstantiateNormal<ScalingImage>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "StartImage")
+	{
+		InstantiateNormal<StartImage>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////OtherObject///////////////////////

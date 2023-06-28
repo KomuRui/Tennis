@@ -85,7 +85,7 @@ namespace ImageManager
 
 	//アルファ値を指定
 	//引数：handle	設定したい画像の番号
-	//引数：alpha アルファ値（不透明度）　0～255で指定
+	//引数：alpha アルファ値（不透明度）　0～1で指定
 	void SetAlpha(int handle, float alpha);
 
 	//アルファ値をゲットする
