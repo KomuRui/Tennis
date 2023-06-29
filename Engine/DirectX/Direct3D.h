@@ -88,6 +88,7 @@ namespace Direct3D
 	extern int		screenHeight_2;		//スクリーンの高さ
 	extern bool		isDrawCollision_;	//コリジョンを表示するかフラグ
 	extern D3D11_VIEWPORT vp;
+	extern D3D11_VIEWPORT vpFull;
 	extern D3D11_VIEWPORT vpNow;
 	extern D3D11_VIEWPORT vpLeft;
 	extern D3D11_VIEWPORT vpRight;
@@ -118,7 +119,6 @@ namespace Direct3D
 
 	//描画開始
 	void BrginDrawShadowToTexture();
-	void BeginDrawGameScreen();
 	void BeginDrawTwo();
 	void BeginDraw();
 	
@@ -146,12 +146,6 @@ namespace Direct3D
 	//画面がゲーム状態にするかどうかセット
 	void SetScreenGameStatus(bool a);
 
-	//スクリーンショットとっているか取得
-	bool GetNowScreenShoot();
-
-	//スクリーンショットとっているか設定
-	void SetNowScreenShoot(bool a);
-
 	//背景色を設定
 	void SetBackScreenColor(XMFLOAT4 color);
 
@@ -160,6 +154,9 @@ namespace Direct3D
 
 	//ビューポートに合わせたクリッピング行列を設定
 	void SetClipToUv(D3D11_VIEWPORT v);
+
+	//スクリーンショット
+	void ScreenShoot();
 
 	//ウィンドウハンドル取得
 	HWND GetWindowHandle();

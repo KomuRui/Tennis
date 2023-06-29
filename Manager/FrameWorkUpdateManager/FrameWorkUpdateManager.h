@@ -29,9 +29,6 @@ namespace FrameWorkUpdateManager
 	/// </summary>
 	void TwoPlayerDraw(GameObject* root);
 
-	//スクリーンショットをとるための関数
-	void GameScreenDraw(GameObject* root);
-
 	/// <summary>
 	/// 影描画
 	/// </summary>

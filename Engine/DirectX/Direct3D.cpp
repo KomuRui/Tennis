@@ -64,9 +64,6 @@ namespace Direct3D
 	//影を描画しているかどうか
 	bool isShadowDraw = false;
 
-	//スクリーンショットとっているか
-	bool isNowScreenShoot = true;
-
 	//現在使っているシェーダーのタイプ
 	SHADER_TYPE shaderType;
 
@@ -101,7 +98,6 @@ namespace Direct3D
 	//ゲーム画面のスクリーンショット用
 	Sprite* pScreen;
 	ID3D11Texture2D* pRenderTextureGame;
-	ID3D11RenderTargetView* pRenderTargetView_Game = nullptr;
 
 	HWND hWnd_;
 	HWND hWnd2_;
@@ -157,18 +153,6 @@ namespace Direct3D
 		isScreenGameStatus = a;
 	}
 
-	//スクリーンショットとっているか取得
-	bool GetNowScreenShoot()
-	{
-		return isNowScreenShoot;
-	}
-
-	//スクリーンショットとっているか設定
-	void SetNowScreenShoot(bool a)
-	{
-		isNowScreenShoot = a;
-	}
-
 	//ビューポートセット
 	void SetViewPort(D3D11_VIEWPORT v)
 	{
@@ -199,6 +183,15 @@ namespace Direct3D
 	HWND GetTwoWindowHandle()
 	{
 		return hWnd2_;
+	}
+
+	//スクリーンショット
+	void ScreenShoot()
+	{
+		ID3D11Texture2D* pBackBuffer;
+		pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+		pContext_->CopyResource(pRenderTextureGame, pBackBuffer);
+		pScreen->Initialize(pRenderTextureGame);
 	}
 
 	//初期化処理
@@ -448,21 +441,14 @@ namespace Direct3D
 		texdecGame.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		texdecGame.SampleDesc.Count = 1;
 		texdecGame.SampleDesc.Quality = 0;
-		texdecGame.Usage = D3D11_USAGE_DEFAULT;
-		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+		texdecGame.Usage = D3D11_USAGE_DYNAMIC;
+		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 		texdecGame.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		texdecGame.MiscFlags = 0;
-		pDevice_->CreateTexture2D(&texdecGame, nullptr, &pRenderTextureGame);
-
-		D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDescGame;
-		ZeroMemory(&renderTargetViewDescGame, sizeof(D3D11_RENDER_TARGET_VIEW_DESC));
-		renderTargetViewDescGame.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		renderTargetViewDescGame.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-		renderTargetViewDescGame.Texture2D.MipSlice = 0;
-		pDevice_->CreateRenderTargetView(pRenderTextureGame,&renderTargetViewDescGame, &pRenderTargetView_Game);
+		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
 
 		pScreen = new Sprite;
-		pScreen->Initialize(pRenderTextureGame);
+
 
 		// シェーダリソースビュー(テクスチャ用)の設定
 		D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};
@@ -1045,23 +1031,6 @@ namespace Direct3D
 		//深度バッファクリア
 		pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
-
-	void BeginDrawGameScreen()
-	{
-		//何か準備できてないものがあったら諦める
-		if (NULL == pDevice_) return;
-		if (NULL == pContext_) return;
-		if (NULL == pRenderTargetView_Game) return;
-		if (NULL == pSwapChain_) return;
-
-		//R,G,B,A
-		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 1 };
-
-		pContext_->OMSetRenderTargets(1, &pRenderTargetView_Game, pDepthStencilView);	    // 描画先を設定
-		pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
-		pContext_->ClearRenderTargetView(pRenderTargetView_Game, clearColor);
-	}
-
 
 	//描画終了
 	void EndDraw()
