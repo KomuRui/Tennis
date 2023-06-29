@@ -435,17 +435,8 @@ namespace Direct3D
 
 		//ゲーム画面のスクリーンショット
 		D3D11_TEXTURE2D_DESC texdecGame;
-		texdecGame.Width = screenWidth;
-		texdecGame.Height = screenHeight;
-		texdecGame.MipLevels = 1;
-		texdecGame.ArraySize = 1;
-		texdecGame.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		texdecGame.SampleDesc.Count = 1;
-		texdecGame.SampleDesc.Quality = 0;
-		texdecGame.Usage = D3D11_USAGE_DEFAULT;
+		pBackBuffer->GetDesc(&texdecGame);
 		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-		texdecGame.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		texdecGame.MiscFlags = 0;
 		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
 
 		pScreen = new Sprite;
@@ -456,6 +447,9 @@ namespace Direct3D
 		srv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		srv.Texture2D.MipLevels = 1;
 		Direct3D::pDevice_->CreateShaderResourceView(pDepthTexture, &srv, &pDepthSRV_);
+
+		float a[4] = { 0,0,0,0 };
+		pContext_->ClearRenderTargetView(pRenderTargetView_, a);
 
 		// テクスチャー用サンプラー作成
 		D3D11_SAMPLER_DESC  SamDesc;
@@ -987,7 +981,7 @@ namespace Direct3D
 		if (NULL == pSwapChain_) return;
 		
 		//R,G,B,A
-		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 0 };
+		float clearColor[4] = { 0, backScreenColor.y, backScreenColor.z, 1 };
 
 		pContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView);	    // 描画先を設定
 		pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);

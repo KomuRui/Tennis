@@ -58,7 +58,6 @@ void TitleScene::Update()
 		Direct3D::ScreenShoot();
 		GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_MODE_SELECT);
 	}
-
 	//ƒJƒƒ‰
 	CameraMove();
 }
@@ -66,6 +65,8 @@ void TitleScene::Update()
 //•`‰æ
 void TitleScene::Draw()
 {
+	Transform t;
+	Direct3D::pScreen->Draw(&t);
 }
 
 //ƒJƒƒ‰‚Ì“®‚«

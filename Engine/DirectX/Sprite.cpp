@@ -310,7 +310,7 @@ void Sprite::Draw(Transform* transform,float alpha)
 void Sprite::Draw(Transform* transform)
 {
 	Direct3D::SetShader(Direct3D::SHADER_2D);
-
+	if (!pTexture_)return;
 	XMMATRIX scaleMatrix = XMMatrixScaling((float)pTexture_->GetSize().x / Direct3D::screenWidth_, (float)pTexture_->GetSize().y / Direct3D::screenHeight_, 1.0f);
 
 	//コンスタントバッファに渡す情報
