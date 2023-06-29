@@ -192,6 +192,7 @@ namespace Direct3D
 		pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 		pContext_->CopyResource(pRenderTextureGame, pBackBuffer);
 		pScreen->Initialize(pRenderTextureGame);
+		pBackBuffer->Release();
 	}
 
 	//初期化処理
@@ -441,14 +442,13 @@ namespace Direct3D
 		texdecGame.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		texdecGame.SampleDesc.Count = 1;
 		texdecGame.SampleDesc.Quality = 0;
-		texdecGame.Usage = D3D11_USAGE_DYNAMIC;
-		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+		texdecGame.Usage = D3D11_USAGE_DEFAULT;
+		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
 		texdecGame.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		texdecGame.MiscFlags = 0;
 		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
 
 		pScreen = new Sprite;
-
 
 		// シェーダリソースビュー(テクスチャ用)の設定
 		D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};
@@ -987,7 +987,7 @@ namespace Direct3D
 		if (NULL == pSwapChain_) return;
 		
 		//R,G,B,A
-		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 1 };
+		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 0 };
 
 		pContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView);	    // 描画先を設定
 		pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
@@ -1007,7 +1007,7 @@ namespace Direct3D
 		pContext_->RSSetViewports(1, &vpFull2);
 
 		//背景の色
-		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 1 };//R,G,B,A
+		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 0 };//R,G,B,A
 
 		//深度バッファクリア
 		pContext_->ClearDepthStencilView(pDepthStencilView2, D3D11_CLEAR_DEPTH, 1.0f, 0);
@@ -1022,7 +1022,7 @@ namespace Direct3D
 		pContext_->OMSetRenderTargets(1, &pDepthTargetView, pDepthStencilView);
 
 		//背景の色
-		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };//R,G,B,A
+		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0 };//R,G,B,A
 
 		//画面をクリア
 		pContext_->ClearRenderTargetView(pDepthTargetView, clearColor);
