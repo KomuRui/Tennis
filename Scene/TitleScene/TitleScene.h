@@ -31,7 +31,14 @@ public:
 	//描画
 	void Draw() override;
 
-	//データセット
+	/// <summary>
+	/// カメラの動き
+	/// </summary>
+	void CameraMove();
+
+	/// <summary>
+	/// データセット
+	/// </summary>
 	void SetData(string posFileName,string tarFileName);
 
 };

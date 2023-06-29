@@ -1,0 +1,9 @@
+{
+  "ImageBase": {
+    "FileName": "Image/ModeSelect/BackGround.png",
+    "Position": [ 0.0, 0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ImageBase"
+  }
+}

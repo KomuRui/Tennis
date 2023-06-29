@@ -7,6 +7,7 @@
 #include "../../Engine/ResourceManager/Fade.h"
 #include "../../Scene/PlayScene/PlayScene.h"
 #include "../../Scene/TitleScene/TitleScene.h"
+#include "../../Scene/ModeSelectScene/ModeSelectScene.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../../Manager/EffectManager/PlayerEffectManager/PlayerEffectManager.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
@@ -16,7 +17,7 @@
 
 //コンストラクタ
 SceneManager::SceneManager(GameObject * parent)
-	: GameObject(parent, "SceneManager"), isLoadDraw_(true), isSameSceneInitialize_(false)
+	: GameObject(parent, "SceneManager"), isLoadDraw_(false), isSameSceneInitialize_(false)
 {
 }
 
@@ -72,6 +73,7 @@ void SceneManager::SceneUpdate()
 	{
 	case SCENE_ID_PLAY:				 Instantiate<PlayScene>(this); break;
 	case SCENE_ID_TITLE:			 Instantiate<TitleScene>(this); break;
+	case SCENE_ID_MODE_SELECT:		 Instantiate<ModeSelectScene>(this); break;
 	}
 
 	//カレントシーンを更新

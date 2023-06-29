@@ -120,6 +120,12 @@
     <Filter Include="UI\Title">
       <UniqueIdentifier>{d5b39d95-319c-4497-a8d1-07974e7ded95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\ModeSelect">
+      <UniqueIdentifier>{5bbc880d-363f-45af-b6b5-c905ca37e112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\ModeSelectScene">
+      <UniqueIdentifier>{0f28ba56-40b3-495a-ad4c-48331a79bc4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -371,6 +377,12 @@
     </ClCompile>
     <ClCompile Include="UI\Title\StartImage.cpp">
       <Filter>UI\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ModeSelect\ModeSelectSceneUI.cpp">
+      <Filter>UI\ModeSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ModeSelectScene\ModeSelectScene.cpp">
+      <Filter>Scene\ModeSelectScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -636,6 +648,13 @@
     <ClInclude Include="UI\Title\StartImage.h">
       <Filter>UI\Title</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="UI\ModeSelect\ModeSelectSceneUI.h">
+      <Filter>UI\ModeSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ModeSelectScene\ModeSelectScene.h">
+      <Filter>Scene\ModeSelectScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
@@ -668,5 +687,10 @@
     <FxCompile Include="Assets\Shader\Shadowmap.hlsl">
       <Filter>02Shader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameBaseDx11.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

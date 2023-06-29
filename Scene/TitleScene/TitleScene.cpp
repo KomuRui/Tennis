@@ -52,7 +52,24 @@ void TitleScene::Initialize()
 //更新
 void TitleScene::Update()
 {
+	//シーン移行
+	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_A))
+	{
+		Direct3D::SetNowScreenShoot(false);
+		GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_MODE_SELECT);
+	}
+	//カメラ
+	CameraMove();
+}
 
+//描画
+void TitleScene::Draw()
+{
+}
+
+//カメラの動き
+void TitleScene::CameraMove()
+{
 	//カメラ設定
 	Camera::SetPosition(hermiteMoveTable_[nowLookNum_].first->Updata());
 	Camera::SetTarget(hermiteMoveTable_[nowLookNum_].second->Updata());
@@ -63,20 +80,13 @@ void TitleScene::Update()
 		nowLookNum_++;
 
 		//サイズオーバーしていたなら
-		if(hermiteMoveTable_.size() == nowLookNum_)
-			ARGUMENT_INITIALIZE(nowLookNum_,ZERO);
+		if (hermiteMoveTable_.size() == nowLookNum_)
+			ARGUMENT_INITIALIZE(nowLookNum_, ZERO);
 
 		//開始
 		hermiteMoveTable_[nowLookNum_].first->ReStart();
 		hermiteMoveTable_[nowLookNum_].second->ReStart();
 	}
-
-	
-}
-
-//描画
-void TitleScene::Draw()
-{
 }
 
 //データセット

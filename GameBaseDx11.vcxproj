@@ -209,6 +209,7 @@
     <ClCompile Include="OtherObject\PlayScene\Water.cpp" />
     <ClCompile Include="OtherObject\ToolObj\BasePointModel.cpp" />
     <ClCompile Include="Player\PlayerBase.cpp" />
+    <ClCompile Include="Scene\ModeSelectScene\ModeSelectScene.cpp" />
     <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -220,6 +221,7 @@
     <ClCompile Include="State\PlayerState\StandingState.cpp" />
     <ClCompile Include="UI\Button\ButtonBase.cpp" />
     <ClCompile Include="UI\ImageBase.cpp" />
+    <ClCompile Include="UI\ModeSelect\ModeSelectSceneUI.cpp" />
     <ClCompile Include="UI\ScalingImage.cpp" />
     <ClCompile Include="UI\Title\StartImage.cpp" />
   </ItemGroup>
@@ -299,6 +301,8 @@
     <ClInclude Include="OtherObject\PlayScene\Water.h" />
     <ClInclude Include="OtherObject\ToolObj\BasePointModel.h" />
     <ClInclude Include="Player\PlayerBase.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene\ModeSelectScene\ModeSelectScene.h" />
     <ClInclude Include="Scene\PlayScene\PlayScene.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Stage.h" />
@@ -310,6 +314,7 @@
     <ClInclude Include="State\PlayerState\StandingState.h" />
     <ClInclude Include="UI\Button\ButtonBase.h" />
     <ClInclude Include="UI\ImageBase.h" />
+    <ClInclude Include="UI\ModeSelect\ModeSelectSceneUI.h" />
     <ClInclude Include="UI\ScalingImage.h" />
     <ClInclude Include="UI\Title\StartImage.h" />
   </ItemGroup>
@@ -377,6 +382,9 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameBaseDx11.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

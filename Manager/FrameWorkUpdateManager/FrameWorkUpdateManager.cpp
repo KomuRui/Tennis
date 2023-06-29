@@ -70,6 +70,8 @@ namespace FrameWorkUpdateManager
 			break;
 		}
 
+		GameScreenDraw(root);
+
 		//プロジェクションを更新
 		Camera::SetProj(Direct3D::vp.Width, Direct3D::vp.Height);
 
@@ -209,6 +211,45 @@ namespace FrameWorkUpdateManager
 		Camera::SetPosition(pos);
 		Camera::SetTarget(tar);
 		Camera::SetUpDirection(up);
+	}
+
+	/// </summary>
+	//スクリーンショットをとるための関数
+	/// </summary>
+	void GameScreenDraw(GameObject* root)
+	{
+		//とっていないのなら終わり
+		if (!Direct3D::GetNowScreenShoot()) return;
+
+		//プロジェクションを更新
+		//Camera::SetProj(Direct3D::vpNow.Width, Direct3D::vpNow.Height);
+
+		//ビューポート設定
+		//Direct3D::SetViewPort(Direct3D::vpNow);
+		//Direct3D::SetClipToUv(Direct3D::vpNow);
+
+		//描画開始
+		Direct3D::BeginDrawGameScreen();
+
+		//エフェクトエディタモードじゃないのなら
+		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+		{
+			root->DrawSub();
+
+			//透明・半透明描画
+			root->TransparentDrawSub();
+		}
+
+		//エフェクトの描画
+		VFX::Draw();
+
+		//エフェクトエディタモードじゃないのなら
+		if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+		{
+			//様々な描画処理をする
+			GameManager::Draw();
+		}
+
 	}
 
 	/// <summary>

@@ -13,6 +13,8 @@ using namespace DirectX;
 
 #define TEX_DIV 4	//テクスチャのサイズ　＝　画面サイズ÷この値
 
+class Sprite;
+
 //-----------------------------------------------------------
 //画面の描画に関する処理
 //-----------------------------------------------------------
@@ -32,6 +34,7 @@ namespace Direct3D
 	extern XMMATRIX clipToUV_;
 	extern ID3D11ShaderResourceView* pDepthSRV_;
 	extern ID3D11SamplerState* pDepthSampler_;
+	extern Sprite* pScreen;
 	extern bool isShadowDraw;
 
 	//■シェーダー関連で必要なセット
@@ -115,6 +118,7 @@ namespace Direct3D
 
 	//描画開始
 	void BrginDrawShadowToTexture();
+	void BeginDrawGameScreen();
 	void BeginDrawTwo();
 	void BeginDraw();
 	
@@ -141,6 +145,12 @@ namespace Direct3D
 
 	//画面がゲーム状態にするかどうかセット
 	void SetScreenGameStatus(bool a);
+
+	//スクリーンショットとっているか取得
+	bool GetNowScreenShoot();
+
+	//スクリーンショットとっているか設定
+	void SetNowScreenShoot(bool a);
 
 	//背景色を設定
 	void SetBackScreenColor(XMFLOAT4 color);
