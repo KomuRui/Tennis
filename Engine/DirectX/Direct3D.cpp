@@ -189,7 +189,8 @@ namespace Direct3D
 	void ScreenShoot()
 	{
 		ID3D11Texture2D* pBackBuffer;
-		pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+		pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pBackBuffer));
+		pContext_->Flush();
 		pContext_->CopyResource(pRenderTextureGame, pBackBuffer);
 		pScreen->Initialize(pRenderTextureGame);
 		pBackBuffer->Release();
@@ -438,7 +439,6 @@ namespace Direct3D
 		pBackBuffer->GetDesc(&texdecGame);
 		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
 		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
-
 		pScreen = new Sprite;
 
 		// シェーダリソースビュー(テクスチャ用)の設定

@@ -103,10 +103,13 @@ HRESULT Texture::Load(ID3D11Texture2D* pTexture)
 
 	D3D11_SAMPLER_DESC  SamDesc;
 	ZeroMemory(&SamDesc, sizeof(D3D11_SAMPLER_DESC));
-	SamDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	SamDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	SamDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	SamDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	SamDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	SamDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	SamDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	SamDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	SamDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	SamDesc.MinLOD = 0;
+	SamDesc.MaxLOD = D3D11_FLOAT32_MAX;
 	Direct3D::pDevice_->CreateSamplerState(&SamDesc, &pSampleLinear_);
 
 
