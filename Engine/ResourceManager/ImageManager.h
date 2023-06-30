@@ -101,5 +101,16 @@ namespace ImageManager
 	//戻値：ワールド行列
 	XMMATRIX GetMatrix(int handle);
 
+	/// <summary>
+	/// スプライトを取得
+	/// </summary>
+	/// <param name="handle">画像番号</param>
+	/// <returns>スプライト</returns>
+	Sprite* GetSprite(int handle);
 
+	/// <summary>
+	/// スプライトを設定
+	/// </summary>
+	/// <param name="handle">画像番号</param>
+	void SetSprite(int handle, Sprite* s);
 }

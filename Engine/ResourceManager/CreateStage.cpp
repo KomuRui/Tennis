@@ -4,6 +4,7 @@
 #include "../../UI/ImageBase.h"
 #include "../../UI/ScalingImage.h"
 #include "../../UI/Title/StartImage.h"
+#include "../../UI/ModeSelect/ScreenFadeImage.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
@@ -60,6 +61,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "StartImage")
 	{
 		InstantiateNormal<StartImage>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "ScreenFadeImage")
+	{
+		InstantiateNormal<ScreenFadeImage>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////OtherObject///////////////////////

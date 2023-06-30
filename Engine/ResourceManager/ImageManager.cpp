@@ -228,6 +228,20 @@ namespace ImageManager
 		return _datas[handle]->transform->GetWorldMatrix();
 	}
 
+	//スプライトを取得
+	Sprite* GetSprite(int handle)
+	{
+		if (handle < 0 || handle >= _datas.size())
+		{
+			return nullptr;
+		}
+		return _datas[handle]->pSprite;
+	}
 
+	//スプライトをセット
+	void SetSprite(int handle,Sprite* s)
+	{
+		_datas[handle]->pSprite = s;
+	}
 }
 

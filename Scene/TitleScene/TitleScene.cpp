@@ -46,7 +46,7 @@ void TitleScene::Initialize()
 	//開始
 	hermiteMoveTable_[nowLookNum_].first->Start();
 	hermiteMoveTable_[nowLookNum_].second->Start();
-
+	
 }
 
 //更新
@@ -65,8 +65,6 @@ void TitleScene::Update()
 //描画
 void TitleScene::Draw()
 {
-	Transform t;
-	Direct3D::pScreen->Draw(&t);
 }
 
 //カメラの動き

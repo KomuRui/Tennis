@@ -11,7 +11,7 @@ ModeSelectSceneUI::ModeSelectSceneUI(GameObject* parent)
 void ModeSelectSceneUI::Initialize()
 {
 	//ロード
-	//pCreateUI_->LoadFileCreateStage(this, "Data/StageData/ModeSelect/ModeSelect.json");
+	pCreateUI_->LoadFileCreateStage(this, "Data/StageData/ModeSelect/ModeSelect.json");
 }
 
 //更新
@@ -22,6 +22,4 @@ void ModeSelectSceneUI::Update()
 //描画
 void ModeSelectSceneUI::Draw()
 {
-	Transform t;
-	Direct3D::pScreen->Draw(&t);
 }

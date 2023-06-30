@@ -384,6 +384,9 @@
     <ClCompile Include="Scene\ModeSelectScene\ModeSelectScene.cpp">
       <Filter>Scene\ModeSelectScene</Filter>
     </ClCompile>
+    <ClCompile Include="UI\ModeSelect\ScreenFadeImage.cpp">
+      <Filter>UI\ModeSelect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -654,6 +657,9 @@
     </ClInclude>
     <ClInclude Include="Scene\ModeSelectScene\ModeSelectScene.h">
       <Filter>Scene\ModeSelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ModeSelect\ScreenFadeImage.h">
+      <Filter>UI\ModeSelect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
