@@ -28,12 +28,16 @@ namespace ImageManager
 		//行列
 		Transform* transform;
 
+		//画面キャプチャかどうか
+		bool isScreenCapture;
+
 		//コンストラクタ
 		ImageData() : pSprite(nullptr)
 		{
 			fileName = "";
 			alpha = 1.0f;
 			pSprite = nullptr;
+			isScreenCapture = false;
 		}
 	};
 
@@ -90,6 +94,9 @@ namespace ImageManager
 
 	//アルファ値をゲットする
 	float GetAlpha(int handle);
+	
+	//キャプチャ画面かどうかセット
+	void SetScreenCapture(int handle, bool flag);
 
 	//ワールド行列を設定
 	//引数：handle	設定したい画像の番号

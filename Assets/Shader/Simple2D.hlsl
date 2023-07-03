@@ -10,9 +10,13 @@ SamplerState g_sampler : register(s0); // テクスチャーサンプラー
 //───────────────────────────────────────
 cbuffer global
 {
-	matrix g_matWorld;		// 頂点座標変換行列
-	matrix g_matTexture;	// テクスチャ座標変換行列
-	float4 g_vecColor;		// テクスチャ合成色
+	matrix g_matWorld;		  // 頂点座標変換行列
+	matrix g_matTexture;	  // テクスチャ座標変換行列
+	float4 g_vecColor;		  // テクスチャ合成色
+	float  g_distance;		  // 距離
+	float  g_screenWidth;     // スクリーンの横
+	float  g_screenHeight;    // スクリーンの縦
+	bool   g_isScreenCapture; //スクリーンキャプチャかどうか
 };
 
 //───────────────────────────────────────
@@ -41,5 +45,10 @@ VS_OUTPUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 float4 PS(VS_OUTPUT input) : SV_Target
 {
 	float4 diffuse = g_texture.Sample(g_sampler, input.uv);
-	return g_vecColor * diffuse;
+	float4 color = g_vecColor * diffuse;
+
+	if (g_isScreenCapture)
+		color.a = 1;
+
+	return color;
 }

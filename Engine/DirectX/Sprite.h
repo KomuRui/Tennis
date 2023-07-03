@@ -29,12 +29,13 @@ class Sprite
 	//Simple2D.hlslのグローバル変数と対応させる
 	struct CONSTANT_BUFFER
 	{
-		XMMATRIX	world;		// 頂点座標変換行列
-		XMMATRIX	uvTrans;	// テクスチャ座標変換行列
-		XMFLOAT4	color;		// テクスチャとの合成色
-		FLOAT       distance;   // 距離
-		FLOAT    screenWidth;   // スクリーンの横
-		FLOAT    screenHeight;  // スクリーンの縦
+		XMMATRIX	world;		   // 頂点座標変換行列
+		XMMATRIX	uvTrans;	   // テクスチャ座標変換行列
+		XMFLOAT4	color;		   // テクスチャとの合成色
+		FLOAT       distance;      // 距離
+		FLOAT    screenWidth;      // スクリーンの横
+		FLOAT    screenHeight;     // スクリーンの縦
+		BOOL     isScreenCapture;  // 画面キャプチャかどうか
 	};
 
 	//【頂点バッファ】
@@ -71,7 +72,7 @@ public:
 	virtual HRESULT Initialize(ID3D11Texture2D* pTexture);
 
 	//描画
-	void Draw(Transform* transform, RECT rect, float alpha = 1.0f);
+	void Draw(Transform* transform, RECT rect, float alpha,bool isScreenCapture = false);
 	void Draw(Transform* transform, float dis, RECT rect);
 	void Draw(Transform* transform, float alpha);
 	void Draw(Transform* transform);

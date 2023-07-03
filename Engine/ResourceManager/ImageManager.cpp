@@ -83,7 +83,7 @@ namespace ImageManager
 			return;
 		}
 		_datas[handle]->transform->Calclation();
-		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha);
+		_datas[handle]->pSprite->Draw(_datas[handle]->transform, _datas[handle]->rect, _datas[handle]->alpha, _datas[handle]->isScreenCapture);
 	}
 
 	//Ui描画
@@ -92,7 +92,7 @@ namespace ImageManager
 		for (auto i = _uiDrawDatas.begin(); i != _uiDrawDatas.end(); i++)
 		{
 			_datas[(*i)]->transform->Calclation();
-			_datas[(*i)]->pSprite->Draw(_datas[(*i)]->transform, _datas[(*i)]->rect, _datas[(*i)]->alpha);
+			_datas[(*i)]->pSprite->Draw(_datas[(*i)]->transform, _datas[(*i)]->rect, _datas[(*i)]->alpha, _datas[(*i)]->isScreenCapture);
 		}
 
 		//空にする	
@@ -204,6 +204,16 @@ namespace ImageManager
 			return 0;
 		}
 		return _datas[handle]->alpha * 255;
+	}
+
+	//キャプチャ画面かどうかセット
+	void SetScreenCapture(int handle, bool flag)
+	{
+		if (handle < 0 || handle >= _datas.size())
+		{
+			return;
+		}
+		_datas[handle]->isScreenCapture = flag;
 	}
 
 	//ワールド行列を設定

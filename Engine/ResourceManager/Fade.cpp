@@ -216,7 +216,7 @@ namespace Fade
 		rect.bottom = (long)size.y;
 
 		//描画
-		pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->Draw(&t, rect);
+		pSprite_[GameManager::GetpSceneManager()->GetSceneId()]->Draw(&t, rect,1.0f);
 	}
 
 	//円フェードイン描画

@@ -450,30 +450,15 @@ namespace Direct3D
 		renderTargetViewDesc.Texture2D.MipSlice = 0;
 		pDevice_->CreateRenderTargetView(pDepthTexture, &renderTargetViewDesc, &pDepthTargetView);
 
-		D3D11_TEXTURE2D_DESC texdecScreen;
-		texdecScreen.Width = screenWidth_;
-		texdecScreen.Height = screenHeight_;
-		texdecScreen.MipLevels = 1;
-		texdecScreen.ArraySize = 1;
-		texdecScreen.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		texdecScreen.SampleDesc.Count = 1;
-		texdecScreen.SampleDesc.Quality = 0;
-		texdecScreen.Usage = D3D11_USAGE_DEFAULT;
-		texdecScreen.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-		texdecScreen.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		texdecScreen.MiscFlags = 0;
-		pDevice_->CreateTexture2D(&texdecScreen, nullptr, &pRenderTextureGame);
-
-		D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDescScreen;
-		ZeroMemory(&renderTargetViewDescScreen, sizeof(D3D11_RENDER_TARGET_VIEW_DESC));
-		renderTargetViewDescScreen.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		renderTargetViewDescScreen.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-		renderTargetViewDescScreen.Texture2D.MipSlice = 0;
-		pDevice_->CreateRenderTargetView(pRenderTextureGame,
-			&renderTargetViewDescScreen, &pRenderTargetViewScreen);
-
+		//ゲーム画面のスクリーンショット
+		D3D11_TEXTURE2D_DESC texdecGame;
+		pBackBuffer->GetDesc(&texdecGame);
+		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
 		pScreen = new Sprite;
-		pScreen->Initialize(pRenderTextureGame);
+
+		//pScreen = new Sprite;
+		//pScreen->Initialize(pRenderTextureGame);
 
 		// シェーダリソースビュー(テクスチャ用)の設定
 		D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};

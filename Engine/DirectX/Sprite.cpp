@@ -117,7 +117,7 @@ void Sprite::InitIndex()
 	Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 }
 
-void Sprite::Draw(Transform* transform, RECT rect, float alpha)
+void Sprite::Draw(Transform* transform, RECT rect, float alpha, bool isScreenCapture)
 {
 	transform->Calclation();
 
@@ -162,6 +162,7 @@ void Sprite::Draw(Transform* transform, RECT rect, float alpha)
 
 	// テクスチャ合成色情報を渡す
 	cb.color = XMFLOAT4(1, 1, 1, alpha);
+	cb.isScreenCapture = isScreenCapture;
 
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// リソースへ値を送る
@@ -397,6 +398,7 @@ void Sprite::ReversalColorDraw(Transform* transform, RECT rect, XMFLOAT4 color)
 
 	// テクスチャ合成色情報を渡す
 	cb.color = color;
+
 
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// リソースへ値を送る
