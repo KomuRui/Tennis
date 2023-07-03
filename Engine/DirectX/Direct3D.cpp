@@ -64,9 +64,6 @@ namespace Direct3D
 	//影を描画しているかどうか
 	bool isShadowDraw = false;
 
-	//スクリーンショットとるかどうか
-	bool isScreenShot = false;
-
 	//現在使っているシェーダーのタイプ
 	SHADER_TYPE shaderType;
 
@@ -187,18 +184,6 @@ namespace Direct3D
 	HWND GetTwoWindowHandle()
 	{
 		return hWnd2_;
-	}
-
-	//スクリーンショット取るかどうかセット
-	void SetScreenShot(bool a)
-	{
-		isScreenShot = a;
-	}
-
-	//スクリーンショット取るかゲット
-	bool GetScreenShot()
-	{
-		return isScreenShot;
 	}
 
 	//スクリーンショット
@@ -456,9 +441,6 @@ namespace Direct3D
 		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
 		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
 		pScreen = new Sprite;
-
-		//pScreen = new Sprite;
-		//pScreen->Initialize(pRenderTextureGame);
 
 		// シェーダリソースビュー(テクスチャ用)の設定
 		D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};
@@ -964,24 +946,6 @@ namespace Direct3D
 		pContext_->VSSetShader(shaderBundle[type].pVertexShader, NULL, 0);                         // 頂点シェーダをセット
 		pContext_->PSSetShader(shaderBundle[type].pPixelShader, NULL, 0);                          // ピクセルシェーダをセット
 		pContext_->IASetInputLayout(shaderBundle[type].pVertexLayout);
-	}
-
-	//描画開始
-	void BeginDrawToTexture()
-	{
-		//何か準備できてないものがあったら諦める
-		if (NULL == pDevice_) return;
-		if (NULL == pContext_) return;
-		if (NULL == pRenderTargetViewScreen) return;
-		if (NULL == pSwapChain_) return;
-
-		//背景の色
-		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 1 };//R,G,B,A
-
-		pContext_->OMSetRenderTargets(1, &pRenderTargetViewScreen, pDepthStencilView);
-		pContext_->ClearRenderTargetView(pRenderTargetViewScreen, clearColor);
-		pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
-
 	}
 
 	//ShaderBundleをゲット
