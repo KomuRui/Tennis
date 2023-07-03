@@ -19,7 +19,3 @@ void ModeSelectSceneUI::Update()
 {
 }
 
-//•`‰æ
-void ModeSelectSceneUI::Draw()
-{
-}

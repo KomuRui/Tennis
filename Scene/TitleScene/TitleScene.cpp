@@ -55,7 +55,7 @@ void TitleScene::Update()
 	//シーン移行
 	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_A))
 	{
-		Direct3D::ScreenShoot();
+		Direct3D::SetScreenShot(true);
 		GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_MODE_SELECT);
 	}
 	//カメラ

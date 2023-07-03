@@ -119,6 +119,7 @@ namespace Direct3D
 
 	//描画開始
 	void BrginDrawShadowToTexture();
+	void BeginDrawToTexture();
 	void BeginDrawTwo();
 	void BeginDraw();
 	
@@ -145,6 +146,12 @@ namespace Direct3D
 
 	//画面がゲーム状態にするかどうかセット
 	void SetScreenGameStatus(bool a);
+
+	//スクリーンショット取るかどうかセット
+	void SetScreenShot(bool a);
+
+	//スクリーンショット取るかゲット
+	bool GetScreenShot();
 
 	//背景色を設定
 	void SetBackScreenColor(XMFLOAT4 color);

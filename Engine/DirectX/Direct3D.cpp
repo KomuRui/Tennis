@@ -64,6 +64,9 @@ namespace Direct3D
 	//影を描画しているかどうか
 	bool isShadowDraw = false;
 
+	//スクリーンショットとるかどうか
+	bool isScreenShot = false;
+
 	//現在使っているシェーダーのタイプ
 	SHADER_TYPE shaderType;
 
@@ -96,8 +99,9 @@ namespace Direct3D
 	D3D11_VIEWPORT vpFull2;
 
 	//ゲーム画面のスクリーンショット用
-	Sprite* pScreen;
-	ID3D11Texture2D* pRenderTextureGame;
+	Sprite* pScreen = nullptr;
+	ID3D11Texture2D* pRenderTextureGame = nullptr;
+	ID3D11RenderTargetView* pRenderTargetViewScreen = nullptr;
 
 	HWND hWnd_;
 	HWND hWnd2_;
@@ -183,6 +187,18 @@ namespace Direct3D
 	HWND GetTwoWindowHandle()
 	{
 		return hWnd2_;
+	}
+
+	//スクリーンショット取るかどうかセット
+	void SetScreenShot(bool a)
+	{
+		isScreenShot = a;
+	}
+
+	//スクリーンショット取るかゲット
+	bool GetScreenShot()
+	{
+		return isScreenShot;
 	}
 
 	//スクリーンショット
@@ -434,13 +450,30 @@ namespace Direct3D
 		renderTargetViewDesc.Texture2D.MipSlice = 0;
 		pDevice_->CreateRenderTargetView(pDepthTexture, &renderTargetViewDesc, &pDepthTargetView);
 
-		//ゲーム画面のスクリーンショット
-		D3D11_TEXTURE2D_DESC texdecGame;
-		pBackBuffer->GetDesc(&texdecGame);
-		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
+		D3D11_TEXTURE2D_DESC texdecScreen;
+		texdecScreen.Width = screenWidth_;
+		texdecScreen.Height = screenHeight_;
+		texdecScreen.MipLevels = 1;
+		texdecScreen.ArraySize = 1;
+		texdecScreen.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		texdecScreen.SampleDesc.Count = 1;
+		texdecScreen.SampleDesc.Quality = 0;
+		texdecScreen.Usage = D3D11_USAGE_DEFAULT;
+		texdecScreen.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+		texdecScreen.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		texdecScreen.MiscFlags = 0;
+		pDevice_->CreateTexture2D(&texdecScreen, nullptr, &pRenderTextureGame);
+
+		D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDescScreen;
+		ZeroMemory(&renderTargetViewDescScreen, sizeof(D3D11_RENDER_TARGET_VIEW_DESC));
+		renderTargetViewDescScreen.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		renderTargetViewDescScreen.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+		renderTargetViewDescScreen.Texture2D.MipSlice = 0;
+		pDevice_->CreateRenderTargetView(pRenderTextureGame,
+			&renderTargetViewDescScreen, &pRenderTargetViewScreen);
 
 		pScreen = new Sprite;
+		pScreen->Initialize(pRenderTextureGame);
 
 		// シェーダリソースビュー(テクスチャ用)の設定
 		D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};
@@ -948,6 +981,24 @@ namespace Direct3D
 		pContext_->IASetInputLayout(shaderBundle[type].pVertexLayout);
 	}
 
+	//描画開始
+	void BeginDrawToTexture()
+	{
+		//何か準備できてないものがあったら諦める
+		if (NULL == pDevice_) return;
+		if (NULL == pContext_) return;
+		if (NULL == pRenderTargetViewScreen) return;
+		if (NULL == pSwapChain_) return;
+
+		//背景の色
+		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 1 };//R,G,B,A
+
+		pContext_->OMSetRenderTargets(1, &pRenderTargetViewScreen, pDepthStencilView);
+		pContext_->ClearRenderTargetView(pRenderTargetViewScreen, clearColor);
+		pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+	}
+
 	//ShaderBundleをゲット
 	SHADER_TYPE GetShader() {
 		return shaderType;
@@ -979,8 +1030,8 @@ namespace Direct3D
 		if (NULL == pRenderTargetView_) return;
 		if (NULL == pSwapChain_) return;
 		
-		//R,G,B,A
-		float clearColor[4] = { 0, backScreenColor.y, backScreenColor.z, 1 };
+		//背景の色
+		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 1 };//R,G,B,A
 
 		pContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView);	    // 描画先を設定
 		pContext_->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
@@ -1000,7 +1051,7 @@ namespace Direct3D
 		pContext_->RSSetViewports(1, &vpFull2);
 
 		//背景の色
-		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 0 };//R,G,B,A
+		float clearColor[4] = { backScreenColor.x, backScreenColor.y, backScreenColor.z, 1 };//R,G,B,A
 
 		//深度バッファクリア
 		pContext_->ClearDepthStencilView(pDepthStencilView2, D3D11_CLEAR_DEPTH, 1.0f, 0);
@@ -1015,7 +1066,7 @@ namespace Direct3D
 		pContext_->OMSetRenderTargets(1, &pDepthTargetView, pDepthStencilView);
 
 		//背景の色
-		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0 };//R,G,B,A
+		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1 };//R,G,B,A
 
 		//画面をクリア
 		pContext_->ClearRenderTargetView(pDepthTargetView, clearColor);
@@ -1031,6 +1082,7 @@ namespace Direct3D
 		//スワップ（バックバッファを表に表示する）
 		pSwapChain_->Present(0, 0);
 		pSwapChain_2->Present(0, 0);
+		
 	}
 
 

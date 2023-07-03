@@ -70,6 +70,29 @@ namespace FrameWorkUpdateManager
 			break;
 		}
 
+		if (Direct3D::GetScreenShot())
+		{
+			
+			Direct3D::BeginDrawToTexture();
+
+			//エフェクトエディタモードじゃないのなら
+			if (ImGuiSet::GetScreenMode() != static_cast<int>(Mode::EFFECT_EDIT))
+			{
+				root->DrawSub();
+
+				//透明・半透明描画
+				root->TransparentDrawSub();
+			}
+
+			//エフェクトの描画
+			VFX::Draw();
+
+			//描画終了
+			Direct3D::EndDraw();
+
+			Direct3D::SetScreenShot(false);
+		}
+
 		//プロジェクションを更新
 		Camera::SetProj(Direct3D::vp.Width, Direct3D::vp.Height);
 
