@@ -5,6 +5,11 @@
 #include "../../UI/ScalingImage.h"
 #include "../../UI/Title/StartImage.h"
 #include "../../UI/ModeSelect/ScreenFadeImage.h"
+#include "../../UI/ModeSelect/RogoImage.h"
+#include "../../UI/ModeSelect/PlayerImage.h"
+#include "../../UI/ModeSelect/Button/ExplanationButton.h"
+#include "../../UI/ModeSelect/Button/MiniGameButton.h"
+#include "../../UI/ModeSelect/Button/OneVSOneButton.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
@@ -65,6 +70,26 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "ScreenFadeImage")
 	{
 		InstantiateNormal<ScreenFadeImage>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "RogoImage")
+	{
+		InstantiateNormal<RogoImage>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "PlayerImage")
+	{
+		InstantiateNormal<PlayerImage>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "ExplanationButton")
+	{
+		InstantiateButton<ExplanationButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "MiniGameButton")
+	{
+		InstantiateButton<MiniGameButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "OneVSOneButton")
+	{
+		InstantiateButton<OneVSOneButton>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////OtherObject///////////////////////

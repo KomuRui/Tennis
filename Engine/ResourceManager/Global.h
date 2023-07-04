@@ -194,6 +194,8 @@ static T Clamp(T v, T high, T low)
 
 ////////////////////////////////////オペレーター////////////////////////////////////////////
 
+////////ベクトル
+
 static XMVECTOR operator*(const XMVECTOR& v, const XMMATRIX& m)
 {
 	return XMVector3TransformCoord(v, m);

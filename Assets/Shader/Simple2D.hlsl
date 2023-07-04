@@ -45,10 +45,12 @@ VS_OUTPUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 float4 PS(VS_OUTPUT input) : SV_Target
 {
 	float4 diffuse = g_texture.Sample(g_sampler, input.uv);
-	float4 color = g_vecColor * diffuse;
+	float4 color = diffuse;
 
 	if (g_isScreenCapture)
 		color.a = 1;
+
+	color *= g_vecColor;
 
 	return color;
 }

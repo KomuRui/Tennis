@@ -11,7 +11,8 @@ ModeSelectSceneUI::ModeSelectSceneUI(GameObject* parent)
 void ModeSelectSceneUI::Initialize()
 {
 	//ロード
-	pCreateUI_->LoadFileCreateStage(this, "Data/StageData/ModeSelect/ModeSelect.json");
+	pCreateImage_->LoadFileCreateStage(this, "Data/StageData/ModeSelect/ModeSelectImage.json");
+	pCreateButton_->LoadFileCreateStage(this, "Data/StageData/ModeSelect/ModeSelectButton.json");
 }
 
 //更新

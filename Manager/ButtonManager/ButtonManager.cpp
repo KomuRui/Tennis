@@ -235,6 +235,17 @@ namespace ButtonManager
 		nowUseButton.push_back(button);
 	}
 
+	//任意に選択状態のボタンを変更
+	void SetSelect(ButtonBase* button)
+	{
+		for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
+		{
+			(*i)->SetSelect(false);
+		}
+
+		button->SetSelect(true);
+	}
+
 	//リセットする
 	void Reset()
 	{

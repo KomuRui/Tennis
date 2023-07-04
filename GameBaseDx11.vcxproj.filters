@@ -126,6 +126,12 @@
     <Filter Include="Scene\ModeSelectScene">
       <UniqueIdentifier>{0f28ba56-40b3-495a-ad4c-48331a79bc4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\ModeSelect\Button">
+      <UniqueIdentifier>{d997afb5-6f77-4fb9-abe9-ba83473dd732}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Image">
+      <UniqueIdentifier>{a7a16cca-f12b-4c6d-80b8-cc977d8d95bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -152,12 +158,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Component\Posture.cpp">
       <Filter>01Engine\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\ImageBase.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\ScalingImage.cpp">
-      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="UI\Button\ButtonBase.cpp">
       <Filter>UI\Button</Filter>
@@ -387,6 +387,33 @@
     <ClCompile Include="UI\ModeSelect\ScreenFadeImage.cpp">
       <Filter>UI\ModeSelect</Filter>
     </ClCompile>
+    <ClCompile Include="UI\ModeSelect\RogoImage.cpp">
+      <Filter>UI\ModeSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ModeSelect\PlayerImage.cpp">
+      <Filter>UI\ModeSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ModeSelect\Button\OneVSOneButton.cpp">
+      <Filter>UI\ModeSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ModeSelect\Button\ExplanationButton.cpp">
+      <Filter>UI\ModeSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ModeSelect\Button\MiniGameButton.cpp">
+      <Filter>UI\ModeSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Button\EasingButton.cpp">
+      <Filter>UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\EasingImage.cpp">
+      <Filter>UI\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ImageBase.cpp">
+      <Filter>UI\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ScalingImage.cpp">
+      <Filter>UI\Image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -413,12 +440,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Component\Posture.h">
       <Filter>01Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\ImageBase.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\ScalingImage.h">
-      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\Button\ButtonBase.h">
       <Filter>UI\Button</Filter>
@@ -660,6 +681,33 @@
     </ClInclude>
     <ClInclude Include="UI\ModeSelect\ScreenFadeImage.h">
       <Filter>UI\ModeSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ModeSelect\RogoImage.h">
+      <Filter>UI\ModeSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ModeSelect\PlayerImage.h">
+      <Filter>UI\ModeSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ModeSelect\Button\OneVSOneButton.h">
+      <Filter>UI\ModeSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ModeSelect\Button\ExplanationButton.h">
+      <Filter>UI\ModeSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ModeSelect\Button\MiniGameButton.h">
+      <Filter>UI\ModeSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Button\EasingButton.h">
+      <Filter>UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\EasingImage.h">
+      <Filter>UI\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ImageBase.h">
+      <Filter>UI\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ScalingImage.h">
+      <Filter>UI\Image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

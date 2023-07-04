@@ -9,7 +9,8 @@ class ModeSelectSceneUI : public GameObject
 {
 
 	//äeUIçÏê¨óp
-	std::unique_ptr<CreateStage> pCreateUI_ = std::make_unique<CreateStage>();
+	std::unique_ptr<CreateStage> pCreateImage_ = std::make_unique<CreateStage>();
+	std::unique_ptr<CreateStage> pCreateButton_ = std::make_unique<CreateStage>();
 
 public:
 

@@ -24,6 +24,12 @@ namespace ButtonManager
 	void AddButton(ButtonBase* button);
 
 	/// <summary>
+	/// 任意に選択状態のボタンを変更
+	/// </summary>
+	/// <param name="button">ボタン</param>
+	void SetSelect(ButtonBase* button);
+
+	/// <summary>
 	/// リセットする
 	/// </summary>
 	void Reset();

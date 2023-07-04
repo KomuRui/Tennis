@@ -7,6 +7,9 @@
 class ScreenFadeImage : public ImageBase
 {
 
+	//現在の透明度
+	float nowAlpha_;
+
 public:
 
 	//コンストラクタ

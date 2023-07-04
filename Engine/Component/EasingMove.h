@@ -1,5 +1,6 @@
 #pragma once
 #include "../ResourceManager/Global.h"
+#include "../ResourceManager/Easing.h"
 
 /// <summary>
 /// イージングを利用して様々な移動をするクラス
