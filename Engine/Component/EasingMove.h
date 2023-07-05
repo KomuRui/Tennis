@@ -53,8 +53,19 @@ public:
 	int GetEndEasingCount() { return endEasingCount_; }
 
 	/// <summary>
+	/// まだ動いているのか取得
+	/// </summary>
+	/// <returns>動き中ならtrue</returns>
+	bool IsMove();
+
+	/// <summary>
 	/// イージングの終わった回数をリセット
 	/// </summary>
 	void ResetEndEasingCount() { endEasingCount_ = 0; }
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize();
 };
 

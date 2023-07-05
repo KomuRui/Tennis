@@ -1,4 +1,5 @@
 #include <d3dcompiler.h>
+#include <opencv2/opencv.hpp>
 #include "Direct3D.h"
 #include "../ResourceManager/Global.h"
 #include "../GUI/imgui/imgui.h"
@@ -192,9 +193,32 @@ namespace Direct3D
 	{
 		ID3D11Texture2D* pBackBuffer;
 		pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-		pContext_->Flush();
 		pContext_->CopyResource(pRenderTextureGame, pBackBuffer);
 		pScreen->Initialize(pRenderTextureGame);
+
+		//// テクスチャのデータを取得する
+		//D3D11_TEXTURE2D_DESC desc;
+		//pRenderTextureGame->GetDesc(&desc);
+
+		//// テクスチャデータをメモリにマップする
+		//D3D11_MAPPED_SUBRESOURCE mappedResource;
+		//pContext_->Flush();
+		//HRESULT hr = pContext_->Map(pRenderTextureGame, 0, D3D11_MAP_READ, 0, &mappedResource);
+		//if (FAILED(hr))
+		//{
+		//	// エラーハンドリング
+		//	return;
+		//}
+
+		//// OpenCVの画像データを作成する
+		//cv::Mat image(desc.Height, desc.Width, CV_8UC4, mappedResource.pData, mappedResource.RowPitch);
+
+		//// メモリのアンマップ
+		//pContext_->Unmap(pRenderTextureGame, 0);
+
+		//// 画像を保存する
+		//cv::imwrite("Screen.png", image);
+
 		pBackBuffer->Release();
 	}
 
@@ -439,6 +463,8 @@ namespace Direct3D
 		//ゲーム画面のスクリーンショット
 		D3D11_TEXTURE2D_DESC texdecGame;
 		pBackBuffer->GetDesc(&texdecGame);
+		texdecGame.Usage = D3D11_USAGE_DEFAULT;
+		texdecGame.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
 		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
 		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
 		pScreen = new Sprite;

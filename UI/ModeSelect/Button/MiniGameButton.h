@@ -8,7 +8,7 @@ class MiniGameButton : public EasingButton
 {
 
 	int hSelectPict_;    //選択されているときの画像番号
-	int hNotSelectPict_; //選択されていないときの画像番号
+	int hTextPict_;      //文字画像番号
 
 public:
 
@@ -21,6 +21,11 @@ public:
 	/// 初期化
 	/// </summary>
 	void ChildInitialize() override;
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void ChildDraw() override;
 
 	/// <summary>
 	/// ボタンが押されたら何するか

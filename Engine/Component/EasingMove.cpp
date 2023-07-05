@@ -67,4 +67,24 @@ void EasingMove::Reset(XMFLOAT3* targetPos,XMFLOAT3 beforePos, XMFLOAT3 afterPos
 	Time::Lock(timerhNum_);
 }
 
+//‚Ü‚¾“®‚¢‚Ä‚¢‚é‚Ì‚©æ“¾
+bool EasingMove::IsMove()
+{
+	return (isSet_ && nowTime_ < 1);
+}
+
+/// <summary>
+/// ‰Šú‰»
+/// </summary>
+void EasingMove::Initialize()
+{
+	//î•ñ‰Šú‰»
+	ARGUMENT_INITIALIZE(nowTime_, ZERO);
+	ARGUMENT_INITIALIZE(isSet_, false);
+
+	//ƒ^ƒCƒ€‰Šú‰»
+	Time::Reset(timerhNum_);
+	Time::Lock(timerhNum_);
+}
+
 
