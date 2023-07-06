@@ -1,13 +1,13 @@
 {
   "OneVSOneButton": {
-    "FileName": "Image/ModeSelect/1VS1_Normal.png",
+    "FileName": "Image/ModeSelect/Normal.png",
     "Position": [ 0.0, 0.4000000059604645, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "OneVSOneButton"
   },
   "ExplanationButton": {
-    "FileName": "Image/ModeSelect/Explanation_Normal.png",
+    "FileName": "Image/ModeSelect/Normal.png",
     "Position": [ 0.0, -0.4000000059604645, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
@@ -15,7 +15,7 @@
   },
   "MiniGameButton": {
 
-    "FileName": "Image/ModeSelect/MiniGame_Normal.png",
+    "FileName": "Image/ModeSelect/Normal.png",
     "Position": [ 0.0, 0.0, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],

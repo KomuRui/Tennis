@@ -6,9 +6,10 @@
 /// </summary>
 class MiniGameButton : public EasingButton
 {
-
-	int hSelectPict_;    //選択されているときの画像番号
-	int hNotSelectPict_; //選択されていないときの画像番号
+	std::unique_ptr<EasingMove> easingSelectPict_; //選択されているときの画像のイージング用
+	Transform tSelectPict_;                        //選択されているときの画像のトランスフォーム
+	int hSelectPict_;                              //選択されているときの画像番号
+	int hTextPict_;								   //文字画像番号
 
 public:
 
@@ -21,6 +22,16 @@ public:
 	/// 初期化
 	/// </summary>
 	void ChildInitialize() override;
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void EasingButtonChileUpdate() override;
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void ChildDraw() override;
 
 	/// <summary>
 	/// ボタンが押されたら何するか
