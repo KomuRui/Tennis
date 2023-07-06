@@ -325,7 +325,6 @@
     <ClInclude Include="OtherObject\PlayScene\Water.h" />
     <ClInclude Include="OtherObject\ToolObj\BasePointModel.h" />
     <ClInclude Include="Player\PlayerBase.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\ModeSelectScene\ModeSelectScene.h" />
     <ClInclude Include="Scene\PlayScene\PlayScene.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />

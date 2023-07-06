@@ -37,4 +37,3 @@ void StartImage::ChildUpdate()
 	//“§–¾“x‚ª”ÍˆÍ“à‚ÉŽû‚Ü‚é‚æ‚¤‚É
 	ARGUMENT_INITIALIZE(nowAlpha_,Clamp<float>(nowAlpha_, MAX_ALPHA, MIN_ALPHA));
 }
-

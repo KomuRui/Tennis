@@ -672,7 +672,6 @@
     <ClInclude Include="UI\Title\StartImage.h">
       <Filter>UI\Title</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="UI\ModeSelect\ModeSelectSceneUI.h">
       <Filter>UI\ModeSelect</Filter>
     </ClInclude>

@@ -4,7 +4,6 @@
 #include "../GUI/imgui/imgui.h"
 #include "../GUI/imgui/imgui_impl_win32.h"
 #include "../GUI/imgui/imgui_impl_dx11.h"
-#include "../lodepng/lodepng.h"
 #include "Sprite.h"
 
 //‰æ–Ê‚Ì•`‰æ‚ÉŠÖ‚·‚éˆ—

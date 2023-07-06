@@ -6,6 +6,8 @@
 /// </summary>
 class StartImage : public ImageBase
 {
+	int a = 0;
+	
 	int sign_;       //•„†
 	float nowAlpha_; //Œ»İ‚Ì“§–¾“x
 
