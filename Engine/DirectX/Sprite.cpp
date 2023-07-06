@@ -319,6 +319,7 @@ void Sprite::Draw(Transform* transform)
 	cb.world = XMMatrixTranspose(scaleMatrix * transform->GetWorldMatrix());
 	cb.uvTrans = XMMatrixTranspose(XMMatrixIdentity());
 	cb.color = XMFLOAT4(1, 1, 1, 1);
+	cb.isScreenCapture = false;
 
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
