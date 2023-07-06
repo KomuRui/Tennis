@@ -48,6 +48,8 @@ void OneVSOneButton::ChildDraw()
 	//‘I‘ð‚³‚ê‚Ä‚¢‚é‚©‚Ü‚¾“®‚¢‚Ä‚¢‚é‚Ì‚È‚ç
 	if (isSelect_)
 	{
+		ARGUMENT_INITIALIZE(tSelectPict_.position_, transform_->position_);
+
 		//‘I‘ð‰æ‘œ•`‰æ
 		ImageManager::SetTransform(hSelectPict_, &tSelectPict_);
 		ImageManager::SetUi(hSelectPict_);

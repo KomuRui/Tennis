@@ -33,6 +33,7 @@ public:
 
 	//コンストラクタ
 	ButtonBase(GameObject* parent, std::string modelPath, std::string name);
+	~ButtonBase() {};
 	
 	////////////////////オーバーライドする関数/////////////////////////
 

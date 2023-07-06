@@ -16,8 +16,8 @@ protected:
 public:
 
 	//コンストラクタ
-	//引数：parent  親オブジェクト（SceneManager）
 	EasingButton(GameObject* parent, std::string modelPath, std::string name);
+	~EasingButton() {};
 
 	//更新
 	void ChildButtonUpdate() override;

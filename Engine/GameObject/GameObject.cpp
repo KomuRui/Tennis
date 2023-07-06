@@ -457,8 +457,11 @@ void GameObject::ReleaseSub()
 	//ゲームオブジェクト解放
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
-		(*it)->ReleaseSub();
-		SAFE_DELETE(*it);
+		if ((*it))
+		{
+			(*it)->ReleaseSub();
+			SAFE_DELETE(*it);
+		}
 	}
 
 	Release();

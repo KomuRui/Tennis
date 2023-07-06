@@ -17,6 +17,7 @@ public:
 
 	//コンストラクタ
 	ImageBase(GameObject* parent, std::string modelPath, std::string name);
+	~ImageBase() {};
 
 	//初期化
 	void Initialize() override;

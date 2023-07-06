@@ -6,7 +6,6 @@
 /// </summary>
 class MiniGameButton : public EasingButton
 {
-
 	int hSelectPict_;    //選択されているときの画像番号
 	int hTextPict_;      //文字画像番号
 
@@ -14,6 +13,7 @@ public:
 
 	//コンストラクタ
 	MiniGameButton(GameObject* parent, std::string modelPath, std::string name);
+	~MiniGameButton() {};
 
 	////////////////////オーバーライドする関数/////////////////////////
 

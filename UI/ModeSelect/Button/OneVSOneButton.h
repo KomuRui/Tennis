@@ -15,6 +15,7 @@ public:
 
 	//コンストラクタ
 	OneVSOneButton(GameObject* parent, std::string modelPath, std::string name);
+	~OneVSOneButton() {};
 
 	////////////////////オーバーライドする関数/////////////////////////
 

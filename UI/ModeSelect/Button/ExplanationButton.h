@@ -6,7 +6,7 @@
 /// </summary>
 class ExplanationButton : public EasingButton
 {
-
+	//int a_;
 	int hSelectPict_;    //選択されているときの画像番号
 	int hTextPict_;      //文字画像番号
 
@@ -14,6 +14,7 @@ public:
 
 	//コンストラクタ
 	ExplanationButton(GameObject* parent, std::string modelPath, std::string name);
+	~ExplanationButton() {};
 
 	////////////////////オーバーライドする関数/////////////////////////
 
