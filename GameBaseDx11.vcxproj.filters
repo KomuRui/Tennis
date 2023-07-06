@@ -132,9 +132,6 @@
     <Filter Include="UI\Image">
       <UniqueIdentifier>{a7a16cca-f12b-4c6d-80b8-cc977d8d95bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01Engine\lodepng">
-      <UniqueIdentifier>{479f79eb-fd6f-4f03-861c-38fec3ddd1ab}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -416,9 +413,6 @@
     </ClCompile>
     <ClCompile Include="UI\ScalingImage.cpp">
       <Filter>UI\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\lodepng\lodepng.cpp">
-      <Filter>01Engine\lodepng</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -714,9 +708,6 @@
     </ClInclude>
     <ClInclude Include="UI\ScalingImage.h">
       <Filter>UI\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\lodepng\lodepng.h">
-      <Filter>01Engine\lodepng</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

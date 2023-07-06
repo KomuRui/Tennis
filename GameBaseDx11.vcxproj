@@ -189,7 +189,6 @@
     <ClCompile Include="Engine\GUI\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="Engine\GUI\imgui\imgui_tables.cpp" />
     <ClCompile Include="Engine\GUI\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Engine\lodepng\lodepng.cpp" />
     <ClCompile Include="Engine\Main.cpp" />
     <ClCompile Include="Engine\ResourceManager\Audio.cpp" />
     <ClCompile Include="Engine\ResourceManager\CreateStage.cpp" />
@@ -288,7 +287,6 @@
     <ClInclude Include="Engine\GUI\imgui\imstb_rectpack.h" />
     <ClInclude Include="Engine\GUI\imgui\imstb_textedit.h" />
     <ClInclude Include="Engine\GUI\imgui\imstb_truetype.h" />
-    <ClInclude Include="Engine\lodepng\lodepng.h" />
     <ClInclude Include="Engine\nlohmann\json.hpp" />
     <ClInclude Include="Engine\ResourceManager\Audio.h" />
     <ClInclude Include="Engine\ResourceManager\CreateStage.h" />
