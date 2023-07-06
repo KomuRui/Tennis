@@ -4,8 +4,8 @@
 //定数
 namespace
 {
-	static const XMFLOAT3 POS_ADD_VALUE = { 0.4, ZERO, ZERO };  //ポジションに対しての加算値
-	static const float EASING_TIME = 1.0f;                      //イージング時間
+	static const XMFLOAT3 POS_ADD_VALUE = { 0.8f, ZERO, ZERO }; //ポジションに対しての加算値
+	static const float EASING_TIME = 1.4f;                      //イージング時間
 	static const float SELECT_PICT_EASING_TIME = 0.5f;          //選択画像のイージング時間
 }
 
@@ -21,8 +21,9 @@ void ExplanationButton::ChildInitialize()
 {
 	//トランスフォームコピーしておく
 	ARGUMENT_INITIALIZE(tSelectPict_, *transform_);
+	ARGUMENT_INITIALIZE(tSelectPict_.scale_, XMFLOAT3(ZERO, 1, ZERO));
 
-	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutBounce);
+	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutCubic);
 	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE));
 
 	////////////////////////////////画像の初期設定////////////////////////////////////
@@ -70,5 +71,6 @@ void ExplanationButton::IsButtonSelect()
 //ボタンが選択解除された瞬間に何をするか
 void ExplanationButton::IsButtonSelectRelease()
 {
+	easingSelectPict_->Reset(&tSelectPict_.scale_, XMFLOAT3(1, 1, ZERO), XMFLOAT3(ZERO, 1, ZERO), 0.2f, Easing::OutCubic);
 	ARGUMENT_INITIALIZE(tSelectPict_.scale_, XMFLOAT3(ZERO, 1, ZERO));
 }

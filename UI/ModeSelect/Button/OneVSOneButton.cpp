@@ -22,6 +22,7 @@ void OneVSOneButton::ChildInitialize()
 {
 	//トランスフォームコピーしておく
 	ARGUMENT_INITIALIZE(tSelectPict_, *transform_);
+	ARGUMENT_INITIALIZE(tSelectPict_.scale_, XMFLOAT3(ZERO, 1, ZERO));
 
 	//イージング設定
 	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutCubic);
@@ -75,5 +76,6 @@ void OneVSOneButton::IsButtonSelect()
 //ボタンが選択解除された瞬間に何をするか
 void OneVSOneButton::IsButtonSelectRelease() 
 { 
+	easingSelectPict_->Reset(&tSelectPict_.scale_, XMFLOAT3(1, 1, ZERO), XMFLOAT3(ZERO, 1, ZERO), 0.2f, Easing::OutCubic);
 	ARGUMENT_INITIALIZE(tSelectPict_.scale_, XMFLOAT3(ZERO, 1, ZERO));
 }
