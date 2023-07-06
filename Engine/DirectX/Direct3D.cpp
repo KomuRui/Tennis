@@ -1,5 +1,4 @@
 #include <d3dcompiler.h>
-#include <opencv2/opencv.hpp>
 #include "Direct3D.h"
 #include "../ResourceManager/Global.h"
 #include "../GUI/imgui/imgui.h"

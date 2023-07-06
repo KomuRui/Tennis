@@ -451,6 +451,9 @@ void GameObject::ReleaseSub()
 			SAFE_DELETE(*it);
 	}
 
+	//コンポーネント空にする
+	ComponentList_.clear();
+
 	//ゲームオブジェクト解放
 	for (auto it = childList_.begin(); it != childList_.end(); it++)
 	{
