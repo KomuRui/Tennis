@@ -63,14 +63,14 @@
     "TypeName": "NormalObject"
   },
   "Player": {
-    "FileName": "MainCharacter/Player_Drop.fbx",
+    "FileName": "MainCharacter/Player_Boss.fbx",
     "Position": [ 0.0, 0.0, 11.579000473022461 ],
     "Rotate": [ 0.0, 180.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "Player"
   },
   "Player1": {
-    "FileName": "MainCharacter/Player.fbx",
+    "FileName": "MainCharacter/Player_Pig.fbx",
     "Position": [ 0.0, 0.0, -11.579000473022461 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
