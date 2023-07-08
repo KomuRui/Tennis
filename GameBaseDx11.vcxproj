@@ -97,12 +97,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>Library/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Library/assimp/include;Library/PhysX/PhysX-5.1.3/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <StackReserveSize>
       </StackReserveSize>
-      <AdditionalLibraryDirectories>Library/assimp/build/lib/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>Library/assimp/build/lib/$(Configuration);Library/PhysX/PhysX-5.1.3/lib/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>assimp-vc143-mtd.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
@@ -132,14 +132,14 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>Library/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Library/assimp/include;Library/PhysX/PhysX-5.1.3/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <StackReserveSize>
       </StackReserveSize>
-      <AdditionalLibraryDirectories>Library/assimp/build/lib/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>Library/assimp/build/lib/$(Configuration);Library/PhysX/PhysX-5.1.3/lib/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>assimp-vc143-mt.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>

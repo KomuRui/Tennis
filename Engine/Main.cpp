@@ -20,7 +20,6 @@
 #include "GUI/ImGuiSet.h"
 #include "../Manager/FrameWorkUpdateManager/FrameWorkUpdateManager.h"
 
-#pragma comment(lib,"Winmm.lib")
 
 //定数宣言
 const char* WIN_CLASS_NAME = "テニスゲーム";	//ウィンドウクラス名
