@@ -97,10 +97,13 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>Library/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <StackReserveSize>
       </StackReserveSize>
+      <AdditionalLibraryDirectories>Library/assimp/build/lib/$(Configuration)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>assimp-vc143-mtd.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,12 +132,15 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>Library/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <StackReserveSize>
       </StackReserveSize>
+      <AdditionalLibraryDirectories>Library/assimp/build/lib/$(Configuration)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>assimp-vc143-mt.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -401,6 +407,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameBaseDx11.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shader\inc.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
