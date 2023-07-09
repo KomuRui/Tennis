@@ -22,6 +22,27 @@ Fbx::~Fbx()
 
 HRESULT Fbx::Load(std::string fileName)
 {
+	Assimp::Importer importer;
+
+	int flag = 0;
+	flag |= aiProcess_CalcTangentSpace;
+	flag |= aiProcess_Triangulate;
+	flag |= aiProcess_GenSmoothNormals;
+	flag |= aiProcess_PreTransformVertices;
+	flag |= aiProcess_RemoveRedundantMaterials;
+	flag |= aiProcess_GenUVCoords;
+	flag |= aiProcess_OptimizeMeshes;
+
+	const aiScene* pScene = importer.ReadFile(fileName, flag);
+
+	if (pScene == nullptr)
+	{
+		assert(0 && "モデルのファイルが見つかりません");
+		return false;
+	}
+
+	
+
 	// FBXの読み込み
 	pFbxManager_ = FbxManager::Create();
 	pFbxScene_ = FbxScene::Create(pFbxManager_, "fbxscene");

@@ -4,6 +4,7 @@
 #include "Direct3D.h"
 #include "../GameObject/Camera.h"
 
+
 //コンストラクタ
 FbxParts::FbxParts():
 	ppIndexBuffer_(nullptr), pMaterial_(nullptr), 
