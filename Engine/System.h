@@ -41,7 +41,6 @@
 
 #include "Component/EasingMove.h"
 #include "Component/Gauge.h"
-#include "Component/Model.h"
 #include "Component/Posture.h"
 #include "Component/Transform/Transform.h"
 #include "Component/Collider/BoxCollider.h"
