@@ -20,7 +20,6 @@
 #include "GUI/ImGuiSet.h"
 #include "../Manager/FrameWorkUpdateManager/FrameWorkUpdateManager.h"
 
-#pragma comment(lib,"Winmm.lib")
 
 //定数宣言
 const char* WIN_CLASS_NAME = "テニスゲーム";	//ウィンドウクラス名
@@ -35,6 +34,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //#if defined(DEBUG) | defined(_DEBUG)
 //	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 //#endif
+
+#ifdef _DEBUG
+	SetDllDirectoryA("Library/assimp/build/lib/Debug");
+	LoadLibraryExA("assimp-vc143-mtd.dll", NULL, NULL);
+#else
+	SetDllDirectoryA("Library/assimp/build/lib/Release");
+	LoadLibraryExA("assimp-vc143-mt.dll", NULL, NULL);
+#endif
+
 
 	srand((unsigned)time(NULL));
 	SetCurrentDirectory("Assets");
