@@ -1,33 +1,51 @@
 {
   "ImageBase": {
-    "FileName": "Image/ModeSelect/BackGround.png",
+    "FileName": "Image/CharaSelect/BackGround.png",
     "Position": [ 0.0, 0, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "ImageBase"
   },
   "ImageBase1": {
-
-    "FileName": "Image/ModeSelect/BackGround.png",
-    "Position": [ 0.0, 0, 0.0 ],
+    "FileName": "Image/CharaSelect/MainCharIcon.png",
+    "Position": [ -0.13500000536441803, 0.625, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
-    "TypeName": "ScreenFadeImage"
+    "TypeName": "ImageBase"
   },
-  "PlayerImage": {
-
-    "FileName": "Image/ModeSelect/PlayerImage.png",
-    "Position": [ 0.800000011920929, -0.550000011920929, 0.0 ],
+  "ImageBase2": {
+    "FileName": "Image/CharaSelect/PrincessIcon.png",
+    "Position": [ 0.14000000059604645, 0.625, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
-    "TypeName": "PlayerImage"
+    "TypeName": "ImageBase"
   },
-  "RogoImage": {
-
-    "FileName": "Image/ModeSelect/Rogo.png",
-    "Position": [ -0.7799999713897705, 0.800000011920929, 0.0 ],
+  "ImageBase3": {
+    "FileName": "Image/CharaSelect/PigIcon.png",
+    "Position": [ -0.14000000059604645, 0.14000000059604645, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
-    "TypeName": "RogoImage"
+    "TypeName": "ImageBase"
+  },
+  "ImageBase4": {
+    "FileName": "Image/CharaSelect/DropIcon.png",
+    "Position": [ 0.14000000059604645, 0.14000000059604645, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ImageBase"
+  },
+  "ImageBase5": {
+    "FileName": "Image/CharaSelect/BossIcon.png",
+    "Position": [ -0.14000000059604645, -0.3449999988079071, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ImageBase"
+  },
+  "ImageBase6": {
+    "FileName": "Image/CharaSelect/BossChildIcon.png",
+    "Position": [ 0.14000000059604645, -0.3449999988079071, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ImageBase"
   }
 }

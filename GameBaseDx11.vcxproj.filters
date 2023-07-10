@@ -144,6 +144,12 @@
     <Filter Include="Scene\CharaSelectScene">
       <UniqueIdentifier>{22c7b9cb-e6a1-41d0-967a-c47faec79039}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\CharaSelect">
+      <UniqueIdentifier>{574162a3-c3a8-439d-98e3-73c088027296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\CharaSelect\Button">
+      <UniqueIdentifier>{bfc74ea9-2881-472e-a644-f43187277a0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -434,6 +440,27 @@
     </ClCompile>
     <ClCompile Include="Scene\CharaSelectScene\CharaSelectScene.cpp">
       <Filter>Scene\CharaSelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CharaSelect\CharaSelectSceneUI.cpp">
+      <Filter>UI\CharaSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CharaSelect\Button\MainCharButton.cpp">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CharaSelect\Button\BossButton.cpp">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CharaSelect\Button\BossChildButton.cpp">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CharaSelect\Button\DropButton.cpp">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CharaSelect\Button\PigButton.cpp">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CharaSelect\Button\PrincessButton.cpp">
+      <Filter>UI\CharaSelect\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -741,6 +768,27 @@
     </ClInclude>
     <ClInclude Include="Scene\CharaSelectScene\CharaSelectScene.h">
       <Filter>Scene\CharaSelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\CharaSelectSceneUI.h">
+      <Filter>UI\CharaSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\Button\MainCharButton.h">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\Button\BossButton.h">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\Button\BossChildButton.h">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\Button\DropButton.h">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\Button\PigButton.h">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\Button\PrincessButton.h">
+      <Filter>UI\CharaSelect\Button</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -29,9 +29,9 @@ void SceneManager::Initialize()
 	GameManager::SetpSceneManager(this);
 
 	//最初のシーンを準備
-	currentSceneID_ = SCENE_ID_PLAY;
+	currentSceneID_ = SCENE_ID_TITLE;
 	nextSceneID_ = currentSceneID_;
-	Instantiate<PlayScene>(this);
+	Instantiate<TitleScene>(this);
 }
 
 //更新
@@ -47,13 +47,6 @@ void SceneManager::Update()
 //シーンを更新
 void SceneManager::SceneUpdate()
 {
-	//ロード中に描画するなら
-	if (isLoadDraw_)
-	{
-		//ロードしているとき用の画像表示(すぐ表示したいので描画終了を呼ぶ)
-		Fade::SetFadeStatus(DRAW);
-		Direct3D::EndDraw();
-	}
 
 	//そのシーンのオブジェクトを全削除
 	KillAllChildren();

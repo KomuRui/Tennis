@@ -35,13 +35,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 //#endif
 
-#ifdef _DEBUG
-	SetDllDirectoryA("Library/assimp/build/lib/Debug");
-	LoadLibraryExA("assimp-vc143-mtd.dll", NULL, NULL);
-#else
-	SetDllDirectoryA("Library/assimp/build/lib/Release");
-	LoadLibraryExA("assimp-vc143-mt.dll", NULL, NULL);
-#endif
+//#ifdef _DEBUG
+//	SetDllDirectoryA("Library/assimp/build/lib/Debug");
+//	LoadLibraryExA("assimp-vc143-mtd.dll", NULL, NULL);
+//#else
+//	SetDllDirectoryA("Library/assimp/build/lib/Release");
+//	LoadLibraryExA("assimp-vc143-mt.dll", NULL, NULL);
+//#endif
 
 
 	srand((unsigned)time(NULL));

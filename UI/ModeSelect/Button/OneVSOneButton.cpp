@@ -1,6 +1,7 @@
 #include "OneVSOneButton.h"
 #include "../../../Engine/ResourceManager/ImageManager.h"
 #include "../../../Manager/ButtonManager/ButtonManager.h"
+#include "../../../Manager/GameManager/GameManager.h"
 
 //定数
 namespace
@@ -64,7 +65,11 @@ void OneVSOneButton::ChildDraw()
 //ボタンが押されたら何するか
 void OneVSOneButton::IsButtonPush()
 {
-
+	//リセットする
+	ButtonManager::Reset();
+	
+	//キャラ選択シーンに変更
+	GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_CHARA_SELECT);
 }
 
 //ボタンが選択された瞬間に何をするか

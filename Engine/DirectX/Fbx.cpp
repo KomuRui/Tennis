@@ -22,7 +22,7 @@ Fbx::~Fbx()
 
 HRESULT Fbx::Load(std::string fileName)
 {
-	Assimp::Importer importer;
+	/*Assimp::Importer importer;
 
 	int flag = 0;
 	flag |= aiProcess_CalcTangentSpace;
@@ -41,7 +41,7 @@ HRESULT Fbx::Load(std::string fileName)
 		return false;
 	}
 
-	
+	*/
 
 	// FBXÇÃì«Ç›çûÇ›
 	pFbxManager_ = FbxManager::Create();
