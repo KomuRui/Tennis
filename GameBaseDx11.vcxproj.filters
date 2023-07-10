@@ -141,6 +141,9 @@
     <Filter Include="01Engine\Graphics\Model">
       <UniqueIdentifier>{974512f7-9453-4e80-a0fa-104c805c1eb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\CharaSelectScene">
+      <UniqueIdentifier>{22c7b9cb-e6a1-41d0-967a-c47faec79039}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -428,6 +431,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Graphics\Model\ModelLoader.cpp">
       <Filter>01Engine\Graphics\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\CharaSelectScene\CharaSelectScene.cpp">
+      <Filter>Scene\CharaSelectScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -732,6 +738,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Graphics\Model\ModelLoader.h">
       <Filter>01Engine\Graphics\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\CharaSelectScene\CharaSelectScene.h">
+      <Filter>Scene\CharaSelectScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

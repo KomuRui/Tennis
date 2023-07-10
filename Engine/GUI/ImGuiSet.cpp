@@ -176,6 +176,7 @@ namespace ImGuiSet
         //各シーンのステージ情報が入ってるファイルのパス設定
         stageInfoFilePath_[SCENE_ID_TITLE] = "Data/StageData/Title/Title.json";
         stageInfoFilePath_[SCENE_ID_MODE_SELECT] = "Data/StageData/ModeSelect/ModeSelect.json";
+        stageInfoFilePath_[SCENE_ID_CHARA_SELECT] = "Data/StageData/CharaSelect/CharaSelect.json";
         stageInfoFilePath_[SCENE_ID_PLAY] = "Data/StageData/Play/Play.json";
 
         //画像
@@ -2033,6 +2034,7 @@ namespace ImGuiSet
             {
                 if(ImGui::MenuItem("Title")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_TITLE); }
                 if(ImGui::MenuItem("ModeSelect")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_MODE_SELECT); }
+                if(ImGui::MenuItem("CharaSelect")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_CHARA_SELECT); }
                 if(ImGui::MenuItem("Play")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_PLAY); }
                 ImGui::EndMenu();
             }

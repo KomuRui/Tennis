@@ -8,6 +8,7 @@
 #include "../../Scene/PlayScene/PlayScene.h"
 #include "../../Scene/TitleScene/TitleScene.h"
 #include "../../Scene/ModeSelectScene/ModeSelectScene.h"
+#include "../../Scene/CharaSelectScene/CharaSelectScene.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../../Manager/EffectManager/PlayerEffectManager/PlayerEffectManager.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
@@ -74,6 +75,7 @@ void SceneManager::SceneUpdate()
 	case SCENE_ID_PLAY:				 Instantiate<PlayScene>(this); break;
 	case SCENE_ID_TITLE:			 Instantiate<TitleScene>(this); break;
 	case SCENE_ID_MODE_SELECT:		 Instantiate<ModeSelectScene>(this); break;
+	case SCENE_ID_CHARA_SELECT:		 Instantiate<CharaSelectScene>(this); break;
 	}
 
 	//カレントシーンを更新

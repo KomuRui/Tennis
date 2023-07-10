@@ -1,0 +1,33 @@
+{
+  "ImageBase": {
+    "FileName": "Image/ModeSelect/BackGround.png",
+    "Position": [ 0.0, 0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ImageBase"
+  },
+  "ImageBase1": {
+
+    "FileName": "Image/ModeSelect/BackGround.png",
+    "Position": [ 0.0, 0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ScreenFadeImage"
+  },
+  "PlayerImage": {
+
+    "FileName": "Image/ModeSelect/PlayerImage.png",
+    "Position": [ 0.800000011920929, -0.550000011920929, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "PlayerImage"
+  },
+  "RogoImage": {
+
+    "FileName": "Image/ModeSelect/Rogo.png",
+    "Position": [ -0.7799999713897705, 0.800000011920929, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "RogoImage"
+  }
+}
