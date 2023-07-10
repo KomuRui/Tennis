@@ -5,6 +5,16 @@
 #include <string>
 #include "../Component/Transform/Transform.h"
 #include "Direct3D.h"
+#ifdef _DEBUG
+#pragma comment(lib,"assimp-vc143-mtd.lib")
+#else
+#pragma comment(lib,"assimp-vc143-mt.lib")
+#endif 
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 
 class FbxParts;
 class BasePointModel;
