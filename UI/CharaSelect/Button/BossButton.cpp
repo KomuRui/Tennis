@@ -15,6 +15,7 @@ namespace
 BossButton::BossButton(GameObject* parent, std::string modelPath, std::string name)
 	:EasingButton(parent, modelPath, name)
 {
+	ARGUMENT_INITIALIZE(easingSelectPict_, std::make_unique<EasingMove>());
 }
 
 //‰Šú‰»
@@ -28,6 +29,7 @@ void BossButton::ChildInitialize()
 //XV
 void BossButton::EasingButtonChileUpdate()
 {
+	easingSelectPict_->Move();
 }
 
 //•`‰æ

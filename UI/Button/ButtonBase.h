@@ -19,6 +19,12 @@ protected:
 
 	//ボタンが選択解除された瞬間に呼ぶ関数ポインタ
 	void (*ButtonSelectReleaseFunc)(void);
+	
+	//自分の前に選択されていたボタンのポジションを格納
+	XMFLOAT3 beforeButtonSelectPos_;
+
+	//何番のコントローラーに押されたのか
+	int numController_;
 
 	//選択されているかどうか
 	bool isSelect_;
@@ -82,7 +88,7 @@ public:
 	/// 選択されているかをセット 
 	/// </summary>
 	/// <param name="flag">trueなら選択されてる</param>
-	void SetSelect(bool flag);
+	void SetSelect(bool flag, int numController);
 
 	/// <summary>
 	/// 選択されているかを取得
@@ -95,5 +101,17 @@ public:
 	/// </summary>
 	/// <param name="flag">trueなら許可する</param>
 	void SetPushOk(bool flag);
+
+	/// <summary>
+	/// 自分の前に選択されていたボタンのポジションをセット
+	/// </summary>
+	/// <param name="pos">位ポジションを置</param>
+	void SetBeforeButtonSelectPos(XMFLOAT3 pos) { beforeButtonSelectPos_ = pos; }
+
+	/// <summary>
+	/// コントローラー番号を取得
+	/// </summary>
+	/// <returns>コントローラー番号</returns>
+	int GetControllerNum() { return numController_; }
 };
 

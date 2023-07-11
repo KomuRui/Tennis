@@ -15,6 +15,7 @@ namespace
 PrincessButton::PrincessButton(GameObject* parent, std::string modelPath, std::string name)
 	:EasingButton(parent, modelPath, name)
 {
+	ARGUMENT_INITIALIZE(easingSelectPict_, std::make_unique<EasingMove>());
 }
 
 //初期化
@@ -23,11 +24,15 @@ void PrincessButton::ChildInitialize()
 	//イージング設定
 	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutBack);
 	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE));
+
+	//選択状態に(コントローラー番号1にしておく)
+	ButtonManager::SetSelect(this,1);
 }
 
 //更新
 void PrincessButton::EasingButtonChileUpdate()
 {
+	easingSelectPict_->Move();
 }
 
 //描画

@@ -16,7 +16,7 @@ namespace ButtonManager
 	/// <summary>
 	/// 入力
 	/// </summary>
-	void Input(ButtonBase* button);
+	void Input(ButtonBase* button,int numController = 0);
 
 	/// <summary>
 	/// ボタンを追加
@@ -27,7 +27,7 @@ namespace ButtonManager
 	/// 任意に選択状態のボタンを変更
 	/// </summary>
 	/// <param name="button">ボタン</param>
-	void SetSelect(ButtonBase* button);
+	void SetSelect(ButtonBase* button,int numController = 0);
 
 	/// <summary>
 	/// リセットする

@@ -15,6 +15,7 @@ namespace
 MainCharButton::MainCharButton(GameObject* parent, std::string modelPath, std::string name)
 	:EasingButton(parent, modelPath, name)
 {
+	ARGUMENT_INITIALIZE(easingSelectPict_, std::make_unique<EasingMove>());
 }
 
 //‰Šú‰»
@@ -31,6 +32,7 @@ void MainCharButton::ChildInitialize()
 //XV
 void MainCharButton::EasingButtonChileUpdate()
 {
+	easingSelectPict_->Move();
 }
 
 //•`‰æ

@@ -24,12 +24,12 @@ namespace ButtonManager
 	std::vector<ButtonBase*> nowUseButton;
 
 	//XとYの前回入力保存用
-	float beforeXSlope = ZERO;
-	float beforeYSlope = ZERO;
+	float beforeXSlope[2] = { ZERO,ZERO };
+	float beforeYSlope[2] = { ZERO,ZERO };
 
 	//XとYの現在の入力保存用
-	float NowXSlope = ZERO;
-	float NowYSlope = ZERO;
+	float NowXSlope[2] = { ZERO,ZERO };
+	float NowYSlope[2] = { ZERO,ZERO };
 
 	//更新
 	void Update()
@@ -37,8 +37,9 @@ namespace ButtonManager
 		//もしボタンが使われていなかったらこの先は処理しない
 		if (nowUseButton.empty()) return;
 
-		//選択されているボタン格納用
-		ButtonBase* pButton = nullptr; 
+		//各コントローラーで選択されているボタン格納用
+		ButtonBase* pButtonController0 = nullptr;
+		ButtonBase* pButtonController1 = nullptr;
 
 		//最後まで回してnullptrのものは削除・選択されているボタンを見つける
 		for (auto i = nowUseButton.begin(); i != nowUseButton.end();)
@@ -49,40 +50,39 @@ namespace ButtonManager
 			else
 			{
 				//選択されていたら格納
-				if ((*i)->IsSelect()) pButton = (*i);
+				if ((*i)->IsSelect() && (*i)->GetControllerNum() == 0) pButtonController0 = (*i);
+				if ((*i)->IsSelect() && (*i)->GetControllerNum() == 1) pButtonController1 = (*i);
 
 				//次に進める
 				i++;
 			}
 		}
 
-		//nullptrならここで処理終わり
-		if (pButton == nullptr) return;
-
-		//入力処理
-		Input(pButton);
+		//nullじゃないのなら入力処理
+		if (pButtonController0 == nullptr) Input(pButtonController0);
+		if (pButtonController1 == nullptr) Input(pButtonController1,1);
 	}
 
 	//入力
-	void Input(ButtonBase* button)
+	void Input(ButtonBase* button, int numController)
 	{
 		//選択されているボタンのxとyを保存
 		float x = button->GetComponent<Transform>()->GetPosition().x;
 		float y = button->GetComponent<Transform>()->GetPosition().y;
 
 		//前回の傾きを取得
-		ARGUMENT_INITIALIZE(beforeXSlope, NowXSlope);
-		ARGUMENT_INITIALIZE(beforeYSlope, NowYSlope);
+		ARGUMENT_INITIALIZE(beforeXSlope[numController], NowXSlope[numController]);
+		ARGUMENT_INITIALIZE(beforeYSlope[numController], NowYSlope[numController]);
 
 		//PadLスティックの傾きを保存
-		ARGUMENT_INITIALIZE(NowXSlope,Input::GetPadStickL().x);
-		ARGUMENT_INITIALIZE(NowYSlope,Input::GetPadStickL().y);
+		ARGUMENT_INITIALIZE(NowXSlope[numController],Input::GetPadStickL(numController).x);
+		ARGUMENT_INITIALIZE(NowYSlope[numController],Input::GetPadStickL(numController).y);
 
 		//保存用
 		std::vector<std::pair<float, ButtonBase*>> date;
 
 		//傾きが定数より大きければ
-		if (NowXSlope >= PAD_STICK_SLOPE_RIGHT && beforeXSlope <= PAD_STICK_SLOPE_RIGHT)
+		if (NowXSlope[numController] >= PAD_STICK_SLOPE_RIGHT && beforeXSlope[numController] <= PAD_STICK_SLOPE_RIGHT)
 		{
 
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
@@ -105,20 +105,24 @@ namespace ButtonManager
 			//ソート(昇順)
 			sort(date.begin(), date.end());
 
+			//すでに選択されているのならこの先処理しない
+			if ((*(date.begin() + 1)).second->IsSelect()) return;
+
 			//選択解除
-			button->SetSelect(false);
+			button->SetSelect(false, numController);
 
 			//ボタン格納
 			ARGUMENT_INITIALIZE(button, (*(date.begin() + 1)).second);
 
-			//選択されるようにする
-			button->SetSelect(true);
+			//選択されるようにする(前回のボタンの位置を格納)
+			button->SetBeforeButtonSelectPos((*(date.begin())).second->GetComponent<Transform>()->GetPosition());
+			button->SetSelect(true, numController);
 
 			return;
 		}
 
 		//傾きが定数より小さければ
-		if (NowXSlope <= PAD_STICK_SLOPE_LEFT && beforeXSlope >= PAD_STICK_SLOPE_LEFT)
+		if (NowXSlope[numController] <= PAD_STICK_SLOPE_LEFT && beforeXSlope[numController] >= PAD_STICK_SLOPE_LEFT)
 		{
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
@@ -140,20 +144,23 @@ namespace ButtonManager
 			//ソート(降順)
 			sort(date.rbegin(), date.rend());
 
+			//すでに選択されているのならこの先処理しない
+			if ((*(date.begin() + 1)).second->IsSelect()) return;
+
 			//選択解除
-			button->SetSelect(false);
+			button->SetSelect(false, numController);
 
 			//ボタン格納
 			ARGUMENT_INITIALIZE(button, (*(date.begin() + 1)).second);
 
 			//選択されるようにする
-			button->SetSelect(true);
+			button->SetSelect(true, numController);
 
 			return;
 		}
 
 		//傾きが定数より大きければ
-		if (NowYSlope >= PAD_STICK_SLOPE_UP && beforeYSlope <= PAD_STICK_SLOPE_UP)
+		if (NowYSlope[numController] >= PAD_STICK_SLOPE_UP && beforeYSlope[numController] <= PAD_STICK_SLOPE_UP)
 		{
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
@@ -175,20 +182,23 @@ namespace ButtonManager
 			//ソート(昇順)
 			sort(date.begin(), date.end());
 
+			//すでに選択されているのならこの先処理しない
+			if ((*(date.begin() + 1)).second->IsSelect()) return;
+
 			//選択解除
-			button->SetSelect(false);
+			button->SetSelect(false, numController);
 
 			//ボタン格納
 			ARGUMENT_INITIALIZE(button, (*(date.begin() + 1)).second);
 
 			//選択されるようにする
-			button->SetSelect(true);
+			button->SetSelect(true, numController);
 
 			return;
 		}
 
 		//傾きが定数より小さければ
-		if (NowYSlope <= PAD_STICK_SLOPE_DOWN && beforeYSlope >= PAD_STICK_SLOPE_DOWN)
+		if (NowYSlope[numController] <= PAD_STICK_SLOPE_DOWN && beforeYSlope[numController] >= PAD_STICK_SLOPE_DOWN)
 		{
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
@@ -210,14 +220,17 @@ namespace ButtonManager
 			//ソート(降順)
 			sort(date.rbegin(), date.rend());
 
+			//すでに選択されているのならこの先処理しない
+			if ((*(date.begin() + 1)).second->IsSelect()) return;
+
 			//選択解除
-			button->SetSelect(false);
+			button->SetSelect(false, numController);
 
 			//ボタン格納
 			ARGUMENT_INITIALIZE(button, (*(date.begin() + 1)).second);
 
 			//選択されるようにする
-			button->SetSelect(true);
+			button->SetSelect(true, numController);
 
 			return;
 		}
@@ -229,21 +242,21 @@ namespace ButtonManager
 	void AddButton(ButtonBase* button) 
 	{	
 		//ボタンがまだ１つも登録されていないのなら
-		if (nowUseButton.empty()) button->SetSelect(true);
+		if (nowUseButton.empty()) button->SetSelect(true,ZERO);
 
 		//ボタンを追加
 		nowUseButton.push_back(button);
 	}
 
 	//任意に選択状態のボタンを変更
-	void SetSelect(ButtonBase* button)
+	void SetSelect(ButtonBase* button, int numController)
 	{
 		for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 		{
-			(*i)->SetSelect(false);
+			(*i)->SetSelect(false, numController);
 		}
 
-		button->SetSelect(true);
+		button->SetSelect(true, numController);
 	}
 
 	//リセットする
