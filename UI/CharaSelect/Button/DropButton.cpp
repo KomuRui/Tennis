@@ -6,9 +6,9 @@
 //定数
 namespace
 {
-	static const XMFLOAT3 POS_ADD_VALUE = { 0.8f, ZERO, ZERO }; //ポジションに対しての加算値
+	static const XMFLOAT3 POS_ADD_VALUE = { -1.5f, ZERO, ZERO };//ポジションに対しての加算値
 	static const float EASING_TIME = 0.6f;                      //イージング時間
-	static const float SELECT_PICT_EASING_TIME = 0.5f;          //選択画像のイージング時間
+	static const float SELECT_PICT_EASING_TIME = 0.75f;          //選択画像のイージング時間
 }
 
 //コンストラクタ
@@ -21,7 +21,7 @@ DropButton::DropButton(GameObject* parent, std::string modelPath, std::string na
 void DropButton::ChildInitialize()
 {
 	//イージング設定
-	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutCubic);
+	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutBack);
 	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE));
 }
 

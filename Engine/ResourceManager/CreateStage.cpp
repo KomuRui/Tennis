@@ -10,6 +10,12 @@
 #include "../../UI/ModeSelect/Button/ExplanationButton.h"
 #include "../../UI/ModeSelect/Button/MiniGameButton.h"
 #include "../../UI/ModeSelect/Button/OneVSOneButton.h"
+#include "../../UI/CharaSelect/Button/BossButton.h"
+#include "../../UI/CharaSelect/Button/BossChildButton.h"
+#include "../../UI/CharaSelect/Button/DropButton.h"
+#include "../../UI/CharaSelect/Button/MainCharButton.h"
+#include "../../UI/CharaSelect/Button/PigButton.h"
+#include "../../UI/CharaSelect/Button/PrincessButton.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
@@ -90,6 +96,30 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "OneVSOneButton")
 	{
 		InstantiateButton<OneVSOneButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "BossButton")
+	{
+		InstantiateButton<BossButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "BossChildButton")
+	{
+		InstantiateButton<BossChildButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "DropButton")
+	{
+		InstantiateButton<DropButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "MainCharButton")
+	{
+		InstantiateButton<MainCharButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "PigButton")
+	{
+		InstantiateButton<PigButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "PrincessButton")
+	{
+		InstantiateButton<PrincessButton>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////OtherObject///////////////////////
