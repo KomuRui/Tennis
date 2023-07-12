@@ -30,17 +30,21 @@ bool EasingMove::Move()
 	//‚Ç‚Ì‚­‚ç‚¢‚ÌŠ„‡ŽžŠÔ‚ª‚½‚Á‚½‚©‹‚ß‚é(0`1)
 	ARGUMENT_INITIALIZE(nowTime_, (Time::GetTimef(timerhNum_) / moveTime_));
 
-	//‚à‚µÅŒã‚Ü‚ÅI‚í‚Á‚Ä‚¢‚½‚Ì‚È‚çtrue‚ð•Ô‚·
-	if (nowTime_ > 1)
-	{
-		ARGUMENT_INITIALIZE(endEasingCount_, beforeEndEasingCount_ + 1);
-		return true;
-	}
-
 	(*targetPos_) = beforePos_;
 	float x = afterPos_.x - beforePos_.x;
 	float y = afterPos_.y - beforePos_.y;
 	float z = afterPos_.z - beforePos_.z;
+
+	//‚à‚µÅŒã‚Ü‚ÅI‚í‚Á‚Ä‚¢‚½‚Ì‚È‚çtrue‚ð•Ô‚·
+	if (nowTime_ > 1)
+	{
+		ARGUMENT_INITIALIZE(endEasingCount_, beforeEndEasingCount_ + 1);
+		(*targetPos_).x += (x * (*easingFunc)(1));
+		(*targetPos_).y += (y * (*easingFunc)(1));
+		(*targetPos_).y += (z * (*easingFunc)(1));
+		return true;
+	}
+
 	(*targetPos_).x += (x * (*easingFunc)(nowTime_));
 	(*targetPos_).y += (y * (*easingFunc)(nowTime_));
 	(*targetPos_).y += (z * (*easingFunc)(nowTime_));

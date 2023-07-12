@@ -2,6 +2,7 @@
 #include "../../../Engine/ResourceManager/ImageManager.h"
 #include "../../../Manager/ButtonManager/ButtonManager.h"
 #include "../../../Manager/GameManager/GameManager.h"
+#include "../CharaSelectSceneUI.h"
 
 //定数
 namespace
@@ -15,7 +16,6 @@ namespace
 DropButton::DropButton(GameObject* parent, std::string modelPath, std::string name)
 	:EasingButton(parent, modelPath, name)
 {
-	ARGUMENT_INITIALIZE(easingSelectPict_, std::make_unique<EasingMove>());
 }
 
 //初期化
@@ -29,7 +29,6 @@ void DropButton::ChildInitialize()
 //更新
 void DropButton::EasingButtonChileUpdate()
 {
-	easingSelectPict_->Move();
 }
 
 //描画
@@ -47,6 +46,7 @@ void DropButton::IsButtonPush()
 //ボタンが選択された瞬間に何をするか
 void DropButton::IsButtonSelect()
 {
+	((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->ResetEasing(transform_->position_, numController_);
 }
 
 //ボタンが選択解除された瞬間に何をするか

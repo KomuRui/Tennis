@@ -8,8 +8,6 @@
 class PrincessButton : public EasingButton
 {
 
-	std::unique_ptr<EasingMove> easingSelectPict_; //選択されているときの画像のイージング用
-
 public:
 
 	//コンストラクタ

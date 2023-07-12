@@ -8,42 +8,42 @@
   },
   "ImageBase1": {
     "FileName": "Image/CharaSelect/MainCharIcon.png",
-    "Position": [ -0.13500000536441803, 0.625, 0.0 ],
+    "Position": [ -0.14, 0.625, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "MainCharButton"
   },
   "ImageBase2": {
     "FileName": "Image/CharaSelect/PrincessIcon.png",
-    "Position": [ 0.14000000059604645, 0.625, 0.0 ],
+    "Position": [ 0.14, 0.625, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "PrincessButton"
   },
   "ImageBase3": {
     "FileName": "Image/CharaSelect/PigIcon.png",
-    "Position": [ -0.14000000059604645, 0.14000000059604645, 0.0 ],
+    "Position": [ -0.14, 0.14, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "PigButton"
   },
   "ImageBase4": {
     "FileName": "Image/CharaSelect/DropIcon.png",
-    "Position": [ 0.14000000059604645, 0.14000000059604645, 0.0 ],
+    "Position": [ 0.14, 0.14, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "DropButton"
   },
   "ImageBase5": {
     "FileName": "Image/CharaSelect/BossIcon.png",
-    "Position": [ -0.14000000059604645, -0.3449999988079071, 0.0 ],
+    "Position": [ -0.14, -0.345, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "BossButton"
   },
   "ImageBase6": {
     "FileName": "Image/CharaSelect/BossChildIcon.png",
-    "Position": [ 0.14000000059604645, -0.3449999988079071, 0.0 ],
+    "Position": [ 0.14, -0.345, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "BossChildButton"

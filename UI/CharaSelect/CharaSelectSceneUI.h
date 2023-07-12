@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Engine/GameObject/GameObject.h"
 #include "../../Engine/ResourceManager/CreateStage.h"
+#include "../../Engine/Component/EasingMove.h"
 #include <map>
 
 /// <summary>
@@ -12,8 +13,16 @@ class CharaSelectSceneUI : public GameObject
 	//各UI作成用
 	std::unique_ptr<CreateStage> pCreateImage_ = std::make_unique<CreateStage>();
 
-	//Controller0,1の選択してる時の画像とトランスフォームを格納
-	map<int, pair<int, std::shared_ptr<Transform>>> selectPict_;
+	//選択画像の情報
+	struct selectPictInfo
+	{
+		int hPict_;                                    //画像番号
+		std::shared_ptr<Transform> transform_;         //トランスフォーム
+		std::unique_ptr<EasingMove> easingSelectPict_; //選択されているときの画像のイージング用
+	};
+
+	//Controller0,1の選択してる時の情報を格納
+	map<int, selectPictInfo> selectPict_;
 
 public:
 
@@ -25,6 +34,9 @@ public:
 
 	//初期化
 	void Initialize() override;
+
+	//更新
+	void Update() override;
 
 	//描画
 	void Draw() override;
@@ -41,7 +53,14 @@ public:
 	/// </summary>
 	/// <param name="numController">コントローラー番号</param>
 	/// <returns>トランスフォーム</returns>
-	Transform* GetSelectPictTrasnform(int numController) { return selectPict_[numController].second.get(); }
+	Transform* GetSelectPictTrasnform(int numController) { return selectPict_[numController].transform_.get(); }
+
+	/// <summary>
+	/// イージングリセット
+	/// </summary>
+	/// <param name="t">移動後のポジション</param>
+	/// <param name="numController">コントローラー番号</param>
+	void ResetEasing(const XMFLOAT3& t,int numController);
 
 };
 

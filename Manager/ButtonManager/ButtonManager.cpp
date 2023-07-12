@@ -89,7 +89,7 @@ namespace ButtonManager
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
 				//Xの座標が選択されていたボタンをよりも大きければ
-				if ((*i)->GetComponent<Transform>()->GetPosition().x > x)
+				if ((*i)->GetComponent<Transform>()->GetPosition().x > x && abs(button->GetComponent<Transform>()->position_.y - (*i)->GetComponent<Transform>()->GetPosition().y) < 0.02f)
 				{
 					date.push_back({ (*i)->GetComponent<Transform>()->GetPosition().x,(*i)});
 				}
@@ -128,7 +128,7 @@ namespace ButtonManager
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
 				//Xの座標が選択されていたボタンをよりも小さければ
-				if ((*i)->GetComponent<Transform>()->GetPosition().x < x)
+				if ((*i)->GetComponent<Transform>()->GetPosition().x < x && abs(button->GetComponent<Transform>()->position_.y - (*i)->GetComponent<Transform>()->GetPosition().y) < 0.02f)
 				{
 					date.push_back({ (*i)->GetComponent<Transform>()->GetPosition().x,(*i) });
 				}
@@ -166,7 +166,7 @@ namespace ButtonManager
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
 				//Yの座標が選択されていたボタンをよりも大きければ
-				if ((*i)->GetComponent<Transform>()->GetPosition().y > y)
+				if ((*i)->GetComponent<Transform>()->GetPosition().y > y && abs(button->GetComponent<Transform>()->position_.x - (*i)->GetComponent<Transform>()->GetPosition().x) < 0.02f)
 				{
 					date.push_back({ (*i)->GetComponent<Transform>()->GetPosition().y,(*i) });
 				}
@@ -204,7 +204,7 @@ namespace ButtonManager
 			for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 			{
 				//Xの座標が選択されていたボタンをよりも小さければ
-				if ((*i)->GetComponent<Transform>()->GetPosition().y < y)
+				if ((*i)->GetComponent<Transform>()->GetPosition().y < y && abs(button->GetComponent<Transform>()->position_.x - (*i)->GetComponent<Transform>()->GetPosition().x) < 0.02f)
 				{
 					date.push_back({ (*i)->GetComponent<Transform>()->GetPosition().y,(*i) });
 				}

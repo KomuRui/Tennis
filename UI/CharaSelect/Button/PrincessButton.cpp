@@ -16,7 +16,6 @@ namespace
 PrincessButton::PrincessButton(GameObject* parent, std::string modelPath, std::string name)
 	:EasingButton(parent, modelPath, name)
 {
-	ARGUMENT_INITIALIZE(easingSelectPict_, std::make_unique<EasingMove>());
 }
 
 //初期化
@@ -36,7 +35,6 @@ void PrincessButton::ChildInitialize()
 //更新
 void PrincessButton::EasingButtonChileUpdate()
 {
-	easingSelectPict_->Move();
 }
 
 //描画
@@ -54,6 +52,7 @@ void PrincessButton::IsButtonPush()
 //ボタンが選択された瞬間に何をするか
 void PrincessButton::IsButtonSelect()
 {
+	((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->ResetEasing(transform_->position_, numController_);
 }
 
 //ボタンが選択解除された瞬間に何をするか
