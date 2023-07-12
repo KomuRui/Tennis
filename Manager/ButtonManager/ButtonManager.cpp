@@ -66,6 +66,8 @@ namespace ButtonManager
 	//“ü—Í
 	void Input(ButtonBase* button, int numController)
 	{
+		//“®‚«“r’†‚È‚ç‚±‚Ìæˆ—‚µ‚È‚¢
+		if (button->IsMove()) return;
 
 		//‘I‘ð‚³‚ê‚Ä‚¢‚éƒ{ƒ^ƒ“‚Ìx‚Æy‚ð•Û‘¶
 		float x = button->GetComponent<Transform>()->GetPosition().x;

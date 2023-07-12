@@ -8,6 +8,9 @@
 class BossButton : public EasingButton
 {
 
+	//キャラ画像
+	int hCharaPict_;
+	std::unique_ptr<Transform> tCharaPict_;  //トランスフォーム
 
 public:
 

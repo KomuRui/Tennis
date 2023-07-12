@@ -62,5 +62,11 @@ public:
 	/// <param name="numController">コントローラー番号</param>
 	void ResetEasing(const XMFLOAT3& t,int numController);
 
+	/// <summary>
+	/// イージングクラスを取得
+	/// </summary>
+	/// <param name="numController">コントローラー番号</param>
+	/// <returns>イージングクラス</returns>
+	EasingMove& GetEasing(int numController) { return *selectPict_[numController].easingSelectPict_; };
 };
 

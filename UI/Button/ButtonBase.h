@@ -29,8 +29,8 @@ protected:
 	//選択されているかどうか
 	bool isSelect_;
 
-	//押すの許可するか
-	bool isPushOk_;
+	//動き中かどうか
+	bool isMove_;
 
 	//一回でも押したかどうか
 	bool isPush_;        
@@ -97,10 +97,16 @@ public:
 	bool IsSelect() { return isSelect_; }
 
 	/// <summary>
-	/// 押すのを許可するかセット
+	/// 動いているかセット
 	/// </summary>
-	/// <param name="flag">trueなら許可する</param>
-	void SetPushOk(bool flag);
+	/// <param name="flag">trueなら動いている</param>
+	void SetMove(bool flag);
+
+	/// <summary>
+	/// 動いているか取得
+	/// </summary>
+	/// <returns>trueなら動いている</returns>
+	bool IsMove() { return isMove_; }
 
 	/// <summary>
 	/// 自分の前に選択されていたボタンのポジションをセット
