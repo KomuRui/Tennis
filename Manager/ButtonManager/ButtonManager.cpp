@@ -59,13 +59,14 @@ namespace ButtonManager
 		}
 
 		//nullじゃないのなら入力処理
-		if (pButtonController0 == nullptr) Input(pButtonController0);
-		if (pButtonController1 == nullptr) Input(pButtonController1,1);
+		if (pButtonController0 != nullptr) Input(pButtonController0);
+		if (pButtonController1 != nullptr) Input(pButtonController1,1);
 	}
 
 	//入力
 	void Input(ButtonBase* button, int numController)
 	{
+
 		//選択されているボタンのxとyを保存
 		float x = button->GetComponent<Transform>()->GetPosition().x;
 		float y = button->GetComponent<Transform>()->GetPosition().y;
@@ -253,7 +254,9 @@ namespace ButtonManager
 	{
 		for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
 		{
-			(*i)->SetSelect(false, numController);
+			//同じコントローラー番号なら
+			if((*i)->GetControllerNum() == numController)
+				(*i)->SetSelect(false, numController);
 		}
 
 		button->SetSelect(true, numController);

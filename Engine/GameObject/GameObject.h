@@ -133,6 +133,8 @@ public:
 	//RootJobを取得
 	GameObject* GetRootJob();
 
+	//自身を親のリストの最後にプッシュする
+	void MyObjectParentListEndPush();
 
 	//オブジェクトが持っているコンポーネントを取得
 	template<class T>

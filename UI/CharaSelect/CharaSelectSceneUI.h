@@ -26,19 +26,22 @@ public:
 	//初期化
 	void Initialize() override;
 
+	//描画
+	void Draw() override;
+
 	/// <summary>
 	/// トランスフォーム設定
 	/// </summary>
 	/// <param name="t">設定したいトランスフォーム</param>
 	/// <param name="numController">コントローラー番号</param>
-	void SetTransform(const Transform& t, int numController);
+	void SetSelectPictTransform(const Transform& t, int numController);
 
 	/// <summary>
 	/// 各コントローラーの選択画像のトランスフォームを取得
 	/// </summary>
 	/// <param name="numController">コントローラー番号</param>
 	/// <returns>トランスフォーム</returns>
-	Transform* GetTrasnform(int numController) { return selectPict_[numController].second.get(); }
+	Transform* GetSelectPictTrasnform(int numController) { return selectPict_[numController].second.get(); }
 
 };
 

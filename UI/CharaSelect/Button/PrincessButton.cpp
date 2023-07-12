@@ -2,6 +2,7 @@
 #include "../../../Engine/ResourceManager/ImageManager.h"
 #include "../../../Manager/ButtonManager/ButtonManager.h"
 #include "../../../Manager/GameManager/GameManager.h"
+#include "../CharaSelectSceneUI.h"
 
 //定数
 namespace
@@ -21,12 +22,15 @@ PrincessButton::PrincessButton(GameObject* parent, std::string modelPath, std::s
 //初期化
 void PrincessButton::ChildInitialize()
 {
+	//選択状態に(コントローラー番号1にしておく)
+	ButtonManager::SetSelect(this, 1);
+
+	//コントローラーの選択画像のトランスフォームを変更
+	((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->SetSelectPictTransform(*transform_, numController_);
+
 	//イージング設定
 	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutBack);
 	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE));
-
-	//選択状態に(コントローラー番号1にしておく)
-	ButtonManager::SetSelect(this,1);
 }
 
 //更新

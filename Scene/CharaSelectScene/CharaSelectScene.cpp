@@ -3,7 +3,7 @@
 
 //コンストラクタ
 CharaSelectScene::CharaSelectScene(GameObject* parent)
-	: GameObject(parent, "ModeSelectScene")
+	: GameObject(parent, "CharaSelectScene")
 {
 }
 

@@ -268,6 +268,22 @@ GameObject * GameObject::GetRootJob()
 	else return GetParent()->GetRootJob();
 }
 
+//自身を親のリストの最後にプッシュする
+void GameObject::MyObjectParentListEndPush()
+{
+	// オブジェクトのイテレータを検索
+	auto it = std::find(GetParent()->GetChildList()->begin(), GetParent()->GetChildList()->end(), this);
+
+	if (it != GetParent()->GetChildList()->end()) {
+
+		// オブジェクトが見つかった場合、リストから削除
+		GetParent()->GetChildList()->erase(it);
+
+		// オブジェクトをリストの末尾に追加
+		GetParent()->GetChildList()->push_back(this);
+	}
+}
+
 void GameObject::UpdateSub()
 {
 	//nullならこの先処理しない
