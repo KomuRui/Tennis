@@ -56,5 +56,11 @@ public:
 	/// イージングの終わった回数をリセット
 	/// </summary>
 	void ResetEndEasingCount() { endEasingCount_ = 0; }
+
+	/// <summary>
+	/// 最後まで終了したかどうか
+	/// </summary>
+	/// <returns></returns>
+	bool IsFinish();
 };
 

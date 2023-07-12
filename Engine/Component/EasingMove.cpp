@@ -71,4 +71,15 @@ void EasingMove::Reset(XMFLOAT3* targetPos,XMFLOAT3 beforePos, XMFLOAT3 afterPos
 	Time::Lock(timerhNum_);
 }
 
+/// <summary>
+/// 最後まで終了したかどうか
+/// </summary>
+/// <returns></returns>
+bool EasingMove::IsFinish() 
+{
+	//セットしてないなら
+	if (!isSet_) return false;
+
+	return (nowTime_ > 1);
+};
 

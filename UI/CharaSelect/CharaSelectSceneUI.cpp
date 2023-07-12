@@ -5,7 +5,7 @@
 //定数
 namespace
 {
-	static const float EASING_TIME = 0.5f; //イージングにかける時間
+	static const float EASING_TIME = 0.25f; //イージングにかける時間
 }
 
 //コンストラクタ
@@ -62,6 +62,7 @@ void CharaSelectSceneUI::SetSelectPictTransform(const Transform& t, int numContr
 //イージングリセット
 void CharaSelectSceneUI::ResetEasing(const XMFLOAT3& t,int numController)
 {
+
 	selectPict_[numController].easingSelectPict_.get()->Reset(
 		&selectPict_[numController].transform_.get()->position_,
 		selectPict_[numController].transform_.get()->GetPosition(),
