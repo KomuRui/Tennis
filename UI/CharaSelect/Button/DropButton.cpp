@@ -6,8 +6,8 @@
 //定数
 namespace
 {
-	static const XMFLOAT3 POS_ADD_VALUE = { -0.75f, -0.75f, ZERO };        //ポジションに対しての加算値
-	static const XMFLOAT3 CHARA_IMAGE_DRAW_POS = { -0.4f, ZERO, ZERO };    //キャラ画像の表示位置
+	static const XMFLOAT3 CHARA_IMAGE_POS_ADD_VALUE = { ZERO,2.0f,ZERO };  //キャラ画像の対しての加算値
+	static const XMFLOAT3 POS_ADD_VALUE = { -1.5f, ZERO, ZERO };           //ポジションに対しての加算値
 	static const float EASING_TIME = 0.6f;                                 //イージング時間
 	static const float SELECT_PICT_EASING_TIME = 0.75f;                    //選択画像のイージング時間
 }
@@ -17,6 +17,7 @@ DropButton::DropButton(GameObject* parent, std::string modelPath, std::string na
 	:EasingButton(parent, modelPath, name), hCharaPict_(-1)
 {
 	ARGUMENT_INITIALIZE(tCharaPict_, std::make_unique<Transform>());
+	ARGUMENT_INITIALIZE(easingCharaPict_, std::make_unique<EasingMove>());
 }
 
 //初期化
@@ -40,6 +41,8 @@ void DropButton::EasingButtonChileUpdate()
 	//もし動いているかつイージング処理が最後まで終了しているのなら
 	if (isMove_ && charaSelectSceneUI->GetEasing(numController_).IsFinish())
 		ARGUMENT_INITIALIZE(isMove_, false);
+
+	easingCharaPict_->Move();
 }
 
 //描画
@@ -57,13 +60,15 @@ void DropButton::ChildDraw()
 void DropButton::IsButtonPush()
 {
 	charaSelectSceneUI->SetIsOK(true, numController_);
+	SetSelectNoChange(true);
 }
 
 //ボタンが選択された瞬間に何をするか
 void DropButton::IsButtonSelect()
 {
 	ARGUMENT_INITIALIZE(isMove_, true);
-	tCharaPict_.get()->SetPosition(charaSelectSceneUI->GetCharaPictPos(numController_));
+	easingCharaPict_->Reset(&tCharaPict_.get()->position_, VectorToFloat3(charaSelectSceneUI->GetCharaPictPos(numController_) + CHARA_IMAGE_POS_ADD_VALUE), charaSelectSceneUI->GetCharaPictPos(numController_), EASING_TIME, Easing::InCubic);
+	tCharaPict_.get()->SetPosition(VectorToFloat3(charaSelectSceneUI->GetCharaPictPos(numController_) + CHARA_IMAGE_POS_ADD_VALUE));
 	charaSelectSceneUI->ResetEasing(transform_->position_, numController_);
 }
 

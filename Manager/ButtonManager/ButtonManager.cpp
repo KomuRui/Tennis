@@ -66,8 +66,8 @@ namespace ButtonManager
 	//入力
 	void Input(ButtonBase* button, int numController)
 	{
-		//動き途中ならこの先処理しない
-		if (button->IsMove()) return;
+		//動き途中か選択中が変更されないならこの先処理しない
+		if (button->IsMove() || button->IsSelectNoChange()) return;
 
 		//選択されているボタンのxとyを保存
 		float x = button->GetComponent<Transform>()->GetPosition().x;

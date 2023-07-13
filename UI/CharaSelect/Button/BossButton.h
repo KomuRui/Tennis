@@ -13,7 +13,8 @@ class BossButton : public EasingButton
 
 	//キャラ画像
 	int hCharaPict_;
-	std::unique_ptr<Transform> tCharaPict_;  //トランスフォーム
+	std::unique_ptr<Transform> tCharaPict_;        //トランスフォーム
+	std::unique_ptr<EasingMove> easingCharaPict_;  //イージング用
 
 public:
 

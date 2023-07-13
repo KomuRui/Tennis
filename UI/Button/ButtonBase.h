@@ -33,7 +33,10 @@ protected:
 	bool isMove_;
 
 	//一回でも押したかどうか
-	bool isPush_;        
+	bool isPush_;
+
+	//選択中が変更されるかどうか
+	bool isSelectNoChange_;
 
 public:
 
@@ -107,6 +110,18 @@ public:
 	/// </summary>
 	/// <returns>trueなら動いている</returns>
 	bool IsMove() { return isMove_; }
+
+	/// <summary>
+	/// 選択中が変更されるかセット
+	/// </summary>
+	/// <param name="flag">trueなら動いている</param>
+	void SetSelectNoChange(bool flag) { isSelectNoChange_ = flag; }
+
+	/// <summary>
+	/// 選択中が変更されるかどうか取得
+	/// </summary>
+	/// <returns>trueなら変更されない</returns>
+	bool IsSelectNoChange() { return isSelectNoChange_; }
 
 	/// <summary>
 	/// 自分の前に選択されていたボタンのポジションをセット

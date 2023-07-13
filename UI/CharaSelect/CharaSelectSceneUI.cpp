@@ -77,8 +77,6 @@ void CharaSelectSceneUI::Draw()
 //トランスフォーム設定
 void CharaSelectSceneUI::SetSelectPictTransform(const Transform& t, int numController)
 {
-	if (selectPict_[numController].isOK_) return;
-
 	selectPict_[numController].transform_.get()->SetPosition(t.position_);
 	selectPict_[numController].transform_.get()->SetRotate(t.rotate_);
 	selectPict_[numController].transform_.get()->SetScale(t.scale_);
@@ -87,8 +85,6 @@ void CharaSelectSceneUI::SetSelectPictTransform(const Transform& t, int numContr
 //イージングリセット
 void CharaSelectSceneUI::ResetEasing(const XMFLOAT3& t,int numController)
 {
-	if (selectPict_[numController].isOK_) return;
-
 	selectPict_[numController].easingSelectPict_.get()->Reset(
 		&selectPict_[numController].transform_.get()->position_,
 		selectPict_[numController].transform_.get()->GetPosition(),

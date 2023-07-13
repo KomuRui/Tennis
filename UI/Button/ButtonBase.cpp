@@ -3,7 +3,7 @@
 
 //コンストラクタ
 ButtonBase::ButtonBase(GameObject* parent, std::string modelPath, std::string name)
-	:ImageBase(parent,modelPath,name), isSelect_(false), isPush_(false), isMove_(false), numController_(ZERO), beforeButtonSelectPos_(ZERO, ZERO, ZERO)
+	:ImageBase(parent,modelPath,name), isSelect_(false), isPush_(false), isMove_(false), numController_(ZERO), beforeButtonSelectPos_(ZERO, ZERO, ZERO), isSelectNoChange_(false)
 {}
 
 
