@@ -39,7 +39,7 @@ void DropButton::ChildInitialize()
 void DropButton::EasingButtonChileUpdate()
 {
 	//もし動いているかつイージング処理が最後まで終了しているのなら
-	if (isMove_ && charaSelectSceneUI->GetEasing(numController_).IsFinish())
+	if (isMove_ && charaSelectSceneUI->GetEasing(numController_).IsFinish() && easingCharaPict_->IsFinish())
 		ARGUMENT_INITIALIZE(isMove_, false);
 
 	easingCharaPict_->Move();
@@ -49,7 +49,7 @@ void DropButton::EasingButtonChileUpdate()
 void DropButton::ChildDraw()
 {
 	//選択されているのなら
-	if (isSelect_)
+	if (isSelect_ || !easingCharaPict_->IsFinish())
 	{
 		ImageManager::SetTransform(hCharaPict_, tCharaPict_.get());
 		ImageManager::SetUi(hCharaPict_);
@@ -75,4 +75,6 @@ void DropButton::IsButtonSelect()
 //ボタンが選択解除された瞬間に何をするか
 void DropButton::IsButtonSelectRelease()
 {
+	ARGUMENT_INITIALIZE(isMove_, true);
+	easingCharaPict_->Reset(&tCharaPict_.get()->position_, charaSelectSceneUI->GetCharaPictPos(numController_), VectorToFloat3(charaSelectSceneUI->GetCharaPictPos(numController_) - CHARA_IMAGE_POS_ADD_VALUE), EASING_TIME, Easing::InCubic);
 }

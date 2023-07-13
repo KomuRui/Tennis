@@ -78,7 +78,7 @@ void EasingMove::Reset(XMFLOAT3* targetPos,XMFLOAT3 beforePos, XMFLOAT3 afterPos
 bool EasingMove::IsFinish() 
 {
 	//ƒZƒbƒg‚µ‚Ä‚È‚¢‚È‚ç
-	if (!isSet_) return false;
+	if (!isSet_) return true;
 
 	return (nowTime_ > 1);
 };
