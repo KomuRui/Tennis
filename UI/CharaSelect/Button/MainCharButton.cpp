@@ -2,7 +2,6 @@
 #include "../../../Engine/ResourceManager/ImageManager.h"
 #include "../../../Manager/ButtonManager/ButtonManager.h"
 #include "../../../Manager/GameManager/GameManager.h"
-#include "../CharaSelectSceneUI.h"
 
 //定数
 namespace
@@ -23,11 +22,14 @@ MainCharButton::MainCharButton(GameObject* parent, std::string modelPath, std::s
 //初期化
 void MainCharButton::ChildInitialize()
 {
+	//コントローラーの選択画像のトランスフォームを変更
+	ARGUMENT_INITIALIZE(charaSelectSceneUI, ((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI")));
+
 	//選択状態に
 	ButtonManager::SetSelect(this);
 
 	//コントローラーの選択画像のトランスフォームを変更
-	((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->SetSelectPictTransform(*transform_, numController_);
+	charaSelectSceneUI->SetSelectPictTransform(*transform_, numController_);
 
 	//イージング設定
 	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutBack);
@@ -35,14 +37,14 @@ void MainCharButton::ChildInitialize()
 
 	//画像ロード
 	ARGUMENT_INITIALIZE(hCharaPict_, ImageManager::Load("Image/CharaSelect/MainChar.png"));
-	tCharaPict_.get()->SetPosition(CHARA_IMAGE_DRAW_POS);
+	tCharaPict_.get()->SetPosition(charaSelectSceneUI->GetCharaPictPos(numController_));
 }
 
 //更新
 void MainCharButton::EasingButtonChileUpdate()
 {
 	//もし動いているかつイージング処理が最後まで終了しているのなら
-	if (isMove_ && ((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->GetEasing(numController_).IsFinish())
+	if (isMove_ && charaSelectSceneUI->GetEasing(numController_).IsFinish())
 		ARGUMENT_INITIALIZE(isMove_, false);
 }
 
@@ -60,15 +62,15 @@ void MainCharButton::ChildDraw()
 //ボタンが押されたら何するか
 void MainCharButton::IsButtonPush()
 {
-	//リセットする
-	ButtonManager::Reset();
+	charaSelectSceneUI->SetIsOK(true, numController_);
 }
 
 //ボタンが選択された瞬間に何をするか
 void MainCharButton::IsButtonSelect()
 {
 	ARGUMENT_INITIALIZE(isMove_, true);
-	((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->ResetEasing(transform_->position_, numController_);
+	tCharaPict_.get()->SetPosition(charaSelectSceneUI->GetCharaPictPos(numController_));
+	charaSelectSceneUI->ResetEasing(transform_->position_, numController_);
 }
 
 //ボタンが選択解除された瞬間に何をするか

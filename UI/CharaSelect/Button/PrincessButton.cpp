@@ -2,13 +2,11 @@
 #include "../../../Engine/ResourceManager/ImageManager.h"
 #include "../../../Manager/ButtonManager/ButtonManager.h"
 #include "../../../Manager/GameManager/GameManager.h"
-#include "../CharaSelectSceneUI.h"
 
 //定数
 namespace
 {
 	static const XMFLOAT3 POS_ADD_VALUE = { -0.75f, -0.75f, ZERO };        //ポジションに対しての加算値
-	static const XMFLOAT3 CHARA_IMAGE_DRAW_POS = { -0.4f, ZERO, ZERO };    //キャラ画像の表示位置
 	static const float EASING_TIME = 0.6f;                                 //イージング時間
 	static const float SELECT_PICT_EASING_TIME = 0.75f;                    //選択画像のイージング時間
 }
@@ -23,11 +21,12 @@ PrincessButton::PrincessButton(GameObject* parent, std::string modelPath, std::s
 //初期化
 void PrincessButton::ChildInitialize()
 {
-	//選択状態に(コントローラー番号1にしておく)
-	ButtonManager::SetSelect(this, 1);
 
 	//コントローラーの選択画像のトランスフォームを変更
-	((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->SetSelectPictTransform(*transform_, numController_);
+	ARGUMENT_INITIALIZE(charaSelectSceneUI,((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI")));
+
+	//選択状態に(コントローラー番号1にしておく)
+	ButtonManager::SetSelect(this, 1);
 
 	//イージング設定
 	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutBack);
@@ -35,14 +34,14 @@ void PrincessButton::ChildInitialize()
 
 	//画像ロード
 	ARGUMENT_INITIALIZE(hCharaPict_, ImageManager::Load("Image/CharaSelect/Princess.png"));
-	tCharaPict_.get()->SetPosition(CHARA_IMAGE_DRAW_POS);
+	tCharaPict_.get()->SetPosition(charaSelectSceneUI->GetCharaPictPos(numController_));
 }
 
 //更新
 void PrincessButton::EasingButtonChileUpdate()
 {
 	//もし動いているかつイージング処理が最後まで終了しているのなら
-	if (isMove_ && ((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->GetEasing(numController_).IsFinish())
+	if (isMove_ && charaSelectSceneUI->GetEasing(numController_).IsFinish())
 		ARGUMENT_INITIALIZE(isMove_, false);
 }
 
@@ -60,15 +59,15 @@ void PrincessButton::ChildDraw()
 //ボタンが押されたら何するか
 void PrincessButton::IsButtonPush()
 {
-	//リセットする
-	ButtonManager::Reset();
+	charaSelectSceneUI->SetIsOK(true, numController_);
 }
 
 //ボタンが選択された瞬間に何をするか
 void PrincessButton::IsButtonSelect()
 {
 	ARGUMENT_INITIALIZE(isMove_, true);
-	((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->ResetEasing(transform_->position_, numController_);
+	tCharaPict_.get()->SetPosition(charaSelectSceneUI->GetCharaPictPos(numController_));
+	charaSelectSceneUI->ResetEasing(transform_->position_, numController_);
 }
 
 //ボタンが選択解除された瞬間に何をするか

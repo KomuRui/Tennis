@@ -1,12 +1,16 @@
 #pragma once
 #pragma once
 #include "../../Button/EasingButton.h"
+#include "../CharaSelectSceneUI.h"
 
 /// <summary>
 /// お姫様ボタン
 /// </summary>
 class PrincessButton : public EasingButton
 {
+	//UI統括してるやつ
+	CharaSelectSceneUI* charaSelectSceneUI;
+
 	//キャラ画像
 	int hCharaPict_; 
 	std::unique_ptr<Transform> tCharaPict_;  //トランスフォーム

@@ -17,6 +17,8 @@ class CharaSelectSceneUI : public GameObject
 	struct selectPictInfo
 	{
 		int hPict_;                                    //画像番号
+		int hPictOK_;								   //OKしたときの画像番号
+		bool isOK_;									   //OKしたかどうか
 		std::shared_ptr<Transform> transform_;         //トランスフォーム
 		std::unique_ptr<EasingMove> easingSelectPict_; //選択されているときの画像のイージング用
 	};
@@ -68,5 +70,23 @@ public:
 	/// <param name="numController">コントローラー番号</param>
 	/// <returns>イージングクラス</returns>
 	EasingMove& GetEasing(int numController) { return *selectPict_[numController].easingSelectPict_; };
+
+	/// <summary>
+	/// キャラ画像の表示位置
+	/// </summary>
+	/// <returns>表示位置</returns>
+	XMFLOAT3 GetCharaPictPos(int numController);
+
+	/// <summary>
+	/// OKしたかどうか設定する
+	/// </summary>
+	/// <param name="flag">trueならOK</param>
+	void SetIsOK(bool flag, int numController) { selectPict_[numController].isOK_ = flag; }
+
+	/// <summary>
+	/// OKしたかどうか取得する
+	/// </summary>
+	/// <returns>trueならOKしている</returns>
+	bool IsOK(int numController) { return selectPict_[numController].isOK_; }
 };
 

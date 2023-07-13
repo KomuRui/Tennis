@@ -1,12 +1,15 @@
 #pragma once
 #pragma once
 #include "../../Button/EasingButton.h"
+#include "../CharaSelectSceneUI.h"
 
 /// <summary>
 /// “Øƒ{ƒ^ƒ“
 /// </summary>
 class PigButton : public EasingButton
 {
+	//UI“Š‡‚µ‚Ä‚é‚â‚Â
+	CharaSelectSceneUI* charaSelectSceneUI;
 
 	//ƒLƒƒƒ‰‰æ‘œ
 	int hCharaPict_;

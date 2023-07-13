@@ -2,7 +2,6 @@
 #include "../../../Engine/ResourceManager/ImageManager.h"
 #include "../../../Manager/ButtonManager/ButtonManager.h"
 #include "../../../Manager/GameManager/GameManager.h"
-#include "../CharaSelectSceneUI.h"
 
 //定数
 namespace
@@ -23,20 +22,23 @@ DropButton::DropButton(GameObject* parent, std::string modelPath, std::string na
 //初期化
 void DropButton::ChildInitialize()
 {
+	//コントローラーの選択画像のトランスフォームを変更
+	ARGUMENT_INITIALIZE(charaSelectSceneUI, ((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI")));
+
 	//イージング設定
 	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutBack);
 	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE));
 
 	//画像ロード
 	ARGUMENT_INITIALIZE(hCharaPict_, ImageManager::Load("Image/CharaSelect/Drop.png"));
-	tCharaPict_.get()->SetPosition(CHARA_IMAGE_DRAW_POS);
+	tCharaPict_.get()->SetPosition(charaSelectSceneUI->GetCharaPictPos(numController_));
 }
 
 //更新
 void DropButton::EasingButtonChileUpdate()
 {
 	//もし動いているかつイージング処理が最後まで終了しているのなら
-	if (isMove_ && ((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->GetEasing(numController_).IsFinish())
+	if (isMove_ && charaSelectSceneUI->GetEasing(numController_).IsFinish())
 		ARGUMENT_INITIALIZE(isMove_, false);
 }
 
@@ -54,15 +56,15 @@ void DropButton::ChildDraw()
 //ボタンが押されたら何するか
 void DropButton::IsButtonPush()
 {
-	//リセットする
-	ButtonManager::Reset();
+	charaSelectSceneUI->SetIsOK(true, numController_);
 }
 
 //ボタンが選択された瞬間に何をするか
 void DropButton::IsButtonSelect()
 {
 	ARGUMENT_INITIALIZE(isMove_, true);
-	((CharaSelectSceneUI*)FindObject("CharaSelectSceneUI"))->ResetEasing(transform_->position_, numController_);
+	tCharaPict_.get()->SetPosition(charaSelectSceneUI->GetCharaPictPos(numController_));
+	charaSelectSceneUI->ResetEasing(transform_->position_, numController_);
 }
 
 //ボタンが選択解除された瞬間に何をするか

@@ -1,12 +1,15 @@
 #pragma once
 #pragma once
 #include "../../Button/EasingButton.h"
+#include "../CharaSelectSceneUI.h"
 
 /// <summary>
 ///メインキャラボタン
 /// </summary>
 class MainCharButton : public EasingButton
 {
+	//UI統括してるやつ
+	CharaSelectSceneUI* charaSelectSceneUI;
 
 	//キャラ画像
 	int hCharaPict_;
