@@ -37,6 +37,9 @@ void CharaSelectSceneUI::Initialize()
 
 	//親のリストの最後に位置替え
 	MyObjectParentListEndPush();
+
+	//フェード用の画像ロード
+	pCreateImage_->LoadFileCreateStage(GetParent(), "Data/StageData/CharaSelect/CharaSelectFade.json");
 }
 
 //更新

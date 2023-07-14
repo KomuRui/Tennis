@@ -37,7 +37,7 @@ namespace Direct3D
 	extern XMMATRIX clipToUV_;
 	extern ID3D11ShaderResourceView* pDepthSRV_;
 	extern ID3D11SamplerState* pDepthSampler_;
-	extern Sprite* pScreen;
+	extern std::shared_ptr<Sprite> pScreen;
 	extern bool isShadowDraw;
 
 	//■シェーダー関連で必要なセット

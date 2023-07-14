@@ -96,7 +96,7 @@ namespace Direct3D
 	D3D11_VIEWPORT vpFull2;
 
 	//ゲーム画面のスクリーンショット用
-	Sprite* pScreen = nullptr;
+	std::shared_ptr<Sprite> pScreen = std::make_shared<Sprite>();
 	ID3D11Texture2D* pRenderTextureGame = nullptr;
 	ID3D11RenderTargetView* pRenderTargetViewScreen = nullptr;
 
@@ -440,7 +440,7 @@ namespace Direct3D
 		pBackBuffer->GetDesc(&texdecGame);
 		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
 		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
-		pScreen = new Sprite;
+		
 
 		// シェーダリソースビュー(テクスチャ用)の設定
 		D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};

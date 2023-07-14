@@ -104,7 +104,7 @@ namespace ImageManager
 	//”CˆÓ‚Ì‰æ‘œ‚ðŠJ•ú
 	void Release(int handle)
 	{
-		if (handle < 0 || handle >= _datas.size())
+		if (handle < 0 || _datas[handle]->isScreenCapture || handle >= _datas.size())
 		{
 			return;
 		}

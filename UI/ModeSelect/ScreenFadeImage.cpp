@@ -17,7 +17,7 @@ ScreenFadeImage::ScreenFadeImage(GameObject* parent, std::string modelPath, std:
 //‰Šú‰»
 void ScreenFadeImage::ChildInitialize()
 {
-	ImageManager::SetSprite(hPict_,Direct3D::pScreen);
+	ImageManager::SetSprite(hPict_,Direct3D::pScreen.get());
 	ImageManager::SetScreenCapture(hPict_, true);
 }
 
