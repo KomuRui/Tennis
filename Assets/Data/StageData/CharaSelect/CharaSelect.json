@@ -47,5 +47,12 @@
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "BossChildButton"
+  },
+  "ImageBase7": {
+    "FileName": "Image/CharaSelect/BossChildIcon.png",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "CharaSelectScreenFadeImage"
   }
 }

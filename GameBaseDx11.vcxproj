@@ -239,6 +239,7 @@
     <ClCompile Include="UI\CharaSelect\Button\PrincessButton.cpp" />
     <ClCompile Include="UI\CharaSelect\Button\YesButton.cpp" />
     <ClCompile Include="UI\CharaSelect\CharaSelectSceneUI.cpp" />
+    <ClCompile Include="UI\CharaSelect\CharaSelectScreenFadeImage.cpp" />
     <ClCompile Include="UI\CharaSelect\QuestionImage.cpp" />
     <ClCompile Include="UI\EasingImage.cpp" />
     <ClCompile Include="UI\ImageBase.cpp" />
@@ -354,6 +355,7 @@
     <ClInclude Include="UI\CharaSelect\Button\PrincessButton.h" />
     <ClInclude Include="UI\CharaSelect\Button\YesButton.h" />
     <ClInclude Include="UI\CharaSelect\CharaSelectSceneUI.h" />
+    <ClInclude Include="UI\CharaSelect\CharaSelectScreenFadeImage.h" />
     <ClInclude Include="UI\CharaSelect\QuestionImage.h" />
     <ClInclude Include="UI\EasingImage.h" />
     <ClInclude Include="UI\ImageBase.h" />

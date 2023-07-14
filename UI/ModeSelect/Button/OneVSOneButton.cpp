@@ -68,6 +68,9 @@ void OneVSOneButton::IsButtonPush()
 	//リセットする
 	ButtonManager::Reset();
 	
+	//スクリーンショット
+	Direct3D::ScreenShoot();
+
 	//キャラ選択シーンに変更
 	GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_CHARA_SELECT);
 }

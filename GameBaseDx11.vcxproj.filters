@@ -471,6 +471,9 @@
     <ClCompile Include="UI\CharaSelect\Button\NoButton.cpp">
       <Filter>UI\CharaSelect\Button</Filter>
     </ClCompile>
+    <ClCompile Include="UI\CharaSelect\CharaSelectScreenFadeImage.cpp">
+      <Filter>UI\CharaSelect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -807,6 +810,9 @@
     </ClInclude>
     <ClInclude Include="UI\CharaSelect\Button\NoButton.h">
       <Filter>UI\CharaSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\CharaSelectScreenFadeImage.h">
+      <Filter>UI\CharaSelect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
