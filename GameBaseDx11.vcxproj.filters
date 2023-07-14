@@ -462,6 +462,15 @@
     <ClCompile Include="UI\CharaSelect\Button\PrincessButton.cpp">
       <Filter>UI\CharaSelect\Button</Filter>
     </ClCompile>
+    <ClCompile Include="UI\CharaSelect\QuestionImage.cpp">
+      <Filter>UI\CharaSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CharaSelect\Button\YesButton.cpp">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CharaSelect\Button\NoButton.cpp">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -788,6 +797,15 @@
       <Filter>UI\CharaSelect\Button</Filter>
     </ClInclude>
     <ClInclude Include="UI\CharaSelect\Button\PrincessButton.h">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\QuestionImage.h">
+      <Filter>UI\CharaSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\Button\YesButton.h">
+      <Filter>UI\CharaSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CharaSelect\Button\NoButton.h">
       <Filter>UI\CharaSelect\Button</Filter>
     </ClInclude>
   </ItemGroup>

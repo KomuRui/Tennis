@@ -23,6 +23,9 @@ namespace ButtonManager
 	//現在使われているボタンを格納する変数
 	std::vector<ButtonBase*> nowUseButton;
 
+	//現在使われているボタンを保存しておく変数
+	std::vector<ButtonBase*> nowUseKeepButton;
+
 	//XとYの前回入力保存用
 	float beforeXSlope[2] = { ZERO,ZERO };
 	float beforeYSlope[2] = { ZERO,ZERO };
@@ -269,5 +272,31 @@ namespace ButtonManager
 	{
 		//空にする
 		nowUseButton.clear();
+	}
+
+	//現在使われているボタンを保存しボタンリストを空にする
+	void NowUseButtonKeepAndButtonListEmpty()
+	{
+		//保存しておく
+		ARGUMENT_INITIALIZE(nowUseKeepButton, nowUseButton);
+
+		//空にする
+		nowUseButton.clear();
+	}
+
+	//保存されているボタンを現在使われているボタンに移行する
+	void KeepButtonChangeNowUseButton()
+	{
+		//保存しておく
+		ARGUMENT_INITIALIZE(nowUseButton, nowUseKeepButton);
+
+		//空にする
+		nowUseKeepButton.clear();
+
+		//全部チェンジしないようにする
+		for (auto i = nowUseButton.begin(); i != nowUseButton.end(); i++)
+		{
+			(*i)->SetSelectNoChange(false);
+		}
 	}
 };

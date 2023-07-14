@@ -13,6 +13,9 @@ class CharaSelectSceneUI : public GameObject
 	//各UI作成用
 	std::unique_ptr<CreateStage> pCreateImage_ = std::make_unique<CreateStage>();
 
+	//確認用UI
+	std::unique_ptr<CreateStage> pCreateConfirmationImage_ = std::make_unique<CreateStage>();
+
 	//選択画像の情報
 	struct selectPictInfo
 	{
@@ -25,6 +28,9 @@ class CharaSelectSceneUI : public GameObject
 
 	//Controller0,1の選択してる時の情報を格納
 	map<int, selectPictInfo> selectPict_;
+
+	//確認UIが表示されているか
+	bool isDrawConfirmationUI_;
 
 public:
 
@@ -65,6 +71,11 @@ public:
 	void ResetEasing(const XMFLOAT3& t,int numController);
 
 	/// <summary>
+	/// 確認UiでNoが選ばれた時
+	/// </summary>
+	void ConfirmationUINo();
+
+	/// <summary>
 	/// イージングクラスを取得
 	/// </summary>
 	/// <param name="numController">コントローラー番号</param>
@@ -81,12 +92,23 @@ public:
 	/// OKしたかどうか設定する
 	/// </summary>
 	/// <param name="flag">trueならOK</param>
-	void SetIsOK(bool flag, int numController) { selectPict_[numController].isOK_ = flag; }
+	void SetIsOK(bool flag, int numController);
 
 	/// <summary>
 	/// OKしたかどうか取得する
 	/// </summary>
 	/// <returns>trueならOKしている</returns>
 	bool IsOK(int numController) { return selectPict_[numController].isOK_; }
+
+	/// <summary>
+	/// 確認用UIが表示されているか設定
+	/// </summary>
+	/// <param name="flag">trueなら表示されている</param>
+	void SetDrawConfirmationUI(bool flag) { isDrawConfirmationUI_ = flag; }
+
+	/// <summary>
+	/// 確認用UIが表示されているか取得
+	/// </summary>
+	bool IsDrawConfirmationUI() { return isDrawConfirmationUI_; }
 };
 

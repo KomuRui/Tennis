@@ -1,6 +1,7 @@
 #include "CharaSelectSceneUI.h"
 #include "../../Engine/DirectX/Sprite.h"
 #include "../../Engine/ResourceManager/ImageManager.h"
+#include "../../Manager/ButtonManager/ButtonManager.h"
 
 //定数
 namespace
@@ -11,7 +12,7 @@ namespace
 
 //コンストラクタ
 CharaSelectSceneUI::CharaSelectSceneUI(GameObject* parent)
-	: GameObject(parent, "CharaSelectSceneUI")
+	: GameObject(parent, "CharaSelectSceneUI"), isDrawConfirmationUI_(false)
 {
 }
 
@@ -74,6 +75,23 @@ void CharaSelectSceneUI::Draw()
 
 }
 
+//確認UiでNoが選ばれた時
+void CharaSelectSceneUI::ConfirmationUINo()
+{
+	//UI描画していないに変更
+	SetDrawConfirmationUI(false);
+
+	//削除
+	pCreateConfirmationImage_->AllCreateStageDelete();
+
+	//OK状態じゃなくする
+	ARGUMENT_INITIALIZE(selectPict_[0].isOK_, false);
+	ARGUMENT_INITIALIZE(selectPict_[1].isOK_, false);
+
+	//保存ボタンを現在使われているボタンに変更
+	ButtonManager::KeepButtonChangeNowUseButton();
+}
+
 //トランスフォーム設定
 void CharaSelectSceneUI::SetSelectPictTransform(const Transform& t, int numController)
 {
@@ -98,5 +116,23 @@ void CharaSelectSceneUI::ResetEasing(const XMFLOAT3& t,int numController)
 XMFLOAT3 CharaSelectSceneUI::GetCharaPictPos(int numController)
 {
 	return CHARA_IMAGE_DRAW_POS[numController];
+}
+
+//OKしたかどうか設定する
+void CharaSelectSceneUI::SetIsOK(bool flag, int numController)
+{ 
+	//確認用UIが表示されているのならこの先は処理しない
+	if (isDrawConfirmationUI_) return;
+
+	//flag設定
+	ARGUMENT_INITIALIZE(selectPict_[numController].isOK_,flag);
+
+	//どちらもOK状態になったら確認用Uiを表示
+	if (selectPict_[0].isOK_ && selectPict_[1].isOK_)
+	{
+		ARGUMENT_INITIALIZE(isDrawConfirmationUI_, true);
+		ButtonManager::NowUseButtonKeepAndButtonListEmpty();
+		pCreateConfirmationImage_->LoadFileCreateStage(this, "Data/StageData/CharaSelect/CharaSelectConfirmation.json");
+	}
 }
 

@@ -33,5 +33,15 @@ namespace ButtonManager
 	/// リセットする
 	/// </summary>
 	void Reset();
+
+	/// </summary>
+	/// 現在使われているボタンを保存しボタンリストを空にする
+	/// </summary>
+	void NowUseButtonKeepAndButtonListEmpty();
+
+	/// <summary>
+	/// 保存されているボタンを現在使われているボタンに移行する
+	/// </summary>
+	void KeepButtonChangeNowUseButton();
 };
 

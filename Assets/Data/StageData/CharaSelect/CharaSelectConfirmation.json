@@ -1,9 +1,30 @@
 {
   "ImageBase": {
     "FileName": "Image/CharaSelect/BackGround2.png",
-    "Position": [ 0.0, 0, 0.0 ],
+    "Position": [ 0.0, 0.0, 0.0 ],
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "ImageBase"
+  },
+  "ImageBase1": {
+    "FileName": "Image/CharaSelect/Normal.png",
+    "Position": [ -0.5, -0.5, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "NoButton"
+  },
+  "ImageBase2": {
+    "FileName": "Image/CharaSelect/Question_Text.png",
+    "Position": [ 0.0, 0.2, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "QuestionImage"
+  },
+  "ImageBase3": {
+    "FileName": "Image/CharaSelect/Normal.png",
+    "Position": [ 0.5, -0.5, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "YesButton"
   }
 }

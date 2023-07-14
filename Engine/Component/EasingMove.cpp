@@ -41,13 +41,13 @@ bool EasingMove::Move()
 		ARGUMENT_INITIALIZE(endEasingCount_, beforeEndEasingCount_ + 1);
 		(*targetPos_).x += (x * (*easingFunc)(1));
 		(*targetPos_).y += (y * (*easingFunc)(1));
-		(*targetPos_).y += (z * (*easingFunc)(1));
+		(*targetPos_).z += (z * (*easingFunc)(1));
 		return true;
 	}
 
 	(*targetPos_).x += (x * (*easingFunc)(nowTime_));
 	(*targetPos_).y += (y * (*easingFunc)(nowTime_));
-	(*targetPos_).y += (z * (*easingFunc)(nowTime_));
+	(*targetPos_).z += (z * (*easingFunc)(nowTime_));
 
 	ARGUMENT_INITIALIZE(beforeEndEasingCount_, endEasingCount_);
 

@@ -16,6 +16,9 @@
 #include "../../UI/CharaSelect/Button/MainCharButton.h"
 #include "../../UI/CharaSelect/Button/PigButton.h"
 #include "../../UI/CharaSelect/Button/PrincessButton.h"
+#include "../../UI/CharaSelect/QuestionImage.h"
+#include "../../UI/CharaSelect/Button/YesButton.h"
+#include "../../UI/CharaSelect/Button/NoButton.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
@@ -85,6 +88,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	{
 		InstantiateNormal<PlayerImage>(parent, ModelPathName, inName, t);
 	}
+	if (inName == "QuestionImage")
+	{
+		InstantiateNormal<QuestionImage>(parent, ModelPathName, inName, t);
+	}
 	if (inName == "ExplanationButton")
 	{
 		InstantiateButton<ExplanationButton>(parent, ModelPathName, inName, t);
@@ -120,6 +127,14 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "PrincessButton")
 	{
 		InstantiateButton<PrincessButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "YesButton")
+	{
+		InstantiateButton<YesButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "NoButton")
+	{
+		InstantiateButton<NoButton>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////OtherObject///////////////////////

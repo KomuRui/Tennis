@@ -47,6 +47,13 @@ void PrincessButton::EasingButtonChileUpdate()
 		ARGUMENT_INITIALIZE(isMove_, false);
 
 	easingCharaPict_->Move();
+
+	//‘I‘ð‚µ‚½ó‘Ô‚ÅBƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½‚È‚ç
+	if (!charaSelectSceneUI->IsDrawConfirmationUI() && isSelectNoChange_ && Input::IsPadButtonDown(XINPUT_GAMEPAD_B, numController_))
+	{
+		charaSelectSceneUI->SetIsOK(false, numController_);
+		SetSelectNoChange(false);
+	}
 }
 
 //•`‰æ

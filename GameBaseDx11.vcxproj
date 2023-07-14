@@ -234,9 +234,12 @@
     <ClCompile Include="UI\CharaSelect\Button\BossChildButton.cpp" />
     <ClCompile Include="UI\CharaSelect\Button\DropButton.cpp" />
     <ClCompile Include="UI\CharaSelect\Button\MainCharButton.cpp" />
+    <ClCompile Include="UI\CharaSelect\Button\NoButton.cpp" />
     <ClCompile Include="UI\CharaSelect\Button\PigButton.cpp" />
     <ClCompile Include="UI\CharaSelect\Button\PrincessButton.cpp" />
+    <ClCompile Include="UI\CharaSelect\Button\YesButton.cpp" />
     <ClCompile Include="UI\CharaSelect\CharaSelectSceneUI.cpp" />
+    <ClCompile Include="UI\CharaSelect\QuestionImage.cpp" />
     <ClCompile Include="UI\EasingImage.cpp" />
     <ClCompile Include="UI\ImageBase.cpp" />
     <ClCompile Include="UI\ModeSelect\Button\ExplanationButton.cpp" />
@@ -346,9 +349,12 @@
     <ClInclude Include="UI\CharaSelect\Button\BossChildButton.h" />
     <ClInclude Include="UI\CharaSelect\Button\DropButton.h" />
     <ClInclude Include="UI\CharaSelect\Button\MainCharButton.h" />
+    <ClInclude Include="UI\CharaSelect\Button\NoButton.h" />
     <ClInclude Include="UI\CharaSelect\Button\PigButton.h" />
     <ClInclude Include="UI\CharaSelect\Button\PrincessButton.h" />
+    <ClInclude Include="UI\CharaSelect\Button\YesButton.h" />
     <ClInclude Include="UI\CharaSelect\CharaSelectSceneUI.h" />
+    <ClInclude Include="UI\CharaSelect\QuestionImage.h" />
     <ClInclude Include="UI\EasingImage.h" />
     <ClInclude Include="UI\ImageBase.h" />
     <ClInclude Include="UI\ModeSelect\Button\ExplanationButton.h" />
