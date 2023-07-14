@@ -1,5 +1,11 @@
-#include "TitleScene.h"
-#include "../../Engine/System.h"
+#include "CourtSelectScene.h"
+#include "../../UI/ModeSelect/ModeSelectSceneUI.h"
+#include "../../Engine/GameObject/Camera.h"
+#include <fstream>
+#include "../../Engine/nlohmann/json.hpp"
+
+using json = nlohmann::json;
+using namespace std;
 
 //定数
 namespace
@@ -9,21 +15,21 @@ namespace
 	static const int FIELD_ANGLE = 45;						   //カメラの画角
 }
 
-
 //コンストラクタ
-TitleScene::TitleScene(GameObject* parent)
-	: GameObject(parent, "TitleScene"), nowLookNum_(ZERO)
+CourtSelectScene::CourtSelectScene(GameObject* parent)
+	: GameObject(parent, "CourtSelectScene"), nowLookNum_(ZERO)
 {
 }
 
 //デストラクタ
-TitleScene::~TitleScene()
+CourtSelectScene::~CourtSelectScene()
 {
 }
 
 //初期化
-void TitleScene::Initialize()
+void CourtSelectScene::Initialize()
 {
+
 	///////////////カメラ///////////////////
 
 	//一つ目のカメラ
@@ -34,40 +40,27 @@ void TitleScene::Initialize()
 	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
 
 	std::unique_ptr<CreateStage> pCreateStage = std::make_unique<CreateStage>();
-	pCreateStage->LoadFileCreateStage(this, "Data/StageData/Title/Title.json");
+	pCreateStage->LoadFileCreateStage(this, "Data/StageData/CourtSelect/CourtSelect.json");
 
 	/////////////////ファイル読み込んでパスごとの位置取得///////////////////
 
-	SetData("Data/PathData/TitleCamera/CamPos1.json", "Data/PathData/TitleCamera/CamTar1.json");
 	SetData("Data/PathData/TitleCamera/CamPos2.json", "Data/PathData/TitleCamera/CamTar2.json");
 	SetData("Data/PathData/TitleCamera/CamPos3.json", "Data/PathData/TitleCamera/CamTar3.json");
-	
+
 	//開始
 	hermiteMoveTable_[nowLookNum_].first->Start();
 	hermiteMoveTable_[nowLookNum_].second->Start();
-	
 }
 
 //更新
-void TitleScene::Update()
+void CourtSelectScene::Update()
 {
-	//シーン移行
-	if (Input::IsPadButtonDown(XINPUT_GAMEPAD_A))
-	{
-		Direct3D::ScreenShoot();
-		GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_MODE_SELECT);
-	}
 	//カメラ
 	CameraMove();
 }
 
-//描画
-void TitleScene::Draw()
-{
-}
-
 //カメラの動き
-void TitleScene::CameraMove()
+void CourtSelectScene::CameraMove()
 {
 	//カメラ設定
 	Camera::SetPosition(hermiteMoveTable_[nowLookNum_].first->Updata());
@@ -89,7 +82,7 @@ void TitleScene::CameraMove()
 }
 
 //データセット
-void TitleScene::SetData(string posFileName, string tarFileName)
+void CourtSelectScene::SetData(string posFileName, string tarFileName)
 {
 	//新しく追加
 	hermiteMoveTable_.push_back({ std::make_unique<HermiteSplineMove>(), std::make_unique<HermiteSplineMove>() });

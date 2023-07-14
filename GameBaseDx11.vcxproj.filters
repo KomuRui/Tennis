@@ -150,6 +150,12 @@
     <Filter Include="UI\CharaSelect\Button">
       <UniqueIdentifier>{bfc74ea9-2881-472e-a644-f43187277a0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\CourtSelectScene">
+      <UniqueIdentifier>{80957ad3-bc6a-4b8c-aa42-64f8befee525}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\CourtSelect">
+      <UniqueIdentifier>{67149cc7-0ccd-445a-a41f-96d9376287ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -473,6 +479,12 @@
     </ClCompile>
     <ClCompile Include="UI\CharaSelect\CharaSelectScreenFadeImage.cpp">
       <Filter>UI\CharaSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\CourtSelectScene\CourtSelectScene.cpp">
+      <Filter>Scene\CourtSelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CourtSelect\CourtSelectScreenFadeImage.cpp">
+      <Filter>UI\CourtSelect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -813,6 +825,12 @@
     </ClInclude>
     <ClInclude Include="UI\CharaSelect\CharaSelectScreenFadeImage.h">
       <Filter>UI\CharaSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\CourtSelectScene\CourtSelectScene.h">
+      <Filter>Scene\CourtSelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CourtSelect\CourtSelectScreenFadeImage.h">
+      <Filter>UI\CourtSelect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

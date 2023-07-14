@@ -177,6 +177,7 @@ namespace ImGuiSet
         stageInfoFilePath_[SCENE_ID_TITLE] = "Data/StageData/Title/Title.json";
         stageInfoFilePath_[SCENE_ID_MODE_SELECT] = "Data/StageData/ModeSelect/ModeSelect.json";
         stageInfoFilePath_[SCENE_ID_CHARA_SELECT] = "Data/StageData/CharaSelect/CharaSelectConfirmation.json";
+        stageInfoFilePath_[SCENE_ID_COURT_SELECT] = "Data/StageData/CourtSelect/CourtSelect.json";
         stageInfoFilePath_[SCENE_ID_PLAY] = "Data/StageData/Play/Play.json";
 
         //‰æ‘œ

@@ -218,6 +218,7 @@
     <ClCompile Include="OtherObject\ToolObj\BasePointModel.cpp" />
     <ClCompile Include="Player\PlayerBase.cpp" />
     <ClCompile Include="Scene\CharaSelectScene\CharaSelectScene.cpp" />
+    <ClCompile Include="Scene\CourtSelectScene\CourtSelectScene.cpp" />
     <ClCompile Include="Scene\ModeSelectScene\ModeSelectScene.cpp" />
     <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
@@ -241,6 +242,7 @@
     <ClCompile Include="UI\CharaSelect\CharaSelectSceneUI.cpp" />
     <ClCompile Include="UI\CharaSelect\CharaSelectScreenFadeImage.cpp" />
     <ClCompile Include="UI\CharaSelect\QuestionImage.cpp" />
+    <ClCompile Include="UI\CourtSelect\CourtSelectScreenFadeImage.cpp" />
     <ClCompile Include="UI\EasingImage.cpp" />
     <ClCompile Include="UI\ImageBase.cpp" />
     <ClCompile Include="UI\ModeSelect\Button\ExplanationButton.cpp" />
@@ -334,6 +336,7 @@
     <ClInclude Include="Player\PlayerBase.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\CharaSelectScene\CharaSelectScene.h" />
+    <ClInclude Include="Scene\CourtSelectScene\CourtSelectScene.h" />
     <ClInclude Include="Scene\ModeSelectScene\ModeSelectScene.h" />
     <ClInclude Include="Scene\PlayScene\PlayScene.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
@@ -357,6 +360,7 @@
     <ClInclude Include="UI\CharaSelect\CharaSelectSceneUI.h" />
     <ClInclude Include="UI\CharaSelect\CharaSelectScreenFadeImage.h" />
     <ClInclude Include="UI\CharaSelect\QuestionImage.h" />
+    <ClInclude Include="UI\CourtSelect\CourtSelectScreenFadeImage.h" />
     <ClInclude Include="UI\EasingImage.h" />
     <ClInclude Include="UI\ImageBase.h" />
     <ClInclude Include="UI\ModeSelect\Button\ExplanationButton.h" />

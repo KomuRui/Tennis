@@ -20,6 +20,7 @@
 #include "../../UI/CharaSelect/Button/YesButton.h"
 #include "../../UI/CharaSelect/Button/NoButton.h"
 #include "../../UI/CharaSelect/CharaSelectScreenFadeImage.h"
+#include "../../UI/CourtSelect/CourtSelectScreenFadeImage.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
@@ -96,6 +97,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "CharaSelectScreenFadeImage")
 	{
 		InstantiateNormal<CharaSelectScreenFadeImage>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "CourtSelectScreenFadeImage")
+	{
+		InstantiateNormal<CourtSelectScreenFadeImage>(parent, ModelPathName, inName, t);
 	}
 	if (inName == "ExplanationButton")
 	{

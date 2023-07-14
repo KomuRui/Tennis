@@ -65,6 +65,14 @@ void YesButton::ChildDraw()
 //ボタンが押されたら何するか
 void YesButton::IsButtonPush()
 {
+	//ボタンリセット
+	ButtonManager::Reset();
+
+	//スクリーンショット
+	Direct3D::ScreenShoot();
+
+	//キャラ選択シーンに変更
+	GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_COURT_SELECT);
 }
 
 //ボタンが選択された瞬間に何をするか
