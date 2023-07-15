@@ -498,6 +498,15 @@
     <ClCompile Include="UI\CourtSelect\Button\GrassCourtButton.cpp">
       <Filter>UI\CourtSelect\Button</Filter>
     </ClCompile>
+    <ClCompile Include="UI\CourtSelect\CourtSelectSceneUI.cpp">
+      <Filter>UI\CourtSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CourtSelect\BoundUI.cpp">
+      <Filter>UI\CourtSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CourtSelect\SphereFootUI.cpp">
+      <Filter>UI\CourtSelect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -852,6 +861,15 @@
     </ClInclude>
     <ClInclude Include="UI\CourtSelect\Button\GrassCourtButton.h">
       <Filter>UI\CourtSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CourtSelect\CourtSelectSceneUI.h">
+      <Filter>UI\CourtSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CourtSelect\BoundUI.h">
+      <Filter>UI\CourtSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CourtSelect\SphereFootUI.h">
+      <Filter>UI\CourtSelect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

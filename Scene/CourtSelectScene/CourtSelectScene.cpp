@@ -1,5 +1,5 @@
 #include "CourtSelectScene.h"
-#include "../../UI/ModeSelect/ModeSelectSceneUI.h"
+#include "../../UI/CourtSelect/CourtSelectSceneUI.h"
 #include "../../Engine/GameObject/Camera.h"
 #include <fstream>
 #include "../../Engine/nlohmann/json.hpp"
@@ -37,10 +37,10 @@ void CourtSelectScene::Initialize()
 	Camera::SetTarget(CAM_TAR);
 	Camera::SetFieldAngle(FIELD_ANGLE);
 
-	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
+	/////////////////UI作成///////////////////
 
-	std::unique_ptr<CreateStage> pCreateStage = std::make_unique<CreateStage>();
-	pCreateStage->LoadFileCreateStage(this, "Data/StageData/CourtSelect/CourtSelect.json");
+	//表示
+	Instantiate<CourtSelectSceneUI>(this);
 
 	/////////////////ファイル読み込んでパスごとの位置取得///////////////////
 

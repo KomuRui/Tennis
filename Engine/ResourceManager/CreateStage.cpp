@@ -21,6 +21,9 @@
 #include "../../UI/CharaSelect/Button/NoButton.h"
 #include "../../UI/CharaSelect/CharaSelectScreenFadeImage.h"
 #include "../../UI/CourtSelect/CourtSelectScreenFadeImage.h"
+#include "../../UI/CourtSelect/Button/ClayCourtButton.h"
+#include "../../UI/CourtSelect/Button/GrassCourtButton.h"
+#include "../../UI/CourtSelect/Button/HardCourtButton.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
@@ -145,6 +148,18 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "NoButton")
 	{
 		InstantiateButton<NoButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "HardCourtButton")
+	{
+		InstantiateButton<HardCourtButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "ClayCourtButton")
+	{
+		InstantiateButton<ClayCourtButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "GrassCourtButton")
+	{
+		InstantiateButton<GrassCourtButton>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////OtherObject///////////////////////
