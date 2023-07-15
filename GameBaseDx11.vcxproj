@@ -242,6 +242,9 @@
     <ClCompile Include="UI\CharaSelect\CharaSelectSceneUI.cpp" />
     <ClCompile Include="UI\CharaSelect\CharaSelectScreenFadeImage.cpp" />
     <ClCompile Include="UI\CharaSelect\QuestionImage.cpp" />
+    <ClCompile Include="UI\CourtSelect\Button\ClayCourtButton.cpp" />
+    <ClCompile Include="UI\CourtSelect\Button\GrassCourtButton.cpp" />
+    <ClCompile Include="UI\CourtSelect\Button\HardCourtButton.cpp" />
     <ClCompile Include="UI\CourtSelect\CourtSelectScreenFadeImage.cpp" />
     <ClCompile Include="UI\EasingImage.cpp" />
     <ClCompile Include="UI\ImageBase.cpp" />
@@ -360,6 +363,9 @@
     <ClInclude Include="UI\CharaSelect\CharaSelectSceneUI.h" />
     <ClInclude Include="UI\CharaSelect\CharaSelectScreenFadeImage.h" />
     <ClInclude Include="UI\CharaSelect\QuestionImage.h" />
+    <ClInclude Include="UI\CourtSelect\Button\ClayCourtButton.h" />
+    <ClInclude Include="UI\CourtSelect\Button\GrassCourtButton.h" />
+    <ClInclude Include="UI\CourtSelect\Button\HardCourtButton.h" />
     <ClInclude Include="UI\CourtSelect\CourtSelectScreenFadeImage.h" />
     <ClInclude Include="UI\EasingImage.h" />
     <ClInclude Include="UI\ImageBase.h" />

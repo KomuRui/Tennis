@@ -15,5 +15,8 @@ public:
 	//‰Šú‰»
 	void ChildInitialize() override;
 
+	//XV
+	void EasingImageChileUpdate() override;
+
 };
 

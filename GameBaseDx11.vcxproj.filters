@@ -156,6 +156,9 @@
     <Filter Include="UI\CourtSelect">
       <UniqueIdentifier>{67149cc7-0ccd-445a-a41f-96d9376287ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\CourtSelect\Button">
+      <UniqueIdentifier>{b22e4868-ccf9-451e-a27d-e7bb9729829a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -485,6 +488,15 @@
     </ClCompile>
     <ClCompile Include="UI\CourtSelect\CourtSelectScreenFadeImage.cpp">
       <Filter>UI\CourtSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CourtSelect\Button\HardCourtButton.cpp">
+      <Filter>UI\CourtSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CourtSelect\Button\ClayCourtButton.cpp">
+      <Filter>UI\CourtSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CourtSelect\Button\GrassCourtButton.cpp">
+      <Filter>UI\CourtSelect\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -831,6 +843,15 @@
     </ClInclude>
     <ClInclude Include="UI\CourtSelect\CourtSelectScreenFadeImage.h">
       <Filter>UI\CourtSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CourtSelect\Button\HardCourtButton.h">
+      <Filter>UI\CourtSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CourtSelect\Button\ClayCourtButton.h">
+      <Filter>UI\CourtSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CourtSelect\Button\GrassCourtButton.h">
+      <Filter>UI\CourtSelect\Button</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

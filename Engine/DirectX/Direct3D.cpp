@@ -440,7 +440,7 @@ namespace Direct3D
 		pBackBuffer->GetDesc(&texdecGame);
 		texdecGame.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
 		pDevice_->CreateTexture2D(&texdecGame, NULL, &pRenderTextureGame);
-		
+		ScreenShoot();
 
 		// シェーダリソースビュー(テクスチャ用)の設定
 		D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};

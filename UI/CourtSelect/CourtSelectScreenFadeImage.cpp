@@ -18,5 +18,15 @@ void CourtSelectScreenFadeImage::ChildInitialize()
 {
 	ImageManager::SetSprite(hPict_, Direct3D::pScreen.get());
 	ImageManager::SetScreenCapture(hPict_, true);
-	easing_->Reset(&transform_->position_, transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), EASING_TIME, Easing::InCubic);
+	easing_->Reset(&transform_->scale_, transform_->scale_, {ZERO,ZERO,ZERO}, EASING_TIME, Easing::InCubic);
+}
+
+//更新
+void CourtSelectScreenFadeImage::EasingImageChileUpdate()
+{
+	//回転させる
+	transform_->rotate_.z += 10.0f;
+
+	//イージングが終了したら削除
+	if (easing_->IsFinish())KillMe();
 }
