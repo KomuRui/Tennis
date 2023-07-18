@@ -34,6 +34,11 @@ public:
 	void CameraMove();
 
 	/// <summary>
+	/// カメラリスタート
+	/// </summary>
+	void CameraReStart();
+
+	/// <summary>
 	/// データセット
 	/// </summary>
 	void SetData(string posFileName, string tarFileName);

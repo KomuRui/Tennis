@@ -30,6 +30,8 @@ void TennisCourt::TwoWindowDraw()
 //テニスコートの型を設定
 void TennisCourt::SetTennisCourtType(TennisCourtType type)
 {
+	if (this == nullptr) return;
+
 	//タイプ登録
 	ARGUMENT_INITIALIZE(type_, type);
 	ARGUMENT_INITIALIZE(hModel_, hModelTable_[type]);

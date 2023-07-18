@@ -2,6 +2,8 @@
 #include "../../../Engine/ResourceManager/ImageManager.h"
 #include "../../../Manager/ButtonManager/ButtonManager.h"
 #include "../../../Manager/GameManager/GameManager.h"
+#include "../../../OtherObject/PlayScene/TennisCourt.h"
+#include "../../../Scene/CourtSelectScene/CourtSelectScene.h"
 
 //定数
 namespace
@@ -13,7 +15,7 @@ namespace
 
 //コンストラクタ
 ClayCourtButton::ClayCourtButton(GameObject* parent, std::string modelPath, std::string name)
-	:EasingButton(parent, modelPath, name), hTextPict_(-1), hSelectPict_(-1)
+	:EasingButton(parent, modelPath, name), hTextPict_(-1), hSelectPict_(-1), hCourtInfoPict_(-1)
 {
 	ARGUMENT_INITIALIZE(easingSelectPict_, std::make_unique<EasingMove>());
 }
@@ -31,11 +33,9 @@ void ClayCourtButton::ChildInitialize()
 
 	////////////////////////////////画像の初期設定////////////////////////////////////
 
-	ARGUMENT_INITIALIZE(hTextPict_, ImageManager::Load("Image/ModeSelect/1VS1_Text.png"));
-	ARGUMENT_INITIALIZE(hSelectPict_, ImageManager::Load("Image/ModeSelect/1VS1_Select.png"));
-
-	//選択状態に
-	ButtonManager::SetSelect(this);
+	ARGUMENT_INITIALIZE(hTextPict_, ImageManager::Load("Image/CourtSelect/Clay_Text.png"));
+	ARGUMENT_INITIALIZE(hSelectPict_, ImageManager::Load("Image/CourtSelect/Clay_Select.png"));
+	ARGUMENT_INITIALIZE(hCourtInfoPict_, ImageManager::Load("Image/CourtSelect/Clay_Info.png"));
 }
 
 //更新
@@ -55,6 +55,10 @@ void ClayCourtButton::ChildDraw()
 		//選択画像描画
 		ImageManager::SetTransform(hSelectPict_, &tSelectPict_);
 		ImageManager::SetUi(hSelectPict_);
+
+		//コート情報画像描画
+		ImageManager::SetTransform(hCourtInfoPict_, &tCourtInfoPict_);
+		ImageManager::SetUi(hCourtInfoPict_);
 	}
 
 	//文字描画
@@ -71,6 +75,12 @@ void ClayCourtButton::IsButtonPush()
 void ClayCourtButton::IsButtonSelect()
 {
 	easingSelectPict_->Reset(&tSelectPict_.scale_, XMFLOAT3(ZERO, 1, ZERO), XMFLOAT3(1, 1, ZERO), SELECT_PICT_EASING_TIME, Easing::OutBack);
+
+	//カメラリスタート
+	((CourtSelectScene*)FindObject("CourtSelectScene"))->CameraReStart();
+
+	//テニスコート変更
+	((TennisCourt*)FindObject("TennisCourt"))->SetTennisCourtType(TennisCourtType::CLAY_COURT);
 }
 
 //ボタンが選択解除された瞬間に何をするか

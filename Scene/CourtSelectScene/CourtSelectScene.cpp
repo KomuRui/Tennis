@@ -81,6 +81,20 @@ void CourtSelectScene::CameraMove()
 	}
 }
 
+//カメラリスタート
+void CourtSelectScene::CameraReStart()
+{
+	//空ならこの先処理しない
+	if (hermiteMoveTable_.empty()) return;
+
+	//見るポイントを最初にする
+	ARGUMENT_INITIALIZE(nowLookNum_, ZERO);
+
+	//開始
+	hermiteMoveTable_[nowLookNum_].first->ReStart();
+	hermiteMoveTable_[nowLookNum_].second->ReStart();
+}
+
 //データセット
 void CourtSelectScene::SetData(string posFileName, string tarFileName)
 {

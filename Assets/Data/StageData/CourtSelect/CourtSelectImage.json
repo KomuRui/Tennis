@@ -1,4 +1,46 @@
 {
+  "ImageBase": {
+    "FileName": "Image/CharaSelect/BackGround.png",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "CourtSelectScreenFadeImage"
+  },
+  "ImageBase1": {
+    "FileName": "Image/CourtSelect/BackGround.png",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ImageBase"
+  },
+  "ImageBase2": {
+    "FileName": "Image/CourtSelect/AandB.png",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ImageBase"
+  },
+  "ImageBase3": {
+    "FileName": "Image/CourtSelect/Normal.png",
+    "Position": [ -0.7540000081062317, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ClayCourtButton"
+  },
+  "ImageBase4": {
+    "FileName": "Image/CourtSelect/Normal.png",
+    "Position": [ -0.7540000081062317, 0.1899999976158142, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "HardCourtButton"
+  },
+  "ImageBase5": {
+    "FileName": "Image/CourtSelect/Normal.png",
+    "Position": [ -0.7540000081062317, -0.1899999976158142, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "GrassCourtButton"
+  },
   "Net": {
     "FileName": "Stage/Net.fbx",
     "Position": [ 0.0, 0.0, 0.0 ],
@@ -61,12 +103,5 @@
     "Rotate": [ 0.0, 0.0, 0.0 ],
     "Scale": [ 1.0, 1.0, 1.0 ],
     "TypeName": "Water"
-  },
-  "ImageBase": {
-    "FileName": "Image/CharaSelect/BackGround.png",
-    "Position": [ 0.0, 0.0, 0.0 ],
-    "Rotate": [ 0.0, 0.0, 0.0 ],
-    "Scale": [ 1.0, 1.0, 1.0 ],
-    "TypeName": "CourtSelectScreenFadeImage"
   }
 }

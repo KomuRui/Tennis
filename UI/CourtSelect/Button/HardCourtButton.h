@@ -8,8 +8,10 @@ class HardCourtButton : public EasingButton
 {
 	std::unique_ptr<EasingMove> easingSelectPict_; //選択されているときの画像のイージング用
 	Transform tSelectPict_;                        //選択されているときの画像のトランスフォーム
+	Transform tCourtInfoPict_;                     //コート情報の画像のトランスフォーム
 	int hSelectPict_;                              //選択されているときの画像番号
 	int hTextPict_;								   //文字画像番号
+	int hCourtInfoPict_;                           //コート情報の画像番号
 
 public:
 
