@@ -69,6 +69,14 @@ void ClayCourtButton::ChildDraw()
 //ボタンが押されたら何するか
 void ClayCourtButton::IsButtonPush()
 {
+	//ボタンリセット
+	ButtonManager::Reset();
+
+	//スクリーンショット
+	Direct3D::ScreenShoot();
+
+	//ゲーム情報選択シーンに変更
+	GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_INFO_SELECT);
 }
 
 //ボタンが選択された瞬間に何をするか

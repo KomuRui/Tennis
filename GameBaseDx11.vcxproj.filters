@@ -159,6 +159,15 @@
     <Filter Include="UI\CourtSelect\Button">
       <UniqueIdentifier>{b22e4868-ccf9-451e-a27d-e7bb9729829a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\InfoSelect">
+      <UniqueIdentifier>{ac71a86f-cb36-49db-b3a5-7e2108059cf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\InfoSelect\Button">
+      <UniqueIdentifier>{44d62d5c-d2f2-4a94-a02e-d2b1c1aae582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\InfoSelectScene">
+      <UniqueIdentifier>{535b1c07-c8b5-4f48-8487-ef815143010d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -506,6 +515,21 @@
     </ClCompile>
     <ClCompile Include="UI\CourtSelect\SphereFootUI.cpp">
       <Filter>UI\CourtSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\InfoSelect\InfoSelectSceneUI.cpp">
+      <Filter>UI\InfoSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\InfoSelect\Button\SetButton.cpp">
+      <Filter>UI\InfoSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\InfoSelect\Button\GameButton.cpp">
+      <Filter>UI\InfoSelect\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\InfoSelectScene\InfoSelectScene.cpp">
+      <Filter>Scene\InfoSelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\InfoSelect\InfoSelectScreenFadeImage.cpp">
+      <Filter>UI\InfoSelect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -870,6 +894,21 @@
     </ClInclude>
     <ClInclude Include="UI\CourtSelect\SphereFootUI.h">
       <Filter>UI\CourtSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\InfoSelect\InfoSelectSceneUI.h">
+      <Filter>UI\InfoSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\InfoSelect\Button\SetButton.h">
+      <Filter>UI\InfoSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\InfoSelect\Button\GameButton.h">
+      <Filter>UI\InfoSelect\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\InfoSelectScene\InfoSelectScene.h">
+      <Filter>Scene\InfoSelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\InfoSelect\InfoSelectScreenFadeImage.h">
+      <Filter>UI\InfoSelect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

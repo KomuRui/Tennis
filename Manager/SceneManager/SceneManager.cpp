@@ -10,6 +10,7 @@
 #include "../../Scene/ModeSelectScene/ModeSelectScene.h"
 #include "../../Scene/CharaSelectScene/CharaSelectScene.h"
 #include "../../Scene/CourtSelectScene/CourtSelectScene.h"
+#include "../../Scene/InfoSelectScene/InfoSelectScene.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../../Manager/EffectManager/PlayerEffectManager/PlayerEffectManager.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
@@ -71,6 +72,7 @@ void SceneManager::SceneUpdate()
 	case SCENE_ID_MODE_SELECT:		 Instantiate<ModeSelectScene>(this); break;
 	case SCENE_ID_CHARA_SELECT:		 Instantiate<CharaSelectScene>(this); break;
 	case SCENE_ID_COURT_SELECT:		 Instantiate<CourtSelectScene>(this); break;
+	case SCENE_ID_INFO_SELECT:		 Instantiate<InfoSelectScene>(this); break;
 	}
 
 	//カレントシーンを更新

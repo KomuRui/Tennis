@@ -1,4 +1,4 @@
-#include "CharaSelectScreenFadeImage.h"
+#include "InfoSelectScreenFadeImage.h"
 #include "../../Engine/ResourceManager/ImageManager.h"
 
 //定数
@@ -9,12 +9,12 @@ namespace
 }
 
 //コンストラクタ
-CharaSelectScreenFadeImage::CharaSelectScreenFadeImage(GameObject* parent, std::string modelPath, std::string name)
+InfoSelectScreenFadeImage::InfoSelectScreenFadeImage(GameObject* parent, std::string modelPath, std::string name)
 	:EasingImage(parent, modelPath, name)
 {}
 
 //初期化
-void CharaSelectScreenFadeImage::ChildInitialize()
+void InfoSelectScreenFadeImage::ChildInitialize()
 {
 	ImageManager::SetSprite(hPict_, Direct3D::pScreen.get());
 	ImageManager::SetScreenCapture(hPict_, true);
@@ -22,7 +22,7 @@ void CharaSelectScreenFadeImage::ChildInitialize()
 }
 
 //更新
-void CharaSelectScreenFadeImage::EasingImageChileUpdate()
+void InfoSelectScreenFadeImage::EasingImageChileUpdate()
 {
 	//回転させる
 	transform_->rotate_.z += 10.0f;

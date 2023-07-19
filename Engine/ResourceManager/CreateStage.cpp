@@ -24,6 +24,9 @@
 #include "../../UI/CourtSelect/Button/ClayCourtButton.h"
 #include "../../UI/CourtSelect/Button/GrassCourtButton.h"
 #include "../../UI/CourtSelect/Button/HardCourtButton.h"
+#include "../../UI/InfoSelect/InfoSelectScreenFadeImage.h"
+#include "../../UI/InfoSelect/Button/GameButton.h"
+#include "../../UI/InfoSelect/Button/SetButton.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
@@ -105,6 +108,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	{
 		InstantiateNormal<CourtSelectScreenFadeImage>(parent, ModelPathName, inName, t);
 	}
+	if (inName == "InfoSelectScreenFadeImage")
+	{
+		InstantiateNormal<InfoSelectScreenFadeImage>(parent, ModelPathName, inName, t);
+	}
 	if (inName == "ExplanationButton")
 	{
 		InstantiateButton<ExplanationButton>(parent, ModelPathName, inName, t);
@@ -160,6 +167,14 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "GrassCourtButton")
 	{
 		InstantiateButton<GrassCourtButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "SetButton")
+	{
+		InstantiateButton<SetButton>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "GameButton")
+	{
+		InstantiateButton<GameButton>(parent, ModelPathName, inName, t);
 	}
 
 	/////////////////////OtherObject///////////////////////
@@ -250,6 +265,7 @@ void CreateStage::LoadFileCreateStage(GameObject* parent, std::string filename)
 	ifstream ifs(filename);
 	json json_object;
 	ifs >> json_object;
+
 
 	//Še’lŽæ“¾
 	for (auto it = json_object.begin(); it != json_object.end(); it++) {

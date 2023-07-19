@@ -219,6 +219,7 @@
     <ClCompile Include="Player\PlayerBase.cpp" />
     <ClCompile Include="Scene\CharaSelectScene\CharaSelectScene.cpp" />
     <ClCompile Include="Scene\CourtSelectScene\CourtSelectScene.cpp" />
+    <ClCompile Include="Scene\InfoSelectScene\InfoSelectScene.cpp" />
     <ClCompile Include="Scene\ModeSelectScene\ModeSelectScene.cpp" />
     <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
@@ -251,6 +252,10 @@
     <ClCompile Include="UI\CourtSelect\SphereFootUI.cpp" />
     <ClCompile Include="UI\EasingImage.cpp" />
     <ClCompile Include="UI\ImageBase.cpp" />
+    <ClCompile Include="UI\InfoSelect\Button\GameButton.cpp" />
+    <ClCompile Include="UI\InfoSelect\Button\SetButton.cpp" />
+    <ClCompile Include="UI\InfoSelect\InfoSelectScreenFadeImage.cpp" />
+    <ClCompile Include="UI\InfoSelect\InfoSelectSceneUI.cpp" />
     <ClCompile Include="UI\ModeSelect\Button\ExplanationButton.cpp" />
     <ClCompile Include="UI\ModeSelect\Button\MiniGameButton.cpp" />
     <ClCompile Include="UI\ModeSelect\Button\OneVSOneButton.cpp" />
@@ -343,6 +348,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\CharaSelectScene\CharaSelectScene.h" />
     <ClInclude Include="Scene\CourtSelectScene\CourtSelectScene.h" />
+    <ClInclude Include="Scene\InfoSelectScene\InfoSelectScene.h" />
     <ClInclude Include="Scene\ModeSelectScene\ModeSelectScene.h" />
     <ClInclude Include="Scene\PlayScene\PlayScene.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
@@ -375,6 +381,10 @@
     <ClInclude Include="UI\CourtSelect\SphereFootUI.h" />
     <ClInclude Include="UI\EasingImage.h" />
     <ClInclude Include="UI\ImageBase.h" />
+    <ClInclude Include="UI\InfoSelect\Button\GameButton.h" />
+    <ClInclude Include="UI\InfoSelect\Button\SetButton.h" />
+    <ClInclude Include="UI\InfoSelect\InfoSelectScreenFadeImage.h" />
+    <ClInclude Include="UI\InfoSelect\InfoSelectSceneUI.h" />
     <ClInclude Include="UI\ModeSelect\Button\ExplanationButton.h" />
     <ClInclude Include="UI\ModeSelect\Button\MiniGameButton.h" />
     <ClInclude Include="UI\ModeSelect\Button\OneVSOneButton.h" />

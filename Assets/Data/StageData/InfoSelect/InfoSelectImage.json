@@ -1,0 +1,80 @@
+{
+  "ImageBase": {
+    "FileName": "Image/InfoSelect/BackGround.png",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "ImageBase"
+  },
+  "ImageBase1": {
+    "FileName": "Image/CharaSelect/BackGround.png",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "InfoSelectScreenFadeImage"
+  },
+  "Net": {
+    "FileName": "Stage/Net.fbx",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "Net"
+  },
+  "NetAround": {
+    "FileName": "Stage/NetAround.fbx",
+    "Position": [ 0.0, 0.05000000074505806, 0.0 ],
+    "Rotate": [ 0.0, 180.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "NetAround"
+  },
+  "NormalObject": {
+    "FileName": "Stage/RefereeStand.fbx",
+    "Position": [ -8.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "NormalObject"
+  },
+  "NormalObject1": {
+    "FileName": "Stage/Chair.fbx",
+    "Position": [ -7.368000030517578, 0.0, 5.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.5, 1.5, 1.5 ],
+    "TypeName": "NormalObject"
+  },
+  "NormalObject2": {
+    "FileName": "Stage/Chair.fbx",
+    "Position": [ -7.368000030517578, 0.0, -5.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.5, 1.5, 1.5 ],
+    "TypeName": "NormalObject"
+  },
+  "Sky": {
+    "FileName": "Stage/Sky.fbx",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "Sky"
+  },
+  "TennisCourt": {
+    "FileName": "Stage/TennisCourt_ha-do.fbx",
+    "Position": [ 0.0, 0.0, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "TennisCourt"
+  },
+  "TennisCourtAround": {
+    "FileName": "Stage/TennisCourtAround.fbx",
+    "Position": [ 0.0, 0.05000000074505806, 0.0 ],
+    "Rotate": [ 0.0, 180.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "TennisCourtAround"
+  },
+  "Water": {
+    "FileName": "Stage/Water.fbx",
+    "Position": [ 0.0, -0.10000000149011612, 0.0 ],
+    "Rotate": [ 0.0, 0.0, 0.0 ],
+    "Scale": [ 1.0, 1.0, 1.0 ],
+    "TypeName": "Water"
+  }
+
+}
