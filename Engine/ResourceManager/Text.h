@@ -10,11 +10,11 @@ class Text
 
 	//////////////////////////画像情報/////////////////////////////
 
-	int hPict_;                                   //画像番号
-	unsigned int width_, height_;	              //1文字分の幅と高さ
-	char fileName_[MAX_PATH];                     //文字の画像
-	unsigned int rowLength_;                      //画像の中に何文字並んでいるか
-	Transform transform;
+	int hPict_;                                           //画像番号
+	unsigned int width_, height_;	                      //1文字分の幅と高さ
+	char fileName_[MAX_PATH];                             //文字の画像
+	unsigned int rowLength_;                              //画像の中に何文字並んでいるか
+	vector<std::shared_ptr<Transform>> textTransform_;    //文字のトランスフォーム
 
 	//////////////////////////表示/////////////////////////////
 

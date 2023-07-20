@@ -58,14 +58,14 @@ void Text::NumberDraw(float x, float y, const char* str, XMFLOAT2 ratio, float t
 		int y = id / rowLength_;	//上から何番目
 
 		//表示する位置
-		transform.position_.x = px;
-		transform.position_.y = py;
+		textTransform_[i]->position_.x = px;
+		textTransform_[i]->position_.y = py;
 
 		//大きさ
-		transform.scale_.x = ratio.x;
-		transform.scale_.y = ratio.y;
+		textTransform_[i]->scale_.x = ratio.x;
+		textTransform_[i]->scale_.y = ratio.y;
 
-		transform.parent = nullptr;
+		textTransform_[i]->parent = nullptr;
 
 		//表示する範囲
 		RECT r;
@@ -75,10 +75,10 @@ void Text::NumberDraw(float x, float y, const char* str, XMFLOAT2 ratio, float t
 		r.bottom = height_;
 
 		//表示
-		ImageManager::SetText(hPict_, r, &transform);
+		ImageManager::SetText(hPict_, r, textTransform_[i].get());
 
 		//次の位置にずらす
-		px += (width_ / (float)(Direct3D::screenWidth_ / 2.0f) * transform.scale_.x) - textInterval;
+		px += (width_ / (float)(Direct3D::screenWidth_ / 2.0f) * textTransform_[i]->scale_.x) - textInterval;
 	}
 }
 
@@ -264,6 +264,11 @@ void Text::NumberDraw(float x, float y, int value, XMFLOAT2 ratio, float textInt
 	//文字列に変換
 	char str[256];
 	sprintf_s(str, "%d", value);
+
+	for (int i = 0; i < to_string(value).size(); i++)
+	{
+		textTransform_.push_back(std::make_shared<Transform>());
+	}
 
 	NumberDraw(x, y, str, ratio, textInterval);
 }
