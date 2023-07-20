@@ -24,8 +24,8 @@ struct TextInfo
 //テニスのスコア
 class Score
 {
-	map<TennisCourtName, ScoreInfo> scoreTable_;			//スコア表
-	map<TennisCourtName, pair<Text*, TextInfo>> scoreText_; //スコアのテキスト表示用
+	map<TennisCourtName, ScoreInfo> scoreTable_;					        //スコア表
+	map<TennisCourtName, pair<std::unique_ptr<Text>, TextInfo>> scoreText_; //スコアのテキスト表示用
 
 	TennisCourtName pointGetTennisCourtName_;               //ポイント取得しテニスコートの名前
 
