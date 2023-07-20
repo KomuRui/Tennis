@@ -1,6 +1,8 @@
 #include "TennisCourt.h"
 #include "../../Engine/ResourceManager/ModelManager.h"
 #include "../../Engine/DirectX/Direct3D.h"
+#include "../../OtherObject/PlayScene/Referee.h"
+#include "../../Manager/GameManager/GameManager.h"
 
 //コンストラクタ
 TennisCourt::TennisCourt(GameObject* parent, std::string modelPath, std::string name)
@@ -14,6 +16,9 @@ void TennisCourt::ChildInitialize()
 	ARGUMENT_INITIALIZE(hModelTable_[TennisCourtType::HARD_COURT], ModelManager::Load("Stage/TennisCourt_ha-do.fbx"));
 	ARGUMENT_INITIALIZE(hModelTable_[TennisCourtType::GRASS_COURT], ModelManager::Load("Stage/TennisCourt_gurasu.fbx"));
 	ARGUMENT_INITIALIZE(hModelTable_[TennisCourtType::CLAY_COURT], ModelManager::Load("Stage/TennisCourt_kurei.fbx"));
+
+	//テニスコートタイプ設定
+	SetTennisCourtType(GameManager::GetReferee()->GetTennisCourtType());
 
 	//影適用しないように
 	SetShadow(false);

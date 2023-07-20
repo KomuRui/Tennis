@@ -2,7 +2,7 @@
 #include "../../../Engine/ResourceManager/ImageManager.h"
 #include "../../../Manager/ButtonManager/ButtonManager.h"
 #include "../../../Manager/GameManager/GameManager.h"
-#include "../../../OtherObject/PlayScene/TennisCourt.h"
+#include "../../../OtherObject/PlayScene/Referee.h"
 #include "../../../Scene/CourtSelectScene/CourtSelectScene.h"
 
 //定数
@@ -77,6 +77,9 @@ void HardCourtButton::IsButtonPush()
 
 	//スクリーンショット
 	Direct3D::ScreenShoot();
+
+	//テニスコート設定
+	GameManager::GetReferee()->SetTennisCourtType(TennisCourtType::HARD_COURT);
 
 	//ゲーム情報選択シーンに変更
 	GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_INFO_SELECT);

@@ -1,6 +1,7 @@
 #pragma once
 #include "Score.h"
 #include "../../Player/PlayerBase.h"
+#include "../../OtherObject/PlayScene/TennisCourt.h"
 
 //試合状態
 enum class GameStatus
@@ -23,7 +24,11 @@ class Referee
 	Score* score_;	       //スコア
 	GameStatus status_;    //試合状態
 	Side side_;            //サイド状況
+
+	TennisCourtType tennisCourtType_; //テニスコートタイプ
+
 	int numGameFirstToGet_;//何ゲーム先取か
+	int numSetFirstToGet_; //何セット先取か
 
 	PlayerBase* server_;   //サーバー
 	PlayerBase* receiver_; //レシーバー
@@ -157,5 +162,35 @@ public:
 	/// </summary>
 	/// <returns>何ゲーム先取か</returns>
 	int GetnumGameFirstToGet() { return numGameFirstToGet_; }
+
+	/// <summary>
+	/// 何ゲーム先取か設定
+	/// </summary>
+	/// <param name="num">設定したいゲーム数</param>
+	void SetnumGameFirstToGet(int num) { numGameFirstToGet_ = num; }
+
+	/// <summary>
+	/// 何セット先取か取得
+	/// </summary>
+	/// <returns>何セット先取か</returns>
+	int GetnumSetFirstToGet() { return numSetFirstToGet_; }
+
+	/// <summary>
+	/// 何セット先取か設定
+	/// </summary>
+	/// <param name="num">設定したいセット数</param>
+	void SetnumSetFirstToGet(int num) { numSetFirstToGet_ = num; }
+
+	/// <summary>
+	/// テニスコートタイプ取得
+	/// </summary>
+	/// <returns>テニスコートタイプ</returns>
+	TennisCourtType GetTennisCourtType() { return tennisCourtType_; }
+
+	/// <summary>
+	/// テニスコートタイプ設定
+	/// </summary>
+	/// <param name="num">設定したいテニスコートタイプ</param>
+	void SetTennisCourtType(TennisCourtType type) { tennisCourtType_ = type; }
 };
 

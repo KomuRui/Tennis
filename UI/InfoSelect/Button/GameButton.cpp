@@ -2,6 +2,7 @@
 #include "../../../Engine/ResourceManager/ImageManager.h"
 #include "../../../Manager/ButtonManager/ButtonManager.h"
 #include "../../../Manager/GameManager/GameManager.h"
+#include "../../../OtherObject/PlayScene/Referee.h"
 
 //定数
 namespace
@@ -90,6 +91,8 @@ void GameButton::ChildDraw()
 //ボタンが押されたら何するか
 void GameButton::IsButtonPush()
 {
+	//ゲーム数を設定
+	GameManager::GetReferee()->SetnumGameFirstToGet(gameNum_);
 }
 
 //ボタンが選択された瞬間に何をするか
