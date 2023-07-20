@@ -52,6 +52,10 @@ void PlayScene::Initialize()
 	Camera::TwoWindowSetTarget(CAM_TAR_TOW_WINDOW);
 	Camera::SetTwoWindowUpDirection(CAM_UP_TOW_WINDOW);
 
+	/////////////////スコア生成///////////////////
+	
+	GameManager::GetReferee()->ScoreInstantiate();
+
 	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
 
 	CreateStage* pCreateStage = new CreateStage;

@@ -21,9 +21,9 @@ enum class Side {
 /// </summary>
 class Referee
 {
-	Score* score_;	       //スコア
-	GameStatus status_;    //試合状態
-	Side side_;            //サイド状況
+	std::unique_ptr<Score> score_; //スコア
+	GameStatus status_;            //試合状態
+	Side side_;                    //サイド状況
 
 	TennisCourtType tennisCourtType_; //テニスコートタイプ
 
@@ -88,6 +88,11 @@ public:
 	/// サイドリセット
 	/// </summary>
 	void SideReset() { side_ = Side::DEUCE_SIDE; }
+
+	/// <summary>
+	/// スコア生成
+	/// </summary>
+	void ScoreInstantiate() { score_ = std::make_unique<Score>(); }
 
 	/////////////////////////////ゲッター・セッター////////////////////////////////////
 

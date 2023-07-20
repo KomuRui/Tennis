@@ -31,6 +31,10 @@ void TitleScene::Initialize()
 	Camera::SetTarget(CAM_TAR);
 	Camera::SetFieldAngle(FIELD_ANGLE);
 
+	////////////////////////Player人数をまずは1人にしておく/////////////////////////////////
+
+	GameManager::SetPlayers(Players::ONE);
+
 	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
 
 	std::unique_ptr<CreateStage> pCreateStage = std::make_unique<CreateStage>();
