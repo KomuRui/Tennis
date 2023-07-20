@@ -91,8 +91,17 @@ void SetButton::ChildDraw()
 //ボタンが押されたら何するか
 void SetButton::IsButtonPush()
 {
+	//ボタンリセット
+	ButtonManager::Reset();
+
+	//スクリーンショット
+	Direct3D::ScreenShoot();
+
 	//ゲーム数を設定
-	GameManager::GetReferee()->SetnumGameFirstToGet(setNum_);
+	GameManager::GetReferee()->SetnumSetFirstToGet(setNum_);
+
+	//ゲーム情報選択シーンに変更
+	GameManager::GetpSceneManager()->ChangeScene(SCENE_ID_PLAY);
 }
 
 //ボタンが選択された瞬間に何をするか

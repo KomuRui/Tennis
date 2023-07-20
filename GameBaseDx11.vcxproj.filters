@@ -168,6 +168,9 @@
     <Filter Include="Scene\InfoSelectScene">
       <UniqueIdentifier>{535b1c07-c8b5-4f48-8487-ef815143010d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\Play">
+      <UniqueIdentifier>{cff4d040-f3a2-4fd8-bf66-cbd67da4f3f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -530,6 +533,9 @@
     </ClCompile>
     <ClCompile Include="UI\InfoSelect\InfoSelectScreenFadeImage.cpp">
       <Filter>UI\InfoSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Play\PlaySelectScreenFadeImage.cpp">
+      <Filter>UI\Play</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -909,6 +915,9 @@
     </ClInclude>
     <ClInclude Include="UI\InfoSelect\InfoSelectScreenFadeImage.h">
       <Filter>UI\InfoSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Play\PlaySelectScreenFadeImage.h">
+      <Filter>UI\Play</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
