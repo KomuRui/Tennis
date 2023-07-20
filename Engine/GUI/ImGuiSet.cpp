@@ -2036,6 +2036,8 @@ namespace ImGuiSet
             {
                 if(ImGui::MenuItem("Title")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_TITLE); }
                 if(ImGui::MenuItem("ModeSelect")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_MODE_SELECT); }
+                if(ImGui::MenuItem("CourtSelect")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_COURT_SELECT); }
+                if(ImGui::MenuItem("InfoSelect")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_INFO_SELECT); }
                 if(ImGui::MenuItem("CharaSelect")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_CHARA_SELECT); }
                 if(ImGui::MenuItem("Play")){ GameManager::GetpSceneManager()->SetLoadDrawFlag(false); GameManager::GetpSceneManager()->SameSceneInitializ(SCENE_ID_PLAY); }
                 ImGui::EndMenu();

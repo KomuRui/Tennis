@@ -11,6 +11,7 @@ Transform::Transform()
 	matScale_ = XMMatrixIdentity();
 	matAxisRotate_ = XMMatrixIdentity();
 	isAxisRotate_ = false;
+	parent = nullptr;
 }
 
 

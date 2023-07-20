@@ -81,6 +81,9 @@ namespace GameManager
 		//Uiなどを表示
 		ImageManager::UiDraw();
 
+		//テキスト描画
+		ImageManager::TextDraw();
+
 		//スコアとか表示
 		referee_->Draw();
 

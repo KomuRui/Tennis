@@ -10,6 +10,9 @@ namespace ImageManager
 	//uiの描画用
 	std::vector<int> _uiDrawDatas;
 
+	//textの描画用
+	std::vector<TextData> _textDrawDatas;
+
 	//初期化
 	void Initialize()
 	{
@@ -99,6 +102,18 @@ namespace ImageManager
 		_uiDrawDatas.clear();
 	}
 
+	//Text描画
+	void TextDraw()
+	{
+		for (auto i = _textDrawDatas.begin(); i != _textDrawDatas.end(); i++)
+		{
+			(*i).transform->Calclation();
+			_datas[(*i).handle]->pSprite->Draw((*i).transform, (*i).rect, _datas[(*i).handle]->alpha, _datas[(*i).handle]->isScreenCapture);
+		}
+
+		//空にする	
+		_textDrawDatas.clear();
+	}
 
 
 	//任意の画像を開放
@@ -130,8 +145,6 @@ namespace ImageManager
 		SAFE_DELETE(_datas[handle]);
 	}
 
-
-
 	//全ての画像を解放
 	void AllRelease()
 	{
@@ -153,6 +166,22 @@ namespace ImageManager
 
 		_uiDrawDatas.push_back(handle);
 	}
+
+	//テキストをセット(最後に描画したいときに使う
+	void SetText(int handle, RECT rect, Transform* transform)
+	{
+		if (handle < 0 || handle >= _datas.size())
+		{
+			return;
+		}
+
+		TextData data;
+		data.handle = handle;
+		data.rect = rect;
+		data.transform = transform;
+		_textDrawDatas.push_back(data);
+	}
+
 
 	//切り抜き範囲の設定
 	void SetRect(int handle, int x, int y, int width, int height)

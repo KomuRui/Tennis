@@ -7,15 +7,19 @@
 namespace
 {
 	static const XMFLOAT3 POS_ADD_VALUE = { 0.8f, ZERO, ZERO }; //ポジションに対しての加算値
+	static const XMFLOAT2 TEXT_SIZE = { 0.8f,0.8f };            //テキストサイズ
 	static const float EASING_TIME = 0.6f;                      //イージング時間
 	static const float SELECT_PICT_EASING_TIME = 0.5f;          //選択画像のイージング時間
+	static const int MIN_GAME_NUM = 2;							//最小ゲーム数
+	static const int MAX_GAME_NUM = 5;							//最大ゲーム数
 }
 
 //コンストラクタ
 GameButton::GameButton(GameObject* parent, std::string modelPath, std::string name)
-	:EasingButton(parent, modelPath, name), hTextPict_(-1), hSelectPict_(-1)
+	:EasingButton(parent, modelPath, name), hTextPict_(-1), hSelectPict_(-1), gameNum_(MIN_GAME_NUM)
 {
 	ARGUMENT_INITIALIZE(easingSelectPict_, std::make_unique<EasingMove>());
+	ARGUMENT_INITIALIZE(gameNumText_, std::make_unique<Text>());
 }
 
 //初期化
@@ -24,6 +28,9 @@ void GameButton::ChildInitialize()
 	//トランスフォームコピーしておく
 	ARGUMENT_INITIALIZE(tSelectPict_, *transform_);
 	ARGUMENT_INITIALIZE(tSelectPict_.scale_, XMFLOAT3(ZERO, 1, ZERO));
+
+	//テキスト設定
+	gameNumText_->Initialize("Text/NumberFont.png", 128, 256, 10);
 
 	//イージング設定
 	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutCubic);
@@ -41,6 +48,21 @@ void GameButton::ChildInitialize()
 //更新
 void GameButton::EasingButtonChileUpdate()
 {
+	//左に傾けたのなら
+	if (Input::IsPadStickLeftL() && isSelect_)
+	{
+		gameNum_--;
+		ARGUMENT_INITIALIZE(gameNum_,Clamp(gameNum_, MAX_GAME_NUM, MIN_GAME_NUM));
+	}
+
+	//右に傾けたのなら
+	if (Input::IsPadStickRightL() && isSelect_)
+	{
+		gameNum_++;
+		ARGUMENT_INITIALIZE(gameNum_, Clamp(gameNum_, MAX_GAME_NUM, MIN_GAME_NUM));
+	}
+
+	//イージング移動
 	easingSelectPict_->Move();
 }
 
@@ -60,6 +82,9 @@ void GameButton::ChildDraw()
 	//文字描画
 	ImageManager::SetTransform(hTextPict_, transform_);
 	ImageManager::SetUi(hTextPict_);
+
+	//テキスト描画
+	gameNumText_->NumberDraw(0.17f, 0.16f, gameNum_, TEXT_SIZE);
 }
 
 //ボタンが押されたら何するか

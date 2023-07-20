@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Button/EasingButton.h"
+#include "../../../Engine/ResourceManager/Text.h"
 
 /// <summary>
 /// ゲーム数ボタン
@@ -7,9 +8,11 @@
 class GameButton : public EasingButton
 {
 	std::unique_ptr<EasingMove> easingSelectPict_; //選択されているときの画像のイージング用
+	std::unique_ptr<Text>       gameNumText_;      //ゲーム数のテキスト
 	Transform tSelectPict_;                        //選択されているときの画像のトランスフォーム
 	int hSelectPict_;                              //選択されているときの画像番号
 	int hTextPict_;								   //文字画像番号
+	int gameNum_;                                  //ゲーム数
 
 public:
 

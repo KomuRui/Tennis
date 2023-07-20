@@ -41,6 +41,21 @@ namespace ImageManager
 		}
 	};
 
+	//テキスト情報
+	struct TextData
+	{
+		//番号
+		int handle;
+
+		//切り抜き範囲
+		RECT rect;
+
+		//行列
+		Transform* transform;
+
+		//コンストラクタ
+		TextData() : transform(nullptr) {}
+	};
 
 	//初期化
 	void Initialize();
@@ -61,6 +76,11 @@ namespace ImageManager
 	/// </summary>
 	void UiDraw();
 
+	/// <summary>
+	/// Text描画
+	/// </summary>
+	void TextDraw();
+
 	//任意の画像を開放
 	//引数：handle	開放したいモデルの番号
 	void Release(int handle);
@@ -74,6 +94,12 @@ namespace ImageManager
 	/// </summary>
 	/// <param name="handle">番号</param>
 	void SetUi(int handle);
+
+	/// <summary>
+	/// テキストをセット(最後に描画したいときに使う)
+	/// </summary>
+	/// <param name="handle">番号</param>
+	void SetText(int handle, RECT rect, Transform* transform);
 
 	//切り抜き範囲の設定
 	//引数：handle	設定したい画像の番号

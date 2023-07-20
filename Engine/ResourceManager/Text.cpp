@@ -58,7 +58,6 @@ void Text::NumberDraw(float x, float y, const char* str, XMFLOAT2 ratio, float t
 		int y = id / rowLength_;	//上から何番目
 
 		//表示する位置
-		Transform transform;
 		transform.position_.x = px;
 		transform.position_.y = py;
 
@@ -66,13 +65,17 @@ void Text::NumberDraw(float x, float y, const char* str, XMFLOAT2 ratio, float t
 		transform.scale_.x = ratio.x;
 		transform.scale_.y = ratio.y;
 
-		ImageManager::SetTransform(hPict_, &transform);
+		transform.parent = nullptr;
 
 		//表示する範囲
-		ImageManager::SetRect(hPict_, width_ * x , height_ * y, width_, height_);
+		RECT r;
+		r.left = width_ * x;
+		r.top = height_ * y;
+		r.right = width_;
+		r.bottom = height_;
 
 		//表示
-		ImageManager::Draw(hPict_);
+		ImageManager::SetText(hPict_, r, &transform);
 
 		//次の位置にずらす
 		px += (width_ / (float)(Direct3D::screenWidth_ / 2.0f) * transform.scale_.x) - textInterval;
@@ -252,6 +255,7 @@ void Text::Draw(float x, float y, const wchar_t* str, XMFLOAT2 ratio, float text
 			px += (width_ / (float)(Direct3D::screenWidth_ / 2.0f) * transform.scale_.x) + textInterval;
 		}
 	}
+
 }
 
 //描画（整数値）

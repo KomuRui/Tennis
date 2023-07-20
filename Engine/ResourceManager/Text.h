@@ -10,10 +10,11 @@ class Text
 
 	//////////////////////////‰æ‘œî•ñ/////////////////////////////
 
-	int hPict_;                     //‰æ‘œ”Ô†
-	unsigned int width_, height_;	//1•¶š•ª‚Ì•‚Æ‚‚³
-	char fileName_[MAX_PATH];       //•¶š‚Ì‰æ‘œ
-	unsigned int rowLength_;        //‰æ‘œ‚Ì’†‚É‰½•¶š•À‚ñ‚Å‚¢‚é‚©
+	int hPict_;                                   //‰æ‘œ”Ô†
+	unsigned int width_, height_;	              //1•¶š•ª‚Ì•‚Æ‚‚³
+	char fileName_[MAX_PATH];                     //•¶š‚Ì‰æ‘œ
+	unsigned int rowLength_;                      //‰æ‘œ‚Ì’†‚É‰½•¶š•À‚ñ‚Å‚¢‚é‚©
+	Transform transform;
 
 	//////////////////////////•\¦/////////////////////////////
 
