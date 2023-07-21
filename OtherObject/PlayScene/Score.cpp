@@ -72,8 +72,8 @@ Score::Score()
 //描画
 void Score::Draw()
 {
-	//プレイシーンでないのならば
-	if (GameManager::GetpSceneManager()->GetSceneId() != SCENE_ID_PLAY) return;
+	//プレイシーンでないかゲームスタートしていないのなら
+	if (GameManager::GetpSceneManager()->GetSceneId() != SCENE_ID_PLAY || !GameManager::GetReferee()->IsGameStart()) return;
 
 	//ポイント数描画
 	PointDraw();

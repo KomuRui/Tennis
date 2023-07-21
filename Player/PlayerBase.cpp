@@ -95,14 +95,18 @@ void PlayerBase::ChildUpdate()
     pState_->Update3D(this);
 
     //カメラの処理
-    GameStartCamera();
+    CameraBehavior();
 }
 
 //カメラの処理
 void PlayerBase::CameraBehavior()
 {
-    //ゲームスタート時のカメラ
-    GameStartCamera();
+    //スタートしていないのなら(スタート開始前のカメラワークをする)
+    if (!GameManager::GetReferee()->IsGameStart())
+    {
+        GameStartCamera();
+        return;
+    }
 
     //カメラの挙動(サーブレシーブの時とラリー中の時のカメラを分ける)
     if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE)

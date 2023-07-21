@@ -179,7 +179,7 @@ namespace ImGuiSet
         stageInfoFilePath_[SCENE_ID_CHARA_SELECT] = "Data/StageData/CharaSelect/CharaSelectConfirmation.json";
         stageInfoFilePath_[SCENE_ID_COURT_SELECT] = "Data/StageData/CourtSelect/CourtSelectImage.json";
         stageInfoFilePath_[SCENE_ID_INFO_SELECT] = "Data/StageData/InfoSelect/InfoSelectImage.json";
-        stageInfoFilePath_[SCENE_ID_PLAY] = "Data/StageData/Play/Play.json";
+        stageInfoFilePath_[SCENE_ID_PLAY] = "Data/StageData/Play/PlayObject.json";
 
         //‰æ‘œ
         HRESULT hr = tex1_->Load("Image/GUI/MainCharIcon_Normal.png");

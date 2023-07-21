@@ -33,6 +33,8 @@ class Referee
 	PlayerBase* server_;   //サーバー
 	PlayerBase* receiver_; //レシーバー
 
+	bool isGameStart_;     //試合開始しているか
+
 	//サーバーの動ける範囲
 	map<pair<TennisCourtName, Side>, pair<float, float>> serverMoveRange_;
 
@@ -202,5 +204,17 @@ public:
 	/// </summary>
 	/// <param name="num">設定したいテニスコートタイプ</param>
 	void SetTennisCourtType(TennisCourtType type) { tennisCourtType_ = type; }
+
+	/// <summary>
+	/// 試合開始しているかどうか取得
+	/// </summary>
+	/// <returns>trueなら試合開始している</returns>
+	bool IsGameStart() { return isGameStart_; }
+
+	/// <summary>
+	/// 試合開始しているかどうか設定
+	/// </summary>
+	/// <param name="flag">trueなら試合開始している</param>
+	void SetGameStart(bool flag) { isGameStart_ = flag; }
 };
 

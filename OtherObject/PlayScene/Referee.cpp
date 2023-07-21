@@ -2,7 +2,7 @@
 
 //コンストラクタ
 Referee::Referee()
-	: status_(GameStatus::NOW_SERVE_RECEIVE), side_(Side::DEUCE_SIDE), server_(nullptr), receiver_(nullptr), numGameFirstToGet_(2), numSetFirstToGet_(1), tennisCourtType_(TennisCourtType::HARD_COURT)
+	: status_(GameStatus::NOW_SERVE_RECEIVE), side_(Side::DEUCE_SIDE), server_(nullptr), receiver_(nullptr), numGameFirstToGet_(2), numSetFirstToGet_(1), tennisCourtType_(TennisCourtType::HARD_COURT), isGameStart_(false)
 {
 
 	//サーバーの動ける範囲を設定

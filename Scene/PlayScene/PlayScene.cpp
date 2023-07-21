@@ -58,8 +58,8 @@ void PlayScene::Initialize()
 
 	/////////////////ファイル読み込んでステージの各オブジェクト設置///////////////////
 
-	CreateStage* pCreateStage = new CreateStage;
-	pCreateStage->LoadFileCreateStage(this, "Data/StageData/Play/Play.json");
+	std::unique_ptr<CreateStage> pCreateStage = std::make_unique<CreateStage>();
+	pCreateStage->LoadFileCreateStage(this, "Data/StageData/Play/PlayObject.json");
 
 	////////////////////////ツールの基準点モデルを生成/////////////////////////////////
 
@@ -76,22 +76,9 @@ void PlayScene::Initialize()
 
 }
 
-//更新の前に一度だけ呼ばれる更新
-void PlayScene::StartUpdate()
+//UI作成
+void PlayScene::CreateUI()
 {
-}
-
-//更新
-void PlayScene::Update()
-{
-}
-
-//描画
-void PlayScene::Draw()
-{
-}
-
-//開放
-void PlayScene::Release()
-{
+	std::unique_ptr<CreateStage> pCreateStage = std::make_unique<CreateStage>();
+	pCreateStage->LoadFileCreateStage(this, "Data/StageData/Play/PlayUI.json");
 }
