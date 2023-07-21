@@ -148,21 +148,14 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 
 	//割合が最低値なら
 	if (ratio_ == RATIO_MIN_VALUE)
-	{
 		((Ball*)pTarget)->SetUsePowerEffect(true);
-
-		//Playerも敵も1.0秒後に動き出す
-		SetTimeMethod(1.0f);
-		((Ball*)pTarget)->SetTimeMethod(1.0f);
-	}
 	else
-	{
 		((Ball*)pTarget)->SetUsePowerEffect(false);
 
-		//Playerも敵も0.1秒後に動き出す
-		SetTimeMethod(0.1f);
-		((Ball*)pTarget)->SetTimeMethod(0.1f);
-	}
+
+	//Playerも敵も0.1秒後に動き出す
+	SetTimeMethod(0.1f);
+	((Ball*)pTarget)->SetTimeMethod(0.1f);
 
 	//保存しておく
 	float s = hitStrength_[type_].strength_.x;
@@ -172,14 +165,9 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 
 	//スライスなら
 	if (Type::SLICE == type_)
-	{
 		hitStrength_[type_].strength_.x *= 1 + ((1 - ratio_) * 2.0f);
-	}
 	else
-	{
-		//最終的な移動時間を求める
 		moveTime *= ratio_;
-	}
 
 	//バックハンドならXの強さを逆にする
 	if (stroke_ == Stroke::BACKHAND)

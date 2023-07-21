@@ -291,12 +291,6 @@ void Ball::BoundMove()
 		//トスアップのベクトルの値を元に戻す
 		ARGUMENT_INITIALIZE(ballInfo_.tossUpVector_, TOSS_UP_VALUE);
 		ARGUMENT_INITIALIZE(ballInfo_.isTossUp_, false);
-
-		//打つ強さをランダムに取得
-		//HitStrength h =  GameManager::GetpPlayer()->GetRacket()->GetRamdomHitStrength();
-
-		//リセット
-		//Reset(h.strength_.x, h.strength_.y,h.moveTime_,BasePointManager::GetRandomBasePointName());
 	}
 }
 
@@ -337,14 +331,14 @@ void Ball::Reset(float strengthX, float strengthY, float moveTime,string basePoi
 		ARGUMENT_INITIALIZE(endPos.x, Clamp<float>(endPos.x, MAX_POS_X, MIN_POS_X));
 		ARGUMENT_INITIALIZE(endPos.z, Clamp<float>(endPos.z, MAX_POS_Z, MIN_POS_Z));
 	}
-
+	
 	//各情報再設定
 	ARGUMENT_INITIALIZE(ballInfo_.startPoint_, transform_->position_);
 	ARGUMENT_INITIALIZE(ballInfo_.endPoint_, endPos);
 	ARGUMENT_INITIALIZE(ballInfo_.endPointDirection_, ballInfo_.endPoint_ - ballInfo_.startPoint_);
 	ARGUMENT_INITIALIZE(ballInfo_.v0_.y, (0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
 	ARGUMENT_INITIALIZE(ballInfo_.v0_.x, (ballInfo_.endPoint_.x + 0.5f * GRAVITY) / sin(XMConvertToRadians(ANGLE)));
-	ARGUMENT_INITIALIZE(ballInfo_.moveTime_, moveTime)
+	ARGUMENT_INITIALIZE(ballInfo_.moveTime_, moveTime * std::max<float>(XMVectorGetX(XMVector3Length(ballInfo_.endPointDirection_) / 22.0f),0.3f));
 	ARGUMENT_INITIALIZE(ballInfo_.strength_.y, strengthY);
 	ARGUMENT_INITIALIZE(ballInfo_.strength_.x, strengthX);
 	Time::Reset(ballInfo_.hTime_);
