@@ -3,7 +3,11 @@
 #include "../../Player/PlayerBase.h"
 #include "../../Manager/SceneManager/SceneManager.h"
 #include "../../OtherObject/PlayScene/Ball.h"
+#include "../../Engine/nlohmann/json.hpp"
+#include <fstream>
 
+using json = nlohmann::json;
+using namespace std;
 
 //âÊñ ëçêî
 enum class Players

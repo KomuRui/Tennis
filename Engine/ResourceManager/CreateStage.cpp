@@ -27,6 +27,7 @@
 #include "../../UI/InfoSelect/InfoSelectScreenFadeImage.h"
 #include "../../UI/InfoSelect/Button/GameButton.h"
 #include "../../UI/InfoSelect/Button/SetButton.h"
+#include "../../UI/Play/VSImage.h"
 #include "../../Manager/ButtonManager/ButtonManager.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../GameObject/GameObject.h"
@@ -111,6 +112,10 @@ void CreateStage::CreateObject(GameObject* parent, std::string ModelPathName, st
 	if (inName == "InfoSelectScreenFadeImage")
 	{
 		InstantiateNormal<InfoSelectScreenFadeImage>(parent, ModelPathName, inName, t);
+	}
+	if (inName == "VSImage")
+	{
+		InstantiateNormal<VSImage>(parent, ModelPathName, inName, t);
 	}
 	if (inName == "ExplanationButton")
 	{

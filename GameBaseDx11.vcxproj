@@ -264,6 +264,7 @@
     <ClCompile Include="UI\ModeSelect\RogoImage.cpp" />
     <ClCompile Include="UI\ModeSelect\ScreenFadeImage.cpp" />
     <ClCompile Include="UI\Play\PlaySelectScreenFadeImage.cpp" />
+    <ClCompile Include="UI\Play\VSImage.cpp" />
     <ClCompile Include="UI\ScalingImage.cpp" />
     <ClCompile Include="UI\Title\StartImage.cpp" />
   </ItemGroup>
@@ -394,6 +395,7 @@
     <ClInclude Include="UI\ModeSelect\RogoImage.h" />
     <ClInclude Include="UI\ModeSelect\ScreenFadeImage.h" />
     <ClInclude Include="UI\Play\PlaySelectScreenFadeImage.h" />
+    <ClInclude Include="UI\Play\VSImage.h" />
     <ClInclude Include="UI\ScalingImage.h" />
     <ClInclude Include="UI\Title\StartImage.h" />
   </ItemGroup>

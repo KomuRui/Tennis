@@ -537,6 +537,9 @@
     <ClCompile Include="UI\Play\PlaySelectScreenFadeImage.cpp">
       <Filter>UI\Play</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Play\VSImage.cpp">
+      <Filter>UI\Play</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -917,6 +920,9 @@
       <Filter>UI\InfoSelect</Filter>
     </ClInclude>
     <ClInclude Include="UI\Play\PlaySelectScreenFadeImage.h">
+      <Filter>UI\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Play\VSImage.h">
       <Filter>UI\Play</Filter>
     </ClInclude>
   </ItemGroup>

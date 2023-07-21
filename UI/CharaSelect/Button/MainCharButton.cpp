@@ -73,6 +73,27 @@ void MainCharButton::ChildDraw()
 void MainCharButton::IsButtonPush()
 {
 	charaSelectSceneUI->SetIsOK(true, numController_);
+
+	//書き込み用
+	json json_object;
+
+	//既存のデータを読み込む
+	std::ifstream input_file("Data/StageData/Play/PlayObject.json");
+	input_file >> json_object;
+	input_file.close();
+
+	//ファイルネーム更新
+	char fileName[50] = "MainCharacter/Player.fbx";
+	if (numController_)
+		json_object["Player1"]["FileName"] = fileName;
+	else
+		json_object["Player"]["FileName"] = fileName;
+
+	//書き込み
+	std::ofstream output_file("Data/StageData/Play/PlayObject.json");
+	output_file << json_object;
+	output_file.close();
+
 	SetSelectNoChange(true);
 }
 
