@@ -11,7 +11,6 @@
 namespace
 {
     static const XMFLOAT3 RACKET_END_ROTATION_ANGLE = { 0,-185,0 }; //ラケットの終了角度
-    static const float RUN_SPEED = 1.5f;                            //走っているときのキャラのスピード
     static const float PLAYER_WALK_ANIM_SPEED = 1.0f;               //アニメーションの再生速度
     static const float ANIM_RUN_SPEED = 2.0f;                       //アニメーションの再生速度(走ってるとき)
     static const float POSSTURE_RESTORE_TIME = 5.0f;                //元の姿勢に戻す時間
@@ -19,7 +18,7 @@ namespace
 
 //コンストラクタ
 PlayerStateManager::PlayerStateManager():front_(STRAIGHT_VECTOR),hTime_(Time::Add()), 
-    isRestorePosture_(false), isHitMove_(false),buttonCode_(XINPUT_GAMEPAD_A), hChargeEffectName_("chargeEffect"), chargeTime_(ZERO), playerNum_(ZERO)
+    isRestorePosture_(false), isHitMove_(false),buttonCode_(XINPUT_GAMEPAD_A), hChargeEffectName_("chargeEffect"), chargeTime_(ZERO), playerNum_(ZERO), runSpeed_(ZERO)
 {
     playerStanding_ = new StandingState;
     playerForehanding_ = new ForehandingState;
@@ -110,6 +109,8 @@ void PlayerStateManager::HandleInput(PlayerBase* player)
 //状態変化したとき一回だけ呼ばれる関数
 void PlayerStateManager::Enter(PlayerBase* player)
 {
+    //キャラスピード設定
+    ARGUMENT_INITIALIZE(runSpeed_, CharaParameterManager::GetCharaSpeed(player->GetPathName()));
 }
 
 //状態チェンジ用
@@ -164,16 +165,16 @@ void PlayerStateManager::Move(PlayerBase* player, float padLx, float padLy)
             //距離が定数以下なら
             if (dis <= 3.0f)
             {
-                player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * (dis / 3.0f * 0.5f), matRotate))));
+                player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * runSpeed_) * (dis / 3.0f * 0.5f), matRotate))));
             }
             else
             {
-                player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * 0.5f, matRotate))));
+                player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * runSpeed_) * 0.5f, matRotate))));
             }
         }
         //サーブ状態じゃないのなら
         else if (playerState_ != PlayerStateManager::playerServing_)
-            player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord((front_ / 10.0f) * RUN_SPEED, matRotate))));
+            player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), VectorToFloat3(XMVector3TransformCoord((front_ / 10.0f) * runSpeed_, matRotate))));
 
         //回転
         player->GetComponent<Transform>()->SetRotateY(XMConvertToDegrees(atan2(-padLx, -padLy)));
@@ -213,7 +214,7 @@ void PlayerStateManager::ServeMove(PlayerBase* player, float padLx, float padLy)
         pair<float, float> moveRange = GameManager::GetReferee()->GetServerMoveRange();
 
         //移動
-        XMFLOAT3 moveValue = VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * RUN_SPEED) * 0.5f, matRotate));
+        XMFLOAT3 moveValue = VectorToFloat3(XMVector3TransformCoord(((front_ / 10.0f) * runSpeed_) * 0.5f, matRotate));
         ARGUMENT_INITIALIZE(moveValue.z, ZERO);
         player->GetComponent<Transform>()->SetPosition(Float3Add(player->GetComponent<Transform>()->GetPosition(), moveValue));
         player->GetComponent<Transform>()->SetPositionX(Clamp<float>(player->GetComponent<Transform>()->GetPosition().x, moveRange.second, moveRange.first));

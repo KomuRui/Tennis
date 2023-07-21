@@ -9,7 +9,7 @@ namespace
 
 //コンストラクタ
 HermiteSplineMove::HermiteSplineMove()
-	:isMove_(false), nowLookValue_(ZERO), timerhNum_(-1), moveTime_(2.0f), nowTime_(ZERO), isFinish_(false)
+	:isMove_(false), nowLookValue_(ZERO), timerhNum_(-1), moveTime_(2.0f), nowTime_(ZERO), isFinish_(false), isLoop_(false), endPosition_(ZERO,ZERO,ZERO)
 {
 	//タイマー作成
 	ARGUMENT_INITIALIZE(timerhNum_, Time::Add());
@@ -25,7 +25,7 @@ HermiteSplineMove::~HermiteSplineMove()
 XMFLOAT3 HermiteSplineMove::Updata()
 {
 	//エラー値か動かないのならこの先処理しない
-	if (!isMove_ || pathData_.size() < MIN_DATA_VALUE) return XMFLOAT3(ZERO,ZERO,ZERO);
+	if (!isMove_ || pathData_.size() < MIN_DATA_VALUE || nowLookValue_ >= pathData_.size()) return endPosition_;
 
 	XMVECTOR pos0 = XMLoadFloat3(&pathData_.at(nowLookValue_).first);
 	XMVECTOR tan0 = XMLoadFloat3(new XMFLOAT3((pathData_.at(nowLookValue_ + 1).first.x - pathData_.at(nowLookValue_).first.x), (pathData_.at(nowLookValue_ + 1).first.y - pathData_.at(nowLookValue_).first.y), (pathData_.at(nowLookValue_ + 1).first.z - pathData_.at(nowLookValue_).first.z)));
@@ -53,14 +53,23 @@ XMFLOAT3 HermiteSplineMove::Updata()
 	if (nowTime_ > 1)
 	{
 		//最後なら最初に戻す
-		if (nowLookValue_ + 1 >= pathData_.size() - 1)
+		if (nowLookValue_ + 1 >= pathData_.size() - 1 && isLoop_)
 		{
 			ARGUMENT_INITIALIZE(nowLookValue_,ZERO);
 			ARGUMENT_INITIALIZE(isFinish_, true);
 		}
 		else
+		{
 			nowLookValue_++;
 
+			//サイズオーバーしていたら終了にする
+			if (nowLookValue_ >= pathData_.size())
+			{
+				ARGUMENT_INITIALIZE(isFinish_, true);
+			}
+		}
+
+		ARGUMENT_INITIALIZE(endPosition_, VectorToFloat3(XMVectorHermite(pos0, tan0, pos1, tan1, nowTime_)));
 		Time::Reset(timerhNum_);
 	}
 

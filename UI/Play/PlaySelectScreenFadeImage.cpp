@@ -4,7 +4,6 @@
 //定数
 namespace
 {
-	static const XMFLOAT3 POS_ADD_VALUE = { 2.0f, ZERO, ZERO };  //ポジションに対しての加算値
 	static const float EASING_TIME = 1.0f;                       //イージング時間
 }
 

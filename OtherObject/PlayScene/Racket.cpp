@@ -14,6 +14,7 @@ namespace
 {		
 	static const XMFLOAT3 RACKET_START_ROTATION_ANGLE = { 0,-185,0 };  //ラケットの開始角度
 	static const float RATIO_MIN_VALUE = 0.25f;                        //割合の最小値
+	static const float MIN_MOVE_TIME = 0.3f;                           //最小時間
 
 	////////////////コライダー///////////////////
 
@@ -165,9 +166,19 @@ void Racket::HitColliderFunc(GameObject* pTarget)
 
 	//スライスなら
 	if (Type::SLICE == type_)
+	{
 		hitStrength_[type_].strength_.x *= 1 + ((1 - ratio_) * 2.0f);
+		hitStrength_[type_].strength_.x *= ((PlayerBase*)GetParent())->GetTechnique();
+		moveTime *= 2 - ((PlayerBase*)GetParent())->GetTechnique();
+	}
 	else
+	{
 		moveTime *= ratio_;
+
+		//パワーに合わせてボールの威力を変える
+		moveTime *= 2 - ((PlayerBase*)GetParent())->GetPower();
+		ARGUMENT_INITIALIZE(moveTime, std::max<float>(moveTime, MIN_MOVE_TIME));
+	}
 
 	//バックハンドならXの強さを逆にする
 	if (stroke_ == Stroke::BACKHAND)

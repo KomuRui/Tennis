@@ -22,6 +22,8 @@ protected:
 	PlayerStateManager* pState_;        //Playerの状態を表す変数
 	TennisCourtName nowMyCourtName_;    //自身がいるコートの名前
 	XMFLOAT3 initialPosition_;          //Playerの初期位置 
+	float power_;                       //パワー
+	float technique_;                   //テクニック
 
 	/////////////////////カメラ//////////////////////
 
@@ -102,5 +104,17 @@ public:
 	/// </summary>
 	/// <returns>状態</returns>
 	PlayerStateManager* GetState() { return pState_; }
+
+	/// <summary>
+	/// テクニックを取得
+	/// </summary>
+	/// <returns>テクニック</returns>
+	float GetTechnique() { return technique_; }
+
+	/// <summary>
+	/// パワーを取得
+	/// </summary>
+	/// <returns>パワー</returns>
+	float GetPower() { return power_; }
 };
 

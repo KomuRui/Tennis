@@ -9,15 +9,17 @@ class HermiteSplineMove
 {
 
 	vector<pair<XMFLOAT3, XMFLOAT3>> pathData_; //移動する時に使うパスデータ
+	XMFLOAT3 endPosition_; //終了ポジション
 
-	int timerhNum_;     //タイマーのハンドル番号
-	float moveTime_;    //移動時間
-	float nowTime_;     //現在の時間
-
-	int nowLookValue_;	//現在見ている値
-		
-	bool isMove_;		//動くかどうか
-	bool isFinish_;     //終わったかどうか
+	int timerhNum_;        //タイマーのハンドル番号
+	float moveTime_;       //移動時間
+	float nowTime_;        //現在の時間
+						   
+	int nowLookValue_;	   //現在見ている値
+						   
+	bool isMove_;		   //動くかどうか
+	bool isFinish_;        //終わったかどうか
+	bool isLoop_;          //ループするかどうか
 
 public:
 
@@ -54,5 +56,17 @@ public:
 
 	//終わったかどうか取得
 	bool IsFinish() { return isFinish_; }
+
+	/// <summary>
+	/// ループかどうか設定
+	/// </summary>
+	/// <param name="flag">trueならループに設定</param>
+	void SetLoop(bool flag) { isLoop_ = flag; }
+
+	/// <summary>
+	/// ループかどうか取得
+	/// </summary>
+	/// <returns>trueならループ</returns>
+	bool IsLoop() { return isLoop_; }
 };
 

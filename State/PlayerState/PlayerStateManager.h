@@ -26,7 +26,8 @@ private:
 	int hTime_;				    //タイマーハンドル
 	int buttonCode_;		    //打つ時のボタンコード格納用
 	int playerNum_;             //プレイヤー番号
-	float chargeTime_;          //チャージ時間             
+	float chargeTime_;          //チャージ時間 
+	float runSpeed_;            //走るスピード
 
 public:
 

@@ -1,0 +1,32 @@
+{
+  "MainCharacter/Player.fbx": {
+    "speed": 1.5,
+    "power": 1.0,
+    "technique": 1.0
+  },
+  "MainCharacter/Player_Princess.fbx": {
+    "speed": 1.5,
+    "power": 1.0,
+    "technique": 1.0
+  },
+  "MainCharacter/Player_Pig.fbx": {
+    "speed": 1.2,
+    "power": 1.2,
+    "technique": 0.8
+  },
+  "MainCharacter/Player_Drop.fbx": {
+    "speed": 1.8,
+    "power": 0.8,
+    "technique": 1.2
+  },
+  "MainCharacter/Player_Boss.fbx": {
+    "speed": 1.2,
+    "power": 1.2,
+    "technique": 0.8
+  },
+  "MainCharacter/Player_BossChild.fbx": {
+    "speed": 1.8,
+    "power": 0.8,
+    "technique": 1.2
+  }
+}

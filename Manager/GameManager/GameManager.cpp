@@ -44,6 +44,9 @@ namespace GameManager
 		//基準点のマネージャーを初期化
 		BasePointManager::Initialize();
 
+		//キャラパラメータマネージャーの初期化
+		CharaParameterManager::Initialize();
+
 		//フェイドの初期化
 		Fade::Initialize();
 

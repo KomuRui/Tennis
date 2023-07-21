@@ -36,6 +36,7 @@
 #include "../Manager/JsonManager/JsonManager.h"
 #include "../Manager/SceneManager/SceneManager.h"
 #include "../Manager/EffectManager/OtherEffectManager/OtherEffectManager.h"
+#include "../Manager/CharaParameterManager/CharaParameterManager.h"
 
 /////////////////////////////Component///////////////////////////////////
 

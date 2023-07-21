@@ -52,13 +52,15 @@ void PlayerBase::ChildInitialize()
     //状態
     ARGUMENT_INITIALIZE(pState_->playerState_ , pState_->playerStanding_);
     pState_->SetPlayerNum(GameManager::SetPlayer(this));
+    pState_->Enter(this);
+
+    //パワーとテクニック設定
+    ARGUMENT_INITIALIZE(power_, CharaParameterManager::GetCharaPower(modelNamePath_));
+    ARGUMENT_INITIALIZE(technique_, CharaParameterManager::GetCharaTechnique(modelNamePath_));
 
     //サーバーだけ角度修正
     if (GameManager::GetReferee()->GetServer() == this)
         ARGUMENT_INITIALIZE(transform_->rotate_, PLAYER_SERVE_ROTATION_ANGLE);
-
-    //明るさ最大に
-    //ModelManager::SetBrightness(hModel_, 1.0f);
 
     //自身に影を描画しないように
     ModelManager::SetMyShadowApply(hModel_, false);

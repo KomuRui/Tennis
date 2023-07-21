@@ -49,7 +49,9 @@ void CourtSelectScene::Initialize()
 
 	//開始
 	hermiteMoveTable_[nowLookNum_].first->Start();
+	hermiteMoveTable_[nowLookNum_].first->SetLoop(true);
 	hermiteMoveTable_[nowLookNum_].second->Start();
+	hermiteMoveTable_[nowLookNum_].second->SetLoop(true);
 }
 
 //更新

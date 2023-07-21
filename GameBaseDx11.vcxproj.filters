@@ -171,6 +171,9 @@
     <Filter Include="UI\Play">
       <UniqueIdentifier>{cff4d040-f3a2-4fd8-bf66-cbd67da4f3f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\CharaParameterManager">
+      <UniqueIdentifier>{c4c54cb4-615a-40e5-b978-b858609b1273}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -539,6 +542,9 @@
     </ClCompile>
     <ClCompile Include="UI\Play\VSImage.cpp">
       <Filter>UI\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\CharaParameterManager\CharaParameterManager.cpp">
+      <Filter>Manager\CharaParameterManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -924,6 +930,9 @@
     </ClInclude>
     <ClInclude Include="UI\Play\VSImage.h">
       <Filter>UI\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\CharaParameterManager\CharaParameterManager.h">
+      <Filter>Manager\CharaParameterManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
