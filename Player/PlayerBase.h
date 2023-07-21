@@ -5,6 +5,7 @@
 #include "../Engine/ResourceManager/ModelManager.h"
 #include "../Engine/Component/Transform/Transform.h"
 #include "../OtherObject/PlayScene/TennisCourt.h"
+#include "../Engine/Component/HermiteSplineMove.h"
 
 class Racket;
 
@@ -24,8 +25,12 @@ protected:
 
 	/////////////////////カメラ//////////////////////
 
-	XMVECTOR camVec_;                   //Playerからカメラまでのベクトル
-	XMVECTOR camVec2_;                  //Playerからカメラまでのベクトル
+	
+	vector<std::unique_ptr<HermiteSplineMove>> hermiteMoveTable_; //エルミートスプラインを使ってカメラを動かす(連続して動きを変更したいのでvectorにしておく)
+	int nowLookNum_;    //現在見ている番号                       
+
+	XMVECTOR camVec_;   //Playerからカメラまでのベクトル
+	XMVECTOR camVec2_;  //Playerからカメラまでのベクトル
 
 public:
 
@@ -52,9 +57,19 @@ public:
 	void CameraBehavior();
 
 	/// <summary>
+	///ゲームスタート時のカメラ 
+	/// </summary>
+	void GameStartCamera();
+
+	/// <summary>
 	/// サーブレシーブ時のカメラの処理
 	/// </summary>
 	void ServeReceiveCameraBehavior();
+
+	/// <summary>
+	/// データセット
+	/// </summary>
+	void SetData(string posFileName);
 
 	/////////////////////セットゲット関数//////////////////////
 

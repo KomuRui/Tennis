@@ -10,6 +10,7 @@ namespace
     ///////////////キャラの必要な情報///////////////////
 
     static const XMFLOAT3 PLAYER_SERVE_ROTATION_ANGLE = { 0,240,0 };   //プレイヤーの開始角度
+    static const XMFLOAT3 CAM_TAR_ADD_VALUE = { 0,1,0 };               //カメラの焦点に加算する値
     static const float PLAYER_ANIM_SPEED = 2.0f;   //アニメーションの再生速度
     static const int ANIM_START_FRAME = 1;         //アニメーションの開始フレーム
     static const int ANIM_END_FRAME = 60;		   //アニメーションの終了フレーム
@@ -35,7 +36,8 @@ PlayerBase::PlayerBase(GameObject* parent, std::string modelFilePath_, std::stri
     ///////////////////カメラ///////////////////////
 
     camVec_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
-    camVec2_(XMVectorSet(ZERO,ZERO,ZERO,ZERO))
+    camVec2_(XMVectorSet(ZERO,ZERO,ZERO,ZERO)),
+    nowLookNum_(ZERO)
 
 {
 }
@@ -55,7 +57,6 @@ void PlayerBase::ChildInitialize()
     if (GameManager::GetReferee()->GetServer() == this)
         ARGUMENT_INITIALIZE(transform_->rotate_, PLAYER_SERVE_ROTATION_ANGLE);
 
-
     //明るさ最大に
     //ModelManager::SetBrightness(hModel_, 1.0f);
 
@@ -70,6 +71,17 @@ void PlayerBase::ChildInitialize()
     //アニメーション
     ModelManager::SetAnimFrame(hModel_, ANIM_START_FRAME, ANIM_END_FRAME, PLAYER_ANIM_SPEED);
 
+    /////////////////ファイル読み込んでパスごとの位置取得///////////////////
+
+    //1人目のプレイヤーなら
+    if (pState_->GetPlayerNum() == 0)
+        SetData("Data/PathData/GameStartCamera/CamPos1.json");
+    else
+        SetData("Data/PathData/GameStartCamera/CamPos2.json");
+
+    //開始
+    hermiteMoveTable_[nowLookNum_]->Start();
+
     ///////////////ラケット生成///////////////////
 
     ARGUMENT_INITIALIZE(pRacket_,Instantiate<Racket>(this));
@@ -82,16 +94,23 @@ void PlayerBase::ChildUpdate()
     //更新
     pState_->Update3D(this);
 
-    //カメラの挙動(サーブレシーブの時とラリー中の時のカメラを分ける)
-    if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE)
-        ServeReceiveCameraBehavior();
-    else
-        CameraBehavior();
+    //カメラの処理
+    GameStartCamera();
 }
 
 //カメラの処理
 void PlayerBase::CameraBehavior()
 {
+    //ゲームスタート時のカメラ
+    GameStartCamera();
+
+    //カメラの挙動(サーブレシーブの時とラリー中の時のカメラを分ける)
+    if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE)
+    {
+        ServeReceiveCameraBehavior();
+        return;
+    }
+
     vector<float> zPos; //Zの位置を格納する用
     vector<float> xPos; //Xの位置を格納する用
 
@@ -164,6 +183,36 @@ void PlayerBase::CameraBehavior()
     }
 }
 
+//ゲームスタート時のカメラ 
+void PlayerBase::GameStartCamera()
+{
+    //1人目のプレイヤーなら
+    if (pState_->GetPlayerNum() == 0)
+    {
+        Camera::SetPosition(hermiteMoveTable_[nowLookNum_]->Updata());
+        Camera::SetTarget(VectorToFloat3(GetComponent<Transform>()->GetPosition() + CAM_TAR_ADD_VALUE));
+    }
+    else
+    {
+        Camera::SetPositionTwo(hermiteMoveTable_[nowLookNum_]->Updata());
+        Camera::SetTargetTwo(VectorToFloat3(GetComponent<Transform>()->GetPosition() + CAM_TAR_ADD_VALUE));
+    }
+
+    //動きが終わったのなら
+    if (hermiteMoveTable_[nowLookNum_]->IsFinish())
+    {
+        nowLookNum_++;
+
+        //サイズオーバーしていたなら
+        if (hermiteMoveTable_.size() == nowLookNum_)
+            ARGUMENT_INITIALIZE(nowLookNum_, ZERO);
+
+        //開始
+        hermiteMoveTable_[nowLookNum_]->ReStart();
+    }
+}
+
+
 //サーブレシーブ時のカメラの処理
 void PlayerBase::ServeReceiveCameraBehavior()
 {
@@ -195,4 +244,22 @@ void PlayerBase::ServeReceiveCameraBehavior()
             Camera::SetTargetTwo(GameManager::GetReferee()->GetServerPosition());
     }
         
+}
+
+//データセット
+void PlayerBase::SetData(string posFileName)
+{
+    //新しく追加
+    hermiteMoveTable_.push_back(std::make_unique<HermiteSplineMove>());
+
+    //読み込み
+    ifstream ifsPos(posFileName);
+    json json_object_Pos;
+    ifsPos >> json_object_Pos;
+
+    //各値取得
+    for (auto it = json_object_Pos.begin(); it != json_object_Pos.end(); it++) {
+
+        hermiteMoveTable_[hermiteMoveTable_.size() - 1]->AddPath(XMFLOAT3(json_object_Pos[it.key()]["Position"][0], json_object_Pos[it.key()]["Position"][1], json_object_Pos[it.key()]["Position"][2]), XMFLOAT3(50, ZERO, ZERO));
+    }
 }
