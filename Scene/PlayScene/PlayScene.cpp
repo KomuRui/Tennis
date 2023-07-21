@@ -72,6 +72,7 @@ void PlayScene::Initialize()
 	////////////////////////R”»‰Šú‰»/////////////////////////////////
 
 	GameManager::GetReferee()->Initialize();
+	GameManager::GetReferee()->GameStart();
 
 }
 

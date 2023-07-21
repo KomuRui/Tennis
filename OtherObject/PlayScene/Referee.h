@@ -75,6 +75,11 @@ public:
 	void GetGame();
 
 	/// <summary>
+	/// ‡ŠJn
+	/// </summary>
+	void GameStart();
+
+	/// <summary>
 	/// ‡I—¹
 	/// </summary>
 	void GameMatch();

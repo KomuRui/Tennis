@@ -83,6 +83,12 @@ void Referee::GetGame()
 	ARGUMENT_INITIALIZE(status_, GameStatus::NOW_SERVE_RECEIVE);
 }
 
+//‡ŠJn
+void Referee::GameStart()
+{
+
+}
+
 //‡I—¹‚ÉŒÄ‚Î‚ê‚é
 void Referee::GameMatch()
 {
