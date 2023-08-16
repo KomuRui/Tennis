@@ -117,6 +117,8 @@ public:
 
 	XMFLOAT3 GetNowPos() { return nowPosition_; }
 	XMFLOAT3 GetBeforePos() { return beforePosition_; }
+	XMFLOAT3 GetNowRotate() { return nowRotate_; }
+	XMFLOAT3 GetBeforeRotate() { return beforeRotate_; }
 
 private:
 
