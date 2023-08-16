@@ -34,4 +34,12 @@ void testBox::ChildUpdate()
 	{
 		transform_->position_.y -= 0.05f;
 	}
+	if (Input::IsKey(DIK_Z) && objectName_ == "testBox")
+	{
+		transform_->rotate_.z += 0.5f;
+	}
+	if (Input::IsKey(DIK_X) && objectName_ == "testBox")
+	{
+		transform_->rotate_.z -= 0.5f;
+	}
 }

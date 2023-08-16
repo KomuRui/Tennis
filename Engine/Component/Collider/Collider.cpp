@@ -5,7 +5,7 @@
 
 //コンストラクタ
 Collider::Collider()
-	:nowPosition_(99999, 99999, 99999),beforePosition_(99999, 99999, 99999)
+	:nowPosition_(99999, 99999, 99999),beforePosition_(99999, 99999, 99999), nowRotate_(99999, 99999, 99999), nowRotate_(99999, 99999, 99999)
 {
 }
 
@@ -149,17 +149,17 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 	rotateX = XMMatrixRotationX(XMConvertToRadians(rotateB_.x));
 	rotateY = XMMatrixRotationY(XMConvertToRadians(rotateB_.y));
 	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateB_.z));
-	XMMATRIX matRotate_ = rotateZ * rotateX * rotateY;
+	XMMATRIX matRotateBox_ = rotateZ * rotateX * rotateY;
 
-	boxPos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxPos), matRotate_));
+	boxPos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxPos), matRotateBox_));
 
 	XMFLOAT3 rotateS_ = (sphere->parent->GetComponent<Transform>()->GetWorldRotate());
 	rotateX = XMMatrixRotationX(XMConvertToRadians(rotateB_.x));
 	rotateY = XMMatrixRotationY(XMConvertToRadians(rotateB_.y));
 	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateB_.z));
-	matRotate_ = rotateZ * rotateX * rotateY;
+	XMMATRIX matRotateCircle_ = rotateZ * rotateX * rotateY;
 
-	circlePos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&circlePos), matRotate_));
+	circlePos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&circlePos), matRotateCircle_));
 
 	if (circlePos.x > boxPos.x - box->size_.x / 2 - sphere->size_.x &&
 		circlePos.x < boxPos.x + box->size_.x / 2 + sphere->size_.x &&
@@ -168,36 +168,55 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 		circlePos.z > boxPos.z - box->size_.z / 2 - sphere->size_.x &&
 		circlePos.z < boxPos.z + box->size_.z / 2 + sphere->size_.x)
 	{
-		XMFLOAT3 len = {
-			min<float>(abs(circlePos.x - boxPos.x - box->size_.x / 2 - sphere->size_.x),abs(circlePos.x - boxPos.x + box->size_.x / 2 + sphere->size_.x)),
-			min<float>(abs(circlePos.y - boxPos.y - box->size_.y / 2 - sphere->size_.x),abs(circlePos.y - boxPos.y + box->size_.y / 2 + sphere->size_.x)),
-			min<float>(abs(circlePos.z - boxPos.z - box->size_.z / 2 - sphere->size_.x),abs(circlePos.z - boxPos.z + box->size_.z / 2 + sphere->size_.x))
+
+		XMFLOAT3 boxVertices[] = {
+			{ boxPos.x - box->size_.x / 2, boxPos.y - box->size_.y / 2, boxPos.z - box->size_.z / 2 },
+			{ boxPos.x + box->size_.x / 2, boxPos.y - box->size_.y / 2, boxPos.z - box->size_.z / 2 },
+			{ boxPos.x + box->size_.x / 2, boxPos.y + box->size_.y / 2, boxPos.z - box->size_.z / 2 },
+			{ boxPos.x - box->size_.x / 2, boxPos.y + box->size_.y / 2, boxPos.z - box->size_.z / 2 },
+			{ boxPos.x - box->size_.x / 2, boxPos.y - box->size_.y / 2, boxPos.z + box->size_.z / 2 },
+			{ boxPos.x + box->size_.x / 2, boxPos.y - box->size_.y / 2, boxPos.z + box->size_.z / 2 },
+			{ boxPos.x + box->size_.x / 2, boxPos.y + box->size_.y / 2, boxPos.z + box->size_.z / 2 },
+			{ boxPos.x - box->size_.x / 2, boxPos.y + box->size_.y / 2, boxPos.z + box->size_.z / 2 }
 		};
-		XMVECTOR dir = XMVector3Normalize(sphere->GetNowPos() - box->GetNowPos());
+
+		float len = -99999;
+
+		for (int i = 0; i < 8; i++)
+		{
+			float d = -1;
+
+			if(i == 7)
+				d = PointToLineSegmentDistance(circlePos, VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVertices[i]), matRotateBox_)), VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVertices[0]), matRotateBox_)));
+			else
+				d = PointToLineSegmentDistance(circlePos, VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVertices[i]), matRotateBox_)), VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVertices[i + 1]), matRotateBox_)));
+
+			//半径より内側にあるならば
+			if (d <= sphere->size_.x && len < (sphere->size_.x - d))
+			{
+				ARGUMENT_INITIALIZE(len, (sphere->size_.x - d));
+			}
+		}
+
+		if (len == -99999) ARGUMENT_INITIALIZE(len, 0);
 
 		//Aが動いていたなら
 		if (!IsMatch(box->GetNowPos(), box->GetBeforePos()))
 		{
-			XMVECTOR dir = XMVector3Normalize(box->GetBeforePos() - box->GetNowPos());
-			len.x *= XMVectorGetX(dir);
-			len.y *= XMVectorGetY(dir);
-			len.z *= XMVectorGetZ(dir);
-
 			Transform* p = box->parent->GetComponent<Transform>();
-			p->SetPosition(VectorToFloat3(p->GetPosition() + len));
+			XMVECTOR dir = XMVector3Normalize(box->GetBeforePos() - sphere->GetNowPos());
+
+			p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
 
 			ARGUMENT_INITIALIZE(box->nowPosition_, p->GetPosition());
 			ARGUMENT_INITIALIZE(box->beforePosition_, box->nowPosition_);
 		}
 		else if (!IsMatch(sphere->GetNowPos(), sphere->GetBeforePos()))
 		{
-			XMVECTOR dir = XMVector3Normalize(sphere->GetBeforePos() - sphere->GetNowPos());
-			len.x *= XMVectorGetX(dir);
-			len.y *= XMVectorGetY(dir);
-			len.z *= XMVectorGetZ(dir);
-
+			
 			Transform* p = sphere->parent->GetComponent<Transform>();
-			p->SetPosition(VectorToFloat3(p->GetPosition() + len));
+			XMVECTOR dir = XMVector3Normalize(sphere->GetBeforePos() - sphere->GetNowPos());
+			p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
 
 			ARGUMENT_INITIALIZE(sphere->nowPosition_, p->GetPosition());
 			ARGUMENT_INITIALIZE(sphere->beforePosition_, sphere->nowPosition_);

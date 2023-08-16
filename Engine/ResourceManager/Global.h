@@ -190,6 +190,28 @@ static XMVECTOR MaxVector(XMVECTOR a, XMVECTOR b)
 		return b;
 }
 
+static float PointToLineSegmentDistance(const XMFLOAT3& point, const XMFLOAT3& start, const XMFLOAT3& end) {
+	XMVECTOR pointVec = XMLoadFloat3(&point);
+	XMVECTOR startVec = XMLoadFloat3(&start);
+	XMVECTOR endVec = XMLoadFloat3(&end);
+
+	XMVECTOR lineVec = endVec - startVec;
+	XMVECTOR pointToStartVec = pointVec - startVec;
+
+	float lengthSq = XMVectorGetX(XMVector3LengthSq(lineVec));
+	if (lengthSq < 1e-6) { // ü•ª‚ª‚Ù‚Ú“_‚Ìê‡
+		return XMVectorGetX(XMVector3Length(pointToStartVec));
+	}
+
+	float t = XMVectorGetX(XMVector3Dot(pointToStartVec, lineVec)) / lengthSq;
+	t = XMMin(XMMax(t, 0.0f), 1.0f);
+
+	XMVECTOR nearestPoint = startVec + t * lineVec;
+	XMVECTOR distanceVec = pointVec - nearestPoint;
+
+	return XMVectorGetX(XMVector3Length(distanceVec));
+}
+
 template<class T>
 static T Clamp(T v, T high, T low)
 {
