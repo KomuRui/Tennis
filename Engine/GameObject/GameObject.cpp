@@ -258,6 +258,22 @@ void GameObject::KillObjectSub(GameObject * obj)
 	obj->Release();
 }
 
+//当たり判定
+void GameObject::AllHitTest()
+{
+	//nullならこの先処理しない
+	if (this == nullptr) return;
+
+	for (auto it = childList_.begin(); it != childList_.end(); it++)
+	{
+		//当たり判定コンポーネントが存在するのならば接触計算
+		if ((*it)->GetComponent<Collider>() && !(*it)->IsDead())
+			(*it)->GetComponent<Collider>()->Collision(GetParent());
+
+		(*it)->AllHitTest();
+	}
+}
+
 //RootJobを取得
 GameObject * GameObject::GetRootJob()
 {
@@ -322,10 +338,6 @@ void GameObject::UpdateSub()
 		}
 		else
 		{
-			//当たり判定コンポーネントが存在するのならば接触計算
-			if((*it)->GetComponent<Collider>())
-				(*it)->GetComponent<Collider>()->Collision(GetParent());
-			
 			it++;
 		}
 	}

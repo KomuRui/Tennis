@@ -132,6 +132,9 @@
     <Filter Include="UI\Image">
       <UniqueIdentifier>{a7a16cca-f12b-4c6d-80b8-cc977d8d95bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Test">
+      <UniqueIdentifier>{6e94219b-1320-4a6e-8a46-0c0f5fa09028}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stage.cpp" />
@@ -414,6 +417,11 @@
     <ClCompile Include="UI\ScalingImage.cpp">
       <Filter>UI\Image</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\TestScene\TestScene.cpp">
+      <Filter>Scene\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="testBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stage.h" />
@@ -708,6 +716,11 @@
     <ClInclude Include="UI\ScalingImage.h">
       <Filter>UI\Image</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\TestScene\TestScene.h">
+      <Filter>Scene\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h" />
+    <ClInclude Include="testBox.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

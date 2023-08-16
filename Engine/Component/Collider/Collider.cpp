@@ -5,6 +5,7 @@
 
 //コンストラクタ
 Collider::Collider()
+	:nowPosition_(99999, 99999, 99999),beforePosition_(99999, 99999, 99999)
 {
 }
 
@@ -44,6 +45,24 @@ void Collider::Draw()
 
 }
 
+void Collider::Update()
+{
+	//位置格納用
+	XMFLOAT3 position = parent->GetComponent<Transform>()->GetWorldPosition();
+
+	//まだ情報が入っていないのなら
+	if (IsMatch(nowPosition_, XMFLOAT3(99999, 99999, 99999)))
+	{
+		ARGUMENT_INITIALIZE(nowPosition_, XMFLOAT3(position.x + center_.x, position.y + center_.y, position.z + center_.z));
+		ARGUMENT_INITIALIZE(beforePosition_, nowPosition_);
+	}
+	else
+	{
+		ARGUMENT_INITIALIZE(beforePosition_, nowPosition_);
+		ARGUMENT_INITIALIZE(nowPosition_, XMFLOAT3(position.x + center_.x, position.y + center_.y, position.z + center_.z));
+	}
+}
+
 //衝突判定
 //引数：pTarget	衝突してるか調べる相手
 void Collider::Collision(GameObject* pTarget)
@@ -81,9 +100,14 @@ void Collider::Collision(GameObject* pTarget)
 	//子供も当たり判定
 	for (auto i = pTarget->GetChildList()->begin(); i != pTarget->GetChildList()->end(); i++)
 	{
-		//コライダーがあるのならば
-		if((*i)->GetComponent<Collider>())
-			Collision((*i));
+		for (auto j = (*i)->GetChildList()->begin(); j != (*i)->GetChildList()->end(); j++)
+		{
+
+			//コライダーがあるのならば
+			if ((*j)->GetComponent<Collider>() && this != (*j)->GetComponent<Collider>())
+				Collision((*j));
+
+		}
 	}
 }
 
@@ -144,6 +168,41 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 		circlePos.z > boxPos.z - box->size_.z / 2 - sphere->size_.x &&
 		circlePos.z < boxPos.z + box->size_.z / 2 + sphere->size_.x)
 	{
+		XMFLOAT3 len = {
+			min<float>(abs(circlePos.x - boxPos.x - box->size_.x / 2 - sphere->size_.x),abs(circlePos.x - boxPos.x + box->size_.x / 2 + sphere->size_.x)),
+			min<float>(abs(circlePos.y - boxPos.y - box->size_.y / 2 - sphere->size_.x),abs(circlePos.y - boxPos.y + box->size_.y / 2 + sphere->size_.x)),
+			min<float>(abs(circlePos.z - boxPos.z - box->size_.z / 2 - sphere->size_.x),abs(circlePos.z - boxPos.z + box->size_.z / 2 + sphere->size_.x))
+		};
+		XMVECTOR dir = XMVector3Normalize(sphere->GetNowPos() - box->GetNowPos());
+
+		//Aが動いていたなら
+		if (!IsMatch(box->GetNowPos(), box->GetBeforePos()))
+		{
+			XMVECTOR dir = XMVector3Normalize(box->GetBeforePos() - box->GetNowPos());
+			len.x *= XMVectorGetX(dir);
+			len.y *= XMVectorGetY(dir);
+			len.z *= XMVectorGetZ(dir);
+
+			Transform* p = box->parent->GetComponent<Transform>();
+			p->SetPosition(VectorToFloat3(p->GetPosition() + len));
+
+			ARGUMENT_INITIALIZE(box->nowPosition_, p->GetPosition());
+			ARGUMENT_INITIALIZE(box->beforePosition_, box->nowPosition_);
+		}
+		else if (!IsMatch(sphere->GetNowPos(), sphere->GetBeforePos()))
+		{
+			XMVECTOR dir = XMVector3Normalize(sphere->GetBeforePos() - sphere->GetNowPos());
+			len.x *= XMVectorGetX(dir);
+			len.y *= XMVectorGetY(dir);
+			len.z *= XMVectorGetZ(dir);
+
+			Transform* p = sphere->parent->GetComponent<Transform>();
+			p->SetPosition(VectorToFloat3(p->GetPosition() + len));
+
+			ARGUMENT_INITIALIZE(sphere->nowPosition_, p->GetPosition());
+			ARGUMENT_INITIALIZE(sphere->beforePosition_, sphere->nowPosition_);
+		}
+
 		return true;
 	}
 
@@ -166,6 +225,28 @@ bool Collider::IsHitCircleVsCircle(SphereCollider* circleA, SphereCollider* circ
 
 	if (XMVector3Length(v).m128_f32[0] <= circleA->size_.x + circleB->size_.x)
 	{
+		float len = (circleA->size_.x + circleB->size_.x) - XMVector3Length(v).m128_f32[0];
+		
+		//Aが動いていたなら
+		if (!IsMatch(circleA->GetNowPos(), circleA->GetBeforePos()))
+		{
+			Transform *p = circleA->parent->GetComponent<Transform>();
+			XMVECTOR dir = XMVector3Normalize(circleA->GetBeforePos() - circleA->GetNowPos());
+			p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
+
+			ARGUMENT_INITIALIZE(circleA->nowPosition_, p->GetPosition());
+			ARGUMENT_INITIALIZE(circleA->beforePosition_, circleA->nowPosition_);
+		}
+		else if(!IsMatch(circleB->GetNowPos(), circleB->GetBeforePos()))
+		{
+			Transform* p = circleB->parent->GetComponent<Transform>();
+			XMVECTOR dir = XMVector3Normalize(circleB->GetBeforePos() - circleB->GetNowPos());
+			p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
+
+			ARGUMENT_INITIALIZE(circleB->nowPosition_, p->GetPosition());
+			ARGUMENT_INITIALIZE(circleB->beforePosition_, circleB->nowPosition_);
+		}
+
 		return true;
 	}
 

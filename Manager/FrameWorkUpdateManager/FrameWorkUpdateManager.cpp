@@ -27,6 +27,10 @@ namespace FrameWorkUpdateManager
 			//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 			root->StartUpdateSub();
 			root->UpdateSub();
+
+			//当たり判定
+			root->AllHitTest();
+
 		}
 
 		//マネージャの更新処理を呼ぶ

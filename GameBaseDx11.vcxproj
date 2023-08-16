@@ -227,6 +227,7 @@
     <ClCompile Include="Player\PlayerBase.cpp" />
     <ClCompile Include="Scene\ModeSelectScene\ModeSelectScene.cpp" />
     <ClCompile Include="Scene\PlayScene\PlayScene.cpp" />
+    <ClCompile Include="Scene\TestScene\TestScene.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="State\PlayerState\BackhandingState.cpp" />
@@ -235,6 +236,8 @@
     <ClCompile Include="State\PlayerState\PlayerStateManager.cpp" />
     <ClCompile Include="State\PlayerState\ServingState.cpp" />
     <ClCompile Include="State\PlayerState\StandingState.cpp" />
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="testBox.cpp" />
     <ClCompile Include="UI\Button\ButtonBase.cpp" />
     <ClCompile Include="UI\Button\EasingButton.cpp" />
     <ClCompile Include="UI\EasingImage.cpp" />
@@ -327,6 +330,7 @@
     <ClInclude Include="Player\PlayerBase.h" />
     <ClInclude Include="Scene\ModeSelectScene\ModeSelectScene.h" />
     <ClInclude Include="Scene\PlayScene\PlayScene.h" />
+    <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="State\PlayerState\BackhandingState.h" />
@@ -335,6 +339,8 @@
     <ClInclude Include="State\PlayerState\PlayerStateManager.h" />
     <ClInclude Include="State\PlayerState\ServingState.h" />
     <ClInclude Include="State\PlayerState\StandingState.h" />
+    <ClInclude Include="test.h" />
+    <ClInclude Include="testBox.h" />
     <ClInclude Include="UI\Button\ButtonBase.h" />
     <ClInclude Include="UI\Button\EasingButton.h" />
     <ClInclude Include="UI\EasingImage.h" />

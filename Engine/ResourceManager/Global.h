@@ -143,6 +143,10 @@ static float VectorLen(const XMVECTOR& v)
 	return XMVectorGetX(XMVector3Length(v));
 }
 
+static bool IsMatch(XMFLOAT3 a, XMFLOAT3 b)
+{
+	return (a.x == b.x && a.y == b.y && a.z == b.z);
+}
 
 /// <summary>
 /// float‚©‚çstring‚É•ÏŠ·

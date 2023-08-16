@@ -31,6 +31,8 @@ protected:
 	ColliderType	type_;			//種類
 	XMFLOAT3		center_;		//中心位置（ゲームオブジェクトの原点から見た位置）
 	XMFLOAT3		size_;			//判定サイズ（幅、高さ、奥行き）
+	XMFLOAT3        beforePosition_;//前回の位置
+	XMFLOAT3        nowPosition_;   //現在の位置
 	int				hDebugModel_;	//デバッグ表示用のモデルのID
 	bool            rotateflag_;    //コライダーが回転するかどうか
 
@@ -49,6 +51,9 @@ public:
 
 	//描画
 	void Draw() override;
+
+	//更新
+	void Update() override;
 
 	/////////////////////////////////接触判定関数////////////////////////////////////////
 
@@ -107,6 +112,9 @@ public:
 
 	//半径ゲット
 	float GetRadius() { return size_.x; }
+
+	XMFLOAT3 GetNowPos() { return nowPosition_; }
+	XMFLOAT3 GetBeforePos() { return beforePosition_; }
 
 private:
 

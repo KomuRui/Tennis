@@ -124,6 +124,9 @@ public:
 	//子オブジェクトを全て削除
 	void KillAllChildren();
 
+	//当たり判定
+	void AllHitTest();
+
 	//指定した時間で呼ばれるメソッド
 	virtual void TimeMethod() {};
 
@@ -195,7 +198,6 @@ private:
 	//オブジェクト削除（再帰）
 	//引数：obj　削除するオブジェクト
 	void KillObjectSub(GameObject* obj);
-
 
 	//フラグ
 	struct OBJECT_STATE

@@ -7,6 +7,7 @@
 #include "../../Engine/ResourceManager/Fade.h"
 #include "../../Scene/PlayScene/PlayScene.h"
 #include "../../Scene/TitleScene/TitleScene.h"
+#include "../../Scene/TestScene/TestScene.h"
 #include "../../Scene/ModeSelectScene/ModeSelectScene.h"
 #include "../../Manager/GameManager/GameManager.h"
 #include "../../Manager/EffectManager/PlayerEffectManager/PlayerEffectManager.h"
@@ -28,9 +29,9 @@ void SceneManager::Initialize()
 	GameManager::SetpSceneManager(this);
 
 	//最初のシーンを準備
-	currentSceneID_ = SCENE_ID_TITLE;
+	currentSceneID_ = SCENE_ID_TEST;
 	nextSceneID_ = currentSceneID_;
-	Instantiate<TitleScene>(this);
+	Instantiate<TestScene>(this);
 }
 
 //更新
@@ -73,6 +74,7 @@ void SceneManager::SceneUpdate()
 	{
 	case SCENE_ID_PLAY:				 Instantiate<PlayScene>(this); break;
 	case SCENE_ID_TITLE:			 Instantiate<TitleScene>(this); break;
+	case SCENE_ID_TEST:			 Instantiate<TestScene>(this); break;
 	case SCENE_ID_MODE_SELECT:		 Instantiate<ModeSelectScene>(this); break;
 	}
 
