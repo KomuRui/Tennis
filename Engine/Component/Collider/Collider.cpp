@@ -5,7 +5,7 @@
 
 //コンストラクタ
 Collider::Collider()
-	:nowPosition_(99999, 99999, 99999),beforePosition_(99999, 99999, 99999), nowRotate_(99999, 99999, 99999), nowRotate_(99999, 99999, 99999)
+	:nowPosition_(99999, 99999, 99999),beforePosition_(99999, 99999, 99999), nowRotate_(99999, 99999, 99999), beforeRotate_(99999, 99999, 99999)
 {
 }
 
