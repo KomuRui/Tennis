@@ -223,7 +223,7 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 		for (int j = 0; j < 12; j++)
 		{
 			//マイナスなら四角の中に入っている
-			if (XMVectorGetX(XMVector3Cross(sideB[j].second - sideB[j].first, boxVerticesA[i] - sideB[j].first)) >= 0)
+			if (XMVectorGetZ(XMVector3Cross(sideB[j].second - sideB[j].first, boxVerticesA[i] - sideB[j].first)) >= 0)
 			{
 				float d = PointToLineSegmentDistance(boxVerticesA[i], sideB[j].first, sideB[j].second);
 				if (d < len)
