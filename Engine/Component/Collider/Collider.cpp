@@ -172,8 +172,8 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 	sideA.push_back({ boxVerticesA[6],boxVerticesA[7] });
 	sideA.push_back({ boxVerticesA[7],boxVerticesA[4] });
 	sideA.push_back({ boxVerticesA[0],boxVerticesA[4] });
-	sideA.push_back({ boxVerticesA[1],boxVerticesA[5] });
-	sideA.push_back({ boxVerticesA[2],boxVerticesA[6] });
+	sideA.push_back({ boxVerticesA[5],boxVerticesA[1] });
+	sideA.push_back({ boxVerticesA[6],boxVerticesA[2] });
 	sideA.push_back({ boxVerticesA[3],boxVerticesA[7] });
 
 	//各頂点
@@ -203,65 +203,74 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 	sideB.push_back({ boxVerticesB[2],boxVerticesB[6] });
 	sideB.push_back({ boxVerticesB[3],boxVerticesB[7] });
 
+	int count = 0;
+	bool isHit = false;										//当たっているか
 	float len = 99999;										//めり込み距離
-	XMVECTOR dir = XMVector3Normalize(boxPosA - boxPosB);   //めり込み除去する方向
-	bool isHit = false;										//当たったかどうか
+	XMVECTOR dir = XMVector3Normalize(boxPosA - boxPosB);   //めり込み除去する方向									
 
 	//8頂点分回す(回転した後の頂点にする)
-	//衝突しているか調べる
 	for (int i = 0; i < 8; i++)
 	{
-
 		boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)) * matRotateBoxA_));
 		boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)));
-
-		//当たっているか
-		if ((boxPosB.x + boxB->size_.x / 2) >= boxVerticesA[i].x &&
-			(boxPosB.x - boxB->size_.x / 2) <= boxVerticesA[i].x &&
-			(boxPosB.y + boxB->size_.y / 2) >= boxVerticesA[i].y &&
-			(boxPosB.y - boxB->size_.y / 2) <= boxVerticesA[i].y &&
-			(boxPosB.z + boxB->size_.z / 2) >= boxVerticesA[i].z &&
-			(boxPosB.z - boxB->size_.z / 2) <= boxVerticesA[i].z)
-		{
-			ARGUMENT_INITIALIZE(isHit, true);
-
-			//辺分回す
-			for (auto& e : sideB)
-			{
-				float d = PointToLineSegmentDistance(boxVerticesA[i], e.first, e.second);
-				if (d < len)
-				{
-					ARGUMENT_INITIALIZE(len, d);
-				}
-			}
-
-			break;
-		}
-
 		boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)) * matRotateBoxB_));
 		boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)));
-	
-		//当たっているか
-		if ((boxPosA.x + boxA->size_.x / 2) >= boxVerticesB[i].x &&
-			(boxPosA.x - boxA->size_.x / 2) <= boxVerticesB[i].x &&
-			(boxPosA.y + boxA->size_.y / 2) >= boxVerticesB[i].y &&
-			(boxPosA.y - boxA->size_.y / 2) <= boxVerticesB[i].y &&
-			(boxPosA.z + boxA->size_.z / 2) >= boxVerticesB[i].z &&
-			(boxPosA.z - boxA->size_.z / 2) <= boxVerticesB[i].z)
-		{
-			ARGUMENT_INITIALIZE(isHit, true);
+	}
 
-			//辺分回す
-			for (auto& e : sideA)
+	for (int i = 0; i < 8; i++)
+	{
+		//辺分回す
+		for (int j = 0; j < 12; j++)
+		{
+			//マイナスなら四角の中に入っている
+			if (XMVectorGetX(XMVector3Cross(sideB[j].second - sideB[j].first, boxVerticesA[i] - sideB[j].first)) >= 0)
 			{
-				float d = PointToLineSegmentDistance(boxVerticesB[i], e.first, e.second);
+				float d = PointToLineSegmentDistance(boxVerticesA[i], sideB[j].first, sideB[j].second);
 				if (d < len)
 				{
 					ARGUMENT_INITIALIZE(len, d);
 				}
 			}
+			else
+				count++;
+		}
 
+		if (count == 0)
+		{
+			ARGUMENT_INITIALIZE(isHit, true);
 			break;
+		}
+		else
+		{
+			ARGUMENT_INITIALIZE(len, 99999);
+			ARGUMENT_INITIALIZE(count,0);
+		}
+
+		//辺分回す
+		for (int j = 0; j < 12; j++)
+		{
+			//マイナスなら四角の中に入っている
+			if (XMVectorGetZ(XMVector3Cross(sideA[j].second - sideA[j].first, boxVerticesB[i] - sideA[j].first)) >= 0)
+			{
+				float d = PointToLineSegmentDistance(boxVerticesB[i], sideA[j].first, sideA[j].second);
+				if (d < len)
+				{
+					ARGUMENT_INITIALIZE(len, d);
+				}
+			}
+			else
+				count++;
+		}
+
+		if (count == 0)
+		{
+			ARGUMENT_INITIALIZE(isHit, true);
+			break;
+		}
+		else
+		{
+			ARGUMENT_INITIALIZE(len, 99999);
+			ARGUMENT_INITIALIZE(count, 0);
 		}
 	}
 
