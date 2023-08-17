@@ -34,9 +34,10 @@ void TestScene::Initialize()
 	Camera::SetTarget(CAM_TAR);
 	Camera::SetFieldAngle(FIELD_ANGLE);
 
-	Instantiate<test>(this, "Ball/Ball.fbx", "test1");
+	//Instantiate<test>(this, "Ball/Ball.fbx", "test1");
 	Instantiate<test>(this, "Ball/Ball.fbx", "test2")->GetComponent<Transform>()->SetPosition(5,0,0);
 	Instantiate<testBox>(this, "Ball/Ball.fbx", "testBox")->GetComponent<Transform>()->SetPosition(-5,0,0);
+	Instantiate<testBox>(this, "Ball/Ball.fbx", "testBox2")->GetComponent<Transform>()->SetPosition(0,0,0);
 }
 
 //çXêV

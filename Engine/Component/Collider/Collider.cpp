@@ -134,17 +134,163 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 	XMFLOAT3 boxPosA = Float3Add(boxA->parent->GetComponent<Transform>()->GetWorldPosition(), boxA->center_);
 	XMFLOAT3 boxPosB = Float3Add(boxB->parent->GetComponent<Transform>()->GetWorldPosition(), boxB->center_);
 
+	//回転行列
+	XMFLOAT3 rotateA_ = (boxA->parent->GetComponent<Transform>()->GetWorldRotate());
+	XMMATRIX rotateX, rotateY, rotateZ;
+	rotateX = XMMatrixRotationX(XMConvertToRadians(rotateA_.x));
+	rotateY = XMMatrixRotationY(XMConvertToRadians(rotateA_.y));
+	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateA_.z));
+	XMMATRIX matRotateBoxA_ = rotateZ * rotateX * rotateY;
 
-	if ((boxPosA.x + boxA->size_.x / 2) > (boxPosB.x - boxB->size_.x / 2) &&
-		(boxPosA.x - boxA->size_.x / 2) < (boxPosB.x + boxB->size_.x / 2) &&
-		(boxPosA.y + boxA->size_.y / 2) > (boxPosB.y - boxB->size_.y / 2) &&
-		(boxPosA.y - boxA->size_.y / 2) < (boxPosB.y + boxB->size_.y / 2) &&
-		(boxPosA.z + boxA->size_.z / 2) > (boxPosB.z - boxB->size_.z / 2) &&
-		(boxPosA.z - boxA->size_.z / 2) < (boxPosB.z + boxB->size_.z / 2))
+	//回転行列
+	XMFLOAT3 rotateB_ = (boxB->parent->GetComponent<Transform>()->GetWorldRotate());
+	rotateX = XMMatrixRotationX(XMConvertToRadians(rotateB_.x));
+	rotateY = XMMatrixRotationY(XMConvertToRadians(rotateB_.y));
+	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateB_.z));
+	XMMATRIX matRotateBoxB_ = rotateZ * rotateX * rotateY;
+
+	//各頂点
+	XMFLOAT3 boxVerticesA[] = {
+			{ boxPosA.x - boxA->size_.x / 2, boxPosA.y - boxA->size_.y / 2, boxPosA.z - boxA->size_.z / 2 },
+			{ boxPosA.x + boxA->size_.x / 2, boxPosA.y - boxA->size_.y / 2, boxPosA.z - boxA->size_.z / 2 },
+			{ boxPosA.x + boxA->size_.x / 2, boxPosA.y + boxA->size_.y / 2, boxPosA.z - boxA->size_.z / 2 },
+			{ boxPosA.x - boxA->size_.x / 2, boxPosA.y + boxA->size_.y / 2, boxPosA.z - boxA->size_.z / 2 },
+			{ boxPosA.x - boxA->size_.x / 2, boxPosA.y - boxA->size_.y / 2, boxPosA.z + boxA->size_.z / 2 },
+			{ boxPosA.x + boxA->size_.x / 2, boxPosA.y - boxA->size_.y / 2, boxPosA.z + boxA->size_.z / 2 },
+			{ boxPosA.x + boxA->size_.x / 2, boxPosA.y + boxA->size_.y / 2, boxPosA.z + boxA->size_.z / 2 },
+			{ boxPosA.x - boxA->size_.x / 2, boxPosA.y + boxA->size_.y / 2, boxPosA.z + boxA->size_.z / 2 }
+	};
+
+	//辺の集合
+	vector<pair<XMFLOAT3, XMFLOAT3>> sideA;
+	sideA.push_back({ boxVerticesA[0],boxVerticesA[1] });
+	sideA.push_back({ boxVerticesA[1],boxVerticesA[2] });
+	sideA.push_back({ boxVerticesA[2],boxVerticesA[3] });
+	sideA.push_back({ boxVerticesA[3],boxVerticesA[0] });
+	sideA.push_back({ boxVerticesA[4],boxVerticesA[5] });
+	sideA.push_back({ boxVerticesA[5],boxVerticesA[6] });
+	sideA.push_back({ boxVerticesA[6],boxVerticesA[7] });
+	sideA.push_back({ boxVerticesA[7],boxVerticesA[4] });
+	sideA.push_back({ boxVerticesA[0],boxVerticesA[4] });
+	sideA.push_back({ boxVerticesA[1],boxVerticesA[5] });
+	sideA.push_back({ boxVerticesA[2],boxVerticesA[6] });
+	sideA.push_back({ boxVerticesA[3],boxVerticesA[7] });
+
+	//各頂点
+	XMFLOAT3 boxVerticesB[] = {
+			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
+			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
+			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
+			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
+			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
+			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
+			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
+			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 }
+	};
+
+	//辺の集合
+	vector<pair<XMFLOAT3, XMFLOAT3>> sideB;
+	sideB.push_back({ boxVerticesB[0],boxVerticesB[1] });
+	sideB.push_back({ boxVerticesB[1],boxVerticesB[2] });
+	sideB.push_back({ boxVerticesB[2],boxVerticesB[3] });
+	sideB.push_back({ boxVerticesB[3],boxVerticesB[0] });
+	sideB.push_back({ boxVerticesB[4],boxVerticesB[5] });
+	sideB.push_back({ boxVerticesB[5],boxVerticesB[6] });
+	sideB.push_back({ boxVerticesB[6],boxVerticesB[7] });
+	sideB.push_back({ boxVerticesB[7],boxVerticesB[4] });
+	sideB.push_back({ boxVerticesB[0],boxVerticesB[4] });
+	sideB.push_back({ boxVerticesB[1],boxVerticesB[5] });
+	sideB.push_back({ boxVerticesB[2],boxVerticesB[6] });
+	sideB.push_back({ boxVerticesB[3],boxVerticesB[7] });
+
+	float len = 99999;										//めり込み距離
+	XMVECTOR dir = XMVector3Normalize(boxPosA - boxPosB);   //めり込み除去する方向
+	bool isHit = false;										//当たったかどうか
+
+	//8頂点分回す(回転した後の頂点にする)
+	//衝突しているか調べる
+	for (int i = 0; i < 8; i++)
 	{
-		return true;
+
+		boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)) * matRotateBoxA_));
+		boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)));
+
+		//当たっているか
+		if ((boxPosB.x + boxB->size_.x / 2) >= boxVerticesA[i].x &&
+			(boxPosB.x - boxB->size_.x / 2) <= boxVerticesA[i].x &&
+			(boxPosB.y + boxB->size_.y / 2) >= boxVerticesA[i].y &&
+			(boxPosB.y - boxB->size_.y / 2) <= boxVerticesA[i].y &&
+			(boxPosB.z + boxB->size_.z / 2) >= boxVerticesA[i].z &&
+			(boxPosB.z - boxB->size_.z / 2) <= boxVerticesA[i].z)
+		{
+			ARGUMENT_INITIALIZE(isHit, true);
+
+			//辺分回す
+			for (auto& e : sideB)
+			{
+				float d = PointToLineSegmentDistance(boxVerticesA[i], e.first, e.second);
+				if (d < len)
+				{
+					ARGUMENT_INITIALIZE(len, d);
+				}
+			}
+
+			break;
+		}
+
+		boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)) * matRotateBoxB_));
+		boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)));
+	
+		//当たっているか
+		if ((boxPosA.x + boxA->size_.x / 2) >= boxVerticesB[i].x &&
+			(boxPosA.x - boxA->size_.x / 2) <= boxVerticesB[i].x &&
+			(boxPosA.y + boxA->size_.y / 2) >= boxVerticesB[i].y &&
+			(boxPosA.y - boxA->size_.y / 2) <= boxVerticesB[i].y &&
+			(boxPosA.z + boxA->size_.z / 2) >= boxVerticesB[i].z &&
+			(boxPosA.z - boxA->size_.z / 2) <= boxVerticesB[i].z)
+		{
+			ARGUMENT_INITIALIZE(isHit, true);
+
+			//辺分回す
+			for (auto& e : sideA)
+			{
+				float d = PointToLineSegmentDistance(boxVerticesB[i], e.first, e.second);
+				if (d < len)
+				{
+					ARGUMENT_INITIALIZE(len, d);
+				}
+			}
+
+			break;
+		}
 	}
-	return false;
+
+	//当たっているのなら
+	if (isHit)
+	{
+		//Aが動いていたなら
+		if (!IsMatch(boxA->GetNowPos(), boxA->GetBeforePos()) || !IsMatch(boxA->GetNowRotate(), boxA->GetBeforeRotate()))
+		{
+			Transform* p = boxB->parent->GetComponent<Transform>();
+
+			p->SetPosition(VectorToFloat3(p->GetPosition() + -dir * len));
+
+			ARGUMENT_INITIALIZE(boxB->beforePosition_, boxB->nowPosition_);
+			ARGUMENT_INITIALIZE(boxB->nowPosition_, p->GetPosition());
+		}
+		else if (!IsMatch(boxB->GetNowPos(), boxB->GetBeforePos()) || !IsMatch(boxB->GetNowRotate(), boxB->GetBeforeRotate()))
+		{
+
+			Transform* p = boxA->parent->GetComponent<Transform>();
+			p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
+
+			ARGUMENT_INITIALIZE(boxA->beforePosition_, boxA->nowPosition_);
+			ARGUMENT_INITIALIZE(boxA->nowPosition_, p->GetPosition());
+		}
+
+	}
+
+	return isHit;
 }
 
 //箱型と球体の衝突判定
@@ -260,11 +406,9 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 			ARGUMENT_INITIALIZE(box->beforePosition_, box->nowPosition_);
 			ARGUMENT_INITIALIZE(box->nowPosition_, p->GetPosition());
 		}
-
-		return true;
 	}
 
-	return false;
+	return isHit;
 }
 
 //球体同士の衝突判定
