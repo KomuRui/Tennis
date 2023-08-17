@@ -161,7 +161,7 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 	XMMATRIX rotateX, rotateY, rotateZ;
 	rotateX = XMMatrixRotationX(XMConvertToRadians(rotateB_.x));
 	rotateY = XMMatrixRotationY(XMConvertToRadians(rotateB_.y));
-	rotateZ = XMMatrixRotationZ(XMConvertToRadians(-rotateB_.z));
+	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateB_.z));
 
 	XMMATRIX matRotateBox_ = rotateZ * rotateX * rotateY;
 
@@ -173,13 +173,17 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 	}
 
 	XMFLOAT3 rotateS_ = (sphere->parent->GetComponent<Transform>()->GetWorldRotate());
-	rotateX = XMMatrixRotationX(XMConvertToRadians(rotateB_.x));
-	rotateY = XMMatrixRotationY(XMConvertToRadians(rotateB_.y));
-	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateB_.z));
+	rotateX = XMMatrixRotationX(XMConvertToRadians(rotateS_.x));
+	rotateY = XMMatrixRotationY(XMConvertToRadians(rotateS_.y));
+	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateS_.z));
 	XMMATRIX matRotateCircle_ = rotateZ * rotateX * rotateY;
 
-	//‹…‘Ì‚Ì‰ñ“]
-	circlePos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&circlePos), matRotateCircle_));
+	//0‚¶‚á‚È‚¯‚ê‚Î
+	if (!VectorNotZero(XMLoadFloat3(&sphere->center_)))
+	{
+		circlePos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&circlePos), XMMatrixInverse(nullptr, XMMatrixTranslation(sphere->center_.x, sphere->center_.y, sphere->center_.z)) * matRotateCircle_));
+		circlePos = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&circlePos), XMMatrixTranslation(sphere->center_.x, sphere->center_.y, sphere->center_.z)));
+	}
 
 	//Še’¸“_
 	XMFLOAT3 boxVertices[] = {
@@ -215,13 +219,11 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 	//•Ó•ª‰ñ‚·
 	for (auto& e : side)
 	{
-		XMFLOAT3 p1 = VectorToFloat3(e.first - boxPos);
-		e.first = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&e.first), XMMatrixInverse(nullptr, XMMatrixTranslation(p1.x, p1.y, p1.z)) * matRotateBox_));
-		e.first = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&e.first), XMMatrixTranslation(p1.x, p1.y, p1.z)));
+		e.first = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&e.first), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)) * matRotateBox_));
+		e.first = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&e.first), XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)));
 
-		XMFLOAT3 p2 = VectorToFloat3(e.second - boxPos);
-		e.second = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&e.second), XMMatrixInverse(nullptr, XMMatrixTranslation(p2.x, p2.y, p2.z)) * matRotateBox_));
-		e.second = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&e.second), XMMatrixTranslation(p2.x, p2.y, p2.z)));
+		e.second = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&e.second), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)) * matRotateBox_));
+		e.second = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&e.second), XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)));
 
 		float d = PointToLineSegmentDistance(circlePos, e.first, e.second);
 
@@ -242,21 +244,21 @@ bool Collider::IsHitBoxVsCircle(BoxCollider* box, SphereCollider* sphere)
 		//A‚ª“®‚¢‚Ä‚¢‚½‚È‚ç
 		if (!IsMatch(box->GetNowPos(), box->GetBeforePos()) || !IsMatch(box->GetNowRotate(), box->GetBeforeRotate()))
 		{
-			Transform* p = box->parent->GetComponent<Transform>();
+			Transform* p = sphere->parent->GetComponent<Transform>();
 
-			p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
+			p->SetPosition(VectorToFloat3(p->GetPosition() + -dir * len));
 
-			ARGUMENT_INITIALIZE(box->nowPosition_, p->GetPosition());
-			ARGUMENT_INITIALIZE(box->beforePosition_, box->nowPosition_);
+			ARGUMENT_INITIALIZE(sphere->beforePosition_, sphere->nowPosition_);
+			ARGUMENT_INITIALIZE(sphere->nowPosition_, p->GetPosition());
 		}
 		else if (!IsMatch(sphere->GetNowPos(), sphere->GetBeforePos()))
 		{
 			
-			Transform* p = sphere->parent->GetComponent<Transform>();
-			p->SetPosition(VectorToFloat3(p->GetPosition() + -dir * len));
+			Transform* p = box->parent->GetComponent<Transform>();
+			p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
 
-			ARGUMENT_INITIALIZE(sphere->nowPosition_, p->GetPosition());
-			ARGUMENT_INITIALIZE(sphere->beforePosition_, sphere->nowPosition_);
+			ARGUMENT_INITIALIZE(box->beforePosition_, box->nowPosition_);
+			ARGUMENT_INITIALIZE(box->nowPosition_, p->GetPosition());
 		}
 
 		return true;
@@ -290,8 +292,8 @@ bool Collider::IsHitCircleVsCircle(SphereCollider* circleA, SphereCollider* circ
 			XMVECTOR dir = XMVector3Normalize(circleA->GetBeforePos() - circleA->GetNowPos());
 			p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
 
-			ARGUMENT_INITIALIZE(circleA->nowPosition_, p->GetPosition());
 			ARGUMENT_INITIALIZE(circleA->beforePosition_, circleA->nowPosition_);
+			ARGUMENT_INITIALIZE(circleA->nowPosition_, p->GetPosition());
 		}
 		else if(!IsMatch(circleB->GetNowPos(), circleB->GetBeforePos()))
 		{
@@ -299,8 +301,8 @@ bool Collider::IsHitCircleVsCircle(SphereCollider* circleA, SphereCollider* circ
 			XMVECTOR dir = XMVector3Normalize(circleB->GetBeforePos() - circleB->GetNowPos());
 			p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
 
-			ARGUMENT_INITIALIZE(circleB->nowPosition_, p->GetPosition());
 			ARGUMENT_INITIALIZE(circleB->beforePosition_, circleB->nowPosition_);
+			ARGUMENT_INITIALIZE(circleB->nowPosition_, p->GetPosition());
 		}
 
 		return true;
