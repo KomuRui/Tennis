@@ -161,6 +161,27 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 			{ boxPosA.x - boxA->size_.x / 2, boxPosA.y + boxA->size_.y / 2, boxPosA.z + boxA->size_.z / 2 }
 	};
 
+	//各頂点
+	XMFLOAT3 boxVerticesB[] = {
+			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
+			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
+			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
+			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
+			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
+			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
+			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
+			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 }
+	};
+
+	//8頂点分回す(回転した後の頂点にする)
+	for (int i = 0; i < 8; i++)
+	{
+		boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)) * matRotateBoxA_));
+		boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)));
+		boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)) * matRotateBoxB_));
+		boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)));
+	}
+
 	//辺の集合
 	vector<pair<XMFLOAT3, XMFLOAT3>> sideA;
 	sideA.push_back({ boxVerticesA[0],boxVerticesA[1] });
@@ -176,18 +197,6 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 	sideA.push_back({ boxVerticesA[6],boxVerticesA[2] });
 	sideA.push_back({ boxVerticesA[3],boxVerticesA[7] });
 
-	//各頂点
-	XMFLOAT3 boxVerticesB[] = {
-			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
-			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
-			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
-			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
-			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
-			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
-			{ boxPosB.x + boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
-			{ boxPosB.x - boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 }
-	};
-
 	//辺の集合
 	vector<pair<XMFLOAT3, XMFLOAT3>> sideB;
 	sideB.push_back({ boxVerticesB[0],boxVerticesB[1] });
@@ -199,23 +208,14 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 	sideB.push_back({ boxVerticesB[6],boxVerticesB[7] });
 	sideB.push_back({ boxVerticesB[7],boxVerticesB[4] });
 	sideB.push_back({ boxVerticesB[0],boxVerticesB[4] });
-	sideB.push_back({ boxVerticesB[1],boxVerticesB[5] });
-	sideB.push_back({ boxVerticesB[2],boxVerticesB[6] });
+	sideB.push_back({ boxVerticesB[5],boxVerticesB[1] });
+	sideB.push_back({ boxVerticesB[6],boxVerticesB[2] });
 	sideB.push_back({ boxVerticesB[3],boxVerticesB[7] });
 
 	int count = 0;
 	bool isHit = false;										//当たっているか
 	float len = 99999;										//めり込み距離
 	XMVECTOR dir = XMVector3Normalize(boxPosA - boxPosB);   //めり込み除去する方向									
-
-	//8頂点分回す(回転した後の頂点にする)
-	for (int i = 0; i < 8; i++)
-	{
-		boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)) * matRotateBoxA_));
-		boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)));
-		boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)) * matRotateBoxB_));
-		boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)));
-	}
 
 	for (int i = 0; i < 8; i++)
 	{
