@@ -15,6 +15,10 @@ BoxCollider::BoxCollider()
 	//テスト表示用判定枠
 	hDebugModel_ = ModelManager::Load("DebugCollision/boxCollider.fbx");
 #endif
+
+	nX = RIGHT_VECTOR;
+	nY = UP_VECTOR;
+	nZ = STRAIGHT_VECTOR;
 }
 
 //接触判定
@@ -50,6 +54,10 @@ float BoxCollider::prjLine(XMVECTOR* sep, XMVECTOR* e1, XMVECTOR* e2, XMVECTOR* 
 //各軸ベクトルを回転
 void BoxCollider::CalcAxisVec()
 {
+	OBB_X = nX * size_.x;
+	OBB_Y = nY * size_.y;
+	OBB_Z = nZ * size_.z;
+
 	XMVECTOR rotateQua = XMQuaternionRotationMatrix(parent->GetComponent<Transform>()->GetWorldRotateMatrix());
 	OBB_X = XMVector3Rotate(OBB_X, rotateQua);
 	OBB_Y = XMVector3Rotate(OBB_Y, rotateQua);
