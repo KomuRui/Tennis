@@ -27,3 +27,31 @@ bool BoxCollider::IsHit(Collider* target)
 	else
 		return IsHitBoxVsCircle(this, (SphereCollider*)target);
 }
+
+//オブジェクトA,Bの距離を計算
+XMVECTOR BoxCollider::calcDistance(XMFLOAT3 posA, XMFLOAT3 posB)
+{
+	XMVECTOR distance = XMLoadFloat3(&posB) - XMLoadFloat3(&posA);
+	return distance;
+}
+
+//分離軸に投影された軸成分から投影線分長を算出
+float BoxCollider::prjLine(XMVECTOR* sep, XMVECTOR* e1, XMVECTOR* e2, XMVECTOR* e3)
+{
+	XMVECTOR sp = XMVectorZero();
+	sp = XMVector3Normalize(*sep);
+	float r1 = abs(XMVectorGetX(XMVector3Dot(sp, *e1)));
+	float r2 = abs(XMVectorGetX(XMVector3Dot(sp, *e2)));
+	float r3 = e3 ? abs(XMVectorGetX(XMVector3Dot(sp, *e3))) : 0;
+
+	return r1 + r2 + r3;
+}
+
+//各軸ベクトルを回転
+void BoxCollider::CalcAxisVec()
+{
+	XMVECTOR rotateQua = XMQuaternionRotationMatrix(parent->GetComponent<Transform>()->GetWorldRotateMatrix());
+	OBB_X = XMVector3Rotate(OBB_X, rotateQua);
+	OBB_Y = XMVector3Rotate(OBB_Y, rotateQua);
+	OBB_Z = XMVector3Rotate(OBB_Z, rotateQua);
+}

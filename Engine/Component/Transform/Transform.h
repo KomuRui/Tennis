@@ -53,6 +53,7 @@ public:
 	XMFLOAT3 GetWorldPosition();
 	XMFLOAT3 GetWorldRotate();
 	XMFLOAT3 GetWorldScale();
+	XMMATRIX GetWorldRotateMatrix();
 	Transform* GetTransform() { return this; }
 	void SetTransform(Transform* t);
 	void SetPosition(XMFLOAT3 position) { position_ = position; }

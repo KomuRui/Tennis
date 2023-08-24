@@ -106,3 +106,15 @@ XMFLOAT3 Transform::GetWorldScale() {
 	else
 		return scale_;
 }
+
+XMMATRIX Transform::GetWorldRotateMatrix()
+{
+	Calclation();
+
+	if (parent && parent->GetParent() && parent->GetParent()->GetComponent<Transform>())
+	{
+		return  matRotate_ * parent->GetParent()->GetComponent<Transform>()->GetWorldRotateMatrix();
+	}
+
+	return  matRotate_;
+}
