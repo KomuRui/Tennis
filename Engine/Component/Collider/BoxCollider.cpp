@@ -54,12 +54,24 @@ float BoxCollider::prjLine(XMVECTOR* sep, XMVECTOR* e1, XMVECTOR* e2, XMVECTOR* 
 //各軸ベクトルを回転
 void BoxCollider::CalcAxisVec()
 {
-	OBB_X = nX * size_.x;
-	OBB_Y = nY * size_.y;
-	OBB_Z = nZ * size_.z;
+	XMFLOAT3 boxPos = Float3Add(parent->GetComponent<Transform>()->GetWorldPosition(), center_);
 
-	XMVECTOR rotateQua = XMQuaternionRotationMatrix(parent->GetComponent<Transform>()->GetWorldRotateMatrix());
-	OBB_X = XMVector3Rotate(OBB_X, rotateQua);
-	OBB_Y = XMVector3Rotate(OBB_Y, rotateQua);
-	OBB_Z = XMVector3Rotate(OBB_Z, rotateQua);
+	XMFLOAT3 rotate_ = (parent->GetComponent<Transform>()->GetWorldRotate());
+	XMMATRIX rotateX, rotateY, rotateZ;
+	rotateX = XMMatrixRotationX(XMConvertToRadians(rotate_.x));
+	rotateY = XMMatrixRotationY(XMConvertToRadians(rotate_.y));
+	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotate_.z));
+	XMMATRIX matRotateBox_ = rotateZ * rotateX * rotateY;
+
+	OBB_X = nX * (size_.x / 2);
+	OBB_Y = nY * (size_.y / 2);
+	OBB_Z = nZ * (size_.z / 2);
+
+	OBB_X = XMVector3TransformCoord(OBB_X, XMMatrixInverse(nullptr, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)) * matRotateBox_);
+	OBB_X = XMVector3TransformCoord(OBB_X, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z));
+	OBB_Y = XMVector3TransformCoord(OBB_Y, XMMatrixInverse(nullptr, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)) * matRotateBox_);
+	OBB_Y = XMVector3TransformCoord(OBB_Y, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z));
+	OBB_Z = XMVector3TransformCoord(OBB_Z, XMMatrixInverse(nullptr, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)) * matRotateBox_);
+	OBB_Z = XMVector3TransformCoord(OBB_Z, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z));
+
 }
