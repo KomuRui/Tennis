@@ -215,6 +215,13 @@ public:
 	/// 試合開始しているかどうか設定
 	/// </summary>
 	/// <param name="flag">trueなら試合開始している</param>
-	void SetGameStart(bool flag) { isGameStart_ = flag; }
+	void SetGameStart(bool flag) { 
+
+		//試合開始してない状態で開始するなら
+		if (!isGameStart_ && flag)
+			GameStart();
+
+		isGameStart_ = flag; 
+	}
 };
 

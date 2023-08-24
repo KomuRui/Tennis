@@ -57,10 +57,17 @@ XMFLOAT3 HermiteSplineMove::Updata()
 		{
 			ARGUMENT_INITIALIZE(nowLookValue_,ZERO);
 			ARGUMENT_INITIALIZE(isFinish_, true);
+			Time::Reset(timerhNum_);
+		}
+		else if (nowLookValue_ + 1 >= pathData_.size() - 1 && !isLoop_)
+		{
+			ARGUMENT_INITIALIZE(isFinish_, true);
+			ARGUMENT_INITIALIZE(isMove_, false);
 		}
 		else
 		{
 			nowLookValue_++;
+			Time::Reset(timerhNum_);
 
 			//サイズオーバーしていたら終了にする
 			if (nowLookValue_ >= pathData_.size())
@@ -70,7 +77,6 @@ XMFLOAT3 HermiteSplineMove::Updata()
 		}
 
 		ARGUMENT_INITIALIZE(endPosition_, VectorToFloat3(XMVectorHermite(pos0, tan0, pos1, tan1, nowTime_)));
-		Time::Reset(timerhNum_);
 	}
 
 	return VectorToFloat3(XMVectorHermite(pos0, tan0, pos1, tan1, nowTime_));

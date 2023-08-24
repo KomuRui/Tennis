@@ -204,18 +204,9 @@ void PlayerBase::GameStartCamera()
         Camera::SetTargetTwo(VectorToFloat3(GetComponent<Transform>()->GetPosition() + CAM_TAR_ADD_VALUE));
     }
 
-    //動きが終わったのなら
+    //終了したならゲーム開始
     if (hermiteMoveTable_[nowLookNum_]->IsFinish())
-    {
-        nowLookNum_++;
-
-        //サイズオーバーしていたなら
-        if (hermiteMoveTable_.size() == nowLookNum_)
-            ARGUMENT_INITIALIZE(nowLookNum_, ZERO);
-
-        //開始
-        hermiteMoveTable_[nowLookNum_]->ReStart();
-    }
+        GameManager::GetReferee()->SetGameStart(true);
 }
 
 

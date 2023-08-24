@@ -4,12 +4,12 @@
 //定数
 namespace
 {
-	static const float EASING_TIME = 1.0f;                       //イージング時間
+	static const float ALPAH_ADD_VALUE = -0.02f; //透明度に対しての加算値
 }
 
 //コンストラクタ
 PlaySelectScreenFadeImage::PlaySelectScreenFadeImage(GameObject* parent, std::string modelPath, std::string name)
-	:EasingImage(parent, modelPath, name)
+	:ImageBase(parent, modelPath, name), nowAlpha_(1.0f)
 {}
 
 //初期化
@@ -17,15 +17,11 @@ void PlaySelectScreenFadeImage::ChildInitialize()
 {
 	ImageManager::SetSprite(hPict_, Direct3D::pScreen.get());
 	ImageManager::SetScreenCapture(hPict_, true);
-	easing_->Reset(&transform_->scale_, transform_->scale_, { ZERO,ZERO,ZERO }, EASING_TIME, Easing::InCubic);
 }
 
 //更新
-void PlaySelectScreenFadeImage::EasingImageChileUpdate()
+void PlaySelectScreenFadeImage::ChildUpdate()
 {
-	//回転させる
-	transform_->rotate_.z += 10.0f;
-
-	//イージングが終了したら削除
-	if (easing_->IsFinish())KillMe();
+	nowAlpha_ += ALPAH_ADD_VALUE;
+	ImageManager::SetAlpha(hPict_, nowAlpha_);
 }

@@ -1,4 +1,6 @@
 #include "Referee.h"
+#include "../../Scene/PlayScene/PlayScene.h"
+#include "../../UI/Play/VSImage.h"
 
 //コンストラクタ
 Referee::Referee()
@@ -86,7 +88,11 @@ void Referee::GetGame()
 //試合開始
 void Referee::GameStart()
 {
+	//UI作成
+	((PlayScene*)server_->GetParent())->CreateUI();
 
+	//VS画像削除
+	((VSImage*)server_->FindObject("VSImage"))->KillMe();
 }
 
 //試合終了時に呼ばれる

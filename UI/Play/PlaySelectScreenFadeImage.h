@@ -4,8 +4,11 @@
 /// <summary>
 /// スクリーン画像(Fade用)
 /// </summary>
-class PlaySelectScreenFadeImage : public EasingImage
+class PlaySelectScreenFadeImage : public ImageBase
 {
+
+	//現在の透明度
+	float nowAlpha_;
 
 public:
 
@@ -16,7 +19,6 @@ public:
 	void ChildInitialize() override;
 
 	//更新
-	void EasingImageChileUpdate() override;
-
+	void ChildUpdate() override;
 };
 

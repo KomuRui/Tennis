@@ -4,8 +4,8 @@
 //定数
 namespace
 {
-	static const XMFLOAT3 POS_ADD_VALUE = { ZERO, -1.0, ZERO };  //ポジションに対しての加算値
-	static const float EASING_TIME = 1.0f;                       //イージング時間
+	static const XMFLOAT3 SCALE_ADD_VALUE = { 4.0f, 4.0f, ZERO };  //ポジションに対しての加算値
+	static const float EASING_TIME = 2.5f;                         //イージング時間
 }
 
 //コンストラクタ
@@ -16,6 +16,6 @@ VSImage::VSImage(GameObject* parent, std::string modelPath, std::string name)
 //初期化
 void VSImage::ChildInitialize()
 {
-	easing_->Reset(&transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE), transform_->position_, EASING_TIME, Easing::OutCubic);
-	ARGUMENT_INITIALIZE(transform_->position_, VectorToFloat3(transform_->position_ + POS_ADD_VALUE));
+	easing_->Reset(&transform_->scale_, VectorToFloat3(transform_->scale_ + SCALE_ADD_VALUE), transform_->scale_, EASING_TIME, Easing::OutCubic);
+	ARGUMENT_INITIALIZE(transform_->scale_, VectorToFloat3(transform_->scale_ + SCALE_ADD_VALUE));
 }
