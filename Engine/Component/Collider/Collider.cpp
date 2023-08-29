@@ -132,340 +132,174 @@ void Collider::Collision(GameObject* pTarget)
 bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 {
 
-	XMFLOAT3 boxAPos = Float3Add(boxA->parent->GetComponent<Transform>()->GetWorldPosition(), boxA->center_);
+	/*XMFLOAT3 boxAPos = Float3Add(boxA->parent->GetComponent<Transform>()->GetWorldPosition(), boxA->center_);
 	XMFLOAT3 boxBPos = Float3Add(boxB->parent->GetComponent<Transform>()->GetWorldPosition(), boxB->center_);
 
-	XMVECTOR betweenCenterPoint = XMLoadFloat3(&boxBPos) - XMLoadFloat3(&boxAPos);
+	XMVECTOR betweenCenterPoint = XMLoadFloat3(&boxBPos) - XMLoadFloat3(&boxAPos);*/
 
 	boxA->CalcAxisVec();
 	boxB->CalcAxisVec();
 
-	float rA = XMVectorGetX(XMVector3Length(boxA->OBB_X));								    //boxAの中心点からの長さ
-	float rB = boxA->prjLine(&boxA->OBB_X, &boxB->OBB_X, &boxB->OBB_Y, &boxB->OBB_Z);		//boxBの中心点からの長さ
-	float  L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxA->OBB_X))));//中心点間の長さ
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	//float rA = XMVectorGetX(XMVector3Length(boxA->OBB_X));								    //boxAの中心点からの長さ
+	//float rB = boxA->prjLine(&boxA->OBB_X, &boxB->OBB_X, &boxB->OBB_Y, &boxB->OBB_Z);		//boxBの中心点からの長さ
+	//float  L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxA->OBB_X))));//中心点間の長さ
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	rA = XMVectorGetX(XMVector3Length(boxA->OBB_Y));								    //boxAの中心点からの長さ
-	rB = boxA->prjLine(&boxA->OBB_Y, &boxB->OBB_X, &boxB->OBB_Y, &boxB->OBB_Z);			//boxBの中心点からの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxA->OBB_Y))));//中心点間の長さ
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	//rA = XMVectorGetX(XMVector3Length(boxA->OBB_Y));								    //boxAの中心点からの長さ
+	//rB = boxA->prjLine(&boxA->OBB_Y, &boxB->OBB_X, &boxB->OBB_Y, &boxB->OBB_Z);			//boxBの中心点からの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxA->OBB_Y))));//中心点間の長さ
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	rA = XMVectorGetX(XMVector3Length(boxA->OBB_Z));								    //boxAの中心点からの長さ
-	rB = boxA->prjLine(&boxA->OBB_Z, &boxB->OBB_X, &boxB->OBB_Y, &boxB->OBB_Z);			//boxBの中心点からの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxA->OBB_Z))));//中心点間の長さ
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	//rA = XMVectorGetX(XMVector3Length(boxA->OBB_Z));								    //boxAの中心点からの長さ
+	//rB = boxA->prjLine(&boxA->OBB_Z, &boxB->OBB_X, &boxB->OBB_Y, &boxB->OBB_Z);			//boxBの中心点からの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxA->OBB_Z))));//中心点間の長さ
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	rA = XMVectorGetX(XMVector3Length(boxB->OBB_X));								    //boxAの中心点からの長さ
-	rB = boxA->prjLine(&boxB->OBB_X, &boxA->OBB_X, &boxA->OBB_Y, &boxA->OBB_Z);			//boxBの中心点からの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxB->OBB_X))));//中心点間の長さ
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	//rA = XMVectorGetX(XMVector3Length(boxB->OBB_X));								    //boxAの中心点からの長さ
+	//rB = boxA->prjLine(&boxB->OBB_X, &boxA->OBB_X, &boxA->OBB_Y, &boxA->OBB_Z);			//boxBの中心点からの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxB->OBB_X))));//中心点間の長さ
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	rA = XMVectorGetX(XMVector3Length(boxB->OBB_Y));								    //boxAの中心点からの長さ
-	rB = boxA->prjLine(&boxB->OBB_Y, &boxA->OBB_X, &boxA->OBB_Y, &boxA->OBB_Z);			//boxBの中心点からの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxB->OBB_Y))));//中心点間の長さ
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	//rA = XMVectorGetX(XMVector3Length(boxB->OBB_Y));								    //boxAの中心点からの長さ
+	//rB = boxA->prjLine(&boxB->OBB_Y, &boxA->OBB_X, &boxA->OBB_Y, &boxA->OBB_Z);			//boxBの中心点からの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxB->OBB_Y))));//中心点間の長さ
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	rA = XMVectorGetX(XMVector3Length(boxB->OBB_Z));								    //boxAの中心点からの長さ
-	rB = boxA->prjLine(&boxB->OBB_Z, &boxA->OBB_X, &boxA->OBB_Y, &boxA->OBB_Z);			//boxBの中心点からの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxB->OBB_Z))));//中心点間の長さ
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	//rA = XMVectorGetX(XMVector3Length(boxB->OBB_Z));								    //boxAの中心点からの長さ
+	//rB = boxA->prjLine(&boxB->OBB_Z, &boxA->OBB_X, &boxA->OBB_Y, &boxA->OBB_Z);			//boxBの中心点からの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, XMVector3Normalize(boxB->OBB_Z))));//中心点間の長さ
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	///////////////////////////////ここから外積軸による衝突判定//////////////////////////////////////
+	/////////////////////////////////ここから外積軸による衝突判定//////////////////////////////////////
 
-	XMVECTOR cross;
-	//boxAのX軸とboxBのX軸の外積 : この外積を分離軸として計算を行う
-	cross = XMVector3Normalize(XMVector3Cross(boxA->nX, boxB->nX));
-	rA = boxA->prjLine(&cross, &boxA->OBB_Y, &boxA->OBB_Z);				//boxAの長さ
-	rB = boxA->prjLine(&cross, &boxB->OBB_Y, &boxB->OBB_Z);				//boxBの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	//XMVECTOR cross;
+	////boxAのX軸とboxBのX軸の外積 : この外積を分離軸として計算を行う
+	//cross = XMVector3Normalize(XMVector3Cross(boxA->nX, boxB->nX));
+	//rA = boxA->prjLine(&cross, &boxA->OBB_Y, &boxA->OBB_Z);				//boxAの長さ
+	//rB = boxA->prjLine(&cross, &boxB->OBB_Y, &boxB->OBB_Z);				//boxBの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	//boxAのX軸とboxBのY軸の外積 : この外積を分離軸として計算を行う
-	cross = XMVector3Normalize(XMVector3Cross(boxA->nX, boxB->nY));
-	rA = boxA->prjLine(&cross, &boxA->OBB_Y, &boxA->OBB_Z);				//boxAの長さ
-	rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Z);				//boxBの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	////boxAのX軸とboxBのY軸の外積 : この外積を分離軸として計算を行う
+	//cross = XMVector3Normalize(XMVector3Cross(boxA->nX, boxB->nY));
+	//rA = boxA->prjLine(&cross, &boxA->OBB_Y, &boxA->OBB_Z);				//boxAの長さ
+	//rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Z);				//boxBの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	//boxAのX軸とboxBのZ軸の外積 : この外積を分離軸として計算を行う
-	cross = XMVector3Normalize(XMVector3Cross(boxA->nX, boxB->nZ));
-	rA = boxA->prjLine(&cross, &boxA->OBB_Y, &boxA->OBB_Z);				//boxAの長さ
-	rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Y);				//boxBの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));//分離軸に投影した中心点間の距離
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	////boxAのX軸とboxBのZ軸の外積 : この外積を分離軸として計算を行う
+	//cross = XMVector3Normalize(XMVector3Cross(boxA->nX, boxB->nZ));
+	//rA = boxA->prjLine(&cross, &boxA->OBB_Y, &boxA->OBB_Z);				//boxAの長さ
+	//rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Y);				//boxBの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));//分離軸に投影した中心点間の距離
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	//boxAのY軸とboxBのX軸の外積 : この外積を分離軸として計算を行う
-	cross = XMVector3Normalize(XMVector3Cross(boxA->nY, boxB->nX));
-	rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Z);				//boxAの長さ
-	rB = boxA->prjLine(&cross, &boxB->OBB_Y, &boxB->OBB_Z);				//boxBの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));//分離軸に投影した中心点間の距離
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	////boxAのY軸とboxBのX軸の外積 : この外積を分離軸として計算を行う
+	//cross = XMVector3Normalize(XMVector3Cross(boxA->nY, boxB->nX));
+	//rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Z);				//boxAの長さ
+	//rB = boxA->prjLine(&cross, &boxB->OBB_Y, &boxB->OBB_Z);				//boxBの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));//分離軸に投影した中心点間の距離
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	//boxAのY軸とboxBのY軸の外積 : この外積を分離軸として計算を行う
-	cross = XMVector3Normalize(XMVector3Cross(boxA->nY, boxB->nY));
-	rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Z);				//boxAの長さ
-	rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Z);				//boxBの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	////boxAのY軸とboxBのY軸の外積 : この外積を分離軸として計算を行う
+	//cross = XMVector3Normalize(XMVector3Cross(boxA->nY, boxB->nY));
+	//rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Z);				//boxAの長さ
+	//rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Z);				//boxBの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	//boxAのY軸とboxBのZ軸の外積 : この外積を分離軸として計算を行う
-	cross = XMVector3Normalize(XMVector3Cross(boxA->nY, boxB->nZ));
-	rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Z);				//boxAの長さ
-	rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Y);				//boxBの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	////boxAのY軸とboxBのZ軸の外積 : この外積を分離軸として計算を行う
+	//cross = XMVector3Normalize(XMVector3Cross(boxA->nY, boxB->nZ));
+	//rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Z);				//boxAの長さ
+	//rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Y);				//boxBの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	//boxAのZ軸とboxBのX軸の外積 : この外積を分離軸として計算を行う
-	cross = XMVector3Normalize(XMVector3Cross(boxA->nZ, boxB->nX));
-	rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Y);				//boxAの長さ
-	rB = boxA->prjLine(&cross, &boxB->OBB_Y, &boxB->OBB_Z);				//boxBの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	////boxAのZ軸とboxBのX軸の外積 : この外積を分離軸として計算を行う
+	//cross = XMVector3Normalize(XMVector3Cross(boxA->nZ, boxB->nX));
+	//rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Y);				//boxAの長さ
+	//rB = boxA->prjLine(&cross, &boxB->OBB_Y, &boxB->OBB_Z);				//boxBの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	//boxAのZ軸とboxBのY軸の外積 : この外積を分離軸として計算を行う
-	cross = XMVector3Normalize(XMVector3Cross(boxA->nZ, boxB->nY));
-	rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Y);				//boxAの長さ
-	rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Z);				//boxBの長さ
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	////boxAのZ軸とboxBのY軸の外積 : この外積を分離軸として計算を行う
+	//cross = XMVector3Normalize(XMVector3Cross(boxA->nZ, boxB->nY));
+	//rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Y);				//boxAの長さ
+	//rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Z);				//boxBの長さ
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));	//分離軸に投影した中心点間の距離
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
-	//boxAのZ軸とboxBのZ軸の外積 : この外積を分離軸として計算を行う
-	cross = XMVector3Normalize(XMVector3Cross(boxA->nZ, boxB->nZ));
-	rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Y);
-	rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Y);
-	L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));//分離軸に投影した中心点間の距離
-	if (L > rA + rB)
-	{
-		ImGuiSet::DebugLog("isHit", false);
-		return false;
-	}
+	////boxAのZ軸とboxBのZ軸の外積 : この外積を分離軸として計算を行う
+	//cross = XMVector3Normalize(XMVector3Cross(boxA->nZ, boxB->nZ));
+	//rA = boxA->prjLine(&cross, &boxA->OBB_X, &boxA->OBB_Y);
+	//rB = boxA->prjLine(&cross, &boxB->OBB_X, &boxB->OBB_Y);
+	//L = fabsf(XMVectorGetX(XMVector3Dot(betweenCenterPoint, cross)));//分離軸に投影した中心点間の距離
+	//if (L > rA + rB)
+	//{
+	//	ImGuiSet::DebugLog("isHit", false);
+	//	return false;
+	//}
 
 	ImGuiSet::DebugLog("isHit", true);
 	//中心点間の距離が一回もrA + rB以上にならなかったので当たっている
 	return true;
 
-	////回転行列
-	//XMFLOAT3 rotateA_ = (boxA->parent->GetComponent<Transform>()->GetWorldRotate());
-	//XMMATRIX rotateX, rotateY, rotateZ;
-	//rotateX = XMMatrixRotationX(XMConvertToRadians(rotateA_.x));
-	//rotateY = XMMatrixRotationY(XMConvertToRadians(rotateA_.y));
-	//rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateA_.z));
-	//XMMATRIX matRotateBoxA_ = rotateZ * rotateX * rotateY;
-
-	////回転行列
-	//XMFLOAT3 rotateB_ = (boxB->parent->GetComponent<Transform>()->GetWorldRotate());
-	//rotateX = XMMatrixRotationX(XMConvertToRadians(rotateB_.x));
-	//rotateY = XMMatrixRotationY(XMConvertToRadians(rotateB_.y));
-	//rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotateB_.z));
-	//XMMATRIX matRotateBoxB_ = rotateZ * rotateX * rotateY;
-
-	////各頂点
-	//XMFLOAT3 boxVerticesA[] = {
-	//		{ boxPosA.x - boxA->size_.x / 2, boxPosA.y - boxA->size_.y / 2, boxPosA.z - boxA->size_.z / 2 },
-	//		{ boxPosA.x + boxA->size_.x / 2, boxPosA.y - boxA->size_.y / 2, boxPosA.z - boxA->size_.z / 2 },
-	//		{ boxPosA.x + boxA->size_.x / 2, boxPosA.y + boxA->size_.y / 2, boxPosA.z - boxA->size_.z / 2 },
-	//		{ boxPosA.x - boxA->size_.x / 2, boxPosA.y + boxA->size_.y / 2, boxPosA.z - boxA->size_.z / 2 },
-	//		{ boxPosA.x - boxA->size_.x / 2, boxPosA.y - boxA->size_.y / 2, boxPosA.z + boxA->size_.z / 2 },
-	//		{ boxPosA.x + boxA->size_.x / 2, boxPosA.y - boxA->size_.y / 2, boxPosA.z + boxA->size_.z / 2 },
-	//		{ boxPosA.x + boxA->size_.x / 2, boxPosA.y + boxA->size_.y / 2, boxPosA.z + boxA->size_.z / 2 },
-	//		{ boxPosA.x - boxA->size_.x / 2, boxPosA.y + boxA->size_.y / 2, boxPosA.z + boxA->size_.z / 2 }
-	//};
-
-	////各頂点
-	//XMFLOAT3 boxVerticesB[] = {
-	//		{ boxPosB.x - boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
-	//		{ boxPosB.x + boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
-	//		{ boxPosB.x + boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
-	//		{ boxPosB.x - boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z - boxB->size_.z / 2 },
-	//		{ boxPosB.x - boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
-	//		{ boxPosB.x + boxB->size_.x / 2, boxPosB.y - boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
-	//		{ boxPosB.x + boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 },
-	//		{ boxPosB.x - boxB->size_.x / 2, boxPosB.y + boxB->size_.y / 2, boxPosB.z + boxB->size_.z / 2 }
-	//};
-
-	////8頂点分回す(回転した後の頂点にする)
-	//for (int i = 0; i < 8; i++)
-	//{
-	//	boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)) * matRotateBoxA_));
-	//	boxVerticesA[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesA[i]), XMMatrixTranslation(boxPosA.x, boxPosA.y, boxPosA.z)));
-	//	boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixInverse(nullptr, XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)) * matRotateBoxB_));
-	//	boxVerticesB[i] = VectorToFloat3(XMVector3TransformCoord(XMLoadFloat3(&boxVerticesB[i]), XMMatrixTranslation(boxPosB.x, boxPosB.y, boxPosB.z)));
-	//}
-
-	////辺の集合
-	//vector<pair<XMFLOAT3, XMFLOAT3>> sideA;
-	//sideA.push_back({ boxVerticesA[0],boxVerticesA[1] });
-	//sideA.push_back({ boxVerticesA[1],boxVerticesA[2] });
-	//sideA.push_back({ boxVerticesA[2],boxVerticesA[3] });
-	//sideA.push_back({ boxVerticesA[3],boxVerticesA[0] });
-	//sideA.push_back({ boxVerticesA[4],boxVerticesA[5] });
-	//sideA.push_back({ boxVerticesA[5],boxVerticesA[6] });
-	//sideA.push_back({ boxVerticesA[6],boxVerticesA[7] });
-	//sideA.push_back({ boxVerticesA[7],boxVerticesA[4] });
-	//sideA.push_back({ boxVerticesA[0],boxVerticesA[4] });
-	//sideA.push_back({ boxVerticesA[5],boxVerticesA[1] });
-	//sideA.push_back({ boxVerticesA[6],boxVerticesA[2] });
-	//sideA.push_back({ boxVerticesA[3],boxVerticesA[7] });
-
-	////辺の集合
-	//vector<pair<XMFLOAT3, XMFLOAT3>> sideB;
-	//sideB.push_back({ boxVerticesB[0],boxVerticesB[1] });
-	//sideB.push_back({ boxVerticesB[1],boxVerticesB[2] });
-	//sideB.push_back({ boxVerticesB[2],boxVerticesB[3] });
-	//sideB.push_back({ boxVerticesB[3],boxVerticesB[0] });
-	//sideB.push_back({ boxVerticesB[4],boxVerticesB[5] });
-	//sideB.push_back({ boxVerticesB[5],boxVerticesB[6] });
-	//sideB.push_back({ boxVerticesB[6],boxVerticesB[7] });
-	//sideB.push_back({ boxVerticesB[7],boxVerticesB[4] });
-	//sideB.push_back({ boxVerticesB[0],boxVerticesB[4] });
-	//sideB.push_back({ boxVerticesB[5],boxVerticesB[1] });
-	//sideB.push_back({ boxVerticesB[6],boxVerticesB[2] });
-	//sideB.push_back({ boxVerticesB[3],boxVerticesB[7] });
-
-	//int count = 0;
-	//bool isHit = false;										//当たっているか
-	//float len = 99999;										//めり込み距離
-	//XMVECTOR dir = XMVector3Normalize(boxPosA - boxPosB);   //めり込み除去する方向									
-
-	//for (int i = 0; i < 8; i++)
-	//{
-	//	//辺分回す
-	//	for (int j = 0; j < 12; j++)
-	//	{
-	//		//マイナスなら四角の中に入っている
-	//		if (XMVectorGetZ(XMVector3Cross(sideB[j].second - sideB[j].first, boxVerticesA[i] - sideB[j].first)) >= 0)
-	//		{
-	//			float d = PointToLineSegmentDistance(boxVerticesA[i], sideB[j].first, sideB[j].second);
-	//			if (d < len)
-	//			{
-	//				ARGUMENT_INITIALIZE(len, d);
-	//			}
-	//		}
-	//		else
-	//			count++;
-	//	}
-
-	//	if (count == 0)
-	//	{
-	//		ARGUMENT_INITIALIZE(isHit, true);
-	//		break;
-	//	}
-	//	else
-	//	{
-	//		ARGUMENT_INITIALIZE(len, 99999);
-	//		ARGUMENT_INITIALIZE(count,0);
-	//	}
-
-	//	//辺分回す
-	//	for (int j = 0; j < 12; j++)
-	//	{
-	//		//マイナスなら四角の中に入っている
-	//		if (XMVectorGetZ(XMVector3Cross(sideA[j].second - sideA[j].first, boxVerticesB[i] - sideA[j].first)) >= 0)
-	//		{
-	//			float d = PointToLineSegmentDistance(boxVerticesB[i], sideA[j].first, sideA[j].second);
-	//			if (d < len)
-	//			{
-	//				ARGUMENT_INITIALIZE(len, d);
-	//			}
-	//		}
-	//		else
-	//			count++;
-	//	}
-
-	//	if (count == 0)
-	//	{
-	//		ARGUMENT_INITIALIZE(isHit, true);
-	//		break;
-	//	}
-	//	else
-	//	{
-	//		ARGUMENT_INITIALIZE(len, 99999);
-	//		ARGUMENT_INITIALIZE(count, 0);
-	//	}
-	//}
-
-	////当たっているのなら
-	//if (isHit)
-	//{
-	//	//Aが動いていたなら
-	//	if (!IsMatch(boxA->GetNowPos(), boxA->GetBeforePos()) || !IsMatch(boxA->GetNowRotate(), boxA->GetBeforeRotate()))
-	//	{
-	//		Transform* p = boxB->parent->GetComponent<Transform>();
-
-	//		p->SetPosition(VectorToFloat3(p->GetPosition() + -dir * len));
-
-	//		ARGUMENT_INITIALIZE(boxB->beforePosition_, boxB->nowPosition_);
-	//		ARGUMENT_INITIALIZE(boxB->nowPosition_, p->GetPosition());
-	//	}
-	//	else if (!IsMatch(boxB->GetNowPos(), boxB->GetBeforePos()) || !IsMatch(boxB->GetNowRotate(), boxB->GetBeforeRotate()))
-	//	{
-
-	//		Transform* p = boxA->parent->GetComponent<Transform>();
-	//		p->SetPosition(VectorToFloat3(p->GetPosition() + dir * len));
-
-	//		ARGUMENT_INITIALIZE(boxA->beforePosition_, boxA->nowPosition_);
-	//		ARGUMENT_INITIALIZE(boxA->nowPosition_, p->GetPosition());
-	//	}
-
-	//}
-
-	//return isHit;
 }
 
 //箱型と球体の衝突判定
