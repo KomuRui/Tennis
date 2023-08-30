@@ -136,6 +136,8 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 	XMFLOAT3 boxBPos = Float3Add(boxB->parent->GetComponent<Transform>()->GetWorldPosition(), boxB->center_);
 
 	XMVECTOR betweenCenterPoint = XMLoadFloat3(&boxBPos) - XMLoadFloat3(&boxAPos);
+	XMVECTOR backVecA = XMVectorSet(0, 0, 0, 0);
+	XMVECTOR backVecB = XMVectorSet(0, 0, 0, 0);
 
 	boxA->CalcAxisVec();
 	boxB->CalcAxisVec();
@@ -148,6 +150,7 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 		ImGuiSet::DebugLog("isHit", false);
 		return false;
 	}
+	backVecA = backVecA + ((boxA->nX) * ((rA + rB) - L));
 
 	rA = XMVectorGetX(XMVector3Length(boxA->OBB_Y));								    //boxAの中心点からの長さ
 	rB = boxA->prjLine(&boxA->OBB_Y, &boxB->OBB_X, &boxB->OBB_Y, &boxB->OBB_Z);			//boxBの中心点からの長さ
@@ -157,6 +160,7 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 		ImGuiSet::DebugLog("isHit", false);
 		return false;
 	}
+	backVecA = backVecA + ((boxA->nY) * ((rA + rB) - L));
 
 	rA = XMVectorGetX(XMVector3Length(boxA->OBB_Z));								    //boxAの中心点からの長さ
 	rB = boxA->prjLine(&boxA->OBB_Z, &boxB->OBB_X, &boxB->OBB_Y, &boxB->OBB_Z);			//boxBの中心点からの長さ
@@ -166,6 +170,7 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 		ImGuiSet::DebugLog("isHit", false);
 		return false;
 	}
+	backVecA = backVecA + ((boxA->nZ) * ((rA + rB) - L));
 
 	rA = XMVectorGetX(XMVector3Length(boxB->OBB_X));								    //boxAの中心点からの長さ
 	rB = boxA->prjLine(&boxB->OBB_X, &boxA->OBB_X, &boxA->OBB_Y, &boxA->OBB_Z);			//boxBの中心点からの長さ
@@ -175,6 +180,7 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 		ImGuiSet::DebugLog("isHit", false);
 		return false;
 	}
+	backVecB = backVecB + ((boxB->nX) * ((rA + rB) - L));
 
 	rA = XMVectorGetX(XMVector3Length(boxB->OBB_Y));								    //boxAの中心点からの長さ
 	rB = boxA->prjLine(&boxB->OBB_Y, &boxA->OBB_X, &boxA->OBB_Y, &boxA->OBB_Z);			//boxBの中心点からの長さ
@@ -184,6 +190,7 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 		ImGuiSet::DebugLog("isHit", false);
 		return false;
 	}
+	backVecB = backVecB + ((boxB->nY) * ((rA + rB) - L));
 
 	rA = XMVectorGetX(XMVector3Length(boxB->OBB_Z));								    //boxAの中心点からの長さ
 	rB = boxA->prjLine(&boxB->OBB_Z, &boxA->OBB_X, &boxA->OBB_Y, &boxA->OBB_Z);			//boxBの中心点からの長さ
@@ -193,6 +200,7 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 		ImGuiSet::DebugLog("isHit", false);
 		return false;
 	}
+	backVecB = backVecB + ((boxB->nZ) * ((rA + rB) - L));
 
 	///////////////////////////////ここから外積軸による衝突判定//////////////////////////////////////
 
@@ -295,6 +303,35 @@ bool Collider::IsHitBoxVsBox(BoxCollider* boxA, BoxCollider* boxB)
 		ImGuiSet::DebugLog("isHit", false);
 		return false;
 	}
+
+	//Aが動いていたなら
+	if (!IsMatch(boxA->GetNowPos(), boxA->GetBeforePos()))
+	{
+		XMVECTOR moveVec = XMVector3Normalize(boxA->GetNowPos() - boxA->GetBeforePos());
+		backVecB = { XMVectorGetX(backVecB) * XMVectorGetX(moveVec) * XMVectorGetX(boxA->nX),
+					 XMVectorGetY(backVecB) * XMVectorGetY(moveVec) * XMVectorGetY(boxA->nY),
+					 XMVectorGetZ(backVecB) * XMVectorGetZ(moveVec) * XMVectorGetZ(boxA->nZ) };
+
+		Transform* p = boxA->parent->GetComponent<Transform>();
+		p->SetPosition(VectorToFloat3(p->GetPosition() - backVecB));
+
+		ARGUMENT_INITIALIZE(boxA->beforePosition_, boxA->nowPosition_);
+		ARGUMENT_INITIALIZE(boxA->nowPosition_, p->GetPosition());
+	}
+	else if (!IsMatch(boxB->GetNowPos(), boxB->GetBeforePos()))
+	{
+		XMVECTOR moveVec = XMVector3Normalize(boxB->GetNowPos() - boxB->GetBeforePos());
+		backVecA = { XMVectorGetX(backVecA) * XMVectorGetX(moveVec) * XMVectorGetX(boxB->nX),
+		             XMVectorGetY(backVecA) * XMVectorGetY(moveVec) * XMVectorGetY(boxB->nY),
+					 XMVectorGetZ(backVecA) * XMVectorGetZ(moveVec) * XMVectorGetZ(boxB->nZ) };
+
+		Transform* p = boxB->parent->GetComponent<Transform>();
+		p->SetPosition(VectorToFloat3(p->GetPosition() - backVecA));
+
+		ARGUMENT_INITIALIZE(boxB->beforePosition_, boxB->nowPosition_);
+		ARGUMENT_INITIALIZE(boxB->nowPosition_, p->GetPosition());
+	}
+
 
 	ImGuiSet::DebugLog("isHit", true);
 	//中心点間の距離が一回もrA + rB以上にならなかったので当たっている
