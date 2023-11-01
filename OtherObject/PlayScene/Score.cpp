@@ -240,6 +240,9 @@ void Score::ChangeScoreEasing()
 		{
 			//Œ³‚É–ß‚·
 			ReturnMovePos();
+
+			//€”õ’†‚ð‰ðœ
+			GameManager::GetReferee()->SetWait(false);
 		}
 		else
 		{

@@ -85,6 +85,10 @@ void PlayerStateManager::Update3D(PlayerBase* player)
     if (GameManager::GetReferee()->GetGameStatus() == GameStatus::NOW_SERVE_RECEIVE &&
        (GameManager::GetReferee()->IsServer(player)))
     {
+
+        //待機状態ならこの先処理しない
+        if (GameManager::GetReferee()->IsWait()) return;
+
         //サーブの時の移動処理
         ServeMove(player, PadLx, PadLy);
 

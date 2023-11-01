@@ -34,6 +34,7 @@ class Referee
 	PlayerBase* receiver_; //レシーバー
 
 	bool isGameStart_;     //試合開始しているか
+	bool isWait_;          //準備中かどうか
 
 	//サーバーの動ける範囲
 	map<pair<TennisCourtName, Side>, pair<float, float>> serverMoveRange_;
@@ -204,6 +205,18 @@ public:
 	/// </summary>
 	/// <param name="num">設定したいテニスコートタイプ</param>
 	void SetTennisCourtType(TennisCourtType type) { tennisCourtType_ = type; }
+
+	/// <summary>
+	/// 準備中かどうか取得
+	/// </summary>
+	/// <returns>trueなら準備中</returns>
+	bool IsWait() { return isWait_; }
+
+	/// <summary>
+	/// 準備中かどうか設定
+	/// </summary>
+	/// <param name="flag">trueなら準備中</param>
+	void SetWait(bool flag) { isWait_ = flag; }
 
 	/// <summary>
 	/// 試合開始しているかどうか取得

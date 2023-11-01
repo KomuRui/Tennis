@@ -4,7 +4,8 @@
 
 //コンストラクタ
 Referee::Referee()
-	: status_(GameStatus::NOW_SERVE_RECEIVE), side_(Side::DEUCE_SIDE), server_(nullptr), receiver_(nullptr), numGameFirstToGet_(2), numSetFirstToGet_(1), tennisCourtType_(TennisCourtType::HARD_COURT), isGameStart_(false)
+	: status_(GameStatus::NOW_SERVE_RECEIVE), side_(Side::DEUCE_SIDE), server_(nullptr), receiver_(nullptr), numGameFirstToGet_(2), numSetFirstToGet_(1),
+	tennisCourtType_(TennisCourtType::HARD_COURT), isGameStart_(false), isWait_(false)
 {
 
 	//サーバーの動ける範囲を設定
@@ -59,6 +60,9 @@ void Referee::EndPoint(TennisCourtName n)
 //どちらかがポイント取得時に呼ばれる
 void Referee::GetPoint()
 {
+	//待機状態に
+	SetWait(true);
+
 	//サイド変更
 	ChangeSide();
 
