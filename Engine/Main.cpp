@@ -1,3 +1,4 @@
+#define _CRTDBG_MAP_ALLOC
 #include <Windows.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -19,6 +20,10 @@
 #include "../Manager/BasePointManager/BasePointManager.h"
 #include "GUI/ImGuiSet.h"
 #include "../Manager/FrameWorkUpdateManager/FrameWorkUpdateManager.h"
+#include <stdlib.h>
+#include <cstdlib>
+#include <crtdbg.h>
+#include <iostream>
 
 #pragma comment(lib,"Winmm.lib")
 
@@ -32,10 +37,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // エントリーポイント
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-//#if defined(DEBUG) | defined(_DEBUG)
-//	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-//#endif
-
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	srand((unsigned)time(NULL));
 	SetCurrentDirectory("Assets");
 
@@ -146,7 +148,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			timeEndPeriod(1);	//時間計測の制度を戻す
 		}
 	}
-
+	
 	//書き込み
 	BasePointManager::BasePointExport();
 
@@ -157,6 +159,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	pRootObject->ReleaseSub();
 	SAFE_DELETE(pRootObject);
 	Direct3D::Release();
+	
+	//_CrtDumpMemoryLeaks();
 
 	return 0;
 }

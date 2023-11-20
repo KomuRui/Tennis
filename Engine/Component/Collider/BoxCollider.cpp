@@ -16,9 +16,7 @@ BoxCollider::BoxCollider()
 	hDebugModel_ = ModelManager::Load("DebugCollision/boxCollider.fbx");
 #endif
 
-	nX = RIGHT_VECTOR;
-	nY = UP_VECTOR;
-	nZ = STRAIGHT_VECTOR;
+
 }
 
 //ê⁄êGîªíË
@@ -63,24 +61,15 @@ void BoxCollider::CalcAxisVec()
 	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotate_.z));
 	XMMATRIX matRotateBox_ = rotateZ * rotateX * rotateY;
 
-	nX = RIGHT_VECTOR;
-	nY = UP_VECTOR;
-	nZ = STRAIGHT_VECTOR;
-
-	nX = XMVector3Normalize(XMVector3TransformCoord(nX, matRotateBox_));
-	nY = XMVector3Normalize(XMVector3TransformCoord(nY, matRotateBox_));
-	nZ = XMVector3Normalize(XMVector3TransformCoord(nZ, matRotateBox_));
-
 	OBB_X = nX * (size_.x / 2);
 	OBB_Y = nY * (size_.y / 2);
 	OBB_Z = nZ * (size_.z / 2);
 
-	/*OBB_X = XMVector3TransformCoord(OBB_X, XMMatrixInverse(nullptr, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)) * matRotateBox_);
+	OBB_X = XMVector3TransformCoord(OBB_X, XMMatrixInverse(nullptr, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)) * matRotateBox_);
 	OBB_X = XMVector3TransformCoord(OBB_X, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z));
 	OBB_Y = XMVector3TransformCoord(OBB_Y, XMMatrixInverse(nullptr, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)) * matRotateBox_);
 	OBB_Y = XMVector3TransformCoord(OBB_Y, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z));
 	OBB_Z = XMVector3TransformCoord(OBB_Z, XMMatrixInverse(nullptr, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z)) * matRotateBox_);
-	OBB_Z = XMVector3TransformCoord(OBB_Z, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z));*/
+	OBB_Z = XMVector3TransformCoord(OBB_Z, XMMatrixTranslation(boxPos.x, boxPos.y, boxPos.z));
 
-	
 }
